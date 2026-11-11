@@ -1,0 +1,475 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101d32">
+<title>صخر | بيتي للصيانة</title>
+
+<style>
+:root {
+  --navy:#101d32;
+  --navy2:#172943;
+  --orange:#f49a38;
+  --bg:#f4f6f9;
+  --text:#172235;
+  --muted:#718096;
+  --white:#fff;
+  --border:#e5eaf0;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0;
+  font-family:Tahoma,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+button,input,textarea,select { font:inherit; }
+button { cursor:pointer; }
+header {
+  background:var(--navy);
+  color:white;
+  padding:17px 5%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  position:sticky;
+  top:0;
+  z-index:5;
+}
+.logo {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:22px;
+  font-weight:bold;
+}
+.logo-mark {
+  background:var(--orange);
+  color:var(--navy);
+  width:42px;
+  height:42px;
+  border-radius:13px;
+  display:grid;
+  place-items:center;
+  font-size:24px;
+}
+header button {
+  background:transparent;
+  border:1px solid #53627a;
+  color:white;
+  padding:9px 15px;
+  border-radius:9px;
+}
+.hero {
+  background:linear-gradient(125deg,#101d32,#203c5b);
+  color:white;
+  padding:55px 6% 65px;
+}
+.hero h1 {
+  font-size:clamp(27px,5vw,43px);
+  margin:0 0 15px;
+  line-height:1.5;
+}
+.hero p {
+  color:#d3dce8;
+  line-height:1.9;
+  max-width:600px;
+}
+.primary {
+  border:0;
+  border-radius:10px;
+  background:var(--orange);
+  color:#172235;
+  font-weight:bold;
+  padding:14px 22px;
+}
+.secondary {
+  border:1px solid var(--border);
+  background:white;
+  padding:12px 18px;
+  border-radius:9px;
+  color:var(--navy);
+}
+.container {
+  width:min(1100px,92%);
+  margin:35px auto;
+}
+.section-title {
+  font-size:23px;
+  margin-bottom:20px;
+}
+.categories {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(145px,1fr));
+  gap:13px;
+}
+.category {
+  background:white;
+  border:1px solid var(--border);
+  padding:19px 10px;
+  border-radius:14px;
+  text-align:center;
+  transition:.2s;
+}
+.category:hover,.category.active {
+  border-color:var(--orange);
+  transform:translateY(-2px);
+  box-shadow:0 5px 18px #17223512;
+}
+.category .emoji {
+  display:block;
+  font-size:30px;
+  margin-bottom:10px;
+}
+.category strong { font-size:14px; }
+.quick-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:15px;
+  margin:28px 0;
+}
+.quick-card {
+  background:white;
+  padding:20px;
+  border-radius:14px;
+  border:1px solid var(--border);
+}
+.quick-card h3 { margin-top:0; }
+.quick-card p { color:var(--muted);line-height:1.8;font-size:14px; }
+.form-card {
+  background:white;
+  border:1px solid var(--border);
+  padding:23px;
+  border-radius:15px;
+  max-width:700px;
+  margin:25px auto;
+}
+.form-card h2 { margin-top:0; }
+.field { margin:15px 0; }
+.field label {
+  display:block;
+  margin-bottom:8px;
+  font-weight:bold;
+  font-size:14px;
+}
+.field input,.field select,.field textarea {
+  width:100%;
+  padding:13px;
+  border:1px solid #dce2ea;
+  border-radius:9px;
+  background:#fff;
+  outline:none;
+}
+.field input:focus,.field select:focus,.field textarea:focus {
+  border-color:var(--orange);
+}
+.field textarea { min-height:100px;resize:vertical; }
+.form-actions {
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:20px;
+}
+.hidden { display:none !important; }
+.notice {
+  background:#fff5e8;
+  color:#82501c;
+  border:1px solid #f5d4a9;
+  padding:13px;
+  border-radius:10px;
+  line-height:1.8;
+  font-size:13px;
+}
+.request {
+  background:white;
+  padding:17px;
+  border:1px solid var(--border);
+  border-radius:12px;
+  margin:12px 0;
+}
+.request small { color:var(--muted); }
+.request h3 { margin:8px 0; }
+footer {
+  background:var(--navy);
+  color:#d3dce8;
+  padding:30px 6%;
+  margin-top:60px;
+  text-align:center;
+  line-height:2;
+}
+footer strong { color:var(--orange); }
+@media(max-width:550px) {
+  header { padding:12px 4%; }
+  .logo { font-size:18px; }
+  .hero { padding:40px 5%; }
+  .container { width:92%; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-mark">⌂</div>
+    <span>صخر | بيتي للصيانة</span>
+  </div>
+  <button onclick="showRequests()">طلباتي</button>
+</header>
+
+<section class="hero">
+  <h1>شنو تحتاج تصلّح ببيتك؟</h1>
+  <p>
+    اختار الخدمة، اشرح المشكلة، واستقبل عروض الفنيين
+    المتاحين بمنطقتك. خدمات منزلك بثقة واهتمام.
+  </p>
+  <button class="primary" onclick="scrollToForm()">
+    اطلب خدمة الآن
+  </button>
+</section>
+
+<main class="container">
+
+  <h2 class="section-title">خدماتنا</h2>
+
+  <div class="categories" id="categories"></div>
+
+  <div class="quick-grid">
+    <div class="quick-card">
+      <h3>⚡ طلب عاجل</h3>
+      <p>للمشكلات التي تحتاج استجابة سريعة من فني متاح.</p>
+      <button class="secondary" onclick="urgentRequest()">
+        طلب عاجل
+      </button>
+    </div>
+
+    <div class="quick-card">
+      <h3>🧰 فنيون متخصصون</h3>
+      <p>منصة تجمع اختصاصات الصيانة المنزلية بمكان واحد.</p>
+    </div>
+
+    <div class="quick-card">
+      <h3>⭐ تقييمات واضحة</h3>
+      <p>اطّلع على تقييم الفني وسجل أعماله قبل اختيار العرض.</p>
+    </div>
+  </div>
+
+  <section class="form-card" id="requestForm">
+    <h2>إنشاء طلب صيانة</h2>
+    <p style="color:#718096;font-size:14px">
+      اكتب تفاصيل المشكلة حتى يستطيع الفني فهم طلبك.
+    </p>
+
+    <form id="serviceForm">
+      <div class="field">
+        <label>نوع الخدمة</label>
+        <select id="service" required>
+          <option value="">اختار نوع الخدمة</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>الاسم</label>
+        <input id="customer" required placeholder="اسم صاحب الطلب">
+      </div>
+
+      <div class="field">
+        <label>رقم الهاتف</label>
+        <input id="phone" type="tel" required placeholder="رقم الهاتف">
+      </div>
+
+      <div class="field">
+        <label>المحافظة</label>
+        <select id="governorate" required>
+          <option value="">اختار المحافظة</option>
+          <option>المثنى</option>
+          <option>بغداد</option>
+          <option>البصرة</option>
+          <option>ميسان</option>
+          <option>ذي قار</option>
+          <option>النجف</option>
+          <option>كربلاء</option>
+          <option>القادسية</option>
+          <option>واسط</option>
+          <option>بابل</option>
+          <option>ديالى</option>
+          <option>الأنبار</option>
+          <option>صلاح الدين</option>
+          <option>كركوك</option>
+          <option>نينوى</option>
+          <option>أربيل</option>
+          <option>السليمانية</option>
+          <option>دهوك</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>القضاء أو المنطقة</label>
+        <input id="area" required placeholder="مثلاً: الرميثة">
+      </div>
+
+      <div class="field">
+        <label>تفاصيل المشكلة</label>
+        <textarea id="details" required
+          placeholder="اشرح المشكلة باختصار..."></textarea>
+      </div>
+
+      <input type="hidden" id="urgency" value="عادي">
+
+      <div class="notice">
+        ملاحظة: هذه نسخة أولية للتجربة. الطلبات تُحفظ على هذا الجهاز
+        فقط، ولا تصل إلى الفنيين قبل ربط المنصة بقاعدة بيانات وخدمة
+        تشغيل فعلية.
+      </div>
+
+      <div class="form-actions">
+        <button class="primary" type="submit">حفظ الطلب</button>
+        <button class="secondary" type="reset">مسح الحقول</button>
+      </div>
+    </form>
+  </section>
+
+  <section class="container hidden" id="myRequests">
+    <h2 class="section-title">طلباتي المحفوظة</h2>
+    <div id="requestsList"></div>
+    <button class="secondary" onclick="hideRequests()">رجوع</button>
+  </section>
+
+</main>
+
+<footer>
+  <strong>صخر | بيتي للصيانة</strong>
+  <br>
+  خدمات منزلك بثقة واهتمام
+  <br>
+  © 2026 جميع الحقوق محفوظة
+</footer>
+
+<script>
+const services = [
+  ["❄️","التكييف والتبريد"],
+  ["⚡","الكهرباء المنزلية"],
+  ["🚰","السباكة والصحيات"],
+  ["🧺","الأجهزة المنزلية"],
+  ["🪚","النجارة والأثاث"],
+  ["🎨","الصبغ والديكورات"],
+  ["🏗️","البناء والترميم"],
+  ["🪟","الألمنيوم والزجاج"],
+  ["🔐","الأبواب والأقفال"],
+  ["🧹","التنظيف والخدمات المنزلية"],
+  ["🌱","الحدائق والمضخات"],
+  ["🧰","خدمات أخرى"]
+];
+
+const categories = document.getElementById("categories");
+const serviceSelect = document.getElementById("service");
+
+services.forEach(([emoji,name]) => {
+  const card = document.createElement("button");
+  card.className = "category";
+  card.type = "button";
+  card.innerHTML = `<span class="emoji">${emoji}</span><strong>${name}</strong>`;
+  card.onclick = () => selectService(name,card);
+  categories.appendChild(card);
+
+  const option = document.createElement("option");
+  option.value = name;
+  option.textContent = name;
+  serviceSelect.appendChild(option);
+});
+
+function selectService(name,card) {
+  serviceSelect.value = name;
+  document.querySelectorAll(".category").forEach(x => x.classList.remove("active"));
+  card.classList.add("active");
+  scrollToForm();
+}
+
+function scrollToForm() {
+  document.getElementById("requestForm").scrollIntoView({
+    behavior:"smooth"
+  });
+}
+
+function urgentRequest() {
+  document.getElementById("urgency").value = "عاجل";
+  scrollToForm();
+  alert("تم اختيار طلب عاجل. أكمل بيانات الطلب.");
+}
+
+document.getElementById("serviceForm").addEventListener("submit",function(e) {
+  e.preventDefault();
+
+  const request = {
+    id:Date.now(),
+    service:document.getElementById("service").value,
+    customer:document.getElementById("customer").value.trim(),
+    phone:document.getElementById("phone").value.trim(),
+    governorate:document.getElementById("governorate").value,
+    area:document.getElementById("area").value.trim(),
+    details:document.getElementById("details").value.trim(),
+    urgency:document.getElementById("urgency").value,
+    date:new Date().toLocaleString("ar-IQ"),
+    status:"محفوظ على هذا الجهاز"
+  };
+
+  if(!request.service) {
+    alert("اختار نوع الخدمة أولاً");
+    return;
+  }
+
+  const saved = JSON.parse(localStorage.getItem("sakhr_requests") || "[]");
+  saved.unshift(request);
+  localStorage.setItem("sakhr_requests",JSON.stringify(saved));
+
+  alert("تم حفظ الطلب على هذا الجهاز بنجاح.");
+  this.reset();
+  document.getElementById("urgency").value = "عادي";
+  showRequests();
+});
+
+function showRequests() {
+  const section = document.getElementById("myRequests");
+  const list = document.getElementById("requestsList");
+  const saved = JSON.parse(localStorage.getItem("sakhr_requests") || "[]");
+
+  list.innerHTML = "";
+
+  if(saved.length === 0) {
+    list.innerHTML = "<p>ما عندك طلبات محفوظة حالياً.</p>";
+  } else {
+    saved.forEach(r => {
+      const item = document.createElement("div");
+      item.className = "request";
+
+      const title = document.createElement("h3");
+      title.textContent = r.service + " — " + r.urgency;
+
+      const info = document.createElement("p");
+      info.textContent = r.governorate + " / " + r.area;
+
+      const details = document.createElement("p");
+      details.textContent = r.details;
+
+      const status = document.createElement("small");
+      status.textContent = r.status + " • " + r.date;
+
+      item.append(title,info,details,status);
+      list.appendChild(item);
+    });
+  }
+
+  section.classList.remove("hidden");
+  section.scrollIntoView({behavior:"smooth"});
+}
+
+function hideRequests() {
+  document.getElementById("myRequests").classList.add("hidden");
+}
+</script>
+
+</body>
+</html>
