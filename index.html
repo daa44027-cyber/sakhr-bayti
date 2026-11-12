@@ -220,13 +220,13 @@ hr{border:0;border-top:1px solid var(--line);margin:18px 0}
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 <script>
 const firebaseConfig={
- apiKey:"AIzaSyBMV-0g7HczYs9mmCf6tjVRQ7cIbAPOdKs",
- authDomain:"sakhr-bayti.firebaseapp.com",
- databaseURL:"https://sakhr-bayti-default-rtdb.europe-west1.firebasedatabase.app",
- projectId:"sakhr-bayti",
- storageBucket:"sakhr-bayti.firebasestorage.app",
- messagingSenderId:"862286934112",
- appId:"1:862286934112:web:9c37762528cc7b7db7d305"
+ apiKey:"AIzaSyBXApuXQQrF9rYcH_VkB_mzqIx8pFbUxLI",
+ authDomain:"sakhr-bayti-ec9e4.firebaseapp.com",
+ databaseURL:"https://sakhr-bayti-ec9e4-default-rtdb.europe-west1.firebasedatabase.app",
+ projectId:"sakhr-bayti-ec9e4",
+ storageBucket:"sakhr-bayti-ec9e4.firebasestorage.app",
+ messagingSenderId:"289076783578",
+ appId:"1:289076783578:web:a999386e30d1a7af6578e3"
 };
 
 const SERVICES=[
@@ -250,11 +250,13 @@ const showSection=id=>{
 };
 const openLogin=()=>{ $("loginMessage").innerHTML="";$("loginModal").classList.remove("hidden") };
 const openRequest=async()=>{
- await ensureSignedIn();
- await loadPublicTechs();
- fillRequestTechnicians();
- $("requestMessage").innerHTML="";
- $("requestModal").classList.remove("hidden");
+ try{
+  await ensureSignedIn();
+  await loadPublicTechs();
+  fillRequestTechnicians();
+  $("requestMessage").innerHTML="";
+  $("requestModal").classList.remove("hidden");
+ }catch(e){msg("requestMessage",friendlyAuthError(e),"error")}
 };
 const closeModal=id=>$(id).classList.add("hidden");
 
@@ -314,9 +316,9 @@ async function onAuthChanged(user){
 function friendlyAuthError(err){
  const code=err?.code||"unknown";
  const messages={
- "auth/invalid-credential":"بيانات الدخول غير صحيحة.",
+ "auth/invalid-credential":"بيانات الدخول غير صحيحة. تأكد أن الحساب موجود في مشروع Firebase الجديد.",
  "auth/wrong-password":"كلمة المرور غير صحيحة.",
- "auth/user-not-found":"هذا البريد غير مسجل.",
+ "auth/user-not-found":"هذا البريد غير مسجل في مشروع Firebase الحالي.",
  "auth/too-many-requests":"محاولات كثيرة. انتظر قليلاً ثم حاول.",
  "auth/operation-not-allowed":"تسجيل البريد وكلمة المرور غير مفعّل في Firebase.",
  "auth/network-request-failed":"مشكلة اتصال بالإنترنت.",
@@ -342,7 +344,7 @@ async function login(){
   }else if(result.role==="technician"){
    closeModal("loginModal");showSection("techAccount");await renderTechAccount();
   }else{
-   msg("loginMessage","الحساب غير موجود ضمن المديرين أو الفنيين.","error");
+   msg("loginMessage","تم الدخول، لكن هذا الحساب غير مضاف كمدير أو فني في قاعدة البيانات الجديدة.","error");
   }
  }catch(err){
   console.error("LOGIN ERROR:",err);
@@ -440,19 +442,19 @@ async function trackRequest(){
  if(!id)return msg("trackResult","أدخل رقم الطلب.","error");
  try{
   const user=await ensureSignedIn();
-  const snap=await db.ref("requests").once("value");
-  let found=null;
-  snap.forEach(child=>{
-   child.forEach(item=>{if(item.key===id)found=item.val()});
-  });
-  if(!found)return msg("trackResult","لم يتم العثور على الطلب. تأكد من الرقم.","error");
+  const snap=await db.ref("requests/"+user.uid+"/"+id).once("value");
+  const found=snap.val();
+  if(!found)return msg("trackResult","لم يتم العثور على الطلب في هذا الجهاز. استخدم الجهاز الذي أرسلته منه.","error");
   $("trackResult").innerHTML=`<div class="notice success">
    <b>حالة الطلب:</b> ${esc(found.status||"قيد المراجعة")}<br>
    <b>الخدمة:</b> ${esc(found.service)}<br>
    <b>المدينة:</b> ${esc(found.city)}<br>
    <b>رقم الطلب:</b> ${esc(found.id)}
   </div>`;
- }catch(e){msg("trackResult","تعذر الوصول إلى الطلب. إذا كنت زبوناً، افتح الطلب من نفس الجهاز الذي أرسلته منه.","error")}
+ }catch(e){
+  console.error("TRACK ERROR:",e);
+  msg("trackResult","تعذر الوصول إلى الطلب. تأكد من الاتصال واستخدم الجهاز الذي أرسلت منه الطلب.","error");
+ }
 }
 async function loadAdminData(){
  if(currentRole!=="admin")return;
@@ -516,18 +518,19 @@ async function assignRequest(requestUid,id){
   if(!tech||tech.approved===false)return alert("هذا الفني غير متاح.");
   if(tech.subscriptionStatus!=="فعال"&&(Number(tech.freeJobsUsed)||0)>=3)
    return alert("استنفد الفني أعماله المجانية الثلاثة ويحتاج إلى اشتراك.");
-  const update={assignedTech:techUid,assignedTechName:tech.name,status:"تم إسناده",assignedAt:Date.now()};
-  // بيانات العمل للفني لا تحتوي اسم الزبون أو هاتفه.
+  const now=Date.now();
   const safeJob={
    id:r.id,service:r.service,city:r.city,area:r.area,
-   problem:r.problem,status:update.status,
-   assignedAt:update.assignedAt,createdAt:r.createdAt
+   problem:r.problem,status:"تم إسناده",
+   assignedAt:now,createdAt:r.createdAt
   };
   const updates={};
+  if(r.assignedTech&&r.assignedTech!==techUid)
+   updates["technicianJobs/"+r.assignedTech+"/"+id]=null;
   updates["requests/"+requestUid+"/"+id+"/assignedTech"]=techUid;
   updates["requests/"+requestUid+"/"+id+"/assignedTechName"]=tech.name;
-  updates["requests/"+requestUid+"/"+id+"/status"]=update.status;
-  updates["requests/"+requestUid+"/"+id+"/assignedAt"]=update.assignedAt;
+  updates["requests/"+requestUid+"/"+id+"/status"]="تم إسناده";
+  updates["requests/"+requestUid+"/"+id+"/assignedAt"]=now;
   updates["technicianJobs/"+techUid+"/"+id]=safeJob;
   await db.ref().update(updates);
   await loadAdminData();
