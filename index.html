@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -8,327 +7,1243 @@
 <title>صخر | بيتي للصيانة</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap');
-:root{--bg:#0b1422;--panel:#121f31;--panel2:#1a2b40;--gold:#eab653;--white:#f6f7fa;--muted:#9cabc0;--line:#293a50;--green:#42c99b;--red:#f36c79}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--white);font-family:Cairo,sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer}
-header{min-height:72px;background:#101b2b;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:10px 5%;position:sticky;top:0;z-index:10;gap:12px}
-.logo{display:flex;align-items:center;gap:10px;font-size:21px;font-weight:900}.logo-icon{width:42px;height:42px;border-radius:13px;background:var(--gold);color:#172132;display:grid;place-items:center;font-size:25px}.logo small{display:block;font-size:10px;color:var(--muted);font-weight:500;margin-top:-5px}
-.btn{border:0;border-radius:12px;padding:11px 17px;font-weight:800}.primary{background:var(--gold);color:#172132}.secondary{background:var(--panel2);color:white;border:1px solid var(--line)}.danger{background:#482630;color:#ffadb4}
-main{max-width:1180px;margin:auto;padding:25px 5% 100px}.hero{border:1px solid #354a62;border-radius:24px;padding:30px;background:linear-gradient(115deg,#253c56,#142338 65%,#1d3046);display:grid;grid-template-columns:1.5fr .5fr;align-items:center;gap:20px}
-.eyebrow{color:var(--gold);font-size:13px;font-weight:800}h1{font-size:clamp(28px,4vw,43px);line-height:1.5;margin:8px 0}.hero p{color:#c1cddd;line-height:2;font-size:14px}.hero-art{text-align:center;font-size:100px}.hero-actions{display:flex;gap:10px;flex-wrap:wrap}
-.section-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:25px 0 14px}.section-head h2{font-size:19px;margin:0}.section-head small{color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}.card{background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:17px}.service{cursor:pointer;transition:.2s}.service:hover,.tech:hover{transform:translateY(-3px);border-color:var(--gold)}.emoji{font-size:29px}.service h3{font-size:15px;margin:8px 0 2px}.muted{color:var(--muted);font-size:12px;line-height:1.8}
-.quick{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}.quick .card{display:flex;align-items:center;gap:12px}.quick b{font-size:23px;color:var(--gold)}.quick span{font-size:12px;color:var(--muted)}.tabs{display:flex;gap:8px;overflow:auto;padding:5px 0;margin:20px 0}.page{display:none}.page.active{display:block}
-input,select,textarea{width:100%;background:#0c1828;color:white;border:1px solid var(--line);border-radius:11px;padding:12px;outline:none}input:focus,select:focus,textarea:focus{border-color:var(--gold)}textarea{min-height:95px;resize:vertical}label{display:block;color:#c3cede;font-size:13px;margin:12px 0 6px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}.full{grid-column:1/-1}
-.list{display:grid;gap:12px}.item{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:16px}.item-head{display:flex;justify-content:space-between;align-items:center;gap:10px}.status{background:#29394d;color:#d8e4f2;padding:5px 10px;border-radius:20px;font-size:11px}.status.done{background:#173d34;color:#75e0b9}.status.urgent{background:#49252e;color:#ffabb2}.item p{font-size:13px;color:var(--muted);line-height:1.9}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.actions button{font-size:12px;padding:8px 12px}.tag{display:inline-block;background:#203b3a;color:#78dfba;padding:4px 9px;border-radius:20px;font-size:11px;margin:8px 0}.avatar{width:47px;height:47px;border-radius:15px;background:#263d58;display:grid;place-items:center;font-size:23px}.tech-top{display:flex;align-items:center;justify-content:space-between}.rating{color:var(--gold);font-size:13px}.search{max-width:260px}.toolbar{display:flex;gap:10px;flex-wrap:wrap}.empty{text-align:center;padding:35px;color:var(--muted);background:var(--panel);border-radius:15px}.notice{font-size:11px;color:var(--muted);line-height:1.9;margin-top:12px}.notice.good{color:var(--green)}.notice.bad{color:#ffabb2}
-footer{text-align:center;border-top:1px solid var(--line);padding:24px;color:var(--muted);font-size:12px}.modal{display:none;position:fixed;inset:0;background:#000b;z-index:30;align-items:center;justify-content:center;padding:15px}.modal.show{display:flex}.modal-box{background:var(--panel);border:1px solid var(--line);border-radius:20px;width:min(560px,100%);max-height:90vh;overflow:auto;padding:22px}.close{float:left;background:none;border:0;color:white;font-size:25px}.bottom-nav{display:none}.hidden{display:none!important}
-@media(max-width:800px){main{padding:18px 4% 95px}.hero{grid-template-columns:1fr;padding:23px}.hero-art{display:none}.grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:520px){header{padding:8px 4%;min-height:64px}.logo{font-size:17px}.logo-icon{width:38px;height:38px}.header-actions .secondary{display:none}.quick{grid-template-columns:1fr 1fr}.quick .card:last-child{display:none}.form-grid{grid-template-columns:1fr}.full{grid-column:auto}.bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:15;background:#101b2b;border-top:1px solid var(--line);justify-content:space-around;padding:8px 2px calc(8px + env(safe-area-inset-bottom))}.bottom-nav button{border:0;background:none;color:var(--muted);font-size:10px}.bottom-nav button span{display:block;font-size:20px}.bottom-nav button.active{color:var(--gold)}}
+:root{
+ --bg:#0b1422;--panel:#121f31;--panel2:#1a2b40;
+ --indigo:#6265f1;--indigo2:#4549c9;--orange:#ff963d;
+ --white:#f6f7fa;--muted:#9cabc0;--line:#293a50;
+ --green:#42c99b;--red:#f36c79
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--white);font-family:Cairo,sans-serif}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+header{
+ min-height:72px;background:#101b2b;border-bottom:1px solid var(--line);
+ display:flex;align-items:center;justify-content:space-between;
+ padding:10px 5%;position:sticky;top:0;z-index:10;gap:12px
+}
+.logo{display:flex;align-items:center;gap:10px;font-size:21px;font-weight:900}
+.logo img{width:55px;height:55px;object-fit:contain;border-radius:10px}
+.logo small{display:block;font-size:10px;color:var(--muted);font-weight:500;margin-top:-5px}
+.btn{border:0;border-radius:12px;padding:11px 17px;font-weight:800}
+.primary{background:var(--indigo);color:white}
+.primary:hover{background:var(--indigo2)}
+.secondary{background:var(--panel2);color:white;border:1px solid var(--line)}
+.orange{background:var(--orange);color:#172132}
+.danger{background:#482630;color:#ffadb4}
+.success{background:#174638;color:#8ce7c5}
+button:disabled{opacity:.5;cursor:not-allowed}
+main{max-width:1180px;margin:auto;padding:25px 5% 100px}
+.hero{
+ border:1px solid #354a62;border-radius:24px;padding:30px;
+ background:linear-gradient(115deg,#30356e,#142338 65%,#1d3046);
+ display:grid;grid-template-columns:1.5fr .5fr;align-items:center;gap:20px
+}
+.eyebrow{color:var(--orange);font-size:13px;font-weight:800}
+h1{font-size:clamp(28px,4vw,43px);line-height:1.5;margin:8px 0}
+.hero p{color:#c1cddd;line-height:2;font-size:14px}
+.hero-art{text-align:center;font-size:100px}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap}
+.section-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:25px 0 14px}
+.section-head h2{font-size:19px;margin:0}
+.section-head small{color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:17px}
+.service,.tech{transition:.2s}
+.service{cursor:pointer}
+.service:hover,.tech:hover{transform:translateY(-3px);border-color:var(--indigo)}
+.emoji{font-size:29px}
+.service h3{font-size:15px;margin:8px 0 2px}
+.muted{color:var(--muted);font-size:12px;line-height:1.8}
+.quick{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+.quick .card{display:flex;align-items:center;gap:12px}
+.quick b{font-size:23px;color:var(--orange)}
+.quick span{font-size:12px;color:var(--muted)}
+.page{display:none}
+.page.active{display:block}
+input,select,textarea{
+ width:100%;background:#0c1828;color:white;border:1px solid var(--line);
+ border-radius:11px;padding:12px;outline:none
+}
+input:focus,select:focus,textarea:focus{border-color:var(--indigo)}
+textarea{min-height:95px;resize:vertical}
+label{display:block;color:#c3cede;font-size:13px;margin:12px 0 6px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
+.full{grid-column:1/-1}
+.list{display:grid;gap:12px}
+.item{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:16px}
+.item-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.status{background:#29394d;color:#d8e4f2;padding:5px 10px;border-radius:20px;font-size:11px}
+.status.done{background:#173d34;color:#75e0b9}
+.status.urgent{background:#49252e;color:#ffabb2}
+.status.indigo{background:#30336e;color:#c5c7ff}
+.item p{font-size:13px;color:var(--muted);line-height:1.9}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.actions button{font-size:12px;padding:8px 12px}
+.tag{display:inline-block;background:#30336e;color:#c5c7ff;padding:4px 9px;border-radius:20px;font-size:11px;margin:8px 0}
+.avatar{width:47px;height:47px;border-radius:15px;background:#263d58;display:grid;place-items:center;font-size:23px}
+.tech-top{display:flex;align-items:center;justify-content:space-between}
+.search{max-width:260px}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap}
+.empty{text-align:center;padding:35px;color:var(--muted);background:var(--panel);border-radius:15px}
+.notice{font-size:11px;color:var(--muted);line-height:1.9;margin-top:12px}
+.notice.good{color:var(--green)}
+.notice.bad{color:#ffabb2}
+footer{text-align:center;border-top:1px solid var(--line);padding:24px;color:var(--muted);font-size:12px}
+.modal{display:none;position:fixed;inset:0;background:#000b;z-index:30;align-items:center;justify-content:center;padding:15px}
+.modal.show{display:flex}
+.modal-box{background:var(--panel);border:1px solid var(--line);border-radius:20px;width:min(560px,100%);max-height:90vh;overflow:auto;padding:22px}
+.close{float:left;background:none;border:0;color:white;font-size:25px}
+.bottom-nav{display:none}
+.hidden{display:none!important}
+.stat-number{font-size:24px;color:var(--orange);font-weight:900}
+@media(max-width:800px){
+ main{padding:18px 4% 95px}
+ .hero{grid-template-columns:1fr;padding:23px}
+ .hero-art{display:none}
+ .grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:520px){
+ header{padding:8px 4%;min-height:64px}
+ .logo{font-size:17px}
+ .logo img{width:43px;height:43px}
+ .header-actions .secondary{display:none}
+ .quick{grid-template-columns:1fr 1fr}
+ .quick .card:last-child{display:none}
+ .form-grid{grid-template-columns:1fr}
+ .full{grid-column:auto}
+ .bottom-nav{
+  display:flex;position:fixed;bottom:0;left:0;right:0;z-index:15;
+  background:#101b2b;border-top:1px solid var(--line);
+  justify-content:space-around;padding:8px 2px calc(8px + env(safe-area-inset-bottom))
+ }
+ .bottom-nav button{border:0;background:none;color:var(--muted);font-size:10px}
+ .bottom-nav button span{display:block;font-size:20px}
+ .bottom-nav button.active{color:var(--orange)}
+}
 </style>
 </head>
 <body>
+
 <header>
- <div class="logo"><div class="logo-icon">⌂</div><div>صخر<small>بيتي للصيانة</small></div></div>
- <div class="header-actions" style="display:flex;gap:8px"><button class="btn secondary" onclick="openLogin()">دخول الإدارة / الفني</button><button class="btn primary" onclick="openRequest()">اطلب فني +</button></div>
+ <div class="logo">
+  <img src="logo-sakhr.png" alt="شعار صخر">
+  <div>صخر<small>بيتي للصيانة</small></div>
+ </div>
+ <div class="header-actions" style="display:flex;gap:8px">
+  <button class="btn secondary" onclick="openLogin()">دخول الإدارة / الفني</button>
+  <button class="btn primary" onclick="openRequest()">اطلب فني +</button>
+ </div>
 </header>
+
 <main>
+
 <section id="home" class="page active">
- <div class="hero"><div><div class="eyebrow">خدمات بيتك بمكان واحد</div><h1>بيتك يحتاج صيانة؟<br>صخر يوصلك بالفني.</h1><p>اختار الخدمة، اشرح المشكلة، وخلي الفني المناسب يتواصل وياك.</p><div class="hero-actions"><button class="btn primary" onclick="openRequest()">اطلب خدمة الآن</button><button class="btn secondary" onclick="showPage('services')">استعرض الخدمات</button></div></div><div class="hero-art">🛠️</div></div>
+ <div class="hero">
+  <div>
+   <div class="eyebrow">خدمات بيتك بمكان واحد</div>
+   <h1>بيتك يحتاج صيانة؟<br>صخر يوصلك بالفني.</h1>
+   <p>اختار الخدمة، استعرض الفنيين، واطلب الخدمة من الفني المناسب.</p>
+   <div class="hero-actions">
+    <button class="btn primary" onclick="openRequest()">اطلب خدمة الآن</button>
+    <button class="btn secondary" onclick="showPage('technicians')">استعرض الفنيين</button>
+   </div>
+  </div>
+  <div class="hero-art">🛠️</div>
+ </div>
+
  <div id="connectionStatus" class="notice" role="status">جاري الاتصال بقاعدة البيانات…</div>
- <div class="quick"><div class="card"><b id="homeRequests">0</b><span>طلباتك المسجلة</span></div><div class="card"><b>24/7</b><span>استقبال الطلبات</span></div><div class="card"><b>18</b><span>محافظة قابلة للتفعيل</span></div></div>
- <div class="section-head"><h2>الخدمات الرئيسية</h2><small>اختار حتى تبدأ</small></div><div class="grid" id="homeServices"></div>
- <div class="section-head"><h2>تحتاج فني بصورة عاجلة؟</h2></div><div class="card" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap"><div><b>طلب صيانة عاجل</b><div class="muted">للأعطال التي تحتاج استجابة سريعة</div></div><button class="btn danger" onclick="openRequest('عاجل')">اطلب فني عاجل</button></div>
+
+ <div class="quick">
+  <div class="card"><b id="homeRequests">0</b><span>طلباتك المسجلة</span></div>
+  <div class="card"><b>24/7</b><span>استقبال الطلبات</span></div>
+  <div class="card"><b>18</b><span>محافظة عراقية</span></div>
+ </div>
+
+ <div class="section-head"><h2>الخدمات الرئيسية</h2><small>اختار حتى تبدأ</small></div>
+ <div class="grid" id="homeServices"></div>
+
+ <div class="section-head"><h2>تحتاج فني بصورة عاجلة؟</h2></div>
+ <div class="card" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+  <div><b>طلب صيانة عاجل</b><div class="muted">للأعطال التي تحتاج استجابة سريعة</div></div>
+  <button class="btn danger" onclick="openRequest('عاجل')">اطلب فني عاجل</button>
+ </div>
 </section>
-<section id="services" class="page"><div class="section-head"><h2>كل خدمات الصيانة</h2><small>اختار نوع الخدمة</small></div><div class="grid" id="allServices"></div></section>
-<section id="technicians" class="page"><div class="section-head"><h2>الفنيون المسجلون</h2><small>الفنيون المسجلون في صخر</small></div><div class="toolbar"><input class="search" id="techSearch" placeholder="ابحث عن فني أو تخصص…" oninput="renderTechs()"><select class="search" id="techFilter" onchange="renderTechs()"><option value="">كل التخصصات</option></select></div><div class="grid" id="techGrid" style="margin-top:15px"></div></section>
-<section id="track" class="page"><div class="section-head"><h2>متابعة طلبك</h2></div><div class="card"><label>رقم متابعة الطلب</label><input id="trackingCode" placeholder="اكتب رقم الطلب"><button class="btn primary" style="width:100%;margin-top:12px" onclick="trackRequest()">بحث عن الطلب</button></div><div id="trackingResult" style="margin-top:15px"></div><p class="notice">يمكن متابعة الطلبات التي أُنشئت من نفس الحساب أو المتصفح. احتفظ برقم المتابعة.</p></section>
-<section id="requests" class="page"><div class="section-head"><h2>طلباتي</h2><button class="btn primary" onclick="openRequest()">طلب جديد +</button></div><div id="requestList" class="list"></div></section>
-<section id="join" class="page"><div class="section-head"><h2>انضم كفني إلى صخر</h2></div><div class="card"><form id="techForm"><div class="form-grid">
- <div><label>الاسم الكامل</label><input name="name" required maxlength="80"></div><div><label>رقم الهاتف</label><input name="phone" required inputmode="tel" pattern="07[0-9]{9}" placeholder="07xxxxxxxxx"></div>
- <div><label>البريد الإلكتروني</label><input name="email" type="email" required autocomplete="email"></div><div><label>كلمة المرور (6 أحرف على الأقل)</label><input name="password" type="password" minlength="6" required autocomplete="new-password"></div>
- <div><label>التخصص</label><select name="service" id="joinService" required></select></div><div><label>المحافظة</label><select name="city" class="cities" required></select></div>
- <div class="full"><label>المنطقة</label><input name="area" required maxlength="100"></div><div class="full"><label>خبرتك وطبيعة عملك</label><textarea name="bio" maxlength="500"></textarea></div></div><button class="btn primary" style="width:100%;margin-top:15px">إنشاء حساب والظهور مباشرة</button></form><p class="notice">بعد إنشاء الحساب يظهر ملفك مباشرة للزبائن. الاشتراك منفصل عن التسجيل ويُدار لاحقاً.</p></div>
- <div class="section-head"><h2>باقات اشتراك الفني</h2></div><div class="grid"><div class="card"><span class="tag">شهري</span><h2>5,000 د.ع</h2><p class="muted">اشتراك لمدة شهر.</p></div><div class="card"><span class="tag">سنوي</span><h2>50,000 د.ع</h2><p class="muted">توفير 10,000 دينار بالسنة.</p></div></div></section>
-<section id="admin" class="page"><div class="section-head"><h2>لوحة إدارة صخر</h2><button class="btn secondary" onclick="logout()">تسجيل الخروج</button></div><div class="quick"><div class="card"><b id="adminRequests">0</b><span>طلبات الزبائن</span></div><div class="card"><b id="adminTechs">0</b><span>الفنيون المسجلون</span></div><div class="card"><b id="adminUrgent">0</b><span>طلبات عاجلة</span></div></div><div class="section-head"><h2>الفنيون المسجلون</h2></div><div id="adminTechList" class="list"></div><div class="section-head"><h2>طلبات الزبائن</h2></div><div id="adminRequestList" class="list"></div></section>
-<section id="techAccount" class="page"><div class="section-head"><h2>حساب الفني</h2><button class="btn secondary" onclick="logout()">تسجيل الخروج</button></div><div id="techAccountInfo" class="card"></div></section>
+
+<section id="services" class="page">
+ <div class="section-head"><h2>كل خدمات الصيانة</h2><small>اختار نوع الخدمة</small></div>
+ <div class="grid" id="allServices"></div>
+</section>
+
+<section id="technicians" class="page">
+ <div class="section-head"><h2>دليل الفنيين</h2><small>الفنيون المسجلون في صخر</small></div>
+ <div class="toolbar">
+  <input class="search" id="techSearch" placeholder="ابحث عن فني أو تخصص…" oninput="renderTechs()">
+  <select class="search" id="techFilter" onchange="renderTechs()">
+   <option value="">كل التخصصات</option>
+  </select>
+ </div>
+ <div class="grid" id="techGrid" style="margin-top:15px"></div>
+</section>
+
+<section id="track" class="page">
+ <div class="section-head"><h2>متابعة طلبك</h2></div>
+ <div class="card">
+  <label>رقم متابعة الطلب</label>
+  <input id="trackingCode" placeholder="اكتب رقم الطلب">
+  <button class="btn primary" style="width:100%;margin-top:12px" onclick="trackRequest()">بحث عن الطلب</button>
+ </div>
+ <div id="trackingResult" style="margin-top:15px"></div>
+ <p class="notice">يمكن متابعة طلباتك من نفس المتصفح الذي أرسلت منه الطلب. احتفظ برقم المتابعة.</p>
+</section>
+
+<section id="requests" class="page">
+ <div class="section-head">
+  <h2>طلباتي</h2>
+  <button class="btn primary" onclick="openRequest()">طلب جديد +</button>
+ </div>
+ <div id="requestList" class="list"></div>
+</section>
+
+<section id="join" class="page">
+ <div class="section-head"><h2>انضم كفني إلى صخر</h2></div>
+ <div class="card">
+  <form id="techForm">
+   <div class="form-grid">
+    <div><label>الاسم الكامل</label><input name="name" required maxlength="80"></div>
+    <div><label>رقم الهاتف / واتساب</label><input name="phone" required inputmode="tel" pattern="07[0-9]{9}" placeholder="07xxxxxxxxx"></div>
+    <div><label>البريد الإلكتروني</label><input name="email" type="email" required autocomplete="email"></div>
+    <div><label>كلمة المرور (6 أحرف على الأقل)</label><input name="password" type="password" minlength="6" required autocomplete="new-password"></div>
+    <div><label>التخصص</label><select name="service" id="joinService" required></select></div>
+    <div><label>المحافظة</label><select name="city" class="cities" required></select></div>
+    <div class="full"><label>المنطقة</label><input name="area" required maxlength="100"></div>
+    <div class="full"><label>خبرتك وطبيعة عملك</label><textarea name="bio" maxlength="500"></textarea></div>
+   </div>
+   <button class="btn primary" style="width:100%;margin-top:15px">إنشاء حساب والظهور مباشرة</button>
+  </form>
+  <p class="notice">يظهر ملف الفني مباشرة بعد التسجيل، ما لم توقفه الإدارة. لكل فني 3 أعمال مكتملة مجانية قبل الاشتراك.</p>
+ </div>
+
+ <div class="section-head"><h2>باقات اشتراك الفني</h2></div>
+ <div class="grid">
+  <div class="card"><span class="tag">شهري</span><h2>5,000 د.ع</h2><p class="muted">اشتراك لمدة شهر.</p></div>
+  <div class="card"><span class="tag">سنوي</span><h2>50,000 د.ع</h2><p class="muted">توفير 10,000 دينار بالسنة.</p></div>
+ </div>
+</section>
+
+<section id="admin" class="page">
+ <div class="section-head">
+  <h2>لوحة إدارة صخر</h2>
+  <button class="btn secondary" onclick="logout()">تسجيل الخروج</button>
+ </div>
+
+ <div class="quick">
+  <div class="card"><b id="adminRequests">0</b><span>طلبات الزبائن</span></div>
+  <div class="card"><b id="adminTechs">0</b><span>الفنيون المسجلون</span></div>
+  <div class="card"><b id="adminUrgent">0</b><span>طلبات عاجلة</span></div>
+ </div>
+
+ <div class="section-head"><h2>إدارة الطلبات وإسنادها</h2></div>
+ <div id="adminRequestList" class="list"></div>
+
+ <div class="section-head"><h2>إدارة الفنيين</h2></div>
+ <div id="adminTechList" class="list"></div>
+
+ <div class="section-head"><h2>إدارة الاشتراكات</h2></div>
+ <p class="notice">تفعيل الاشتراك أو إيقافه يتم من الإدارة بعد التحقق من الدفع خارج المنصة.</p>
+ <div id="adminSubscriptionList" class="list"></div>
+</section>
+
+<section id="techAccount" class="page">
+ <div class="section-head">
+  <h2>حساب الفني</h2>
+  <button class="btn secondary" onclick="logout()">تسجيل الخروج</button>
+ </div>
+ <div id="techAccountInfo" class="card"></div>
+ <div class="section-head"><h2>الطلبات المسندة إليك</h2></div>
+ <div id="techJobsList" class="list"></div>
+</section>
+
 </main>
-<nav class="bottom-nav"><button class="active" data-page="home" onclick="showPage('home')"><span>⌂</span>الرئيسية</button><button data-page="services" onclick="showPage('services')"><span>🔧</span>الخدمات</button><button onclick="openRequest()"><span>＋</span>اطلب فني</button><button data-page="requests" onclick="showPage('requests')"><span>📋</span>طلباتي</button><button data-page="join" onclick="showPage('join')"><span>👨‍🔧</span>للفنيين</button></nav>
-<div class="modal" id="requestModal"><div class="modal-box"><button class="close" onclick="closeModal('requestModal')">×</button><h2>طلب خدمة صيانة</h2><p class="muted">ما تحتاج تسوي حساب. املأ معلومات الطلب ورقم هاتفك للتواصل.</p><form id="requestForm"><div class="form-grid"><div class="full"><label>نوع الخدمة</label><select name="service" id="requestService" required></select></div><div class="full"><label>رقم الهاتف للتواصل *</label><input name="phone" required inputmode="tel" pattern="07[0-9]{9}" placeholder="07xxxxxxxxx"></div><div class="full"><label>الاسم (اختياري)</label><input name="name" maxlength="80" placeholder="اسمك"></div><div><label>المحافظة</label><select name="city" class="cities" required></select></div><div><label>المنطقة / القضاء</label><input name="area" required placeholder="مثلاً السماوة"></div><div class="full"><label>نوع الطلب</label><select name="type"><option>عادي</option><option>عاجل</option></select></div><div class="full"><label>تفاصيل المشكلة</label><textarea name="details" required maxlength="1200" placeholder="اشرح العطل حتى يعرف الفني شنو يحتاج"></textarea></div></div><button class="btn primary" style="width:100%;margin-top:15px">إرسال طلب الصيانة</button><p class="notice">تُحفظ بيانات الطلب في قاعدة البيانات المركزية وتُستخدم للتواصل بشأنه.</p></form></div></div>
-<div class="modal" id="loginModal"><div class="modal-box"><button class="close" onclick="closeModal('loginModal')">×</button><h2>تسجيل الدخول</h2><p class="muted">لإدارة المنصة أو الدخول إلى حساب الفني.</p><form id="loginForm"><label>البريد الإلكتروني</label><input name="email" type="email" required autocomplete="username"><label>كلمة المرور</label><input name="password" type="password" required autocomplete="current-password"><button class="btn primary" style="width:100%;margin-top:15px">دخول</button></form><p id="loginMessage" class="notice" aria-live="polite"></p></div></div>
-<footer>صخر – بيتي للصيانة © <span id="year"></span><br>خدمات بيتك أقرب مما تتصور</footer>
+
+<nav class="bottom-nav">
+ <button class="active" data-page="home" onclick="showPage('home')"><span>⌂</span>الرئيسية</button>
+ <button data-page="services" onclick="showPage('services')"><span>🔧</span>الخدمات</button>
+ <button onclick="openRequest()"><span>＋</span>اطلب فني</button>
+ <button data-page="technicians" onclick="showPage('technicians')"><span>👨‍🔧</span>الفنيون</button>
+ <button data-page="join" onclick="showPage('join')"><span>📋</span>للفنيين</button>
+</nav>
+
+<div class="modal" id="requestModal">
+ <div class="modal-box">
+  <button class="close" onclick="closeModal('requestModal')">×</button>
+  <h2>طلب خدمة صيانة</h2>
+  <p class="muted">ما تحتاج تسوي حساب. املأ معلومات الطلب ورقم هاتفك للتواصل.</p>
+  <form id="requestForm">
+   <div class="form-grid">
+    <div class="full">
+     <label>نوع الخدمة</label>
+     <select name="service" id="requestService" required></select>
+    </div>
+    <div class="full">
+     <label>الفني الذي اخترته</label>
+     <select name="selectedTechUid" id="requestTech">
+      <option value="">بدون اختيار فني محدد</option>
+     </select>
+     <p class="notice">إذا اخترت فنيّاً، سيصل طلبك للإدارة مع اسم الفني المطلوب.</p>
+    </div>
+    <div class="full">
+     <label>رقم الهاتف للتواصل *</label>
+     <input name="phone" required inputmode="tel" pattern="07[0-9]{9}" placeholder="07xxxxxxxxx">
+    </div>
+    <div class="full"><label>الاسم (اختياري)</label><input name="name" maxlength="80" placeholder="اسمك"></div>
+    <div><label>المحافظة</label><select name="city" class="cities" required></select></div>
+    <div><label>المنطقة / القضاء</label><input name="area" required placeholder="مثلاً العمارة"></div>
+    <div class="full">
+     <label>نوع الطلب</label>
+     <select name="type"><option>عادي</option><option>عاجل</option></select>
+    </div>
+    <div class="full">
+     <label>تفاصيل المشكلة</label>
+     <textarea name="details" required maxlength="1200" placeholder="اشرح العطل حتى يعرف الفني شنو يحتاج"></textarea>
+    </div>
+   </div>
+   <button class="btn primary" style="width:100%;margin-top:15px">إرسال طلب الصيانة</button>
+   <p class="notice">بيانات هاتف الزبون لا تظهر في دليل الفنيين، وتُحفظ ضمن تفاصيل الطلب للإدارة.</p>
+  </form>
+ </div>
+</div>
+
+<div class="modal" id="loginModal">
+ <div class="modal-box">
+  <button class="close" onclick="closeModal('loginModal')">×</button>
+  <h2>تسجيل الدخول</h2>
+  <p class="muted">لإدارة المنصة أو الدخول إلى حساب الفني.</p>
+  <form id="loginForm">
+   <label>البريد الإلكتروني</label>
+   <input name="email" type="email" required autocomplete="username">
+   <label>كلمة المرور</label>
+   <input name="password" type="password" required autocomplete="current-password">
+   <button class="btn primary" style="width:100%;margin-top:15px">دخول</button>
+  </form>
+  <p id="loginMessage" class="notice" aria-live="polite"></p>
+ </div>
+</div>
+
+<footer>
+ صخر – بيتي للصيانة © <span id="year"></span><br>
+ خدمات بيتك أقرب مما تتصور
+</footer>
+
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
 <script>
 const firebaseConfig = {
-  apiKey: "AIzaSyBMV-0g7HczYs9mmCf6tjVRQ7cIbAPOdKs",
-  authDomain: "sakhr-bayti.firebaseapp.com",
-  databaseURL: "https://sakhr-bayti-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "sakhr-bayti",
-  storageBucket: "sakhr-bayti.firebasestorage.app",
-  messagingSenderId: "862286934112",
-  appId: "1:862286934112:web:9c37762528cc7b7db7d305"
+ apiKey:"AIzaSyBMV-0g7HczYs9mmCf6tjVRQ7cIbAPOdKs",
+ authDomain:"sakhr-bayti.firebaseapp.com",
+ databaseURL:"https://sakhr-bayti-default-rtdb.europe-west1.firebasedatabase.app",
+ projectId:"sakhr-bayti",
+ storageBucket:"sakhr-bayti.firebasestorage.app",
+ messagingSenderId:"862286934112",
+ appId:"1:862286934112:web:9c37762528cc7b7db7d305"
 };
 
-const services=[['⚡','كهربائيات','أعطال وتمديدات كهربائية'],['🚿','سباكة','أنابيب وتسربات وصحيات'],['❄️','تبريد وتكييف','مكيفات وأجهزة تبريد'],['🧱','بناء وترميم','ترميم وصيانة منزلية'],['🎨','صبغ وديكور','صبغ وجدران وديكورات'],['🪚','نجارة','أبواب وأثاث وخشب'],['🧹','تنظيف','تنظيف منازل وخزانات'],['🔩','أجهزة منزلية','غسالات وثلاجات وأجهزة']];
-const cities=['المثنى','بغداد','البصرة','ذي قار','ميسان','النجف','كربلاء','بابل','واسط','القادسية','ديالى','الأنبار','نينوى','كركوك','صلاح الدين','أربيل','السليمانية','دهوك'];
-let auth=null,db=null,currentUser=null,isAdmin=false,currentTech=null,requests=[],techs=[],publicTechs=[];
+const services=[
+ ['⚡','كهربائيات','أعطال وتمديدات كهربائية'],
+ ['🚿','سباكة','أنابيب وتسربات وصحيات'],
+ ['❄️','تبريد وتكييف','مكيفات وأجهزة تبريد'],
+ ['🧱','بناء وترميم','ترميم وصيانة منزلية'],
+ ['🎨','صبغ وديكور','صبغ وجدران وديكورات'],
+ ['🪚','نجارة','أبواب وأثاث وخشب'],
+ ['🧹','تنظيف','تنظيف منازل وخزانات'],
+ ['🔩','أجهزة منزلية','غسالات وثلاجات وأجهزة']
+];
+
+const cities=[
+ 'المثنى','بغداد','البصرة','ذي قار','ميسان','النجف','كربلاء',
+ 'بابل','واسط','القادسية','ديالى','الأنبار','نينوى','كركوك',
+ 'صلاح الدين','أربيل','السليمانية','دهوك'
+];
+
+let auth=null,db=null,currentUser=null,isAdmin=false,currentTech=null;
+let requests=[],techs=[],publicTechs=[],techJobs=[];
+
 const $=id=>document.getElementById(id);
-function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function setConnection(msg,kind=''){const el=$('connectionStatus');el.textContent=msg;el.className='notice '+kind}
-function setFormEnabled(enabled){document.querySelectorAll('#requestForm button,#techForm button').forEach(b=>b.disabled=!enabled)}
+
+function esc(v){
+ return String(v??'').replace(/[&<>"']/g,c=>({
+  '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+ }[c]));
+}
+
+function setConnection(msg,kind=''){
+ const el=$('connectionStatus');
+ el.textContent=msg;
+ el.className='notice '+kind;
+}
+
+function setFormEnabled(enabled){
+ document.querySelectorAll('#requestForm button,#techForm button')
+ .forEach(b=>b.disabled=!enabled);
+}
+
 function initUI(){
  $('year').textContent=new Date().getFullYear();
+
  const opts=services.map(s=>`<option value="${esc(s[1])}">${esc(s[1])}</option>`).join('');
- ['requestService','joinService','techFilter'].forEach(id=>$(id).innerHTML=(id==='techFilter'?'<option value="">كل التخصصات</option>':'')+opts);
- document.querySelectorAll('.cities').forEach(el=>el.innerHTML='<option value="">اختر المحافظة</option>'+cities.map(c=>`<option>${c}</option>`).join(''));
- const cards=services.map(s=>`<div class="card service" onclick="openRequest('عادي','${s[1]}')"><div class="emoji">${s[0]}</div><h3>${s[1]}</h3><p class="muted">${s[2]}</p></div>`).join('');
- $('homeServices').innerHTML=cards;$('allServices').innerHTML=cards;setFormEnabled(false);
+
+ ['requestService','joinService','techFilter'].forEach(id=>{
+  $(id).innerHTML=(id==='techFilter'?'<option value="">كل التخصصات</option>':'')+opts;
+ });
+
+ document.querySelectorAll('.cities').forEach(el=>{
+  el.innerHTML='<option value="">اختر المحافظة</option>'+
+  cities.map(c=>`<option>${esc(c)}</option>`).join('');
+ });
+
+ const cards=services.map(s=>`
+  <div class="card service" onclick="openRequest('عادي','${s[1]}')">
+   <div class="emoji">${s[0]}</div>
+   <h3>${s[1]}</h3>
+   <p class="muted">${s[2]}</p>
+  </div>
+ `).join('');
+
+ $('homeServices').innerHTML=cards;
+ $('allServices').innerHTML=cards;
+ setFormEnabled(false);
 }
+
 function showPage(id){
  if(id==='admin'&&!isAdmin){openLogin();return}
  if(id==='techAccount'&&!currentTech){openLogin();return}
- document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));
- document.querySelectorAll('.bottom-nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));
+
+ document.querySelectorAll('.page').forEach(p=>{
+  p.classList.toggle('active',p.id===id);
+ });
+
+ document.querySelectorAll('.bottom-nav button').forEach(b=>{
+  b.classList.toggle('active',b.dataset.page===id);
+ });
+
  window.scrollTo({top:0,behavior:'smooth'});
+
  if(id==='requests')renderRequests();
  if(id==='admin')loadAdminData();
  if(id==='technicians')loadPublicTechs();
+ if(id==='techAccount')loadTechJobs();
 }
+
 function openModal(id){$(id).classList.add('show')}
 function closeModal(id){$(id).classList.remove('show')}
-function openRequest(type='عادي',service=''){
- if(!db){alert('المنصة لم تُربط بقاعدة Firebase بعد.');return}
- $('requestForm').reset();$('requestForm').elements.type.value=type;
+
+function openRequest(type='عادي',service='',techUid=''){
+ if(!db){alert('المنصة غير متصلة بقاعدة البيانات حالياً.');return}
+
+ $('requestForm').reset();
+ $('requestForm').elements.type.value=type;
+
  if(service)$('requestService').value=service;
+
+ fillRequestTechnicians();
+
+ if(techUid)$('requestTech').value=techUid;
+
  openModal('requestModal');
 }
-function openLogin(){$('loginMessage').textContent='';$('loginForm').reset();openModal('loginModal')}
-function configIsReady(){return firebaseConfig.apiKey&&firebaseConfig.authDomain==='sakhr-bayti.firebaseapp.com'&&firebaseConfig.databaseURL==='https://sakhr-bayti-default-rtdb.europe-west1.firebasedatabase.app'&&firebaseConfig.projectId==='sakhr-bayti'&&firebaseConfig.appId}
-async function ensureSignedIn(){if(!auth.currentUser)await auth.signInAnonymously();return auth.currentUser}
+
+function openLogin(){
+ $('loginMessage').textContent='';
+ $('loginForm').reset();
+ openModal('loginModal');
+}
+
+function configIsReady(){
+ return firebaseConfig.apiKey&&
+ firebaseConfig.authDomain==='sakhr-bayti.firebaseapp.com'&&
+ firebaseConfig.databaseURL==='https://sakhr-bayti-default-rtdb.europe-west1.firebasedatabase.app'&&
+ firebaseConfig.projectId==='sakhr-bayti'&&firebaseConfig.appId;
+}
+
+async function ensureSignedIn(){
+ if(!auth.currentUser)await auth.signInAnonymously();
+ return auth.currentUser;
+}
+
 async function resolveRole(user){
- isAdmin=false;currentTech=null;
+ isAdmin=false;
+ currentTech=null;
+
  if(!user||user.isAnonymous)return 'guest';
+
  const a=await db.ref('admins/'+user.uid).once('value');
- if(a.val()===true){isAdmin=true;return 'admin'}
+
+ if(a.val()===true){
+  isAdmin=true;
+  return 'admin';
+ }
+
  const t=await db.ref('technicians/'+user.uid).once('value');
- if(t.exists()){currentTech={uid:user.uid,...t.val()};return 'technician'}
+
+ if(t.exists()){
+  currentTech={uid:user.uid,...t.val()};
+  return 'technician';
+ }
+
  return 'unknown';
 }
+
 async function onAuthChanged(user){
  currentUser=user;
- if(!user){try{await auth.signInAnonymously()}catch(e){setConnection('تعذر تسجيل الدخول المجهول: '+e.message,'bad')}return}
+
+ if(!user){
+  try{await auth.signInAnonymously()}
+  catch(e){setConnection('تعذر تسجيل الدخول المجهول: '+e.message,'bad')}
+  return;
+ }
+
  try{
   const role=await resolveRole(user);
+
   if(role==='admin'){
    setConnection('متصل بقاعدة البيانات — دخول الإدارة مفعل.','good');
    if($('admin').classList.contains('active'))loadAdminData();
   }else if(role==='technician'){
-   setConnection('تم تسجيل دخول حساب الفني.','good');renderTechAccount();
+   setConnection('تم تسجيل دخول حساب الفني.','good');
+   renderTechAccount();
   }else{
-   setConnection('متصل بقاعدة البيانات وجاهز لاستقبال الطلبات.','good');loadMyRequests();
+   setConnection('متصل بقاعدة البيانات وجاهز لاستقبال الطلبات.','good');
+   loadMyRequests();
   }
+
   setFormEnabled(true);
- }catch(e){setConnection('اتصل Firebase لكن تعذر تحميل الصلاحيات: '+e.message,'bad')}
+
+ }catch(e){
+  setConnection('اتصل Firebase لكن تعذر تحميل الصلاحيات: '+e.message,'bad');
+ }
 }
+
 function initFirebase(){
- if(!configIsReady()){setConnection('إعداد Firebase غير مكتمل.','bad');return}
+ if(!configIsReady()){
+  setConnection('إعداد Firebase غير مكتمل.','bad');
+  return;
+ }
+
  try{
-  firebase.initializeApp(firebaseConfig);auth=firebase.auth();db=firebase.database();
-  db.ref('.info/connected').on('value',s=>setConnection(s.val()?'متصل بقاعدة البيانات المركزية.':'الاتصال بقاعدة البيانات منقطع حالياً.',s.val()?'good':'bad'));
+  firebase.initializeApp(firebaseConfig);
+  auth=firebase.auth();
+  db=firebase.database();
+
+  db.ref('.info/connected').on('value',s=>{
+   setConnection(
+    s.val()?'متصل بقاعدة البيانات المركزية.':'الاتصال بقاعدة البيانات منقطع حالياً.',
+    s.val()?'good':'bad'
+   );
+  });
+
   auth.onAuthStateChanged(onAuthChanged);
- }catch(e){setConnection('خطأ في إعداد Firebase: '+e.message,'bad')}
+
+ }catch(e){
+  setConnection('خطأ في إعداد Firebase: '+e.message,'bad');
+ }
 }
-function makeId(){return 'SK-'+Date.now().toString(36).toUpperCase()+'-'+Math.random().toString(36).slice(2,6).toUpperCase()}
-function dateText(v){try{return new Date(v).toLocaleString('ar-IQ')}catch{return ''}}
+
+function makeId(){
+ return 'SK-'+Date.now().toString(36).toUpperCase()+'-'+
+ Math.random().toString(36).slice(2,6).toUpperCase();
+}
+
+function dateText(v){
+ try{return new Date(v).toLocaleString('ar-IQ')}
+ catch{return ''}
+}
+
+function whatsappLink(phone,message){
+ let p=String(phone||'').replace(/\D/g,'');
+ if(p.startsWith('0'))p='964'+p.slice(1);
+ if(!p.startsWith('964'))p='964'+p;
+ return 'https://wa.me/'+p+'?text='+encodeURIComponent(message);
+}
+
+/* طلبات الزبائن */
 
 $('requestForm').addEventListener('submit',async e=>{
- e.preventDefault();if(!db){alert('اربط Firebase أولاً.');return}
- const btn=e.submitter;btn.disabled=true;
+ e.preventDefault();
+
+ if(!db){alert('قاعدة البيانات غير متصلة.');return}
+
+ const btn=e.submitter;
+ btn.disabled=true;
+
  try{
-  await ensureSignedIn();const uid=auth.currentUser.uid;
-  const d=Object.fromEntries(new FormData(e.target));const id=makeId();
-  const r={id,uid,service:d.service,phone:d.phone,name:d.name.trim()||'زبون',city:d.city,area:d.area,type:d.type,details:d.details,status:'تم استلام الطلب',createdAt:Date.now()};
-  await db.ref(`requests/${uid}/${id}`).set(r);requests.unshift(r);
-  e.target.reset();closeModal('requestModal');renderRequests();$('trackingCode').value=id;
-  alert('تم حفظ طلبك في قاعدة البيانات. رقم المتابعة: '+id);showPage('track');
- }catch(err){alert('لم يتم حفظ الطلب: '+err.message)}
- finally{btn.disabled=false}
+  await ensureSignedIn();
+
+  const uid=auth.currentUser.uid;
+  const d=Object.fromEntries(new FormData(e.target));
+  const id=makeId();
+
+  const selectedTech=publicTechs.find(t=>t.uid===d.selectedTechUid);
+
+  const r={
+   id,uid,
+   service:d.service,
+   selectedTechUid:d.selectedTechUid||'',
+   selectedTechName:selectedTech?.name||'',
+   phone:d.phone,
+   name:d.name.trim()||'زبون',
+   city:d.city,
+   area:d.area,
+   type:d.type,
+   details:d.details,
+   assignedTechUid:'',
+   assignedTechName:'',
+   status:'تم استلام الطلب',
+   createdAt:Date.now()
+  };
+
+  await db.ref(`requests/${uid}/${id}`).set(r);
+
+  requests.unshift(r);
+  e.target.reset();
+  closeModal('requestModal');
+  renderRequests();
+
+  $('trackingCode').value=id;
+
+  alert('تم حفظ طلبك بنجاح. رقم المتابعة: '+id);
+  showPage('track');
+
+ }catch(err){
+  alert('لم يتم حفظ الطلب: '+err.message);
+ }finally{
+  btn.disabled=false;
+ }
 });
+
 async function loadMyRequests(){
  if(!db||!currentUser)return;
- try{const s=await db.ref('requests/'+currentUser.uid).once('value');const val=s.val()||{};requests=Object.values(val).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));renderRequests()}catch(e){console.error(e)}
+
+ try{
+  const s=await db.ref('requests/'+currentUser.uid).once('value');
+  const val=s.val()||{};
+
+  requests=Object.values(val).sort((a,b)=>
+   (b.createdAt||0)-(a.createdAt||0)
+  );
+
+  renderRequests();
+
+ }catch(e){console.error(e)}
 }
+
 function renderRequests(){
  $('homeRequests').textContent=requests.length;
- $('requestList').innerHTML=requests.map(r=>requestCard(r,false)).join('')||'<div class="empty">ما عندك طلبات بعد. اطلب أول خدمة من صخر.</div>';
+
+ $('requestList').innerHTML=requests.map(r=>requestCard(r,false)).join('')||
+ '<div class="empty">ما عندك طلبات بعد. اطلب أول خدمة من صخر.</div>';
 }
+
 function requestCard(r,admin){
  const st=r.status||'تم استلام الطلب';
- return `<div class="item"><div class="item-head"><b>${esc(r.service)} – ${esc(r.city)}</b><span class="status ${r.type==='عاجل'?'urgent':st==='مكتمل'?'done':''}">${esc(st)}</span></div><p>رقم المتابعة: <b>${esc(r.id)}</b><br>📍 ${esc(r.area)} · ${esc(r.type)}<br>📅 ${dateText(r.createdAt)}<br>${admin?'📞 '+esc(r.phone)+'<br>👤 '+esc(r.name):''}<br>${esc(r.details)}</p>${admin?`<div class="actions"><button class="btn secondary" onclick="setStatus('${esc(r.uid)}','${esc(r.id)}','قيد التنفيذ')">قيد التنفيذ</button><button class="btn primary" onclick="setStatus('${esc(r.uid)}','${esc(r.id)}','مكتمل')">إكمال الطلب</button></div>`:''}</div>`;
+
+ return `
+ <div class="item">
+  <div class="item-head">
+   <b>${esc(r.service)} – ${esc(r.city)}</b>
+   <span class="status ${r.type==='عاجل'?'urgent':st==='مكتمل'?'done':''}">${esc(st)}</span>
+  </div>
+  <p>
+   رقم المتابعة: <b>${esc(r.id)}</b><br>
+   📍 ${esc(r.area)} · ${esc(r.type)}<br>
+   📅 ${dateText(r.createdAt)}<br>
+   ${r.selectedTechName?'الفني المطلوب: '+esc(r.selectedTechName)+'<br>':''}
+   ${r.assignedTechName?'الفني المسند إليه: '+esc(r.assignedTechName)+'<br>':''}
+   ${admin?'📞 '+esc(r.phone)+'<br>👤 '+esc(r.name)+'<br>':''}
+   ${esc(r.details)}
+  </p>
+  ${admin?adminRequestActions(r):''}
+ </div>`;
 }
+
+function adminRequestActions(r){
+ const choices=techs.filter(t=>t.approved===true).map(t=>
+  `<option value="${esc(t.uid)}" ${r.assignedTechUid===t.uid?'selected':''}>${esc(t.name)} — ${esc(t.service)}</option>`
+ ).join('');
+
+ return `
+ <div class="actions">
+  <select id="assign-${esc(r.id)}">
+   <option value="">اختر الفني لإسناد الطلب</option>
+   ${choices}
+  </select>
+  <button class="btn primary" onclick="assignRequest('${esc(r.uid)}','${esc(r.id)}')">إسناد الطلب</button>
+  <button class="btn secondary" onclick="setStatus('${esc(r.uid)}','${esc(r.id)}','قيد التنفيذ')">قيد التنفيذ</button>
+  <button class="btn success" onclick="setStatus('${esc(r.uid)}','${esc(r.id)}','مكتمل')">إكمال العمل</button>
+ </div>`;
+}
+
 function trackRequest(){
- const id=$('trackingCode').value.trim();const r=requests.find(x=>x.id===id);
- $('trackingResult').innerHTML=r?requestCard(r,false):'<div class="empty">لم نجد الطلب ضمن حسابك الحالي. تأكد أنك تستخدم نفس المتصفح والحساب الذي أرسلت منه الطلب.</div>';
+ const id=$('trackingCode').value.trim();
+ const r=requests.find(x=>x.id===id);
+
+ $('trackingResult').innerHTML=r?
+ requestCard(r,false):
+ '<div class="empty">لم نجد الطلب ضمن حسابك الحالي. تأكد من رقم المتابعة ومن استخدام نفس المتصفح.</div>';
 }
+
+/* إسناد الطلبات وإكمالها */
+
+async function assignRequest(uid,id){
+ if(!isAdmin)return alert('هذه العملية للإدارة فقط.');
+
+ const selectedUid=$('assign-'+id)?.value;
+
+ if(!selectedUid)return alert('اختار الفني أولاً.');
+
+ const tech=techs.find(t=>t.uid===selectedUid);
+
+ if(!tech||!tech.approved)return alert('هذا الفني غير متاح حالياً.');
+
+ try{
+  const ref=db.ref(`requests/${uid}/${id}`);
+  const snap=await ref.once('value');
+  const r=snap.val();
+
+  if(!r)return alert('الطلب غير موجود.');
+
+  if(r.assignedTechUid&&r.assignedTechUid!==selectedUid){
+   await db.ref(`technicianJobs/${r.assignedTechUid}/${id}`).remove();
+  }
+
+  const update={
+   assignedTechUid:selectedUid,
+   assignedTechName:tech.name,
+   assignedAt:Date.now()
+  };
+
+  await ref.update(update);
+
+  await db.ref(`technicianJobs/${selectedUid}/${id}`).set({
+   ...r,...update,uid,id
+  });
+
+  await loadAdminData();
+  alert('تم إسناد الطلب إلى الفني.');
+
+ }catch(e){
+  alert('تعذر إسناد الطلب: '+e.message);
+ }
+}
+
 async function setStatus(uid,id,status){
  if(!isAdmin)return alert('هذه العملية للإدارة فقط.');
- try{await db.ref(`requests/${uid}/${id}`).update({status,updatedAt:Date.now()});await loadAdminData();if(currentUser&&currentUser.uid===uid)await loadMyRequests()}
- catch(e){alert('تعذر تحديث الطلب: '+e.message)}
+
+ try{
+  const ref=db.ref(`requests/${uid}/${id}`);
+  const snap=await ref.once('value');
+  const r=snap.val();
+
+  if(!r)return alert('الطلب غير موجود.');
+
+  if(status==='مكتمل'&&r.status!=='مكتمل'){
+   if(!r.assignedTechUid)return alert('يجب إسناد الطلب إلى فني قبل إكماله.');
+
+   const techRef=db.ref('technicians/'+r.assignedTechUid);
+   const techSnap=await techRef.once('value');
+   const tech=techSnap.val();
+
+   if(!tech)return alert('حساب الفني غير موجود.');
+
+   const activeSubscription=tech.subscriptionStatus==='فعال';
+
+   if(!activeSubscription){
+    const used=Number(tech.freeJobsUsed||0);
+
+    if(used>=3){
+     alert('الفني استنفد الأعمال المجانية الثلاثة. يجب تفعيل اشتراكه قبل إكمال أعمال جديدة.');
+     return;
+    }
+
+    await techRef.update({
+     freeJobsUsed:used+1,
+     completedJobs:Number(tech.completedJobs||0)+1
+    });
+
+   }else{
+    await techRef.update({
+     completedJobs:Number(tech.completedJobs||0)+1
+    });
+   }
+  }
+
+  await ref.update({status,updatedAt:Date.now()});
+
+  if(r.assignedTechUid){
+   await db.ref(`technicianJobs/${r.assignedTechUid}/${id}`).update({
+    status,updatedAt:Date.now()
+   });
+  }
+
+  await loadAdminData();
+
+  if(currentUser&&currentUser.uid===uid)await loadMyRequests();
+
+ }catch(e){
+  alert('تعذر تحديث الطلب: '+e.message);
+ }
 }
+
+/* تسجيل الفني */
 
 $('techForm').addEventListener('submit',async e=>{
  e.preventDefault();
- if(!auth||!db){alert('اربط Firebase أولاً.');return}
- const btn=e.submitter;btn.disabled=true;
+
+ if(!auth||!db){alert('قاعدة البيانات غير متصلة.');return}
+
+ const btn=e.submitter;
+ btn.disabled=true;
+
  const d=Object.fromEntries(new FormData(e.target));
+
  try{
-  const cred=await auth.createUserWithEmailAndPassword(d.email.trim(),d.password);
+  const cred=await auth.createUserWithEmailAndPassword(
+   d.email.trim(),d.password
+  );
+
   const uid=cred.user.uid;
+
   const record={
-   uid,name:d.name.trim(),phone:d.phone,email:d.email.trim(),
-   service:d.service,city:d.city,area:d.area,bio:d.bio||'',
-   approved:true,subscriptionStatus:'غير مفعل',createdAt:Date.now()
+   uid,
+   name:d.name.trim(),
+   phone:d.phone,
+   email:d.email.trim(),
+   service:d.service,
+   city:d.city,
+   area:d.area,
+   bio:d.bio||'',
+   approved:true,
+   subscriptionStatus:'غير مفعل',
+   freeJobsUsed:0,
+   completedJobs:0,
+   createdAt:Date.now()
   };
+
   const publicRecord={
-   name:record.name,service:record.service,city:record.city,
-   area:record.area,bio:record.bio,approved:true,createdAt:record.createdAt
+   name:record.name,
+   phone:record.phone,
+   service:record.service,
+   city:record.city,
+   area:record.area,
+   bio:record.bio,
+   approved:true,
+   createdAt:record.createdAt
   };
+
   await db.ref('technicians/'+uid).set(record);
   await db.ref('publicTechnicians/'+uid).set(publicRecord);
+
   currentTech=record;
-  alert('تم إنشاء حسابك وظهر ملفك مباشرة للزبائن.');
-  e.target.reset();renderTechAccount();showPage('techAccount');
+
+  alert('تم إنشاء حسابك وظهر ملفك مباشرة للزبائن. لديك 3 أعمال مكتملة مجانية.');
+
+  e.target.reset();
+  renderTechAccount();
+  showPage('techAccount');
+
  }catch(err){
   alert('تعذر تسجيل الفني: '+friendlyAuthError(err));
- }finally{btn.disabled=false}
+ }finally{
+  btn.disabled=false;
+ }
 });
 
 function friendlyAuthError(e){
  const m=e.code||e.message;
+
  if(m.includes('email-already-in-use'))return 'هذا البريد مسجل مسبقاً. استخدم تسجيل الدخول.';
  if(m.includes('weak-password'))return 'كلمة المرور ضعيفة؛ استخدم 6 أحرف أو أكثر.';
  if(m.includes('invalid-email'))return 'البريد الإلكتروني غير صحيح.';
  if(m.includes('wrong-password')||m.includes('invalid-credential'))return 'البريد أو كلمة المرور غير صحيحة.';
- if(m.includes('permission-denied'))return 'صلاحيات قاعدة البيانات لا تسمح بإتمام التسجيل. راجع قواعد Firebase.';
+ if(m.includes('permission-denied'))return 'صلاحيات قاعدة البيانات لا تسمح بإتمام العملية. راجع قواعد Firebase.';
+
  return e.message;
 }
 
+/* تسجيل الدخول */
+
 $('loginForm').addEventListener('submit',async e=>{
- e.preventDefault();if(!auth)return $('loginMessage').textContent='Firebase غير مربوط بعد.';
- const btn=e.submitter;btn.disabled=true;$('loginMessage').textContent='جاري التحقق…';
+ e.preventDefault();
+
+ if(!auth)return $('loginMessage').textContent='Firebase غير مربوط بعد.';
+
+ const btn=e.submitter;
+ btn.disabled=true;
+ $('loginMessage').textContent='جاري التحقق…';
+
  const d=Object.fromEntries(new FormData(e.target));
+
  try{
-  const c=await auth.signInWithEmailAndPassword(d.email.trim(),d.password);
+  const c=await auth.signInWithEmailAndPassword(
+   d.email.trim(),d.password
+  );
+
   const role=await resolveRole(c.user);
+
   if(role==='admin'){
-   closeModal('loginModal');showPage('admin');await loadAdminData();
+   closeModal('loginModal');
+   showPage('admin');
+   await loadAdminData();
+
   }else if(role==='technician'){
-   closeModal('loginModal');renderTechAccount();showPage('techAccount');
+   closeModal('loginModal');
+   renderTechAccount();
+   showPage('techAccount');
+
   }else{
-   await auth.signOut();$('loginMessage').textContent='هذا الحساب غير مسجل كإدارة أو فني.';
+   await auth.signOut();
+   $('loginMessage').textContent='هذا الحساب غير مسجل كإدارة أو فني.';
   }
- }catch(err){$('loginMessage').textContent=friendlyAuthError(err)}
- finally{btn.disabled=false}
+
+ }catch(err){
+  $('loginMessage').textContent=friendlyAuthError(err);
+ }finally{
+  btn.disabled=false;
+ }
 });
 
 async function logout(){
- try{await auth.signOut();isAdmin=false;currentTech=null;showPage('home')}
- catch(e){alert(e.message)}
+ try{
+  await auth.signOut();
+  isAdmin=false;
+  currentTech=null;
+  showPage('home');
+ }catch(e){alert(e.message)}
 }
+
+/* لوحة الإدارة */
 
 async function loadAdminData(){
  if(!isAdmin)return;
+
  try{
-  const [rs,ts]=await Promise.all([db.ref('requests').once('value'),db.ref('technicians').once('value')]);
+  const [rs,ts]=await Promise.all([
+   db.ref('requests').once('value'),
+   db.ref('technicians').once('value')
+  ]);
+
   const allReq=[];
-  rs.forEach(userSnap=>userSnap.forEach(item=>allReq.push(item.val())));
+
+  rs.forEach(userSnap=>{
+   userSnap.forEach(item=>allReq.push(item.val()));
+  });
+
   allReq.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
-  const allTech=[];
-  ts.forEach(item=>allTech.push({uid:item.key,...item.val()}));
+
+  techs=[];
+  ts.forEach(item=>{
+   techs.push({uid:item.key,...item.val()});
+  });
+
+  requests=allReq;
+
   $('adminRequests').textContent=allReq.length;
-  $('adminTechs').textContent=allTech.length;
+  $('adminTechs').textContent=techs.length;
   $('adminUrgent').textContent=allReq.filter(r=>r.type==='عاجل').length;
-  $('adminRequestList').innerHTML=allReq.map(r=>requestCard(r,true)).join('')||'<div class="empty">لا توجد طلبات.</div>';
-  $('adminTechList').innerHTML=allTech.map(t=>`
+
+  $('adminRequestList').innerHTML=allReq.map(r=>
+   requestCard(r,true)
+  ).join('')||'<div class="empty">لا توجد طلبات.</div>';
+
+  $('adminTechList').innerHTML=techs.map(t=>`
    <div class="item">
     <div class="item-head">
      <b>${esc(t.name)}</b>
-     <span class="status ${t.approved?'done':'urgent'}">${t.approved?'حساب نشط':'موقوف'}</span>
+     <span class="status ${t.approved?'done':'urgent'}">
+      ${t.approved?'حساب نشط':'موقوف'}
+     </span>
     </div>
-    <p>${esc(t.service)} · ${esc(t.city)} · ${esc(t.area)}<br>
-    📞 ${esc(t.phone)}<br>✉️ ${esc(t.email)}<br>
-    حالة الاشتراك: ${esc(t.subscriptionStatus||'غير مفعل')}<br>
-    ${esc(t.bio||'')}</p>
+    <p>
+     ${esc(t.service)} · ${esc(t.city)} · ${esc(t.area)}<br>
+     📞 ${esc(t.phone)}<br>
+     ✉️ ${esc(t.email)}<br>
+     الأعمال المكتملة: ${Number(t.completedJobs||0)}<br>
+     الأعمال المجانية المستخدمة: ${Number(t.freeJobsUsed||0)} من 3<br>
+     الاشتراك: ${esc(t.subscriptionStatus||'غير مفعل')}<br>
+     ${esc(t.bio||'')}
+    </p>
     <div class="actions">
-     ${t.approved?`<button class="btn danger" onclick="suspendTech('${esc(t.uid)}')">إيقاف الفني</button>`:`<button class="btn primary" onclick="restoreTech('${esc(t.uid)}')">إعادة تفعيل الفني</button>`}
+     ${t.approved?
+      `<button class="btn danger" onclick="suspendTech('${esc(t.uid)}')">إيقاف الفني</button>`:
+      `<button class="btn primary" onclick="restoreTech('${esc(t.uid)}')">إعادة تفعيل الفني</button>`
+     }
     </div>
-   </div>`).join('')||'<div class="empty">لا يوجد فنيون مسجلون حالياً.</div>';
- }catch(e){alert('تعذر تحميل لوحة الإدارة: '+e.message)}
+   </div>
+  `).join('')||'<div class="empty">لا يوجد فنيون مسجلون حالياً.</div>';
+
+  renderAdminSubscriptions();
+
+ }catch(e){
+  alert('تعذر تحميل لوحة الإدارة: '+e.message);
+ }
 }
+
+/* الاشتراكات - قسم مستقل */
+
+function renderAdminSubscriptions(){
+ const list=techs;
+
+ $('adminSubscriptionList').innerHTML=list.map(t=>`
+  <div class="item">
+   <div class="item-head">
+    <b>${esc(t.name)}</b>
+    <span class="status ${t.subscriptionStatus==='فعال'?'done':'indigo'}">
+     ${esc(t.subscriptionStatus||'غير مفعل')}
+    </span>
+   </div>
+   <p>
+    ${esc(t.service)} · ${esc(t.city)}<br>
+    الأعمال المجانية المستخدمة: ${Number(t.freeJobsUsed||0)} من 3<br>
+    الأعمال المكتملة: ${Number(t.completedJobs||0)}
+   </p>
+   <div class="actions">
+    <button class="btn primary" onclick="setSubscription('${esc(t.uid)}','فعال')">تفعيل الاشتراك</button>
+    <button class="btn secondary" onclick="setSubscription('${esc(t.uid)}','غير مفعل')">إيقاف الاشتراك</button>
+   </div>
+  </div>
+ `).join('')||'<div class="empty">لا يوجد فنيون لإدارة اشتراكاتهم.</div>';
+}
+
+async function setSubscription(uid,status){
+ if(!isAdmin)return;
+
+ const msg=status==='فعال'?
+ 'هل تحققت من استلام مبلغ الاشتراك وتريد تفعيله؟':
+ 'هل تريد إيقاف اشتراك هذا الفني؟';
+
+ if(!confirm(msg))return;
+
+ try{
+  await db.ref('technicians/'+uid).update({
+   subscriptionStatus:status,
+   subscriptionUpdatedAt:Date.now()
+  });
+
+  await loadAdminData();
+  alert(status==='فعال'?'تم تفعيل الاشتراك.':'تم إيقاف الاشتراك.');
+
+ }catch(e){
+  alert('تعذر تحديث الاشتراك: '+e.message);
+ }
+}
+
+/* إيقاف الفني وإعادة تفعيله */
 
 async function suspendTech(uid){
  if(!isAdmin)return;
+
  if(!confirm('تأكيد إيقاف هذا الفني وإخفاء ملفه عن الزبائن؟'))return;
+
  try{
-  await db.ref('technicians/'+uid).update({approved:false,subscriptionStatus:'موقوف',suspendedAt:Date.now()});
+  await db.ref('technicians/'+uid).update({
+   approved:false,
+   suspendedAt:Date.now()
+  });
+
   await db.ref('publicTechnicians/'+uid).remove();
-  await loadAdminData();await loadPublicTechs();
+
+  await loadAdminData();
+  await loadPublicTechs();
+
   alert('تم إيقاف الفني وإخفاء ملفه.');
- }catch(e){alert('تعذر إيقاف الفني: '+e.message)}
+
+ }catch(e){
+  alert('تعذر إيقاف الفني: '+e.message);
+ }
 }
 
 async function restoreTech(uid){
  if(!isAdmin)return;
+
  if(!confirm('إعادة إظهار هذا الفني للزبائن؟'))return;
+
  try{
-  const s=await db.ref('technicians/'+uid).once('value');const t=s.val();
+  const s=await db.ref('technicians/'+uid).once('value');
+  const t=s.val();
+
   if(!t)return;
-  await db.ref('technicians/'+uid).update({approved:true,subscriptionStatus:t.subscriptionStatus==='موقوف'?'غير مفعل':(t.subscriptionStatus||'غير مفعل')});
-  await db.ref('publicTechnicians/'+uid).set({
-   name:t.name,service:t.service,city:t.city,area:t.area,
-   bio:t.bio||'',approved:true,createdAt:t.createdAt||Date.now()
+
+  await db.ref('technicians/'+uid).update({
+   approved:true
   });
-  await loadAdminData();await loadPublicTechs();
+
+  await db.ref('publicTechnicians/'+uid).set({
+   name:t.name,
+   phone:t.phone,
+   service:t.service,
+   city:t.city,
+   area:t.area,
+   bio:t.bio||'',
+   approved:true,
+   createdAt:t.createdAt||Date.now()
+  });
+
+  await loadAdminData();
+  await loadPublicTechs();
+
   alert('تمت إعادة إظهار الفني.');
- }catch(e){alert('تعذرت إعادة تفعيل الفني: '+e.message)}
+
+ }catch(e){
+  alert('تعذرت إعادة تفعيل الفني: '+e.message);
+ }
 }
+
+/* دليل الفنيين والتواصل */
 
 async function loadPublicTechs(){
  if(!db)return;
+
  try{
   const s=await db.ref('publicTechnicians').once('value');
+
   publicTechs=[];
-  s.forEach(x=>publicTechs.push({uid:x.key,...x.val()}));
+
+  s.forEach(x=>{
+   const t={uid:x.key,...x.val()};
+   if(t.approved===true)publicTechs.push(t);
+  });
+
   renderTechs();
- }catch(e){$('techGrid').innerHTML='<div class="empty">تعذر تحميل الفنيين حالياً.</div>'}
+  fillRequestTechnicians();
+
+ }catch(e){
+  $('techGrid').innerHTML='<div class="empty">تعذر تحميل الفنيين حالياً.</div>';
+ }
+}
+
+function fillRequestTechnicians(){
+ const select=$('requestTech');
+ if(!select)return;
+
+ const old=select.value;
+
+ select.innerHTML='<option value="">بدون اختيار فني محدد</option>'+
+ publicTechs.map(t=>
+  `<option value="${esc(t.uid)}">${esc(t.name)} — ${esc(t.service)} — ${esc(t.city)}</option>`
+ ).join('');
+
+ if(publicTechs.some(t=>t.uid===old))select.value=old;
 }
 
 function renderTechs(){
  const q=($('techSearch')?.value||'').toLowerCase();
  const f=$('techFilter')?.value||'';
- const list=publicTechs.filter(t=>(!f||t.service===f)&&(!q||(t.name+t.service+t.area+t.city).toLowerCase().includes(q)));
+
+ const list=publicTechs.filter(t=>
+  (!f||t.service===f)&&
+  (!q||(t.name+t.service+t.area+t.city).toLowerCase().includes(q))
+ );
+
  $('techGrid').innerHTML=list.map(t=>`
   <div class="card tech">
-   <div class="tech-top"><div class="avatar">👨‍🔧</div><span class="rating">فني مسجل</span></div>
-   <h3>${esc(t.name)}</h3><span class="tag">${esc(t.service)}</span>
+   <div class="tech-top">
+    <div class="avatar">👨‍🔧</div>
+    <span class="status done">فني مسجل</span>
+   </div>
+   <h3>${esc(t.name)}</h3>
+   <span class="tag">${esc(t.service)}</span>
    <p class="muted">📍 ${esc(t.area)} – ${esc(t.city)}</p>
    <p class="muted">${esc(t.bio||'')}</p>
-  </div>`).join('')||'<div class="empty">لا يوجد فنيون مسجلون حالياً.</div>';
+   <div class="actions">
+    <button class="btn primary" onclick="openRequest('عادي','${esc(t.service)}','${esc(t.uid)}')">اطلب هذا الفني</button>
+    <button class="btn orange" onclick="contactTech('${esc(t.uid)}')">واتساب</button>
+   </div>
+  </div>
+ `).join('')||'<div class="empty">لا يوجد فنيون مسجلون حالياً.</div>';
 }
+
+function contactTech(uid){
+ const t=publicTechs.find(x=>x.uid===uid);
+
+ if(!t||!t.phone)return alert('رقم واتساب هذا الفني غير متوفر.');
+
+ const message='السلام عليكم، حصلت على رقمك من منصة صخر – بيتي للصيانة. أحتاج خدمة '+t.service+'.';
+ window.open(whatsappLink(t.phone,message),'_blank');
+}
+
+/* حساب الفني وطلباته */
 
 function renderTechAccount(){
  if(!currentTech)return;
+
  const active=currentTech.approved===true;
+ const used=Number(currentTech.freeJobsUsed||0);
+ const completed=Number(currentTech.completedJobs||0);
+ const subscribed=currentTech.subscriptionStatus==='فعال';
+
  $('techAccountInfo').innerHTML=`
   <div class="item-head">
    <b>${esc(currentTech.name)}</b>
-   <span class="status ${active?'done':'urgent'}">${active?'حساب نشط':'الحساب موقوف'}</span>
+   <span class="status ${active?'done':'urgent'}">
+    ${active?'حساب نشط':'الحساب موقوف'}
+   </span>
   </div>
-  <p>التخصص: ${esc(currentTech.service)}<br>
-  المحافظة: ${esc(currentTech.city)}<br>
-  المنطقة: ${esc(currentTech.area)}<br>
-  حالة الاشتراك: ${esc(currentTech.subscriptionStatus||'غير مفعل')}</p>
-  <p class="notice ${active?'good':'bad'}">${active?'ملفك ظاهر للزبائن في دليل الفنيين. الاشتراك منفصل عن التسجيل.':'تم إيقاف حسابك حالياً، وملفك غير ظاهر للزبائن. راجع إدارة صخر.'}</p>`;
+  <p>
+   التخصص: ${esc(currentTech.service)}<br>
+   المحافظة: ${esc(currentTech.city)}<br>
+   المنطقة: ${esc(currentTech.area)}<br>
+   الأعمال المكتملة: <b>${completed}</b><br>
+   الأعمال المجانية المستخدمة: <b>${used} من 3</b><br>
+   حالة الاشتراك: <b>${subscribed?'فعال':'غير مفعل'}</b>
+  </p>
+  <p class="notice ${active?'good':'bad'}">
+   ${active?'ملفك ظاهر للزبائن في دليل الفنيين.':'تم إيقاف حسابك حالياً، وملفك غير ظاهر للزبائن. راجع إدارة صخر.'}
+  </p>
+  ${!subscribed&&used>=3?
+   '<p class="notice bad">استنفدت الأعمال المجانية الثلاثة. راجع الإدارة لتفعيل الاشتراك.</p>':
+   ''
+  }
+ `;
+
+ loadTechJobs();
 }
+
+async function loadTechJobs(){
+ if(!currentTech||!db)return;
+
+ try{
+  const s=await db.ref('technicianJobs/'+currentTech.uid).once('value');
+
+  techJobs=[];
+
+  s.forEach(x=>techJobs.push(x.val()));
+
+  techJobs.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+
+  $('techJobsList').innerHTML=techJobs.map(r=>`
+   <div class="item">
+    <div class="item-head">
+     <b>${esc(r.service)} – ${esc(r.city)}</b>
+     <span class="status ${r.status==='مكتمل'?'done':''}">${esc(r.status||'تم استلام الطلب')}</span>
+    </div>
+    <p>
+     رقم الطلب: ${esc(r.id)}<br>
+     المنطقة: ${esc(r.area)}<br>
+     نوع الطلب: ${esc(r.type)}<br>
+     تاريخ الطلب: ${dateText(r.createdAt)}<br>
+     التفاصيل: ${esc(r.details)}
+    </p>
+    <p class="notice">بيانات اتصال الزبون لا تظهر في هذه القائمة العامة.</p>
+   </div>
+  `).join('')||'<div class="empty">لا توجد طلبات مسندة إليك حالياً.</div>';
+
+ }catch(e){
+  $('techJobsList').innerHTML='<div class="empty">تعذر تحميل الطلبات المسندة.</div>';
+ }
+}
+
+/* التشغيل */
 
 initUI();
 initFirebase();
