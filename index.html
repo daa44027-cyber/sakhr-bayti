@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -20,10 +21,10 @@ button{cursor:pointer}
 header{
  min-height:72px;background:#101b2b;border-bottom:1px solid var(--line);
  display:flex;align-items:center;justify-content:space-between;
- padding:10px 5%;position:sticky;top:0;z-index:10;gap:12px
+ padding:8px 5%;position:sticky;top:0;z-index:20;gap:12px
 }
-.logo{display:flex;align-items:center;gap:10px;font-size:21px;font-weight:900}
-.logo img{width:55px;height:55px;object-fit:contain;border-radius:10px}
+.logo{display:flex;align-items:center;gap:10px;font-size:21px;font-weight:900;flex-shrink:0}
+.logo img{width:75px;height:75px;object-fit:contain;flex-shrink:0}
 .logo small{display:block;font-size:10px;color:var(--muted);font-weight:500;margin-top:-5px}
 .btn{border:0;border-radius:12px;padding:11px 17px;font-weight:800}
 .primary{background:var(--indigo);color:white}
@@ -33,6 +34,18 @@ header{
 .danger{background:#482630;color:#ffadb4}
 .success{background:#174638;color:#8ce7c5}
 button:disabled{opacity:.5;cursor:not-allowed}
+.top-nav{
+ display:flex;justify-content:center;gap:7px;flex-wrap:wrap;
+ background:#101b2b;border-bottom:1px solid var(--line);padding:9px 4%;
+ position:relative;z-index:5
+}
+.top-nav button{
+ background:transparent;border:1px solid transparent;color:var(--muted);
+ border-radius:10px;padding:7px 12px;font-size:12px;font-weight:700
+}
+.top-nav button:hover,.top-nav button.active{
+ color:var(--orange);border-color:var(--line);background:var(--panel)
+}
 main{max-width:1180px;margin:auto;padding:25px 5% 100px}
 .hero{
  border:1px solid #354a62;border-radius:24px;padding:30px;
@@ -104,10 +117,12 @@ footer{text-align:center;border-top:1px solid var(--line);padding:24px;color:var
  .grid{grid-template-columns:repeat(2,1fr)}
 }
 @media(max-width:520px){
- header{padding:8px 4%;min-height:64px}
- .logo{font-size:17px}
- .logo img{width:43px;height:43px}
- .header-actions .secondary{display:none}
+ header{padding:6px 3%;min-height:65px}
+ .logo{font-size:16px;gap:6px}
+ .logo img{width:57px;height:57px}
+ .header-actions{gap:5px!important}
+ .header-actions .btn{font-size:10px;padding:8px 9px}
+ .top-nav{display:none}
  .quick{grid-template-columns:1fr 1fr}
  .quick .card:last-child{display:none}
  .form-grid{grid-template-columns:1fr}
@@ -120,18 +135,6 @@ footer{text-align:center;border-top:1px solid var(--line);padding:24px;color:var
  .bottom-nav button{border:0;background:none;color:var(--muted);font-size:10px}
  .bottom-nav button span{display:block;font-size:20px}
  .bottom-nav button.active{color:var(--orange)}
-}
-.logo img {
-  width: 75px !important;
-  height: 75px !important;
-  object-fit: contain;
-  flex-shrink: 0;
-}
-
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
 }
 </style>
 </head>
@@ -148,8 +151,16 @@ footer{text-align:center;border-top:1px solid var(--line);padding:24px;color:var
  </div>
 </header>
 
-<main>
+<nav class="top-nav">
+ <button class="active" data-page="home" onclick="showPage('home')">الرئيسية</button>
+ <button data-page="services" onclick="showPage('services')">الخدمات</button>
+ <button data-page="technicians" onclick="showPage('technicians')">الفنيون</button>
+ <button data-page="track" onclick="showPage('track')">متابعة طلب</button>
+ <button data-page="requests" onclick="showPage('requests')">طلباتي</button>
+ <button data-page="join" onclick="showPage('join')">انضم كفني</button>
+</nav>
 
+<main>
 <section id="home" class="page active">
  <div class="hero">
   <div>
@@ -163,18 +174,14 @@ footer{text-align:center;border-top:1px solid var(--line);padding:24px;color:var
   </div>
   <div class="hero-art">🛠️</div>
  </div>
-
  <div id="connectionStatus" class="notice" role="status">جاري الاتصال بقاعدة البيانات…</div>
-
  <div class="quick">
   <div class="card"><b id="homeRequests">0</b><span>طلباتك المسجلة</span></div>
   <div class="card"><b>24/7</b><span>استقبال الطلبات</span></div>
   <div class="card"><b>18</b><span>محافظة عراقية</span></div>
  </div>
-
  <div class="section-head"><h2>الخدمات الرئيسية</h2><small>اختار حتى تبدأ</small></div>
  <div class="grid" id="homeServices"></div>
-
  <div class="section-head"><h2>تحتاج فني بصورة عاجلة؟</h2></div>
  <div class="card" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
   <div><b>طلب صيانة عاجل</b><div class="muted">للأعطال التي تحتاج استجابة سريعة</div></div>
@@ -235,7 +242,6 @@ footer{text-align:center;border-top:1px solid var(--line);padding:24px;color:var
   </form>
   <p class="notice">يظهر ملف الفني مباشرة بعد التسجيل، ما لم توقفه الإدارة. لكل فني 3 أعمال مكتملة مجانية قبل الاشتراك.</p>
  </div>
-
  <div class="section-head"><h2>باقات اشتراك الفني</h2></div>
  <div class="grid">
   <div class="card"><span class="tag">شهري</span><h2>5,000 د.ع</h2><p class="muted">اشتراك لمدة شهر.</p></div>
@@ -248,19 +254,15 @@ footer{text-align:center;border-top:1px solid var(--line);padding:24px;color:var
   <h2>لوحة إدارة صخر</h2>
   <button class="btn secondary" onclick="logout()">تسجيل الخروج</button>
  </div>
-
  <div class="quick">
   <div class="card"><b id="adminRequests">0</b><span>طلبات الزبائن</span></div>
   <div class="card"><b id="adminTechs">0</b><span>الفنيون المسجلون</span></div>
   <div class="card"><b id="adminUrgent">0</b><span>طلبات عاجلة</span></div>
  </div>
-
  <div class="section-head"><h2>إدارة الطلبات وإسنادها</h2></div>
  <div id="adminRequestList" class="list"></div>
-
  <div class="section-head"><h2>إدارة الفنيين</h2></div>
  <div id="adminTechList" class="list"></div>
-
  <div class="section-head"><h2>إدارة الاشتراكات</h2></div>
  <p class="notice">تفعيل الاشتراك أو إيقافه يتم من الإدارة بعد التحقق من الدفع خارج المنصة.</p>
  <div id="adminSubscriptionList" class="list"></div>
@@ -275,7 +277,6 @@ footer{text-align:center;border-top:1px solid var(--line);padding:24px;color:var
  <div class="section-head"><h2>الطلبات المسندة إليك</h2></div>
  <div id="techJobsList" class="list"></div>
 </section>
-
 </main>
 
 <nav class="bottom-nav">
@@ -293,35 +294,21 @@ footer{text-align:center;border-top:1px solid var(--line);padding:24px;color:var
   <p class="muted">ما تحتاج تسوي حساب. املأ معلومات الطلب ورقم هاتفك للتواصل.</p>
   <form id="requestForm">
    <div class="form-grid">
-    <div class="full">
-     <label>نوع الخدمة</label>
-     <select name="service" id="requestService" required></select>
-    </div>
+    <div class="full"><label>نوع الخدمة</label><select name="service" id="requestService" required></select></div>
     <div class="full">
      <label>الفني الذي اخترته</label>
-     <select name="selectedTechUid" id="requestTech">
-      <option value="">بدون اختيار فني محدد</option>
-     </select>
+     <select name="selectedTechUid" id="requestTech"><option value="">بدون اختيار فني محدد</option></select>
      <p class="notice">إذا اخترت فنيّاً، سيصل طلبك للإدارة مع اسم الفني المطلوب.</p>
     </div>
-    <div class="full">
-     <label>رقم الهاتف للتواصل *</label>
-     <input name="phone" required inputmode="tel" pattern="07[0-9]{9}" placeholder="07xxxxxxxxx">
-    </div>
+    <div class="full"><label>رقم الهاتف للتواصل *</label><input name="phone" required inputmode="tel" pattern="07[0-9]{9}" placeholder="07xxxxxxxxx"></div>
     <div class="full"><label>الاسم (اختياري)</label><input name="name" maxlength="80" placeholder="اسمك"></div>
     <div><label>المحافظة</label><select name="city" class="cities" required></select></div>
     <div><label>المنطقة / القضاء</label><input name="area" required placeholder="مثلاً العمارة"></div>
-    <div class="full">
-     <label>نوع الطلب</label>
-     <select name="type"><option>عادي</option><option>عاجل</option></select>
-    </div>
-    <div class="full">
-     <label>تفاصيل المشكلة</label>
-     <textarea name="details" required maxlength="1200" placeholder="اشرح العطل حتى يعرف الفني شنو يحتاج"></textarea>
-    </div>
+    <div class="full"><label>نوع الطلب</label><select name="type"><option>عادي</option><option>عاجل</option></select></div>
+    <div class="full"><label>تفاصيل المشكلة</label><textarea name="details" required maxlength="1200" placeholder="اشرح العطل حتى يعرف الفني شنو يحتاج"></textarea></div>
    </div>
    <button class="btn primary" style="width:100%;margin-top:15px">إرسال طلب الصيانة</button>
-   <p class="notice">بيانات هاتف الزبون لا تظهر في دليل الفنيين، وتُحفظ ضمن تفاصيل الطلب للإدارة.</p>
+   <p class="notice">رقم هاتف الزبون لا يظهر في دليل الفنيين، ويُحفظ ضمن تفاصيل الطلب للإدارة.</p>
   </form>
  </div>
 </div>
@@ -352,7 +339,7 @@ footer{text-align:center;border-top:1px solid var(--line);padding:24px;color:var
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 
 <script>
-const firebaseConfig = {
+const firebaseConfig={
  apiKey:"AIzaSyBMV-0g7HczYs9mmCf6tjVRQ7cIbAPOdKs",
  authDomain:"sakhr-bayti.firebaseapp.com",
  databaseURL:"https://sakhr-bayti-default-rtdb.europe-west1.firebasedatabase.app",
@@ -392,6 +379,7 @@ function esc(v){
 
 function setConnection(msg,kind=''){
  const el=$('connectionStatus');
+ if(!el)return;
  el.textContent=msg;
  el.className='notice '+kind;
 }
@@ -403,7 +391,6 @@ function setFormEnabled(enabled){
 
 function initUI(){
  $('year').textContent=new Date().getFullYear();
-
  const opts=services.map(s=>`<option value="${esc(s[1])}">${esc(s[1])}</option>`).join('');
 
  ['requestService','joinService','techFilter'].forEach(id=>{
@@ -435,8 +422,7 @@ function showPage(id){
  document.querySelectorAll('.page').forEach(p=>{
   p.classList.toggle('active',p.id===id);
  });
-
- document.querySelectorAll('.bottom-nav button').forEach(b=>{
+ document.querySelectorAll('.bottom-nav button,.top-nav button').forEach(b=>{
   b.classList.toggle('active',b.dataset.page===id);
  });
 
@@ -453,16 +439,11 @@ function closeModal(id){$(id).classList.remove('show')}
 
 function openRequest(type='عادي',service='',techUid=''){
  if(!db){alert('المنصة غير متصلة بقاعدة البيانات حالياً.');return}
-
  $('requestForm').reset();
  $('requestForm').elements.type.value=type;
-
- if(service)$('requestService').value=service;
-
  fillRequestTechnicians();
-
+ if(service)$('requestService').value=service;
  if(techUid)$('requestTech').value=techUid;
-
  openModal('requestModal');
 }
 
@@ -473,10 +454,8 @@ function openLogin(){
 }
 
 function configIsReady(){
- return firebaseConfig.apiKey&&
- firebaseConfig.authDomain==='sakhr-bayti.firebaseapp.com'&&
- firebaseConfig.databaseURL==='https://sakhr-bayti-default-rtdb.europe-west1.firebasedatabase.app'&&
- firebaseConfig.projectId==='sakhr-bayti'&&firebaseConfig.appId;
+ return !!(firebaseConfig.apiKey&&firebaseConfig.authDomain&&
+ firebaseConfig.databaseURL&&firebaseConfig.projectId&&firebaseConfig.appId);
 }
 
 async function ensureSignedIn(){
@@ -487,23 +466,19 @@ async function ensureSignedIn(){
 async function resolveRole(user){
  isAdmin=false;
  currentTech=null;
-
  if(!user||user.isAnonymous)return 'guest';
 
  const a=await db.ref('admins/'+user.uid).once('value');
-
  if(a.val()===true){
   isAdmin=true;
   return 'admin';
  }
 
  const t=await db.ref('technicians/'+user.uid).once('value');
-
  if(t.exists()){
   currentTech={uid:user.uid,...t.val()};
   return 'technician';
  }
-
  return 'unknown';
 }
 
@@ -511,29 +486,39 @@ async function onAuthChanged(user){
  currentUser=user;
 
  if(!user){
+  setFormEnabled(false);
   try{await auth.signInAnonymously()}
-  catch(e){setConnection('تعذر تسجيل الدخول المجهول: '+e.message,'bad')}
+  catch(e){
+   setConnection('تعذر تسجيل الدخول المجهول: '+e.message,'bad');
+   setFormEnabled(false);
+  }
   return;
  }
+
+ // لا نترك نماذج الزبائن والفنيين معطلة إذا كان المستخدم مجهولاً.
+ if(user.isAnonymous)setFormEnabled(true);
 
  try{
   const role=await resolveRole(user);
 
   if(role==='admin'){
    setConnection('متصل بقاعدة البيانات — دخول الإدارة مفعل.','good');
+   setFormEnabled(true);
    if($('admin').classList.contains('active'))loadAdminData();
   }else if(role==='technician'){
    setConnection('تم تسجيل دخول حساب الفني.','good');
+   setFormEnabled(true);
    renderTechAccount();
   }else{
    setConnection('متصل بقاعدة البيانات وجاهز لاستقبال الطلبات.','good');
+   setFormEnabled(true);
    loadMyRequests();
   }
-
-  setFormEnabled(true);
-
  }catch(e){
-  setConnection('اتصل Firebase لكن تعذر تحميل الصلاحيات: '+e.message,'bad');
+  // فشل قراءة الصلاحيات لا يعطل استقبال طلبات الزبائن.
+  setFormEnabled(true);
+  setConnection('تعذر تحميل صلاحيات الحساب. قد تحتاج الإدارة لمراجعة قواعد Firebase.','bad');
+  console.error(e);
  }
 }
 
@@ -542,9 +527,8 @@ function initFirebase(){
   setConnection('إعداد Firebase غير مكتمل.','bad');
   return;
  }
-
  try{
-  firebase.initializeApp(firebaseConfig);
+  if(!firebase.apps.length)firebase.initializeApp(firebaseConfig);
   auth=firebase.auth();
   db=firebase.database();
 
@@ -556,7 +540,6 @@ function initFirebase(){
   });
 
   auth.onAuthStateChanged(onAuthChanged);
-
  }catch(e){
   setConnection('خطأ في إعداد Firebase: '+e.message,'bad');
  }
@@ -583,19 +566,16 @@ function whatsappLink(phone,message){
 
 $('requestForm').addEventListener('submit',async e=>{
  e.preventDefault();
-
  if(!db){alert('قاعدة البيانات غير متصلة.');return}
 
  const btn=e.submitter;
- btn.disabled=true;
+ if(btn)btn.disabled=true;
 
  try{
   await ensureSignedIn();
-
   const uid=auth.currentUser.uid;
   const d=Object.fromEntries(new FormData(e.target));
   const id=makeId();
-
   const selectedTech=publicTechs.find(t=>t.uid===d.selectedTechUid);
 
   const r={
@@ -616,50 +596,39 @@ $('requestForm').addEventListener('submit',async e=>{
   };
 
   await db.ref(`requests/${uid}/${id}`).set(r);
-
   requests.unshift(r);
   e.target.reset();
   closeModal('requestModal');
   renderRequests();
-
   $('trackingCode').value=id;
-
+  $('trackingResult').innerHTML=requestCard(r,false);
   alert('تم حفظ طلبك بنجاح. رقم المتابعة: '+id);
   showPage('track');
-
  }catch(err){
-  alert('لم يتم حفظ الطلب: '+err.message);
+  alert('لم يتم حفظ الطلب: '+friendlyAuthError(err));
  }finally{
-  btn.disabled=false;
+  if(btn)btn.disabled=false;
  }
 });
 
 async function loadMyRequests(){
- if(!db||!currentUser)return;
-
+ if(!db||!currentUser||currentUser.isAnonymous===false&&isAdmin)return;
  try{
   const s=await db.ref('requests/'+currentUser.uid).once('value');
   const val=s.val()||{};
-
-  requests=Object.values(val).sort((a,b)=>
-   (b.createdAt||0)-(a.createdAt||0)
-  );
-
+  requests=Object.values(val).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
   renderRequests();
-
  }catch(e){console.error(e)}
 }
 
 function renderRequests(){
  $('homeRequests').textContent=requests.length;
-
  $('requestList').innerHTML=requests.map(r=>requestCard(r,false)).join('')||
  '<div class="empty">ما عندك طلبات بعد. اطلب أول خدمة من صخر.</div>';
 }
 
 function requestCard(r,admin){
  const st=r.status||'تم استلام الطلب';
-
  return `
  <div class="item">
   <div class="item-head">
@@ -683,12 +652,10 @@ function adminRequestActions(r){
  const choices=techs.filter(t=>t.approved===true).map(t=>
   `<option value="${esc(t.uid)}" ${r.assignedTechUid===t.uid?'selected':''}>${esc(t.name)} — ${esc(t.service)}</option>`
  ).join('');
-
  return `
  <div class="actions">
   <select id="assign-${esc(r.id)}">
-   <option value="">اختر الفني لإسناد الطلب</option>
-   ${choices}
+   <option value="">اختر الفني لإسناد الطلب</option>${choices}
   </select>
   <button class="btn primary" onclick="assignRequest('${esc(r.uid)}','${esc(r.id)}')">إسناد الطلب</button>
   <button class="btn secondary" onclick="setStatus('${esc(r.uid)}','${esc(r.id)}','قيد التنفيذ')">قيد التنفيذ</button>
@@ -699,34 +666,28 @@ function adminRequestActions(r){
 function trackRequest(){
  const id=$('trackingCode').value.trim();
  const r=requests.find(x=>x.id===id);
-
- $('trackingResult').innerHTML=r?
- requestCard(r,false):
- '<div class="empty">لم نجد الطلب ضمن حسابك الحالي. تأكد من رقم المتابعة ومن استخدام نفس المتصفح.</div>';
+ $('trackingResult').innerHTML=r?requestCard(r,false):
+ '<div class="empty">لم نجد الطلب ضمن طلبات هذا الحساب. تأكد من رقم المتابعة واستخدم نفس المتصفح الذي أرسلت منه الطلب.</div>';
 }
 
 /* إسناد الطلبات وإكمالها */
 
 async function assignRequest(uid,id){
  if(!isAdmin)return alert('هذه العملية للإدارة فقط.');
-
  const selectedUid=$('assign-'+id)?.value;
-
  if(!selectedUid)return alert('اختار الفني أولاً.');
-
  const tech=techs.find(t=>t.uid===selectedUid);
-
  if(!tech||!tech.approved)return alert('هذا الفني غير متاح حالياً.');
 
  try{
   const ref=db.ref(`requests/${uid}/${id}`);
   const snap=await ref.once('value');
   const r=snap.val();
-
   if(!r)return alert('الطلب غير موجود.');
 
+  const updates={};
   if(r.assignedTechUid&&r.assignedTechUid!==selectedUid){
-   await db.ref(`technicianJobs/${r.assignedTechUid}/${id}`).remove();
+   updates[`technicianJobs/${r.assignedTechUid}/${id}`]=null;
   }
 
   const update={
@@ -735,17 +696,16 @@ async function assignRequest(uid,id){
    assignedAt:Date.now()
   };
 
-  await ref.update(update);
+  updates[`requests/${uid}/${id}/assignedTechUid`]=selectedUid;
+  updates[`requests/${uid}/${id}/assignedTechName`]=tech.name;
+  updates[`requests/${uid}/${id}/assignedAt`]=update.assignedAt;
+  updates[`technicianJobs/${selectedUid}/${id}`]={...r,...update,uid,id};
 
-  await db.ref(`technicianJobs/${selectedUid}/${id}`).set({
-   ...r,...update,uid,id
-  });
-
+  await db.ref().update(updates);
   await loadAdminData();
   alert('تم إسناد الطلب إلى الفني.');
-
  }catch(e){
-  alert('تعذر إسناد الطلب: '+e.message);
+  alert('تعذر إسناد الطلب: '+friendlyAuthError(e));
  }
 }
 
@@ -756,8 +716,10 @@ async function setStatus(uid,id,status){
   const ref=db.ref(`requests/${uid}/${id}`);
   const snap=await ref.once('value');
   const r=snap.val();
-
   if(!r)return alert('الطلب غير موجود.');
+
+  const updates={};
+  const now=Date.now();
 
   if(status==='مكتمل'&&r.status!=='مكتمل'){
    if(!r.assignedTechUid)return alert('يجب إسناد الطلب إلى فني قبل إكماله.');
@@ -765,45 +727,35 @@ async function setStatus(uid,id,status){
    const techRef=db.ref('technicians/'+r.assignedTechUid);
    const techSnap=await techRef.once('value');
    const tech=techSnap.val();
-
    if(!tech)return alert('حساب الفني غير موجود.');
 
    const activeSubscription=tech.subscriptionStatus==='فعال';
+   const used=Number(tech.freeJobsUsed||0);
 
+   if(!activeSubscription&&used>=3){
+    alert('الفني استنفد الأعمال المجانية الثلاثة. يجب تفعيل اشتراكه قبل إكمال أعمال جديدة.');
+    return;
+   }
+
+   updates[`technicians/${r.assignedTechUid}/completedJobs`]=Number(tech.completedJobs||0)+1;
    if(!activeSubscription){
-    const used=Number(tech.freeJobsUsed||0);
-
-    if(used>=3){
-     alert('الفني استنفد الأعمال المجانية الثلاثة. يجب تفعيل اشتراكه قبل إكمال أعمال جديدة.');
-     return;
-    }
-
-    await techRef.update({
-     freeJobsUsed:used+1,
-     completedJobs:Number(tech.completedJobs||0)+1
-    });
-
-   }else{
-    await techRef.update({
-     completedJobs:Number(tech.completedJobs||0)+1
-    });
+    updates[`technicians/${r.assignedTechUid}/freeJobsUsed`]=used+1;
    }
   }
 
-  await ref.update({status,updatedAt:Date.now()});
+  updates[`requests/${uid}/${id}/status`]=status;
+  updates[`requests/${uid}/${id}/updatedAt`]=now;
 
   if(r.assignedTechUid){
-   await db.ref(`technicianJobs/${r.assignedTechUid}/${id}`).update({
-    status,updatedAt:Date.now()
-   });
+   updates[`technicianJobs/${r.assignedTechUid}/${id}/status`]=status;
+   updates[`technicianJobs/${r.assignedTechUid}/${id}/updatedAt`]=now;
   }
 
+  await db.ref().update(updates);
   await loadAdminData();
-
   if(currentUser&&currentUser.uid===uid)await loadMyRequests();
-
  }catch(e){
-  alert('تعذر تحديث الطلب: '+e.message);
+  alert('تعذر تحديث الطلب: '+friendlyAuthError(e));
  }
 }
 
@@ -811,19 +763,16 @@ async function setStatus(uid,id,status){
 
 $('techForm').addEventListener('submit',async e=>{
  e.preventDefault();
-
  if(!auth||!db){alert('قاعدة البيانات غير متصلة.');return}
 
  const btn=e.submitter;
- btn.disabled=true;
-
+ if(btn)btn.disabled=true;
  const d=Object.fromEntries(new FormData(e.target));
+ let createdUser=null;
 
  try{
-  const cred=await auth.createUserWithEmailAndPassword(
-   d.email.trim(),d.password
-  );
-
+  const cred=await auth.createUserWithEmailAndPassword(d.email.trim(),d.password);
+  createdUser=cred.user;
   const uid=cred.user.uid;
 
   const record={
@@ -853,75 +802,77 @@ $('techForm').addEventListener('submit',async e=>{
    createdAt:record.createdAt
   };
 
-  await db.ref('technicians/'+uid).set(record);
-  await db.ref('publicTechnicians/'+uid).set(publicRecord);
+  // حفظ الملف الخاص والعام بتحديث واحد لتقليل احتمال حفظ نصف البيانات.
+  const updates={};
+  updates['technicians/'+uid]=record;
+  updates['publicTechnicians/'+uid]=publicRecord;
+  await db.ref().update(updates);
 
   currentTech=record;
-
   alert('تم إنشاء حسابك وظهر ملفك مباشرة للزبائن. لديك 3 أعمال مكتملة مجانية.');
-
   e.target.reset();
   renderTechAccount();
   showPage('techAccount');
 
  }catch(err){
+  // إذا فشل حفظ بيانات الفني بعد إنشاء الحساب، نحاول تنظيف الحساب غير المكتمل.
+  if(createdUser){
+   try{
+    await db.ref('technicians/'+createdUser.uid).remove();
+    await db.ref('publicTechnicians/'+createdUser.uid).remove();
+    await createdUser.delete();
+    await auth.signInAnonymously();
+   }catch(cleanupError){
+    console.error('تعذر تنظيف الحساب غير المكتمل:',cleanupError);
+   }
+  }
   alert('تعذر تسجيل الفني: '+friendlyAuthError(err));
  }finally{
-  btn.disabled=false;
+  if(btn)btn.disabled=false;
  }
 });
 
 function friendlyAuthError(e){
- const m=e.code||e.message;
-
+ const m=(e.code||'')+' '+(e.message||'');
  if(m.includes('email-already-in-use'))return 'هذا البريد مسجل مسبقاً. استخدم تسجيل الدخول.';
  if(m.includes('weak-password'))return 'كلمة المرور ضعيفة؛ استخدم 6 أحرف أو أكثر.';
  if(m.includes('invalid-email'))return 'البريد الإلكتروني غير صحيح.';
  if(m.includes('wrong-password')||m.includes('invalid-credential'))return 'البريد أو كلمة المرور غير صحيحة.';
- if(m.includes('permission-denied'))return 'صلاحيات قاعدة البيانات لا تسمح بإتمام العملية. راجع قواعد Firebase.';
-
- return e.message;
+ if(m.includes('permission-denied'))return 'صلاحيات قاعدة البيانات لا تسمح بإتمام العملية. يجب مراجعة قواعد Firebase.';
+ if(m.includes('network-request-failed'))return 'الاتصال بالإنترنت غير مستقر. حاول مرة أخرى.';
+ return e.message||'حدث خطأ غير معروف.';
 }
 
 /* تسجيل الدخول */
 
 $('loginForm').addEventListener('submit',async e=>{
  e.preventDefault();
-
  if(!auth)return $('loginMessage').textContent='Firebase غير مربوط بعد.';
 
  const btn=e.submitter;
- btn.disabled=true;
+ if(btn)btn.disabled=true;
  $('loginMessage').textContent='جاري التحقق…';
-
  const d=Object.fromEntries(new FormData(e.target));
 
  try{
-  const c=await auth.signInWithEmailAndPassword(
-   d.email.trim(),d.password
-  );
-
+  const c=await auth.signInWithEmailAndPassword(d.email.trim(),d.password);
   const role=await resolveRole(c.user);
 
   if(role==='admin'){
    closeModal('loginModal');
    showPage('admin');
-   await loadAdminData();
-
   }else if(role==='technician'){
    closeModal('loginModal');
    renderTechAccount();
    showPage('techAccount');
-
   }else{
    await auth.signOut();
    $('loginMessage').textContent='هذا الحساب غير مسجل كإدارة أو فني.';
   }
-
  }catch(err){
   $('loginMessage').textContent=friendlyAuthError(err);
  }finally{
-  btn.disabled=false;
+  if(btn)btn.disabled=false;
  }
 });
 
@@ -930,6 +881,7 @@ async function logout(){
   await auth.signOut();
   isAdmin=false;
   currentTech=null;
+  requests=[];
   showPage('home');
  }catch(e){alert(e.message)}
 }
@@ -946,35 +898,27 @@ async function loadAdminData(){
   ]);
 
   const allReq=[];
-
   rs.forEach(userSnap=>{
    userSnap.forEach(item=>allReq.push(item.val()));
   });
-
   allReq.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
 
   techs=[];
-  ts.forEach(item=>{
-   techs.push({uid:item.key,...item.val()});
-  });
-
+  ts.forEach(item=>techs.push({uid:item.key,...item.val()}));
   requests=allReq;
 
   $('adminRequests').textContent=allReq.length;
   $('adminTechs').textContent=techs.length;
   $('adminUrgent').textContent=allReq.filter(r=>r.type==='عاجل').length;
 
-  $('adminRequestList').innerHTML=allReq.map(r=>
-   requestCard(r,true)
-  ).join('')||'<div class="empty">لا توجد طلبات.</div>';
+  $('adminRequestList').innerHTML=allReq.map(r=>requestCard(r,true)).join('')||
+   '<div class="empty">لا توجد طلبات.</div>';
 
   $('adminTechList').innerHTML=techs.map(t=>`
    <div class="item">
     <div class="item-head">
      <b>${esc(t.name)}</b>
-     <span class="status ${t.approved?'done':'urgent'}">
-      ${t.approved?'حساب نشط':'موقوف'}
-     </span>
+     <span class="status ${t.approved?'done':'urgent'}">${t.approved?'حساب نشط':'موقوف'}</span>
     </div>
     <p>
      ${esc(t.service)} · ${esc(t.city)} · ${esc(t.area)}<br>
@@ -995,24 +939,17 @@ async function loadAdminData(){
   `).join('')||'<div class="empty">لا يوجد فنيون مسجلون حالياً.</div>';
 
   renderAdminSubscriptions();
-
  }catch(e){
-  alert('تعذر تحميل لوحة الإدارة: '+e.message);
+  alert('تعذر تحميل لوحة الإدارة: '+friendlyAuthError(e));
  }
 }
 
-/* الاشتراكات - قسم مستقل */
-
 function renderAdminSubscriptions(){
- const list=techs;
-
- $('adminSubscriptionList').innerHTML=list.map(t=>`
+ $('adminSubscriptionList').innerHTML=techs.map(t=>`
   <div class="item">
    <div class="item-head">
     <b>${esc(t.name)}</b>
-    <span class="status ${t.subscriptionStatus==='فعال'?'done':'indigo'}">
-     ${esc(t.subscriptionStatus||'غير مفعل')}
-    </span>
+    <span class="status ${t.subscriptionStatus==='فعال'?'done':'indigo'}">${esc(t.subscriptionStatus||'غير مفعل')}</span>
    </div>
    <p>
     ${esc(t.service)} · ${esc(t.city)}<br>
@@ -1029,11 +966,7 @@ function renderAdminSubscriptions(){
 
 async function setSubscription(uid,status){
  if(!isAdmin)return;
-
- const msg=status==='فعال'?
- 'هل تحققت من استلام مبلغ الاشتراك وتريد تفعيله؟':
- 'هل تريد إيقاف اشتراك هذا الفني؟';
-
+ const msg=status==='فعال'?'هل تحققت من استلام مبلغ الاشتراك وتريد تفعيله؟':'هل تريد إيقاف اشتراك هذا الفني؟';
  if(!confirm(msg))return;
 
  try{
@@ -1041,73 +974,53 @@ async function setSubscription(uid,status){
    subscriptionStatus:status,
    subscriptionUpdatedAt:Date.now()
   });
-
   await loadAdminData();
   alert(status==='فعال'?'تم تفعيل الاشتراك.':'تم إيقاف الاشتراك.');
-
  }catch(e){
-  alert('تعذر تحديث الاشتراك: '+e.message);
+  alert('تعذر تحديث الاشتراك: '+friendlyAuthError(e));
  }
 }
 
-/* إيقاف الفني وإعادة تفعيله */
-
 async function suspendTech(uid){
  if(!isAdmin)return;
-
  if(!confirm('تأكيد إيقاف هذا الفني وإخفاء ملفه عن الزبائن؟'))return;
 
  try{
-  await db.ref('technicians/'+uid).update({
-   approved:false,
-   suspendedAt:Date.now()
-  });
-
-  await db.ref('publicTechnicians/'+uid).remove();
-
+  const updates={};
+  updates['technicians/'+uid+'/approved']=false;
+  updates['technicians/'+uid+'/suspendedAt']=Date.now();
+  updates['publicTechnicians/'+uid]=null;
+  await db.ref().update(updates);
   await loadAdminData();
   await loadPublicTechs();
-
   alert('تم إيقاف الفني وإخفاء ملفه.');
-
  }catch(e){
-  alert('تعذر إيقاف الفني: '+e.message);
+  alert('تعذر إيقاف الفني: '+friendlyAuthError(e));
  }
 }
 
 async function restoreTech(uid){
  if(!isAdmin)return;
-
  if(!confirm('إعادة إظهار هذا الفني للزبائن؟'))return;
 
  try{
   const s=await db.ref('technicians/'+uid).once('value');
   const t=s.val();
-
   if(!t)return;
 
-  await db.ref('technicians/'+uid).update({
-   approved:true
-  });
+  const updates={};
+  updates['technicians/'+uid+'/approved']=true;
+  updates['publicTechnicians/'+uid]={
+   name:t.name,phone:t.phone,service:t.service,city:t.city,
+   area:t.area,bio:t.bio||'',approved:true,createdAt:t.createdAt||Date.now()
+  };
 
-  await db.ref('publicTechnicians/'+uid).set({
-   name:t.name,
-   phone:t.phone,
-   service:t.service,
-   city:t.city,
-   area:t.area,
-   bio:t.bio||'',
-   approved:true,
-   createdAt:t.createdAt||Date.now()
-  });
-
+  await db.ref().update(updates);
   await loadAdminData();
   await loadPublicTechs();
-
   alert('تمت إعادة إظهار الفني.');
-
  }catch(e){
-  alert('تعذرت إعادة تفعيل الفني: '+e.message);
+  alert('تعذرت إعادة تفعيل الفني: '+friendlyAuthError(e));
  }
 }
 
@@ -1115,43 +1028,34 @@ async function restoreTech(uid){
 
 async function loadPublicTechs(){
  if(!db)return;
-
  try{
   const s=await db.ref('publicTechnicians').once('value');
-
   publicTechs=[];
-
   s.forEach(x=>{
    const t={uid:x.key,...x.val()};
    if(t.approved===true)publicTechs.push(t);
   });
-
   renderTechs();
   fillRequestTechnicians();
-
  }catch(e){
-  $('techGrid').innerHTML='<div class="empty">تعذر تحميل الفنيين حالياً.</div>';
+  $('techGrid').innerHTML='<div class="empty">تعذر تحميل الفنيين حالياً. راجع صلاحيات قراءة دليل الفنيين.</div>';
  }
 }
 
 function fillRequestTechnicians(){
  const select=$('requestTech');
  if(!select)return;
-
  const old=select.value;
-
  select.innerHTML='<option value="">بدون اختيار فني محدد</option>'+
  publicTechs.map(t=>
   `<option value="${esc(t.uid)}">${esc(t.name)} — ${esc(t.service)} — ${esc(t.city)}</option>`
  ).join('');
-
  if(publicTechs.some(t=>t.uid===old))select.value=old;
 }
 
 function renderTechs(){
  const q=($('techSearch')?.value||'').toLowerCase();
  const f=$('techFilter')?.value||'';
-
  const list=publicTechs.filter(t=>
   (!f||t.service===f)&&
   (!q||(t.name+t.service+t.area+t.city).toLowerCase().includes(q))
@@ -1177,9 +1081,7 @@ function renderTechs(){
 
 function contactTech(uid){
  const t=publicTechs.find(x=>x.uid===uid);
-
  if(!t||!t.phone)return alert('رقم واتساب هذا الفني غير متوفر.');
-
  const message='السلام عليكم، حصلت على رقمك من منصة صخر – بيتي للصيانة. أحتاج خدمة '+t.service+'.';
  window.open(whatsappLink(t.phone,message),'_blank');
 }
@@ -1188,7 +1090,6 @@ function contactTech(uid){
 
 function renderTechAccount(){
  if(!currentTech)return;
-
  const active=currentTech.approved===true;
  const used=Number(currentTech.freeJobsUsed||0);
  const completed=Number(currentTech.completedJobs||0);
@@ -1197,9 +1098,7 @@ function renderTechAccount(){
  $('techAccountInfo').innerHTML=`
   <div class="item-head">
    <b>${esc(currentTech.name)}</b>
-   <span class="status ${active?'done':'urgent'}">
-    ${active?'حساب نشط':'الحساب موقوف'}
-   </span>
+   <span class="status ${active?'done':'urgent'}">${active?'حساب نشط':'الحساب موقوف'}</span>
   </div>
   <p>
    التخصص: ${esc(currentTech.service)}<br>
@@ -1212,25 +1111,17 @@ function renderTechAccount(){
   <p class="notice ${active?'good':'bad'}">
    ${active?'ملفك ظاهر للزبائن في دليل الفنيين.':'تم إيقاف حسابك حالياً، وملفك غير ظاهر للزبائن. راجع إدارة صخر.'}
   </p>
-  ${!subscribed&&used>=3?
-   '<p class="notice bad">استنفدت الأعمال المجانية الثلاثة. راجع الإدارة لتفعيل الاشتراك.</p>':
-   ''
-  }
+  ${!subscribed&&used>=3?'<p class="notice bad">استنفدت الأعمال المجانية الثلاثة. راجع الإدارة لتفعيل الاشتراك.</p>':''}
  `;
-
  loadTechJobs();
 }
 
 async function loadTechJobs(){
  if(!currentTech||!db)return;
-
  try{
   const s=await db.ref('technicianJobs/'+currentTech.uid).once('value');
-
   techJobs=[];
-
   s.forEach(x=>techJobs.push(x.val()));
-
   techJobs.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
 
   $('techJobsList').innerHTML=techJobs.map(r=>`
@@ -1246,14 +1137,27 @@ async function loadTechJobs(){
      تاريخ الطلب: ${dateText(r.createdAt)}<br>
      التفاصيل: ${esc(r.details)}
     </p>
-    <p class="notice">بيانات اتصال الزبون لا تظهر في هذه القائمة العامة.</p>
+    <p class="notice">بيانات اتصال الزبون لا تظهر في هذه القائمة.</p>
    </div>
   `).join('')||'<div class="empty">لا توجد طلبات مسندة إليك حالياً.</div>';
-
  }catch(e){
-  $('techJobsList').innerHTML='<div class="empty">تعذر تحميل الطلبات المسندة.</div>';
+  $('techJobsList').innerHTML='<div class="empty">تعذر تحميل الطلبات المسندة. راجع صلاحيات قاعدة البيانات.</div>';
  }
 }
+
+/* إغلاق النوافذ */
+
+document.querySelectorAll('.modal').forEach(modal=>{
+ modal.addEventListener('click',e=>{
+  if(e.target===modal)modal.classList.remove('show');
+ });
+});
+
+document.addEventListener('keydown',e=>{
+ if(e.key==='Escape'){
+  document.querySelectorAll('.modal.show').forEach(m=>m.classList.remove('show'));
+ }
+});
 
 /* التشغيل */
 
