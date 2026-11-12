@@ -3,269 +3,245 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#101b2b">
 <title>صخر | بيتي للصيانة</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap');
-:root{--bg:#0b1422;--panel:#121f31;--panel2:#192940;--gold:#eab653;--text:#f5f6fa;--muted:#9cabc0;--line:#26374d;--green:#35c795;--red:#ff6875}
+:root{--bg:#0b1422;--panel:#121f31;--panel2:#1a2b40;--gold:#eab653;--white:#f6f7fa;--muted:#9cabc0;--line:#293a50;--green:#42c99b;--red:#f36c79}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:'Cairo',sans-serif}
+body{margin:0;background:var(--bg);color:var(--white);font-family:Cairo,sans-serif}
 button,input,select,textarea{font:inherit}
 button{cursor:pointer}
-header{height:76px;padding:0 5%;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);background:#101b2b;position:sticky;top:0;z-index:10}
+header{height:72px;background:#101b2b;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 5%;position:sticky;top:0;z-index:10}
 .logo{display:flex;align-items:center;gap:10px;font-size:21px;font-weight:900}
-.logo-icon{background:var(--gold);color:#172132;border-radius:13px;width:43px;height:43px;display:grid;place-items:center;font-size:24px}
-.logo small{display:block;color:var(--muted);font-size:10px;font-weight:500;margin-top:-5px}
-.header-actions{display:flex;gap:9px;align-items:center}
+.logo-icon{width:42px;height:42px;border-radius:13px;background:var(--gold);color:#172132;display:grid;place-items:center;font-size:25px}
+.logo small{display:block;font-size:10px;color:var(--muted);font-weight:500;margin-top:-5px}
 .btn{border:0;border-radius:12px;padding:11px 17px;font-weight:800}
 .primary{background:var(--gold);color:#172132}
-.secondary{background:var(--panel2);color:var(--text);border:1px solid var(--line)}
-.danger{background:#482530;color:#ff9da5}
-main{max-width:1200px;margin:auto;padding:28px 5% 100px}
-.hero{background:linear-gradient(120deg,#20344e,#142338 65%,#263a50);border:1px solid #334963;border-radius:25px;padding:32px;display:grid;grid-template-columns:1.4fr .6fr;gap:20px;align-items:center;overflow:hidden}
-.eyebrow{color:var(--gold);font-weight:800;font-size:13px}
-h1{font-size:clamp(27px,4vw,43px);line-height:1.45;margin:10px 0}
-.hero p{color:#c1cddd;line-height:2;margin:0 0 20px}
-.hero-art{font-size:100px;text-align:center;filter:drop-shadow(0 15px 20px #0006)}
+.secondary{background:var(--panel2);color:white;border:1px solid var(--line)}
+.danger{background:#482630;color:#ffadb4}
+main{max-width:1180px;margin:auto;padding:25px 5% 100px}
+.hero{border:1px solid #354a62;border-radius:24px;padding:30px;background:linear-gradient(115deg,#253c56,#142338 65%,#1d3046);display:grid;grid-template-columns:1.5fr .5fr;align-items:center;gap:20px}
+.eyebrow{color:var(--gold);font-size:13px;font-weight:800}
+h1{font-size:clamp(28px,4vw,43px);line-height:1.5;margin:8px 0}
+.hero p{color:#c1cddd;line-height:2;font-size:14px}
+.hero-art{text-align:center;font-size:100px}
 .hero-actions{display:flex;gap:10px;flex-wrap:wrap}
-.section-head{display:flex;justify-content:space-between;align-items:center;margin:30px 0 15px;gap:10px}
-.section-head h2{font-size:20px;margin:0}
-.section-head span{color:var(--muted);font-size:12px}
+.section-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:25px 0 14px}
+.section-head h2{font-size:19px;margin:0}
+.section-head small{color:var(--muted)}
 .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:17px}
 .service{cursor:pointer;transition:.2s}
 .service:hover,.tech:hover{transform:translateY(-3px);border-color:var(--gold)}
-.service .emoji{font-size:30px}
-.service h3{margin:8px 0 2px;font-size:15px}
-.service p,.muted{color:var(--muted);font-size:12px;margin:0}
-.quick{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:17px}
+.emoji{font-size:29px}
+.service h3{font-size:15px;margin:8px 0 2px}
+.muted{color:var(--muted);font-size:12px;line-height:1.8}
+.quick{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
 .quick .card{display:flex;align-items:center;gap:12px}
 .quick b{font-size:23px;color:var(--gold)}
 .quick span{font-size:12px;color:var(--muted)}
-.toolbar{display:flex;gap:10px;flex-wrap:wrap}
+.tabs{display:flex;gap:8px;overflow:auto;padding:5px 0;margin:20px 0}
+.tab{white-space:nowrap;background:var(--panel);border:1px solid var(--line);color:var(--muted);border-radius:11px;padding:10px 15px}
+.tab.active{background:var(--gold);color:#172132;border-color:var(--gold);font-weight:900}
+.page{display:none}.page.active{display:block}
 input,select,textarea{width:100%;background:#0c1828;color:white;border:1px solid var(--line);border-radius:11px;padding:12px;outline:none}
 input:focus,select:focus,textarea:focus{border-color:var(--gold)}
-textarea{min-height:90px;resize:vertical}
-label{display:block;font-size:13px;color:#c3cede;margin:12px 0 6px}
+textarea{min-height:95px;resize:vertical}
+label{display:block;color:#c3cede;font-size:13px;margin:12px 0 6px}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
 .full{grid-column:1/-1}
-.tech{transition:.2s}
-.tech-top{display:flex;justify-content:space-between;align-items:center}
-.avatar{width:47px;height:47px;background:#263d58;border-radius:15px;display:grid;place-items:center;font-size:23px}
-.rating{color:var(--gold);font-size:13px}
-.tag{display:inline-block;background:#203b3a;color:#78dfba;border-radius:20px;padding:4px 9px;font-size:11px;margin:8px 0}
-.price{font-weight:900;color:var(--gold);margin:8px 0}
-.tabs{display:flex;gap:8px;overflow:auto;margin:20px 0}
-.tab{white-space:nowrap;border:1px solid var(--line);background:var(--panel);color:var(--muted);padding:9px 15px;border-radius:12px}
-.tab.active{background:var(--gold);color:#172132;border-color:var(--gold);font-weight:900}
-.panel{display:none}.panel.active{display:block}
-.list{display:grid;gap:11px}
+.list{display:grid;gap:12px}
 .item{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:16px}
-.item-head{display:flex;justify-content:space-between;gap:10px;align-items:center}
-.status{font-size:11px;border-radius:20px;padding:5px 10px;background:#29384b;color:#d7e3f2}
-.status.done{background:#173c34;color:#72dfb9}
-.status.urgent{background:#49252e;color:#ff9ca5}
-.item p{color:var(--muted);font-size:13px;line-height:1.8}
+.item-head{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.status{background:#29394d;color:#d8e4f2;padding:5px 10px;border-radius:20px;font-size:11px}
+.status.done{background:#173d34;color:#75e0b9}
+.status.urgent{background:#49252e;color:#ffabb2}
+.item p{font-size:13px;color:var(--muted);line-height:1.9}
 .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
 .actions button{font-size:12px;padding:8px 12px}
+.tag{display:inline-block;background:#203b3a;color:#78dfba;padding:4px 9px;border-radius:20px;font-size:11px;margin:8px 0}
+.avatar{width:47px;height:47px;border-radius:15px;background:#263d58;display:grid;place-items:center;font-size:23px}
+.tech-top{display:flex;align-items:center;justify-content:space-between}
+.rating{color:var(--gold);font-size:13px}
+.search{max-width:260px}
 .empty{text-align:center;padding:35px;color:var(--muted);background:var(--panel);border-radius:15px}
-footer{text-align:center;border-top:1px solid var(--line);padding:25px;color:var(--muted);font-size:12px}
-.bottom-nav{display:none}
-.modal{position:fixed;inset:0;background:#000a;z-index:30;display:none;align-items:center;justify-content:center;padding:15px}
+.notice{font-size:11px;color:var(--muted);line-height:1.9;margin-top:12px}
+footer{text-align:center;border-top:1px solid var(--line);padding:24px;color:var(--muted);font-size:12px}
+.modal{display:none;position:fixed;inset:0;background:#000b;z-index:30;align-items:center;justify-content:center;padding:15px}
 .modal.show{display:flex}
-.modal-box{background:var(--panel);border:1px solid var(--line);border-radius:20px;width:min(520px,100%);max-height:90vh;overflow:auto;padding:22px}
-.close{float:left;background:none;border:0;color:white;font-size:24px}
-.notice{font-size:12px;color:var(--muted);line-height:1.8;margin-top:12px}
-.search{max-width:270px}
-@media(max-width:800px){.grid{grid-template-columns:repeat(2,1fr)}.hero{grid-template-columns:1fr}.hero-art{display:none}.quick{grid-template-columns:1fr 1fr}.quick .card:last-child{display:none}main{padding:20px 4% 95px}}
-@media(max-width:520px){header{height:65px;padding:0 4%}.header-actions .secondary{display:none}.logo{font-size:17px}.logo-icon{width:38px;height:38px}main{padding-top:17px}.hero{padding:23px 19px}.form-grid{grid-template-columns:1fr}.full{grid-column:auto}.bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#101b2b;border-top:1px solid var(--line);z-index:15;justify-content:space-around;padding:9px 4px calc(9px + env(safe-area-inset-bottom))}.bottom-nav button{border:0;background:none;color:var(--muted);font-size:11px}.bottom-nav button span{display:block;font-size:20px}.bottom-nav button.active{color:var(--gold)}}
+.modal-box{background:var(--panel);border:1px solid var(--line);border-radius:20px;width:min(540px,100%);max-height:90vh;overflow:auto;padding:22px}
+.close{float:left;background:none;border:0;color:white;font-size:25px}
+.bottom-nav{display:none}
+@media(max-width:800px){main{padding:18px 4% 95px}.hero{grid-template-columns:1fr;padding:23px}.hero-art{display:none}.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){header{height:64px;padding:0 4%}.logo{font-size:17px}.logo-icon{width:38px;height:38px}.header-actions .secondary{display:none}.quick{grid-template-columns:1fr 1fr}.quick .card:last-child{display:none}.form-grid{grid-template-columns:1fr}.full{grid-column:auto}.bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:15;background:#101b2b;border-top:1px solid var(--line);justify-content:space-around;padding:8px 2px calc(8px + env(safe-area-inset-bottom))}.bottom-nav button{border:0;background:none;color:var(--muted);font-size:10px}.bottom-nav button span{display:block;font-size:20px}.bottom-nav button.active{color:var(--gold)}}
 </style>
 </head>
 <body>
 <header>
  <div class="logo"><div class="logo-icon">⌂</div><div>صخر<small>بيتي للصيانة</small></div></div>
  <div class="header-actions">
-  <button class="btn secondary" onclick="openModal('loginModal')">دخول الحساب</button>
-  <button class="btn primary" onclick="openModal('requestModal')">اطلب فني +</button>
+  <button class="btn secondary" onclick="showPage('track')">متابعة طلب</button>
+  <button class="btn primary" onclick="openRequest()">اطلب فني +</button>
  </div>
 </header>
 
 <main>
-<section class="hero">
- <div>
-  <div class="eyebrow">خدمات بيتك صارت أقرب</div>
-  <h1>كل فني تحتاجه<br>بمكان واحد.</h1>
-  <p>كهرباء، سباكة، تبريد، تنظيف وصيانة منزلية. اختار الخدمة، شوف الفنيين، واطلب الخدمة بسهولة.</p>
-  <div class="hero-actions">
-   <button class="btn primary" onclick="openModal('requestModal')">اطلب خدمة الآن</button>
-   <button class="btn secondary" onclick="showPanel('technicians')">تصفح الفنيين</button>
+<section id="home" class="page active">
+ <div class="hero">
+  <div>
+   <div class="eyebrow">خدمات بيتك بمكان واحد</div>
+   <h1>بيتك يحتاج صيانة؟<br>صخر يوصلك بالفني.</h1>
+   <p>اختار الخدمة، اشرح المشكلة، وخلي الفني المناسب يتواصل وياك.</p>
+   <div class="hero-actions">
+    <button class="btn primary" onclick="openRequest()">اطلب خدمة الآن</button>
+    <button class="btn secondary" onclick="showPage('services')">استعرض الخدمات</button>
+   </div>
   </div>
+  <div class="hero-art">🛠️</div>
  </div>
- <div class="hero-art">🛠️</div>
-</section>
-
-<div class="quick">
- <div class="card"><b id="requestCount">0</b><span>طلب مسجل على هذا الجهاز</span></div>
- <div class="card"><b id="techCount">4</b><span>فنيون تجريبيون</span></div>
- <div class="card"><b>24/7</b><span>استقبال الطلبات</span></div>
-</div>
-
-<div class="section-head"><h2>شنو تحتاج ببيتك؟</h2><span>اختار نوع الخدمة</span></div>
-<div class="grid" id="servicesGrid"></div>
-
-<div class="tabs">
- <button class="tab active" data-panel="home" onclick="showPanel('home')">الرئيسية</button>
- <button class="tab" data-panel="technicians" onclick="showPanel('technicians')">الفنيون</button>
- <button class="tab" data-panel="requests" onclick="showPanel('requests')">طلباتي</button>
- <button class="tab" data-panel="join" onclick="showPanel('join')">سجل كفني</button>
- <button class="tab" data-panel="admin" onclick="showPanel('admin')">الإدارة</button>
-</div>
-
-<section id="home" class="panel active">
- <div class="section-head"><h2>شلون تشتغل المنصة؟</h2></div>
- <div class="grid">
-  <div class="card"><div class="emoji">📍</div><h3>حدد موقعك</h3><p class="muted">اختار المحافظة والمنطقة.</p></div>
-  <div class="card"><div class="emoji">🔧</div><h3>حدد الخدمة</h3><p class="muted">اختار نوع العطل أو الصيانة.</p></div>
-  <div class="card"><div class="emoji">👨‍🔧</div><h3>اختر الفني</h3><p class="muted">راجع بيانات الفني وعروضه.</p></div>
-  <div class="card"><div class="emoji">⭐</div><h3>قيّم الخدمة</h3><p class="muted">شارك تجربتك بعد إكمال العمل.</p></div>
+ <div class="quick">
+  <div class="card"><b id="homeRequests">0</b><span>طلباتك المحفوظة</span></div>
+  <div class="card"><b>24/7</b><span>استقبال الطلبات</span></div>
+  <div class="card"><b>18</b><span>محافظة قابلة للتفعيل</span></div>
  </div>
- <div class="section-head"><h2>تحتاج فني بشكل عاجل؟</h2></div>
- <div class="card" style="display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap">
-  <div><b>طلب صيانة عاجل</b><p class="muted">للأعطال التي تحتاج استجابة سريعة.</p></div>
-  <button class="btn danger" onclick="openRequest('عاجل')">طلب عاجل الآن</button>
+ <div class="section-head"><h2>الخدمات الرئيسية</h2><small>اختار حتى تبدأ</small></div>
+ <div class="grid" id="homeServices"></div>
+ <div class="section-head"><h2>تحتاج فني بصورة عاجلة؟</h2></div>
+ <div class="card" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+  <div><b>طلب صيانة عاجل</b><div class="muted">للأعطال التي تحتاج استجابة سريعة</div></div>
+  <button class="btn danger" onclick="openRequest('عاجل')">اطلب فني عاجل</button>
  </div>
 </section>
 
-<section id="technicians" class="panel">
- <div class="section-head"><h2>الفنيون المسجلون</h2><input class="search" id="techSearch" placeholder="ابحث عن فني..." oninput="renderTechs()"></div>
- <div class="toolbar" style="margin-bottom:15px"><select id="techFilter" onchange="renderTechs()"><option value="">كل التخصصات</option></select></div>
- <div class="grid" id="techGrid"></div>
+<section id="services" class="page">
+ <div class="section-head"><h2>كل خدمات الصيانة</h2><small>اختار نوع الخدمة</small></div>
+ <div class="grid" id="allServices"></div>
 </section>
 
-<section id="requests" class="panel">
- <div class="section-head"><h2>طلباتي</h2><span>الطلبات المحفوظة على هذا الجهاز</span></div>
+<section id="technicians" class="page">
+ <div class="section-head"><h2>الفنيون</h2><small>الفنيون المسجلون بعد الربط</small></div>
+ <div class="toolbar"><input class="search" id="techSearch" placeholder="ابحث عن فني أو تخصص..." oninput="renderTechs()"><select class="search" id="techFilter" onchange="renderTechs()"><option value="">كل التخصصات</option></select></div>
+ <div class="grid" id="techGrid" style="margin-top:15px"></div>
+ <p class="notice">لن تظهر أسماء أو تقييمات فنيين تجريبية على أنها حقيقية. هذه القائمة تنتظر ربط تسجيل الفنيين الفعلي.</p>
+</section>
+
+<section id="track" class="page">
+ <div class="section-head"><h2>متابعة طلبك</h2></div>
+ <div class="card">
+  <label>رقم متابعة الطلب</label>
+  <input id="trackingCode" placeholder="اكتب رقم الطلب">
+  <button class="btn primary" style="width:100%;margin-top:12px" onclick="trackRequest()">بحث عن الطلب</button>
+ </div>
+ <div id="trackingResult" style="margin-top:15px"></div>
+</section>
+
+<section id="requests" class="page">
+ <div class="section-head"><h2>طلباتي على هذا الجهاز</h2><button class="btn primary" onclick="openRequest()">طلب جديد +</button></div>
  <div id="requestList" class="list"></div>
 </section>
 
-<section id="join" class="panel">
- <div class="section-head"><h2>انضم إلى صخر كفني</h2><span>اعرض خدماتك للزبائن</span></div>
+<section id="join" class="page">
+ <div class="section-head"><h2>انضم كفني إلى صخر</h2></div>
  <div class="card">
   <form id="techForm">
    <div class="form-grid">
-    <div><label>الاسم الكامل</label><input name="name" required placeholder="اسم الفني"></div>
+    <div><label>الاسم الكامل</label><input name="name" required></div>
     <div><label>رقم الهاتف</label><input name="phone" required placeholder="07xxxxxxxxx"></div>
-    <div><label>التخصص</label><select name="service" id="joinService" required></select></div>
-    <div><label>المحافظة</label><select name="city" required><option>المثنى</option><option>بغداد</option><option>البصرة</option><option>ذي قار</option><option>ميسان</option><option>النجف</option><option>كربلاء</option><option>بابل</option><option>واسط</option><option>القادسية</option><option>ديالى</option><option>الأنبار</option><option>نينوى</option><option>كركوك</option><option>صلاح الدين</option><option>أربيل</option><option>السليمانية</option><option>دهوك</option></select></div>
-    <div class="full"><label>المنطقة / القضاء</label><input name="area" placeholder="مثلاً الرميثة"></div>
-    <div class="full"><label>نبذة عن خبرتك</label><textarea name="bio" placeholder="اكتب خبرتك وطبيعة عملك"></textarea></div>
+    <div><label>التخصص</label><select name="service" id="joinService"></select></div>
+    <div><label>المحافظة</label><select name="city" class="cities"></select></div>
+    <div class="full"><label>المنطقة</label><input name="area" required></div>
+    <div class="full"><label>خبرتك وطبيعة عملك</label><textarea name="bio"></textarea></div>
    </div>
-   <button class="btn primary" style="margin-top:15px;width:100%">إرسال طلب التسجيل</button>
+   <button class="btn primary" style="width:100%;margin-top:15px">إرسال طلب التسجيل</button>
   </form>
-  <p class="notice">التسجيل هنا تجريبي ومحفوظ على الجهاز. قبول الفني والتحقق من هويته يحتاجان نظام إدارة وربطاً فعلياً.</p>
+  <p class="notice">طلب التسجيل لا يعني اعتماد الفني مباشرة؛ يجب التحقق من بياناته قبل ظهوره للزبائن.</p>
  </div>
- <div class="section-head"><h2>اشتراك الفني</h2></div>
+ <div class="section-head"><h2>باقات اشتراك الفني</h2></div>
  <div class="grid">
   <div class="card"><span class="tag">شهري</span><h2>5,000 د.ع</h2><p class="muted">اشتراك لمدة شهر.</p></div>
-  <div class="card"><span class="tag">سنوي</span><h2>50,000 د.ع</h2><p class="muted">توفير 10,000 دينار مقارنة بالدفع الشهري لمدة سنة.</p></div>
+  <div class="card"><span class="tag">سنوي</span><h2>50,000 د.ع</h2><p class="muted">توفير 10,000 دينار بالسنة.</p></div>
  </div>
 </section>
 
-<section id="admin" class="panel">
- <div class="section-head"><h2>لوحة الإدارة التجريبية</h2><span>عرض بيانات هذا الجهاز</span></div>
+<section id="admin" class="page">
+ <div class="section-head"><h2>لوحة الإدارة التجريبية</h2></div>
  <div class="quick">
   <div class="card"><b id="adminRequests">0</b><span>الطلبات</span></div>
-  <div class="card"><b id="adminTechs">0</b><span>طلبات تسجيل الفنيين</span></div>
+  <div class="card"><b id="adminTechs">0</b><span>طلبات الفنيين</span></div>
   <div class="card"><b id="adminUrgent">0</b><span>طلبات عاجلة</span></div>
  </div>
- <div class="section-head"><h2>طلبات تسجيل الفنيين</h2></div>
+ <div class="section-head"><h2>طلبات الفنيين</h2></div>
  <div id="adminTechList" class="list"></div>
- <div class="section-head"><h2>كل الطلبات</h2></div>
+ <div class="section-head"><h2>طلبات الزبائن</h2></div>
  <div id="adminRequestList" class="list"></div>
- <button class="btn danger" onclick="clearData()">مسح البيانات التجريبية</button>
- <p class="notice">هذه لوحة عرض محلية وليست لوحة إدارة آمنة. لا تستخدمها لإدارة بيانات زبائن حقيقية قبل إضافة تسجيل دخول وصلاحيات على الخادم.</p>
+ <p class="notice">هذه لوحة محلية غير محمية، وليست لوحة إدارة إنتاجية. يجب إضافة تسجيل دخول وصلاحيات قبل استقبال بيانات حقيقية.</p>
 </section>
 </main>
 
-<footer>صخر – بيتي للصيانة © <span id="year"></span><br>خدمات بيتك أقرب مما تتصور</footer>
-
 <nav class="bottom-nav">
- <button class="active" onclick="showPanel('home')"><span>⌂</span>الرئيسية</button>
- <button onclick="showPanel('technicians')"><span>👨‍🔧</span>الفنيون</button>
- <button onclick="openModal('requestModal')"><span>＋</span>اطلب فني</button>
- <button onclick="showPanel('requests')"><span>📋</span>طلباتي</button>
- <button onclick="showPanel('join')"><span>🧰</span>انضم كفني</button>
+ <button class="active" data-page="home" onclick="showPage('home')"><span>⌂</span>الرئيسية</button>
+ <button data-page="services" onclick="showPage('services')"><span>🔧</span>الخدمات</button>
+ <button onclick="openRequest()"><span>＋</span>اطلب فني</button>
+ <button data-page="requests" onclick="showPage('requests')"><span>📋</span>طلباتي</button>
+ <button data-page="join" onclick="showPage('join')"><span>👨‍🔧</span>للفنيين</button>
 </nav>
 
 <div class="modal" id="requestModal">
  <div class="modal-box">
   <button class="close" onclick="closeModal('requestModal')">×</button>
-  <h2>اطلب فني للصيانة</h2>
+  <h2>طلب خدمة صيانة</h2>
+  <p class="muted">ما تحتاج تسوي حساب. املأ معلومات الطلب ورقم هاتفك للتواصل.</p>
   <form id="requestForm">
    <div class="form-grid">
     <div class="full"><label>نوع الخدمة</label><select name="service" id="requestService" required></select></div>
-    <div><label>الاسم</label><input name="name" required></div>
-    <div><label>رقم الهاتف</label><input name="phone" required placeholder="07xxxxxxxxx"></div>
-    <div><label>المحافظة</label><select name="city" required><option>المثنى</option><option>بغداد</option><option>البصرة</option><option>ذي قار</option><option>ميسان</option><option>النجف</option><option>كربلاء</option><option>بابل</option><option>واسط</option><option>القادسية</option><option>ديالى</option><option>الأنبار</option><option>نينوى</option><option>كركوك</option><option>صلاح الدين</option><option>أربيل</option><option>السليمانية</option><option>دهوك</option></select></div>
-    <div><label>المنطقة</label><input name="area" required placeholder="القضاء أو المنطقة"></div>
+    <div class="full"><label>رقم الهاتف للتواصل *</label><input name="phone" required inputmode="tel" pattern="07[0-9]{9}" placeholder="07xxxxxxxxx"></div>
+    <div class="full"><label>الاسم (اختياري)</label><input name="name" placeholder="اسمك إذا تحب"></div>
+    <div><label>المحافظة</label><select name="city" class="cities" required></select></div>
+    <div><label>المنطقة / القضاء</label><input name="area" required placeholder="مثلاً الرميثة"></div>
     <div class="full"><label>نوع الطلب</label><select name="type"><option>عادي</option><option>عاجل</option></select></div>
-    <div class="full"><label>تفاصيل العطل</label><textarea name="details" required placeholder="اشرح المشكلة باختصار"></textarea></div>
+    <div class="full"><label>تفاصيل المشكلة</label><textarea name="details" required placeholder="اشرح العطل حتى يعرف الفني شنو يحتاج"></textarea></div>
    </div>
-   <button class="btn primary" style="width:100%;margin-top:15px">تأكيد الطلب</button>
-   <p class="notice">إرسال الطلب في هذه النسخة يحفظه محلياً فقط ولا يرسل إشعاراً للفنيين.</p>
+   <button class="btn primary" style="width:100%;margin-top:15px">إرسال طلب الصيانة</button>
+   <p class="notice">رقم هاتفك يُستخدم للتواصل بخصوص الطلب. في هذه النسخة التجريبية تُحفظ المعلومات على نفس الجهاز فقط.</p>
   </form>
  </div>
 </div>
 
-<div class="modal" id="loginModal">
- <div class="modal-box">
-  <button class="close" onclick="closeModal('loginModal')">×</button>
-  <h2>الدخول إلى صخر</h2>
-  <label>رقم الهاتف</label><input id="loginPhone" placeholder="07xxxxxxxxx">
-  <label>نوع الحساب</label><select id="loginRole"><option>زبون</option><option>فني</option></select>
-  <button class="btn primary" style="width:100%;margin-top:15px" onclick="demoLogin()">متابعة تجريبية</button>
-  <p class="notice">هذه متابعة تجريبية وليست مصادقة حقيقية أو حماية للحساب.</p>
- </div>
-</div>
+<footer>صخر – بيتي للصيانة © <span id="year"></span><br>خدمات بيتك أقرب مما تتصور</footer>
 
 <script>
 const services=[
- ['⚡','كهربائيات','تمديدات وأعطال كهربائية'],
- ['🚿','سباكة','تسربات وأنابيب وصحيات'],
- ['❄️','تبريد وتكييف','مكيفات وتبريد'],
+ ['⚡','كهربائيات','أعطال وتمديدات كهربائية'],
+ ['🚿','سباكة','أنابيب وتسربات وصحيات'],
+ ['❄️','تبريد وتكييف','مكيفات وأجهزة تبريد'],
  ['🧱','بناء وترميم','ترميم وصيانة منزلية'],
  ['🎨','صبغ وديكور','صبغ وجدران وديكورات'],
  ['🪚','نجارة','أبواب وأثاث وخشب'],
  ['🧹','تنظيف','تنظيف منازل وخزانات'],
  ['🔩','أجهزة منزلية','غسالات وثلاجات وأجهزة']
 ];
-const demoTechs=[
- {name:'علي الكعبي',service:'كهربائيات',city:'المثنى',area:'الرميثة',rating:4.9,phone:'07700000001',bio:'خبرة في الأعمال الكهربائية المنزلية'},
- {name:'حيدر جاسم',service:'سباكة',city:'المثنى',area:'السماوة',rating:4.8,phone:'07700000002',bio:'صيانة أنابيب وتسربات المياه'},
- {name:'مصطفى حسين',service:'تبريد وتكييف',city:'بغداد',area:'الكرادة',rating:4.7,phone:'07700000003',bio:'صيانة وتنظيف المكيفات'},
- {name:'سعد محمد',service:'أجهزة منزلية',city:'البصرة',area:'العشار',rating:4.9,phone:'07700000004',bio:'صيانة الأجهزة المنزلية'}
-];
-const get=(key,def=[])=>{try{return JSON.parse(localStorage.getItem('sakhr_'+key))||def}catch{return def}};
-const save=(key,val)=>localStorage.setItem('sakhr_'+key,JSON.stringify(val));
-let requests=get('requests'),techs=get('techs'),offers=get('offers'),reviews=get('reviews');
-const allTechs=()=>[...demoTechs,...techs];
+const cities=['المثنى','بغداد','البصرة','ذي قار','ميسان','النجف','كربلاء','بابل','واسط','القادسية','ديالى','الأنبار','نينوى','كركوك','صلاح الدين','أربيل','السليمانية','دهوك'];
+const read=k=>{try{return JSON.parse(localStorage.getItem('sakhr_'+k))||[]}catch{return []}};
+const write=(k,v)=>localStorage.setItem('sakhr_'+k,JSON.stringify(v));
+let requests=read('requests'),techs=read('techs');
+function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function init(){
  document.getElementById('year').textContent=new Date().getFullYear();
- document.getElementById('servicesGrid').innerHTML=services.map(s=>`<div class="card service" onclick="openRequest('عادي','${s[1]}')"><div class="emoji">${s[0]}</div><h3>${s[1]}</h3><p>${s[2]}</p></div>`).join('');
- const options=services.map(s=>`<option>${s[1]}</option>`).join('');
- document.getElementById('requestService').innerHTML=options;
- document.getElementById('joinService').innerHTML=options;
- document.getElementById('techFilter').innerHTML='<option value="">كل التخصصات</option>'+options;
- renderTechs();renderRequests();renderAdmin();
+ const serviceOptions=services.map(s=>`<option value="${s[1]}">${s[1]}</option>`).join('');
+ ['requestService','joinService','techFilter'].forEach(id=>document.getElementById(id).innerHTML=(id==='techFilter'?'<option value="">كل التخصصات</option>':'')+serviceOptions);
+ document.querySelectorAll('.cities').forEach(el=>el.innerHTML='<option value="">اختر المحافظة</option>'+cities.map(c=>`<option>${c}</option>`).join(''));
+ const cards=services.map(s=>`<div class="card service" onclick="openRequest('عادي','${s[1]}')"><div class="emoji">${s[0]}</div><h3>${s[1]}</h3><p class="muted">${s[2]}</p></div>`).join('');
+ document.getElementById('homeServices').innerHTML=cards;
+ document.getElementById('allServices').innerHTML=cards;
+ renderRequests();renderTechs();renderAdmin();
 }
-function showPanel(id){
- document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id===id));
- document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.panel===id));
- document.querySelectorAll('.bottom-nav button').forEach(b=>b.classList.remove('active'));
- const index=['home','technicians','requests','join'].indexOf(id);
- if(index>=0)document.querySelectorAll('.bottom-nav button')[index].classList.add('active');
- if(id==='admin')renderAdmin();
+function showPage(id){
+ document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));
+ document.querySelectorAll('.bottom-nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));
  window.scrollTo({top:0,behavior:'smooth'});
+ if(id==='admin')renderAdmin();
 }
 function openModal(id){document.getElementById(id).classList.add('show')}
 function closeModal(id){document.getElementById(id).classList.remove('show')}
@@ -278,58 +254,47 @@ function openRequest(type='عادي',service=''){
 document.getElementById('requestForm').addEventListener('submit',e=>{
  e.preventDefault();
  const d=Object.fromEntries(new FormData(e.target));
- const r={id:Date.now(),...d,status:'بانتظار الفني',created:new Date().toLocaleString('ar-IQ'),offers:[]};
- requests.unshift(r);save('requests',requests);e.target.reset();closeModal('requestModal');renderRequests();renderAdmin();
- alert('تم حفظ طلبك في هذه النسخة التجريبية.');
- showPanel('requests');
+ const r={id:'SK-'+Date.now().toString().slice(-8),...d,name:d.name.trim()||'زبون',status:'تم استلام الطلب',created:new Date().toLocaleString('ar-IQ')};
+ requests.unshift(r);write('requests',requests);
+ e.target.reset();closeModal('requestModal');renderRequests();renderAdmin();
+ alert('تم استلام طلبك. احتفظ برقم المتابعة: '+r.id);
+ document.getElementById('trackingCode').value=r.id;
+ showPage('track');
 });
-document.getElementById('techForm').addEventListener('submit',e=>{
- e.preventDefault();
- const d=Object.fromEntries(new FormData(e.target));
- techs.unshift({...d,id:Date.now(),rating:0,approved:false});
- save('techs',techs);e.target.reset();renderTechs();renderAdmin();
- alert('تم تسجيل طلبك محلياً. يحتاج مراجعة الإدارة.');
-});
-function renderTechs(){
- const q=(document.getElementById('techSearch')?.value||'').toLowerCase();
- const f=document.getElementById('techFilter')?.value||'';
- const list=allTechs().filter(t=>(!q||(t.name+t.service+t.area).toLowerCase().includes(q))&&(!f||t.service===f));
- document.getElementById('techCount').textContent=allTechs().length;
- document.getElementById('techGrid').innerHTML=list.map(t=>`
- <div class="card tech">
- <div class="tech-top"><div class="avatar">👨‍🔧</div><span class="rating">★ ${Number(t.rating||0).toFixed(1)}</span></div>
- <h3>${esc(t.name)}</h3><span class="tag">${esc(t.service)}</span>
- <p class="muted">📍 ${esc(t.area||'')} – ${esc(t.city||'')}</p>
- <p class="muted">${esc(t.bio||'فني خدمات منزلية')}</p>
- <button class="btn primary" style="width:100%;margin-top:12px" onclick="contactTech('${esc(t.phone||'')}')">عرض رقم التواصل</button>
- </div>`).join('')||'<div class="empty">ماكو فنيون مطابقون للبحث حالياً.</div>';
-}
-function contactTech(phone){if(phone)alert('رقم الفني: '+phone);else alert('رقم التواصل غير متوفر.')}
 function renderRequests(){
- document.getElementById('requestCount').textContent=requests.length;
- document.getElementById('requestList').innerHTML=requests.map(r=>requestCard(r,false)).join('')||'<div class="empty">ما عندك طلبات حالياً. ابدأ بطلب خدمة من صخر.</div>';
+ document.getElementById('homeRequests').textContent=requests.length;
+ document.getElementById('requestList').innerHTML=requests.map(r=>requestCard(r,false)).join('')||'<div class="empty">ما عندك طلبات بعد. اطلب أول خدمة من صخر.</div>';
 }
 function requestCard(r,admin){
- return `<div class="item">
- <div class="item-head"><b>${esc(r.service)} – ${esc(r.city)}</b><span class="status ${r.type==='عاجل'?'urgent':r.status==='مكتمل'?'done':''}">${esc(r.status)}</span></div>
- <p>👤 ${esc(r.name)} · 📞 ${esc(r.phone)}<br>📍 ${esc(r.area)} · ${esc(r.type)}<br>${esc(r.details)}</p>
- <p class="muted">رقم الطلب: ${r.id} · ${esc(r.created)}</p>
- ${r.offers?.length?`<p>العروض: ${r.offers.length}</p>`:''}
- ${admin?`<div class="actions"><button class="btn secondary" onclick="changeStatus(${r.id},'قيد التنفيذ')">قيد التنفيذ</button><button class="btn primary" onclick="changeStatus(${r.id},'مكتمل')">إكمال</button></div>`:''}
- </div>`;
+ return `<div class="item"><div class="item-head"><b>${esc(r.service)} – ${esc(r.city)}</b><span class="status ${r.type==='عاجل'?'urgent':r.status==='مكتمل'?'done':''}">${esc(r.status)}</span></div>
+ <p>رقم المتابعة: <b>${esc(r.id)}</b><br>📍 ${esc(r.area)} · ${esc(r.type)}<br>📞 ${admin?esc(r.phone):'رقم التواصل محفوظ ضمن الطلب'}<br>${esc(r.details)}</p>
+ ${admin?`<div class="actions"><button class="btn secondary" onclick="setStatus('${r.id}','قيد التنفيذ')">قيد التنفيذ</button><button class="btn primary" onclick="setStatus('${r.id}','مكتمل')">إكمال الطلب</button></div>`:''}</div>`;
+}
+function trackRequest(){
+ const id=document.getElementById('trackingCode').value.trim();
+ const r=requests.find(x=>x.id===id);
+ document.getElementById('trackingResult').innerHTML=r?requestCard(r,false):'<div class="empty">ما لقينا طلب بهذا الرقم على هذا الجهاز.</div>';
+}
+function setStatus(id,status){requests=requests.map(r=>r.id===id?{...r,status}:r);write('requests',requests);renderRequests();renderAdmin()}
+document.getElementById('techForm').addEventListener('submit',e=>{
+ e.preventDefault();const d=Object.fromEntries(new FormData(e.target));
+ techs.unshift({...d,id:Date.now(),approved:false});
+ write('techs',techs);e.target.reset();renderTechs();renderAdmin();
+ alert('وصل طلب تسجيلك. يبقى بانتظار مراجعة الإدارة.');
+});
+function renderTechs(){
+ const q=(document.getElementById('techSearch')?.value||'').toLowerCase(),f=document.getElementById('techFilter')?.value||'';
+ const list=techs.filter(t=>t.approved&&(!f||t.service===f)&&(!q||(t.name+t.service+t.area).toLowerCase().includes(q)));
+ document.getElementById('techGrid').innerHTML=list.map(t=>`<div class="card tech"><div class="tech-top"><div class="avatar">👨‍🔧</div><span class="rating">فني معتمد</span></div><h3>${esc(t.name)}</h3><span class="tag">${esc(t.service)}</span><p class="muted">📍 ${esc(t.area)} – ${esc(t.city)}</p><p class="muted">${esc(t.bio||'')}</p></div>`).join('')||'<div class="empty">ماكو فنيون معتمدون ظاهرون حالياً. نعرض الفنيين بعد التسجيل والتحقق منهم.</div>';
 }
 function renderAdmin(){
  document.getElementById('adminRequests').textContent=requests.length;
- document.getElementById('adminTechs').textContent=techs.length;
+ document.getElementById('adminTechs').textContent=techs.filter(t=>!t.approved).length;
  document.getElementById('adminUrgent').textContent=requests.filter(r=>r.type==='عاجل').length;
  document.getElementById('adminRequestList').innerHTML=requests.map(r=>requestCard(r,true)).join('')||'<div class="empty">لا توجد طلبات.</div>';
- document.getElementById('adminTechList').innerHTML=techs.map(t=>`<div class="item"><b>${esc(t.name)}</b><p>${esc(t.service)} · ${esc(t.city)} · ${esc(t.phone)}</p><span class="status">${t.approved?'مقبول':'بانتظار المراجعة'}</span><div class="actions"><button class="btn primary" onclick="approveTech(${t.id})">قبول التسجيل</button></div></div>`).join('')||'<div class="empty">لا توجد طلبات تسجيل.</div>';
+ document.getElementById('adminTechList').innerHTML=techs.map(t=>`<div class="item"><b>${esc(t.name)}</b><p>${esc(t.service)} · ${esc(t.city)} · ${esc(t.phone)}</p><span class="status">${t.approved?'تمت الموافقة':'بانتظار المراجعة'}</span><div class="actions"><button class="btn primary" onclick="approveTech(${t.id})">اعتماد الفني</button></div></div>`).join('')||'<div class="empty">لا توجد طلبات تسجيل فنيين.</div>';
 }
-function changeStatus(id,status){requests=requests.map(r=>r.id===id?{...r,status}:r);save('requests',requests);renderRequests();renderAdmin()}
-function approveTech(id){techs=techs.map(t=>t.id===id?{...t,approved:true}:t);save('techs',techs);renderTechs();renderAdmin()}
-function clearData(){if(confirm('متأكد تريد مسح جميع البيانات التجريبية من هذا الجهاز؟')){['requests','techs','offers','reviews'].forEach(k=>localStorage.removeItem('sakhr_'+k));requests=[];techs=[];offers=[];reviews=[];init();renderAdmin()}}
-function demoLogin(){const phone=document.getElementById('loginPhone').value.trim();if(!phone){alert('اكتب رقم الهاتف');return}localStorage.setItem('sakhr_demo_user',JSON.stringify({phone,role:document.getElementById('loginRole').value}));closeModal('loginModal');alert('تم الدخول التجريبي على هذا الجهاز.')}
-function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function approveTech(id){techs=techs.map(t=>t.id===id?{...t,approved:true}:t);write('techs',techs);renderTechs();renderAdmin()}
 init();
 </script>
 </body>
