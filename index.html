@@ -452,24 +452,53 @@ if(currentUser&&currentUser.uid===uid)await loadMyRequests();
 $('techForm').addEventListener('submit',async e=>{
 e.preventDefault();
 if(!auth){alert('اربط Firebase أولاً.');return}
-const btn=e.submitter;btn.disabled=true;
+const btn=e.submitter;
+btn.disabled=true;
 const d=Object.fromEntries(new FormData(e.target));
+
 try{
-const cred=await auth.createUserWithEmailAndPassword(d.email.trim(),d.password);
+const cred=await auth.createUserWithEmailAndPassword(
+d.email.trim(),d.password
+);
+
+const uid=cred.user.uid;
+
 const record={
-uid:cred.user.uid,name:d.name.trim(),phone:d.phone,email:d.email.trim(),
-service:d.service,city:d.city,area:d.area,bio:d.bio||'',
-approved:false,subscriptionStatus:'غير مفعل',createdAt:Date.now()
+uid,
+name:d.name.trim(),
+phone:d.phone,
+email:d.email.trim(),
+service:d.service,
+city:d.city,
+area:d.area,
+bio:d.bio||'',
+approved:true,
+subscriptionStatus:'غير مفعل',
+createdAt:Date.now()
 };
-await db.ref('technicians/'+cred.user.uid).set(record);
+
+await db.ref('technicians/'+uid).set(record);
+
+await db.ref('publicTechnicians/'+uid).set({
+name:record.name,
+service:record.service,
+city:record.city,
+area:record.area,
+bio:record.bio
+});
+
 currentTech=record;
-alert('تم إنشاء حسابك وإرسال طلبك للإدارة للمراجعة.');
+
+alert('تم إنشاء حسابك وظهر ملفك مباشرة للزبائن.');
 e.target.reset();
 renderTechAccount();
 showPage('techAccount');
+
 }catch(err){
 alert('تعذر تسجيل الفني: '+friendlyAuthError(err));
-}finally{btn.disabled=false}
+}finally{
+btn.disabled=false;
+}
 });
 
 function friendlyAuthError(e){
