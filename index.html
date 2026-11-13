@@ -1216,11 +1216,60 @@ async function loadAdminData(){
   requests=[]; technicians=[];
   r.forEach(u=>u.forEach(q=>requests.push({...q.val(),uid:u.key,id:q.key})));
   t.forEach(s=>technicians.push({...s.val(),uid:s.key}));
-  renderAdmin();
+  // تفعيل أو إلغاء تفعيل اشتراك الفني من تليفون المدير
+async function toggleTechSubscription(techUid, currentStatus) {
+    const newStatus = currentStatus === "فعال" ? "غير فعال" : "فعال";
+    try {
+        await db.ref("technicians/" + techUid).update({ subscriptionStatus: newStatus });
+        await db.ref("publicTechnicians/" + techUid).update({ subscriptionStatus: newStatus });
+        alert("تم تحديث حالة اشتراك الفني إلى: " + newStatus);
+        loadAdminData();
+    } catch(e) {
+        alert("خطأ: " + e.message);
+    }
+}
+
+// تصفير عدد الأعمال المجانية للفني
+async function resetTechFreeJobs(techUid) {
+    try {
+        await db.ref("technicians/" + techUid).update({ freeJobsUsed: 0 });
+        await db.ref("publicTechnicians/" + techUid).update({ freeJobsUsed: 0 });
+        alert("تم تصفير عدد الأعمال المجانية للفني بنجاح.");
+        loadAdminData();
+    } catch(e) {
+        alert("خطأ: " + e.message);
+    }
+}
  }catch(e){}
 }
 
-function renderAdmin(){
+ if($("adminStats")) {
+  $("adminStats").innerHTML=`
+  <div class="card"><div class="muted">إجمالي الطلبات</div><div class="stat">${requests.length}</div></div>
+  <div class="card"><div class="muted">إجمالي الفنيين</div><div class="stat">${technicians.length}</div></div>`;
+ }
+ if($("adminRequests")) {
+  $("adminRequests").innerHTML=requests.length?requests.map(r=>`
+  <div class="list-item">
+   <h4>${esc(r.service)} — ${esc(r.status)}</h4>
+   <div class="muted">الزبون: ${esc(r.name)} | الهاتف: ${esc(r.phone)}</div>
+  </div>`).join(""):'<div class="empty">لا توجد طلبات.</div>';
+ }
+ if($("adminTechs")) {
+  $("adminTechs").innerHTML = technicians.length ? technicians.map(t=>`
+  <div class="list-item" style="background:#fff9ef;">
+   <h4>${esc(t.name)} — <span class="badge">${esc(t.service)}</span></h4>
+   <div class="muted">الهاتف: ${esc(t.phone)} | المحافظة: ${esc(t.city)} / ${esc(t.area)}</div>
+   <div class="muted" style="margin-top:5px;">حالة الاشتراك: <b>${esc(t.subscriptionStatus || "غير فعال")}</b> | الأعمال المجانية المستهلكة: <b>${Number(t.freeJobsUsed || 0)} من 3</b></div>
+   <div class="actions" style="margin-top:10px;">
+    <button class="btn ${t.subscriptionStatus === 'فعال' ? 'danger' : 'primary'}" onclick="toggleTechSubscription('${esc(t.uid)}','${esc(t.subscriptionStatus || "غير فعال")}')">
+     ${t.subscriptionStatus === 'فعال' ? 'إلغاء تفعيل الاشتراك' : 'تفعيل الاشتراك'}
+    </button>
+    <button class="btn light" onclick="resetTechFreeJobs('${esc(t.uid)}')">تصفير الأعمال المجانية</button>
+   </div>
+  </div>`).join("") : '<div class="empty">لا يوجد فنيون مسجلون.</div>';
+ }
+}
  if($("adminStats")) {
   $("adminStats").innerHTML=`
   <div class="card"><div class="muted">إجمالي الطلبات</div><div class="stat">${requests.length}</div></div>
