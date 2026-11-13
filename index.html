@@ -33,7 +33,7 @@ body {
   min-height: 100vh;
 }
 
-/* العلامة المائية الخلفية بالاسم logo.jpg بدون إطار */
+/* العلامة المائية الخلفية بالاسم logo.png بدون إطار */
 body::before {
   content: "";
   position: fixed;
@@ -42,7 +42,7 @@ body::before {
   transform: translate(-50%, -50%);
   width: min(480px, 85vw);
   height: min(480px, 85vw);
-  background-image: url('logo.jpg');
+  background-image: url('logo.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -169,7 +169,7 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
 
 <header>
  <div class="brand" onclick="showSection('home')">
-  <img src="logo.jpg" alt="لوغو صخر الرسمي">
+  <img src="logo.png" alt="لوغو صخر الرسمي">
  </div>
  <nav id="navMenu">
   <button onclick="showSection('home')">الرئيسية</button>
