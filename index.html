@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -7,250 +8,112 @@
 <title>صخر | بيتي للصيانة</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap');
-:root{
- --wine:#650d2c;--wine2:#3d061b;--red:#a81740;
- --gold:#ffc329;--gold2:#d98b12;--copper:#bd672e;
- --cream:#fff5df;--bg:#fff8f1;--line:#ead5b8;
- --green:#16845b;--danger:#bd263f;
-}
+:root{--wine:#650d2c;--wine2:#3d061b;--red:#a81740;--gold:#ffc329;--gold2:#d98b12;--cream:#fff5df;--bg:#fff8f1;--line:#ead5b8;--green:#16845b;--danger:#bd263f}
 *{box-sizing:border-box}
 body{margin:0;font-family:'Cairo',sans-serif;background:var(--bg);color:#351323}
 button,input,select,textarea{font:inherit}
 button{cursor:pointer;border:0}
-header{
- background:linear-gradient(120deg,var(--wine2),var(--wine));
- color:white;padding:12px 4%;display:flex;align-items:center;
- justify-content:space-between;gap:12px;flex-wrap:wrap;
- box-shadow:0 5px 18px #39051b55
-}
-.brand{display:flex;align-items:center;gap:10px}
-.logo{width:55px;height:55px;object-fit:contain}
-.brand h1{font-size:23px;margin:0;font-weight:900}
-.brand small{display:block;color:var(--gold);font-size:12px}
-nav{display:flex;gap:7px;flex-wrap:wrap}
-nav button{
- color:white;background:#ffffff12;padding:9px 12px;border-radius:12px;
- border:1px solid #ffc65b55;font-size:13px;
- box-shadow:0 4px 0 #290313,0 6px 12px #0004;
- transition:.15s
-}
-nav button:active,.btn:active{transform:translateY(3px);box-shadow:0 1px 0 #290313}
-.hero-poster{position:relative;width:min(100%,760px);margin:18px auto 0;overflow:hidden;border-radius:18px;box-shadow:0 12px 30px #4a071d35}
-.hero-poster img{display:block;width:100%;height:auto}
-.poster-action{
- position:absolute;border:0;background:transparent;color:transparent;
- z-index:2;border-radius:40px
-}
-.poster-order{left:3%;top:44%;width:94%;height:8%}
-.poster-service{top:53%;height:15%;width:30%}
-.poster-service.s1{right:2%}
-.poster-service.s2{right:35%}
-.poster-service.s3{right:68%}
-.poster-service.s4{right:2%;top:69%}
-.poster-service.s5{right:35%;top:69%}
-.poster-service.s6{right:68%;top:69%}
-.poster-menu{top:1%;left:1%;width:14%;height:6%}
-.poster-order:focus-visible,.poster-service:focus-visible,.poster-menu:focus-visible{outline:4px solid #fff}
-.container{width:min(1100px,92%);margin:30px auto}
-.section-title{font-size:23px;color:var(--wine);margin:0 0 18px}
+header{background:linear-gradient(120deg,var(--wine2),var(--wine));color:white;padding:12px 4%;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;box-shadow:0 5px 18px #39051b55}
+.brand{display:flex;align-items:center;gap:10px}.logo{width:55px;height:55px;object-fit:contain}.brand h1{font-size:23px;margin:0;font-weight:900}.brand small{display:block;color:var(--gold);font-size:12px}
+nav{display:flex;gap:7px;flex-wrap:wrap}nav button{color:white;background:#ffffff12;padding:9px 12px;border-radius:12px;border:1px solid #ffc65b55;font-size:13px;box-shadow:0 4px 0 #290313}
+.hero-poster{position:relative;width:min(100%,760px);margin:18px auto 0;overflow:hidden;border-radius:18px;box-shadow:0 12px 30px #4a071d35}.hero-poster img{display:block;width:100%;height:auto}
+.poster-action{position:absolute;border:0;background:transparent;color:transparent;z-index:2;border-radius:40px}.poster-order{left:3%;top:44%;width:94%;height:8%}.poster-service{height:15%;width:23%}
+.poster-service.s1{right:1%;top:53%}.poster-service.s2{right:26%;top:53%}.poster-service.s3{right:51%;top:53%}.poster-service.s4{right:76%;top:53%}.poster-service.s5{right:1%;top:69%}.poster-service.s6{right:26%;top:69%}.poster-service.s7{right:51%;top:69%}.poster-service.s8{right:76%;top:69%}.poster-menu{top:1%;left:1%;width:14%;height:6%}
+.container{width:min(1100px,92%);margin:30px auto}.section-title{font-size:23px;color:var(--wine);margin:0 0 18px}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px}
-.card{
- background:linear-gradient(145deg,#fff,#fff7e9);border:1px solid var(--line);
- border-radius:17px;padding:19px;box-shadow:0 7px 0 #d9b98e,0 11px 22px #4b071d12
-}
-.card h3{margin:0 0 8px;color:var(--wine)}
-.service-icon{font-size:30px}
-.service-card{text-align:center;transition:.2s;cursor:pointer}
-.service-card:hover{transform:translateY(-4px)}
-.service-card:active{transform:translateY(2px)}
-.service-card h3{font-size:16px}
-.btn{
- padding:11px 18px;border-radius:12px;font-weight:900;display:inline-block;
- text-decoration:none;text-align:center;border:1px solid #ffffff55;
- box-shadow:0 5px 0 #6e3010,0 8px 15px #3c071d35;transition:.15s
-}
-.primary{background:linear-gradient(#ffdb57,#e99a12);color:#45101c}
-.secondary{background:linear-gradient(#9d1740,#650d2c);color:white;box-shadow:0 5px 0 #350416}
-.dark{background:var(--wine2);color:white}
-.light{background:#fff0cf;color:var(--wine);box-shadow:0 5px 0 #d7b77f}
-.danger{background:#ffe4e8;color:var(--danger);box-shadow:0 5px 0 #d9a4ad}
-.field{margin:13px 0}
-.field label{display:block;font-weight:800;font-size:13px;margin-bottom:6px;color:var(--wine)}
-.field input,.field select,.field textarea{
- width:100%;padding:12px;border:1px solid #dec7a9;border-radius:11px;
- background:#fff;outline:none;color:#351323
-}
-.field input:focus,.field select:focus,.field textarea:focus{
- border-color:var(--gold2);box-shadow:0 0 0 3px #e99a1225
-}
-.field textarea{min-height:90px;resize:vertical}
-.row{display:flex;gap:10px;flex-wrap:wrap}
-.row>*{flex:1;min-width:130px}
-.hidden{display:none!important}
-.notice{padding:13px;border-radius:11px;background:#fff0cf;color:#713b0b;margin:12px 0;font-size:13px;line-height:1.8;border:1px solid #f0d49a}
-.success{background:#e5f6ed;color:#176a48}
-.error{background:#fff0f0;color:#a32e39}
-.badge{display:inline-block;padding:4px 10px;border-radius:20px;background:#fff0cf;color:#874b0c;font-size:11px;font-weight:900}
-.badge.green{background:#e5f6ed;color:#16845b}
-.badge.orange{background:#fff1df;color:#a65b08}
-.tech-card{display:flex;flex-direction:column;gap:9px}
-.tech-card .btn{width:100%}
-.muted{color:#8b7180;font-size:13px}
-.empty{text-align:center;padding:30px;color:#987f8b;background:white;border-radius:14px}
-.modal{position:fixed;inset:0;background:#210311d9;display:flex;align-items:center;justify-content:center;padding:15px;z-index:10}
-.modal-box{background:#fff9ef;border:2px solid #e4b24d;border-radius:18px;padding:22px;width:min(520px,100%);max-height:90vh;overflow:auto;box-shadow:0 12px 35px #0006}
-.modal-head{display:flex;justify-content:space-between;align-items:center;color:var(--wine)}
-.close{background:#f5e4d2;border-radius:8px;padding:5px 11px}
-.list-item{border:1px solid var(--line);padding:15px;border-radius:13px;margin:11px 0;background:white;box-shadow:0 4px 0 #ead7bd}
-.list-item h4{margin:0 0 7px;color:var(--wine)}
-.actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:11px}
-.actions button{font-size:12px;padding:8px 11px;border-radius:9px;box-shadow:0 3px 0 #8c6a4a}
-.stat{font-size:25px;font-weight:900;color:var(--wine)}
-footer{
- background:linear-gradient(120deg,var(--wine2),var(--wine));
- color:#ffe6a6;text-align:center;padding:27px;margin-top:45px;
- font-size:13px;line-height:2;border-top:3px solid var(--gold)
-}
-hr{border:0;border-top:1px solid var(--line);margin:20px 0}
-button:disabled{opacity:.55;cursor:not-allowed}
-@media(max-width:600px){
- header{justify-content:center;text-align:center}
- nav{justify-content:center}
- nav button{padding:7px 9px;font-size:12px}
- .brand{justify-content:center}
- .container{margin:24px auto}
- .hero-poster{margin-top:8px;border-radius:0}
-}
+.card{background:linear-gradient(145deg,#fff,#fff7e9);border:1px solid var(--line);border-radius:17px;padding:19px;box-shadow:0 7px 0 #d9b98e,0 11px 22px #4b071d12}
+.card h3{margin:0 0 8px;color:var(--wine)}.service-icon{font-size:30px}.service-card{text-align:center;cursor:pointer}.service-card h3{font-size:16px}
+.btn{padding:11px 18px;border-radius:12px;font-weight:900;display:inline-block;text-decoration:none;text-align:center;border:1px solid #ffffff55;box-shadow:0 5px 0 #6e3010,0 8px 15px #3c071d35}
+.primary{background:linear-gradient(#ffdb57,#e99a12);color:#45101c}.secondary{background:linear-gradient(#9d1740,#650d2c);color:white;box-shadow:0 5px 0 #350416}.dark{background:var(--wine2);color:white}.light{background:#fff0cf;color:var(--wine);box-shadow:0 5px 0 #d7b77f}.danger{background:#ffe4e8;color:var(--danger);box-shadow:0 5px 0 #d9a4ad}
+.field{margin:13px 0}.field label{display:block;font-weight:800;font-size:13px;margin-bottom:6px;color:var(--wine)}
+.field input,.field select,.field textarea{width:100%;padding:12px;border:1px solid #dec7a9;border-radius:11px;background:#fff;outline:none;color:#351323}.field textarea{min-height:90px;resize:vertical}
+.row{display:flex;gap:10px;flex-wrap:wrap}.row>*{flex:1;min-width:130px}.hidden{display:none!important}
+.notice{padding:13px;border-radius:11px;background:#fff0cf;color:#713b0b;margin:12px 0;font-size:13px;line-height:1.8;border:1px solid #f0d49a}.success{background:#e5f6ed;color:#176a48}.error{background:#fff0f0;color:#a32e39}
+.badge{display:inline-block;padding:4px 10px;border-radius:20px;background:#fff0cf;color:#874b0c;font-size:11px;font-weight:900}.badge.green{background:#e5f6ed;color:#16845b}.badge.orange{background:#fff1df;color:#a65b08}
+.tech-card{display:flex;flex-direction:column;gap:9px}.tech-card .btn{width:100%}.muted{color:#8b7180;font-size:13px}.empty{text-align:center;padding:30px;color:#987f8b;background:white;border-radius:14px}
+.modal{position:fixed;inset:0;background:#210311d9;display:flex;align-items:center;justify-content:center;padding:15px;z-index:10}.modal-box{background:#fff9ef;border:2px solid #e4b24d;border-radius:18px;padding:22px;width:min(560px,100%);max-height:90vh;overflow:auto;box-shadow:0 12px 35px #0006}
+.modal-head{display:flex;justify-content:space-between;align-items:center;color:var(--wine)}.close{background:#f5e4d2;border-radius:8px;padding:5px 11px}
+.list-item{border:1px solid var(--line);padding:15px;border-radius:13px;margin:11px 0;background:white;box-shadow:0 4px 0 #ead7bd}.list-item h4{margin:0 0 7px;color:var(--wine)}.actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:11px}.actions button{font-size:12px;padding:8px 11px;border-radius:9px;box-shadow:0 3px 0 #8c6a4a}
+.stat{font-size:25px;font-weight:900;color:var(--wine)}.tech-choice{border:1px solid var(--line);border-radius:12px;padding:12px;margin:9px 0;background:#fff}.tech-choice.selected{border:2px solid var(--gold2);background:#fff6df}
+.avatar{width:92px;height:92px;border-radius:50%;object-fit:cover;border:3px solid var(--gold);background:#fff0cf;display:block;margin:5px auto 12px}.avatar.small{width:65px;height:65px;margin:0}
+.stars{color:#e5a000;font-size:22px;letter-spacing:2px}.rating-button{background:none;color:#d99a00;font-size:28px;padding:2px}.rating-button.active{color:#f0a900}
+footer{background:linear-gradient(120deg,var(--wine2),var(--wine));color:#ffe6a6;text-align:center;padding:27px;margin-top:45px;font-size:13px;line-height:2;border-top:3px solid var(--gold)}
+hr{border:0;border-top:1px solid var(--line);margin:20px 0}button:disabled{opacity:.55;cursor:not-allowed}
+@media(max-width:600px){header{justify-content:center;text-align:center}nav{justify-content:center}nav button{padding:7px 9px;font-size:12px}.brand{justify-content:center}.container{margin:24px auto}.hero-poster{margin-top:8px;border-radius:0}}
 </style>
 </head>
 <body>
-
 <header>
- <div class="brand">
-  <img class="logo" src="logo.png" alt="شعار صخر" onerror="this.style.display='none'">
-  <div><h1>صخر</h1><small>خدمات الصيانة المنزلية</small></div>
- </div>
+ <div class="brand"><img class="logo" src="logo.png" alt="شعار صخر" onerror="this.style.display='none'"><div><h1>صخر</h1><small>خدمات الصيانة المنزلية</small></div></div>
  <nav>
-  <button onclick="showSection('home')">الرئيسية</button>
-  <button onclick="showSection('services')">خدماتنا</button>
-  <button onclick="showSection('technicians')">الفنيون</button>
-  <button onclick="showSection('track')">متابعة الطلب</button>
-  <button onclick="openLogin()">دخول</button>
+  <button onclick="showSection('home')">الرئيسية</button><button onclick="showSection('services')">خدماتنا</button><button onclick="showSection('technicians')">الفنيون</button><button onclick="showSection('track')">متابعة الطلب</button><button onclick="openLogin()">دخول</button>
  </nav>
 </header>
-
 <main>
 <section id="home">
  <div class="hero-poster">
-  <img src="sakhr-home.jpg" alt="صخر بيتي للصيانة - خدمات الصيانة المنزلية">
-  <button class="poster-action poster-menu" aria-label="فتح الخدمات" onclick="showSection('services')">القائمة</button>
-  <button class="poster-action poster-order" aria-label="اطلب خدمتك الآن" onclick="openRequest()">اطلب الآن</button>
-  <button class="poster-action poster-service s1" aria-label="سباكة" onclick="chooseService('سباكة')">سباكة</button>
-  <button class="poster-action poster-service s2" aria-label="دهان وديكور" onclick="chooseService('صبغ وديكور')">دهان وديكور</button>
-  <button class="poster-action poster-service s3" aria-label="تبريد وتكييف" onclick="chooseService('تبريد وتكييف')">تكييف</button>
-  <button class="poster-action poster-service s4" aria-label="بناء وترميم" onclick="chooseService('بناء وترميم')">بناء وترميم</button>
-  <button class="poster-action poster-service s5" aria-label="صيانة عامة" onclick="chooseService('أجهزة منزلية')">صيانة عامة</button>
-  <button class="poster-action poster-service s6" aria-label="كهربائيات" onclick="chooseService('كهربائيات')">كهربائيات</button>
- </div>
- <div class="container">
-  <h2 class="section-title">خدمات صخر</h2>
-  <div class="grid" id="homeServices"></div>
-  <div style="text-align:center;margin-top:25px">
-   <button class="btn primary" onclick="openRequest()">اطلب خدمة الآن</button>
-   <button class="btn secondary" onclick="showSection('technicians')">تصفح الفنيين</button>
-  </div>
+  <img src="sakhr-home.jpg" alt="صخر بيتي للصيانة">
+  <button class="poster-action poster-menu" onclick="showSection('services')">القائمة</button>
+  <button class="poster-action poster-order" onclick="quickOrder()">طلب سريع</button>
+  <button class="poster-action poster-service s1" onclick="chooseService('سباكة')">سباكة</button>
+  <button class="poster-action poster-service s2" onclick="chooseService('صبغ وديكور')">صبغ وديكور</button>
+  <button class="poster-action poster-service s3" onclick="chooseService('تبريد وتكييف')">تبريد وتكييف</button>
+  <button class="poster-action poster-service s4" onclick="chooseService('بناء وترميم')">بناء وترميم</button>
+  <button class="poster-action poster-service s5" onclick="chooseService('أجهزة منزلية')">أجهزة منزلية</button>
+  <button class="poster-action poster-service s6" onclick="chooseService('كهربائيات')">كهربائيات</button>
+  <button class="poster-action poster-service s7" onclick="chooseService('نجارة')">نجارة</button>
+  <button class="poster-action poster-service s8" onclick="chooseService('تنظيف')">تنظيف</button>
  </div>
 </section>
-
-<section id="services" class="container hidden">
- <h2 class="section-title">خدماتنا</h2>
- <div class="grid" id="allServices"></div>
- <div style="text-align:center;margin-top:22px"><button class="btn primary" onclick="openRequest()">اطلب خدمة</button></div>
-</section>
-
-<section id="technicians" class="container hidden">
- <h2 class="section-title">الفنيون المسجلون</h2>
- <p class="muted">تواصل مع الفني عبر واتساب بعد اختيار الخدمة المناسبة.</p>
- <div class="grid" id="publicTechList"><div class="empty">جارٍ تحميل الفنيين...</div></div>
-</section>
-
+<section id="services" class="container hidden"><h2 class="section-title">خدماتنا</h2><div class="grid" id="allServices"></div></section>
+<section id="technicians" class="container hidden"><h2 class="section-title">الفنيون المسجلون</h2><div class="grid" id="publicTechList"><div class="empty">جارٍ تحميل الفنيين...</div></div></section>
 <section id="track" class="container hidden">
- <h2 class="section-title">متابعة طلب الصيانة</h2>
- <div class="card">
-  <div class="field"><label>رقم الطلب</label><input id="trackId" placeholder="أدخل رقم الطلب"></div>
-  <button class="btn secondary" onclick="trackRequest()">متابعة الطلب</button>
-  <div id="trackResult"></div>
- </div>
+ <h2 class="section-title">متابعة طلب الصيانة</h2><div class="card"><div class="field"><label>رقم الطلب</label><input id="trackId" placeholder="أدخل رقم الطلب"></div><button class="btn secondary" onclick="trackRequest()">متابعة الطلب</button><div id="trackResult"></div></div>
 </section>
-
 <section id="join" class="container hidden">
- <h2 class="section-title">انضم إلى فنيي صخر</h2>
- <div class="card">
-  <div class="notice">للفني 3 أعمال مكتملة مجاناً، وبعدها يحتاج إلى اشتراك فعّال لمواصلة استقبال الأعمال.</div>
-  <div class="field"><label>الاسم الكامل</label><input id="regName"></div>
-  <div class="field"><label>رقم واتساب الفني</label><input id="regPhone" inputmode="tel"></div>
-  <div class="row">
-   <div class="field"><label>المحافظة</label><select id="regCity"><option value="">اختر المحافظة</option></select></div>
-   <div class="field"><label>القضاء</label><select id="regArea" disabled><option value="">اختر المحافظة أولاً</option></select></div>
-  </div>
-  <div class="field"><label>الخدمة</label><select id="regService"></select></div>
-  <div class="field"><label>نبذة عن خبرتك</label><textarea id="regBio"></textarea></div>
-  <div class="field"><label>البريد الإلكتروني</label><input id="regEmail" type="email"></div>
-  <div class="field"><label>كلمة المرور</label><input id="regPassword" type="password"></div>
-  <button class="btn primary" onclick="registerTech()">إنشاء حساب فني</button>
-  <div id="regMessage"></div>
+ <h2 class="section-title">انضم إلى فنيي صخر</h2><div class="card">
+ <div class="notice">للفني 3 أعمال مكتملة مجاناً، وبعدها يحتاج إلى اشتراك فعّال لمواصلة استقبال الأعمال.</div>
+ <div class="field"><label>الاسم الكامل</label><input id="regName"></div><div class="field"><label>رقم واتساب الفني</label><input id="regPhone" inputmode="tel"></div>
+ <div class="row"><div class="field"><label>المحافظة</label><select id="regCity"><option value="">اختر المحافظة</option></select></div><div class="field"><label>القضاء</label><select id="regArea" disabled><option value="">اختر المحافظة أولاً</option></select></div></div>
+ <div class="field"><label>المنطقة أو الحي</label><input id="regNeighborhood"></div><div class="field"><label>الخدمة</label><select id="regService"></select></div>
+ <div class="field"><label>نبذة عن خبرتك</label><textarea id="regBio"></textarea></div>
+ <div class="field"><label>الصورة الشخصية للفني</label><input id="regPhoto" type="file" accept="image/*"><small class="muted">اختر صورة واضحة بصيغة JPG أو PNG.</small><img id="regPreview" class="avatar hidden" alt="معاينة الصورة"></div>
+ <div class="field"><label>البريد الإلكتروني</label><input id="regEmail" type="email"></div><div class="field"><label>كلمة المرور</label><input id="regPassword" type="password"></div>
+ <button class="btn primary" onclick="registerTech()">إنشاء حساب فني</button><div id="regMessage"></div>
  </div>
 </section>
-
 <section id="techAccount" class="container hidden">
- <h2 class="section-title">حساب الفني</h2>
- <div id="techSummary" class="card"></div>
- <div id="techJobsArea"><h3>الأعمال المسندة إليك</h3><div id="techJobs"></div></div>
+ <h2 class="section-title">حساب الفني</h2><div id="techSummary" class="card"></div>
+ <div id="techJobsArea"><h3>طلبات الزبائن المرسلة إليك</h3><div id="techJobs"></div></div>
  <button class="btn danger" onclick="logout()">تسجيل الخروج</button>
 </section>
-
 <section id="admin" class="container hidden">
- <h2 class="section-title">لوحة إدارة صخر</h2>
- <div class="grid" id="adminStats"></div><hr>
- <h3>طلبات الزبائن</h3><div id="adminRequests"></div><hr>
- <h3>إدارة الفنيين والاشتراكات</h3><div id="adminTechs"></div>
+ <h2 class="section-title">لوحة إدارة صخر</h2><div class="grid" id="adminStats"></div><hr><h3>طلبات الزبائن</h3><div id="adminRequests"></div><hr><h3>إدارة الفنيين والاشتراكات</h3><div id="adminTechs"></div>
  <button class="btn danger" onclick="logout()">تسجيل الخروج</button>
 </section>
 </main>
-
 <footer><strong>صخر | بيتي للصيانة</strong><br>فنيون محترفون .. لخدمتكم دائماً</footer>
 
-<div class="modal hidden" id="requestModal">
- <div class="modal-box">
-  <div class="modal-head"><h3>طلب صيانة جديد</h3><button class="close" onclick="closeModal('requestModal')">✕</button></div>
-  <div class="field"><label>الاسم</label><input id="custName"></div>
-  <div class="field"><label>رقم الهاتف</label><input id="custPhone" inputmode="tel"></div>
-  <div class="row">
-   <div class="field"><label>المحافظة</label><select id="custCity"><option value="">اختر المحافظة</option></select></div>
-   <div class="field"><label>القضاء</label><select id="custArea" disabled><option value="">اختر المحافظة أولاً</option></select></div>
-  </div>
-  <div class="field"><label>نوع الخدمة</label><select id="custService"></select></div>
-  <div class="field"><label>وصف المشكلة</label><textarea id="custProblem"></textarea></div>
-  <div class="field"><label>الفني (اختياري)</label><select id="custTech"><option value="">لا يوجد تفضيل</option></select></div>
-  <button class="btn primary" onclick="submitRequest()">إرسال الطلب</button>
-  <div id="requestMessage"></div>
- </div>
-</div>
-
-<div class="modal hidden" id="loginModal">
- <div class="modal-box">
-  <div class="modal-head"><h3>تسجيل الدخول</h3><button class="close" onclick="closeModal('loginModal')">✕</button></div>
-  <div class="field"><label>البريد الإلكتروني</label><input id="loginEmail" type="email" autocomplete="username"></div>
-  <div class="field"><label>كلمة المرور</label><input id="loginPassword" type="password" autocomplete="current-password"></div>
-  <button class="btn primary" onclick="login()">دخول</button>
-  <button class="btn light" onclick="closeModal('loginModal');showSection('join')">تسجيل فني جديد</button>
-  <div id="loginMessage"></div>
- </div>
-</div>
+<div class="modal hidden" id="requestModal"><div class="modal-box">
+ <div class="modal-head"><h3>طلب صيانة جديد</h3><button class="close" onclick="closeModal('requestModal')">✕</button></div>
+ <div class="field"><label>الاسم</label><input id="custName"></div><div class="field"><label>رقم الهاتف</label><input id="custPhone" inputmode="tel"></div>
+ <div class="field"><label>المحافظة</label><select id="custCity"><option value="">اختر المحافظة</option><option value="ALL">كل المحافظات</option></select></div>
+ <div class="field"><label>القضاء</label><select id="custArea" disabled><option value="">اختر المحافظة أولاً</option></select></div>
+ <div class="field"><label>المنطقة أو الحي (اختياري)</label><input id="custNeighborhood"></div><div class="field"><label>نوع الخدمة</label><select id="custService"></select></div>
+ <div class="field"><label>وصف المشكلة</label><textarea id="custProblem"></textarea></div><div class="notice">اختر الفني المناسب من القائمة التي تظهر حسب اختصاصه وموقعه.</div>
+ <div id="matchingTechs"><div class="empty">اختر المحافظة والخدمة لعرض الفنيين.</div></div><input type="hidden" id="custTech">
+ <button class="btn primary" onclick="submitRequest()">إرسال الطلب للفني المختار</button><div id="requestMessage"></div>
+</div></div>
+<div class="modal hidden" id="loginModal"><div class="modal-box">
+ <div class="modal-head"><h3>تسجيل الدخول</h3><button class="close" onclick="closeModal('loginModal')">✕</button></div>
+ <div class="field"><label>البريد الإلكتروني</label><input id="loginEmail" type="email"></div><div class="field"><label>كلمة المرور</label><input id="loginPassword" type="password"></div>
+ <button class="btn primary" onclick="login()">دخول</button><button class="btn light" onclick="closeModal('loginModal');showSection('join')">تسجيل فني جديد</button><div id="loginMessage"></div>
+</div></div>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
 <script>
 const firebaseConfig={
  apiKey:"AIzaSyBXApuXQQF9rYcH_VkB_mzqIx8pFbUxLI",
@@ -261,112 +124,98 @@ const firebaseConfig={
  messagingSenderId:"289076783578",
  appId:"1:289076783578:web:a999386e30d1a7af6578e3"
 };
-
 const SERVICES=["كهربائيات","سباكة","تبريد وتكييف","بناء وترميم","صبغ وديكور","نجارة","تنظيف","أجهزة منزلية"];
-
 const DISTRICTS={
- "بغداد":["الرصافة","الكرخ","الأعظمية","الصدر","الكاظمية","المنصور","الدورة","أبو غريب","المدائن","المحمودية","الطارمية","التاجي"],
- "البصرة":["البصرة","الزبير","أبو الخصيب","الفاو","شط العرب","القرنة","المدينة","الهارثة","الدير"],
- "نينوى":["الموصل","تلعفر","سنجار","الحمدانية","تلكيف","الشيخان","البعاج","الحضر","مخمور"],
- "كركوك":["كركوك","داقوق","الحويجة","دبس"],
- "صلاح الدين":["تكريت","سامراء","بيجي","بلد","الدجيل","الشرقاط","طوز خورماتو","الدور","العلم"],
- "ديالى":["بعقوبة","المقدادية","الخالص","خانقين","بلدروز","كفري"],
- "الأنبار":["الرمادي","الفلوجة","حديثة","هيت","عنه","راوة","القائم","الرطبة","الحبانية"],
- "بابل":["الحلة","المسيب","المحاويل","الهاشمية","القاسم","الإسكندرية","الكفل"],
- "كربلاء":["كربلاء","الهندية","عين التمر"],
- "النجف":["النجف","الكوفة","المناذرة","المشخاب"],
- "القادسية":["الديوانية","عفك","الشامية","الحمزة"],
- "المثنى":["السماوة","الرميثة","الخضر","السلمان"],
- "ذي قار":["الناصرية","الشطرة","الرفاعي","سوق الشيوخ","الجبايش","قلعة سكر"],
- "ميسان":["العمارة","المجر الكبير","الكحلاء","الميمونة","قلعة صالح","علي الغربي","علي الشرقي"],
- "واسط":["الكوت","النعمانية","الحي","الصويرة","العزيزية","بدرة","الزبيدية"]
+"بغداد":["الرصافة","الكرخ","الأعظمية","الصدر","الكاظمية","المنصور","الدورة","أبو غريب","المدائن","المحمودية","الطارمية","التاجي"],
+"البصرة":["البصرة","الزبير","أبو الخصيب","الفاو","شط العرب","القرنة","المدينة","الهارثة","الدير"],
+"نينوى":["الموصل","تلعفر","سنجار","الحمدانية","تلكيف","الشيخان","البعاج","الحضر","مخمور"],
+"كركوك":["كركوك","داقوق","الحويجة","دبس"],
+"صلاح الدين":["تكريت","سامراء","بيجي","بلد","الدجيل","الشرقاط","طوز خورماتو","الدور","العلم"],
+"ديالى":["بعقوبة","المقدادية","الخالص","خانقين","بلدروز","كفري"],
+"الأنبار":["الرمادي","الفلوجة","حديثة","هيت","عنه","راوة","القائم","الرطبة","الحبانية"],
+"بابل":["الحلة","المسيب","المحاويل","الهاشمية","القاسم","الإسكندرية","الكفل"],
+"كربلاء":["كربلاء","الهندية","عين التمر"],
+"النجف":["النجف","الكوفة","المناذرة","المشخاب"],
+"القادسية":["الديوانية","عفك","الشامية","الحمزة"],
+"المثنى":["السماوة","الرميثة","الخضر","السلمان"],
+"ذي قار":["الناصرية","الشطرة","الرفاعي","سوق الشيوخ","الجبايش","قلعة سكر"],
+"ميسان":["العمارة","المجر الكبير","الكحلاء","الميمونة","قلعة صالح","علي الغربي","علي الشرقي"],
+"واسط":["الكوت","النعمانية","الحي","الصويرة","العزيزية","بدرة","الزبيدية"]
 };
-
-let auth=null,db=null,currentUser=null,currentRole="guest",currentTech=null;
-let publicTechs=[],requests=[],technicians=[],authVersion=0;
+let auth=null,db=null,storage=null,currentUser=null,currentRole="guest",currentTech=null,publicTechs=[],requests=[],technicians=[],authVersion=0,selectedTechUid="",ratingChoice=0;
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const msg=(id,text,type="notice")=>{const el=$(id);if(el)el.innerHTML='<div class="notice '+type+'">'+esc(text)+'</div>'};
-
-function setupLocations(){
- ["reg","cust"].forEach(prefix=>{
-  const city=$(prefix+"City"),area=$(prefix+"Area");
-  city.innerHTML='<option value="">اختر المحافظة</option>'+Object.keys(DISTRICTS).map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("");
-  city.addEventListener("change",()=>{
-   const districts=DISTRICTS[city.value]||[];
-   area.disabled=!districts.length;
-   area.innerHTML=districts.length?'<option value="">اختر القضاء</option>'+districts.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join(""):'<option value="">اختر المحافظة أولاً</option>';
-  });
- });
-}
 const showSection=id=>{
  document.querySelectorAll("main section").forEach(s=>s.classList.add("hidden"));
- $(id)?.classList.remove("hidden");
- window.scrollTo({top:0,behavior:"smooth"});
+ $(id)?.classList.remove("hidden");window.scrollTo({top:0,behavior:"smooth"});
  if(id==="technicians")loadPublicTechs();
  if(id==="admin"&&currentRole==="admin")loadAdminData();
  if(id==="techAccount"&&["technician","suspended"].includes(currentRole))renderTechAccount();
 };
-const openLogin=()=>{$("loginMessage").innerHTML="";$("loginModal").classList.remove("hidden")};
 const closeModal=id=>$(id).classList.add("hidden");
-
-async function openRequest(){
- try{
-  await ensureSignedIn();await loadPublicTechs();fillRequestTechnicians();
-  $("requestMessage").innerHTML="";$("requestModal").classList.remove("hidden");
- }catch(e){msg("requestMessage",friendlyAuthError(e),"error")}
+const openLogin=()=>{$("loginMessage").innerHTML="";$("loginModal").classList.remove("hidden")};
+function setupLocations(){
+ $("regCity").innerHTML='<option value="">اختر المحافظة</option>'+Object.keys(DISTRICTS).map(x=>`<option>${esc(x)}</option>`).join("");
+ $("custCity").innerHTML='<option value="">اختر المحافظة</option><option value="ALL">كل المحافظات</option>'+Object.keys(DISTRICTS).map(x=>`<option>${esc(x)}</option>`).join("");
+ $("regCity").addEventListener("change",()=>setDistricts("regArea",$("regCity").value));
+ $("custCity").addEventListener("change",()=>{setDistricts("custArea",$("custCity").value);selectedTechUid="";$("custTech").value="";renderMatchingTechs()});
+ ["custArea","custNeighborhood","custService"].forEach(id=>$(id).addEventListener("input",()=>{selectedTechUid="";$("custTech").value="";renderMatchingTechs()}));
+ ["custArea","custService"].forEach(id=>$(id).addEventListener("change",()=>{selectedTechUid="";$("custTech").value="";renderMatchingTechs()}));
 }
-function chooseService(service){
- showSection("home");
- openRequest().then(()=>{$("custService").value=service});
+function setDistricts(id,city){
+ const list=DISTRICTS[city]||[];$(id).disabled=!list.length;
+ $(id).innerHTML=list.length?'<option value="">اختر القضاء</option>'+list.map(x=>`<option>${esc(x)}</option>`).join(""):'<option value="">كل الأقضية</option>';
 }
-function fillSelect(id){
- const el=$(id);if(el)el.innerHTML=SERVICES.map(s=>`<option value="${esc(s)}">${esc(s)}</option>`).join("");
-}
-function fillRequestTechnicians(){
- const el=$("custTech");if(!el)return;
- el.innerHTML='<option value="">لا يوجد تفضيل</option>'+publicTechs.filter(t=>t.approved!==false).map(t=>`<option value="${esc(t.uid)}">${esc(t.name)} — ${esc(t.service)}</option>`).join("");
-}
+function fillSelect(id){$(id).innerHTML=SERVICES.map(s=>`<option>${esc(s)}</option>`).join("")}
 function renderServices(){
  const icons=["⚡","🚰","❄️","🧱","🎨","🪚","🧹","🔌"];
- const html=SERVICES.map((s,i)=>`<div class="card service-card" onclick="chooseService('${s}')"><div class="service-icon">${icons[i]}</div><h3>${esc(s)}</h3><span class="badge">اطلب الخدمة</span></div>`).join("");
- $("homeServices").innerHTML=html;$("allServices").innerHTML=html;
+ $("allServices").innerHTML=SERVICES.map((s,i)=>`<div class="card service-card" onclick="chooseService('${s}')"><div class="service-icon">${icons[i]}</div><h3>${esc(s)}</h3><span class="badge">اطلب الخدمة</span></div>`).join("");
  fillSelect("regService");fillSelect("custService");
 }
 function initFirebase(){
  try{
   if(!firebase.apps.length)firebase.initializeApp(firebaseConfig);
-  auth=firebase.auth();db=firebase.database();
+  auth=firebase.auth();db=firebase.database();storage=firebase.storage();
   auth.onAuthStateChanged(onAuthChanged);loadPublicTechs();
- }catch(e){console.error(e);alert("تعذر تشغيل الاتصال بقاعدة البيانات.")}
+ }catch(e){console.error(e);alert("تعذر تشغيل Firebase.")}
 }
 async function ensureSignedIn(){
  if(!auth)throw new Error("Firebase غير متصل");
  if(!auth.currentUser)await auth.signInAnonymously();
  return auth.currentUser;
 }
-
-/* إنشاء أو تحديث بطاقة الفني العامة بعد حفظ ملفه الخاص */
-async function syncPublicTechnician(uid,profile){
- if(!uid||!profile)throw new Error("بيانات الفني غير مكتملة.");
- if(profile.approved===false){
-  await db.ref("publicTechnicians/"+uid+"/approved").set(false);
-  return;
- }
- const publicProfile={
-  uid,
-  name:profile.name||"",
-  phone:profile.phone||"",
-  city:profile.city||"",
-  area:profile.area||"",
-  service:profile.service||"",
-  bio:profile.bio||"",
-  approved:true,
-  createdAt:profile.createdAt||Date.now()
+function friendlyAuthError(err){
+ const code=err?.code||"unknown";
+ const m={
+ "auth/invalid-credential":"بيانات الدخول غير صحيحة.","auth/wrong-password":"كلمة المرور غير صحيحة.",
+ "auth/user-not-found":"هذا البريد غير مسجل.","auth/too-many-requests":"محاولات كثيرة. انتظر قليلاً.",
+ "auth/operation-not-allowed":"فعّل تسجيل البريد والدخول المجهول في Firebase.",
+ "auth/network-request-failed":"مشكلة اتصال بالإنترنت.","auth/email-already-in-use":"هذا البريد مستخدم مسبقاً.",
+ "auth/weak-password":"كلمة المرور يجب أن تكون 6 أحرف على الأقل.","auth/invalid-email":"البريد غير صحيح.",
+ "PERMISSION_DENIED":"قواعد Firebase منعت العملية.","storage/unauthorized":"قواعد Firebase Storage لا تسمح برفع الصورة."
  };
- await db.ref("publicTechnicians/"+uid).set(publicProfile);
+ return (m[code]||err?.message||"حدث خطأ.")+" ("+code+")";
 }
-
+async function uploadTechPhoto(uid,file){
+ if(!file)return currentTech?.photoURL||"";
+ if(!file.type.startsWith("image/"))throw new Error("اختر ملف صورة فقط.");
+ if(file.size>5*1024*1024)throw new Error("حجم الصورة يجب أن يكون أقل من 5 ميغابايت.");
+ const ref=storage.ref("technicianPhotos/"+uid+"/profile_"+Date.now());
+ const snap=await ref.put(file);
+ return await snap.ref.getDownloadURL();
+}
+async function syncPublicTechnician(uid,p){
+ const data={
+ uid,name:p.name||"",phone:p.phone||"",city:p.city||"",area:p.area||"",
+ neighborhood:p.neighborhood||"",service:p.service||"",bio:p.bio||"",
+ photoURL:p.photoURL||"",approved:p.approved!==false,
+ ratingSum:Number(p.ratingSum)||0,ratingCount:Number(p.ratingCount)||0,
+ ratingAverage:Number(p.ratingAverage)||0,createdAt:p.createdAt||Date.now()
+ };
+ await db.ref("publicTechnicians/"+uid).update(data);
+ if(p.approved===false)await db.ref("publicTechnicians/"+uid+"/approved").set(false);
+}
 async function resolveRole(user){
  if(!user||user.isAnonymous)return {role:"guest",tech:null};
  const a=await db.ref("admins/"+user.uid).once("value");
@@ -382,25 +231,9 @@ async function onAuthChanged(user){
   const result=await resolveRole(user);
   if(version!==authVersion||auth.currentUser?.uid!==user.uid)return;
   currentRole=result.role;currentTech=result.tech;
-  if(currentRole==="admin"){showSection("admin");await loadAdminData()}
-  else if(["technician","suspended"].includes(currentRole)){showSection("techAccount");await renderTechAccount()}
- }catch(e){console.error("Role resolution:",e)}
-}
-function friendlyAuthError(err){
- const code=err?.code||"unknown";
- const messages={
- "auth/invalid-credential":"بيانات الدخول غير صحيحة.",
- "auth/wrong-password":"كلمة المرور غير صحيحة.",
- "auth/user-not-found":"هذا البريد غير مسجل.",
- "auth/too-many-requests":"محاولات كثيرة. انتظر قليلاً ثم حاول.",
- "auth/operation-not-allowed":"تسجيل البريد وكلمة المرور غير مفعّل في Firebase.",
- "auth/network-request-failed":"مشكلة اتصال بالإنترنت.",
- "auth/email-already-in-use":"هذا البريد مستخدم مسبقاً.",
- "auth/weak-password":"كلمة المرور يجب أن تكون 6 أحرف على الأقل.",
- "auth/invalid-email":"صيغة البريد الإلكتروني غير صحيحة.",
- "PERMISSION_DENIED":"قواعد قاعدة البيانات منعت العملية."
- };
- return (messages[code]||err?.message||"حدث خطأ غير معروف.")+" — "+code;
+  if(currentRole==="admin"){showSection("admin");loadAdminData()}
+  else if(["technician","suspended"].includes(currentRole)){showSection("techAccount");renderTechAccount()}
+ }catch(e){console.error(e)}
 }
 async function login(){
  const email=$("loginEmail").value.trim(),password=$("loginPassword").value;
@@ -410,111 +243,118 @@ async function login(){
   const result=await resolveRole(c.user);
   if(version!==authVersion||auth.currentUser?.uid!==c.user.uid)return;
   currentUser=c.user;currentRole=result.role;currentTech=result.tech;
-  if(result.role==="admin"){closeModal("loginModal");showSection("admin");await loadAdminData()}
-  else if(result.role==="technician"){
-   closeModal("loginModal");
-   try{await syncPublicTechnician(c.user.uid,result.tech)}
-   catch(syncError){console.error("Public technician sync:",syncError)}
-   showSection("techAccount");await renderTechAccount()
-  }
-  else if(result.role==="suspended")msg("loginMessage","حسابك موقوف حالياً. تواصل مع إدارة صخر.","error");
+  if(result.role==="admin"){closeModal("loginModal");showSection("admin");loadAdminData()}
+  else if(result.role==="technician"){closeModal("loginModal");await syncPublicTechnician(c.user.uid,result.tech);showSection("techAccount");renderTechAccount()}
+  else if(result.role==="suspended")msg("loginMessage","حسابك موقوف حالياً. تواصل مع الإدارة.","error");
   else msg("loginMessage","هذا الحساب غير مسجل كفني أو مدير.","error");
- }catch(e){console.error(e);msg("loginMessage",friendlyAuthError(e),"error")}
+ }catch(e){msg("loginMessage",friendlyAuthError(e),"error")}
 }
-async function logout(){
- try{await auth.signOut();currentRole="guest";currentTech=null;showSection("home")}
- catch(e){alert(friendlyAuthError(e))}
-}
-
-/* التسجيل: نحفظ سجل الفني أولاً، ثم ننشئ بطاقته العامة */
+async function logout(){try{await auth.signOut();currentRole="guest";currentTech=null;showSection("home")}catch(e){alert(friendlyAuthError(e))}}
 async function registerTech(){
- const name=$("regName").value.trim(),phone=$("regPhone").value.trim();
- const city=$("regCity").value,area=$("regArea").value;
- const service=$("regService").value,bio=$("regBio").value.trim();
- const email=$("regEmail").value.trim(),password=$("regPassword").value;
- if(!name||!phone||!city||!area||!service||!email||!password)return msg("regMessage","يرجى إكمال جميع البيانات.","error");
- if(password.length<6)return msg("regMessage","كلمة المرور يجب ألا تقل عن 6 أحرف.","error");
-
- let createdUser=null;
- let profileSaved=false;
-
+ const name=$("regName").value.trim(),phone=$("regPhone").value.trim(),city=$("regCity").value,area=$("regArea").value;
+ const neighborhood=$("regNeighborhood").value.trim(),service=$("regService").value,bio=$("regBio").value.trim();
+ const email=$("regEmail").value.trim(),password=$("regPassword").value,file=$("regPhoto").files[0];
+ if(!name||!phone||!city||!area||!service||!email||!password)return msg("regMessage","أكمل البيانات المطلوبة.","error");
+ if(password.length<6)return msg("regMessage","كلمة المرور 6 أحرف على الأقل.","error");
+ let createdUser=null,profileSaved=false;
  try{
-  const c=await auth.createUserWithEmailAndPassword(email,password);
-  createdUser=c.user;
-
-  const uid=createdUser.uid,now=Date.now();
-  const profile={
-   name,phone,city,area,service,bio,
-   approved:true,
-   subscriptionStatus:"غير فعال",
-   freeJobsUsed:0,
-   completedJobs:0,
-   createdAt:now
-  };
-
-  /* الخطوة الأولى: حفظ بيانات الفني الخاصة */
-  await db.ref("technicians/"+uid).set(profile);
-  profileSaved=true;
-
-  currentUser=createdUser;
-  currentRole="technician";
-  currentTech=profile;
-
-  /* الخطوة الثانية: نشر بياناته للزبائن */
-  try{
-   await syncPublicTechnician(uid,profile);
-   msg("regMessage","تم إنشاء حسابك بنجاح وظهور بياناتك للزبائن. لديك 3 أعمال مجانية.","success");
-  }catch(publicError){
-   console.error("Public profile save failed:",publicError);
-   msg("regMessage","تم إنشاء حسابك وحفظ بياناتك بنجاح، لكن تعذّر إظهارك للزبائن حالياً. حسابك محفوظ، وسنحاول مزامنة بياناتك عند دخولك مرة أخرى.","error");
-  }
-
-  showSection("techAccount");
-  await renderTechAccount();
-
+  const c=await auth.createUserWithEmailAndPassword(email,password);createdUser=c.user;
+  let photoURL="";
+  if(file)photoURL=await uploadTechPhoto(createdUser.uid,file);
+  const now=Date.now();
+  const profile={name,phone,city,area,neighborhood,service,bio,photoURL,approved:true,subscriptionStatus:"غير فعال",freeJobsUsed:0,completedJobs:0,ratingSum:0,ratingCount:0,ratingAverage:0,createdAt:now};
+  await db.ref("technicians/"+createdUser.uid).set(profile);profileSaved=true;
+  currentUser=createdUser;currentRole="technician";currentTech=profile;
+  await syncPublicTechnician(createdUser.uid,profile);
+  msg("regMessage","تم إنشاء حسابك. لديك 3 أعمال مجانية.","success");
+  showSection("techAccount");await renderTechAccount();
  }catch(e){
-  console.error(e);
-  let cleanup="";
-
-  /* لا نحذف حساب الدخول إذا كان سجل الفني قد حُفظ */
-  if(createdUser&&!profileSaved){
-   try{await createdUser.delete()}
-   catch(_){cleanup=" تعذر حذف حساب الدخول الذي أُنشئ؛ احتفظ بالبريد."}
-   try{if(!auth.currentUser)await auth.signInAnonymously()}catch(_){}
-  }
-
-  msg("regMessage",friendlyAuthError(e)+cleanup,"error");
+  console.error(e);msg("regMessage",friendlyAuthError(e),"error");
+  if(createdUser&&!profileSaved){try{await createdUser.delete()}catch(_){}}
  }
 }
-
+$("regPhoto").addEventListener("change",()=>{
+ const f=$("regPhoto").files[0];if(!f)return;
+ if(!f.type.startsWith("image/"))return msg("regMessage","الملف المختار ليس صورة.","error");
+ $("regPreview").src=URL.createObjectURL(f);$("regPreview").classList.remove("hidden");
+});
+async function saveTechProfile(){
+ if(!currentUser||currentRole!=="technician")return;
+ try{
+  const file=$("editTechPhoto").files[0];let photoURL=currentTech.photoURL||"";
+  if(file)photoURL=await uploadTechPhoto(currentUser.uid,file);
+  const bio=$("editTechBio").value.trim(),phone=$("editTechPhone").value.trim();
+  if(!phone)return alert("أدخل رقم الهاتف.");
+  const updates={phone,bio,photoURL};
+  await db.ref("technicians/"+currentUser.uid).update(updates);
+  currentTech={...currentTech,...updates};
+  await syncPublicTechnician(currentUser.uid,currentTech);
+  alert("تم تحديث بياناتك وصورتك الشخصية.");
+  await renderTechAccount();await loadPublicTechs();
+ }catch(e){alert(friendlyAuthError(e))}
+}
 async function loadPublicTechs(){
  if(!db)return;
  try{
   const s=await db.ref("publicTechnicians").once("value"),data=s.val()||{};
   publicTechs=Object.entries(data).map(([uid,t])=>({...t,uid})).filter(t=>t.approved!==false);
-  renderPublicTechs();fillRequestTechnicians();
+  renderPublicTechs();renderMatchingTechs();
  }catch(e){console.error(e)}
+}
+function stars(n){n=Number(n)||0;return "★".repeat(Math.round(n))+"☆".repeat(5-Math.round(n))}
+function techPhoto(t,small=false){
+ const cls=small?"avatar small":"avatar";
+ return `<img class="${cls}" src="${esc(t.photoURL||"")}" alt="صورة الفني" onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2250%22 fill=%22%23fff0cf%22/%3E%3Ctext x=%2250%22 y=%2264%22 font-size=%2250%22 text-anchor=%22middle%22%3E👤%3C/text%3E%3C/svg%3E'">`;
 }
 function renderPublicTechs(){
  const el=$("publicTechList");if(!el)return;
  if(!publicTechs.length){el.innerHTML='<div class="empty">لا يوجد فنيون متاحون حالياً.</div>';return}
- el.innerHTML=publicTechs.map(t=>`<div class="card tech-card">
+ el.innerHTML=publicTechs.map(t=>`<div class="card tech-card">${techPhoto(t)}
  <h3>${esc(t.name)}</h3><span class="badge green">${esc(t.service)}</span>
- <div class="muted">${esc(t.city)} — ${esc(t.area)}</div><p>${esc(t.bio||"فني مسجل في صخر")}</p>
- <a class="btn primary" target="_blank" rel="noopener" href="https://wa.me/${String(t.phone||"").replace(/\D/g,"")}">تواصل عبر واتساب</a></div>`).join("");
+ <div class="stars">${stars(t.ratingAverage)}</div><div class="muted">${Number(t.ratingAverage||0).toFixed(1)} من 5 — ${Number(t.ratingCount)||0} تقييم</div>
+ <div class="muted">${esc(t.city)} — ${esc(t.area)} ${esc(t.neighborhood)}</div><p>${esc(t.bio||"فني مسجل في صخر")}</p>
+ <button class="btn primary" onclick="chooseService('${esc(t.service)}')">اطلب هذا الاختصاص</button></div>`).join("");
 }
+function renderMatchingTechs(){
+ const box=$("matchingTechs");if(!box)return;
+ const city=$("custCity").value,area=$("custArea").value,neighborhood=$("custNeighborhood").value.trim().toLowerCase(),service=$("custService").value;
+ if(!city||!service){box.innerHTML='<div class="empty">اختر المحافظة ونوع الخدمة لعرض الفنيين.</div>';return}
+ if(city!=="ALL"&&!area){box.innerHTML='<div class="empty">اختر القضاء حتى نعرض الفنيين.</div>';return}
+ const matches=publicTechs.filter(t=>{
+  const loc=city==="ALL"||(t.city===city&&(!area||t.area===area));
+  const hood=!neighborhood||String(t.neighborhood||"").toLowerCase().includes(neighborhood);
+  return loc&&hood&&t.service===service&&t.approved!==false;
+ });
+ if(!matches.length){box.innerHTML='<div class="empty">لا يوجد فني بهذا الاختصاص في الموقع المحدد حالياً.</div>';return}
+ box.innerHTML=matches.map(t=>`<div class="tech-choice ${selectedTechUid===t.uid?"selected":""}">
+ <div class="row" style="align-items:center">${techPhoto(t,true)}<div><h4>${esc(t.name)}</h4><div class="stars">${stars(t.ratingAverage)}</div><div class="muted">${Number(t.ratingAverage||0).toFixed(1)} (${Number(t.ratingCount)||0} تقييم)</div></div></div>
+ <div class="muted">${esc(t.service)} | ${esc(t.city)} — ${esc(t.area)} ${esc(t.neighborhood)}</div><p>${esc(t.bio||"فني مسجل في صخر")}</p>
+ <button class="btn ${selectedTechUid===t.uid?"secondary":"light"}" onclick="selectTechnician('${esc(t.uid)}')">${selectedTechUid===t.uid?"تم اختيار هذا الفني":"اختيار الفني"}</button></div>`).join("");
+}
+function selectTechnician(uid){selectedTechUid=uid;$("custTech").value=uid;renderMatchingTechs()}
+async function openRequest(service=""){
+ try{
+  await ensureSignedIn();await loadPublicTechs();$("requestMessage").innerHTML="";
+  $("custService").value=service||SERVICES[0];$("requestModal").classList.remove("hidden");
+  selectedTechUid="";$("custTech").value="";renderMatchingTechs();
+ }catch(e){msg("requestMessage",friendlyAuthError(e),"error")}
+}
+function quickOrder(){openRequest("")}function chooseService(s){openRequest(s)}
 async function submitRequest(){
  try{
-  const user=await ensureSignedIn();
-  if(!user.isAnonymous)throw new Error("يرجى استخدام نموذج الطلب كزبون.");
-  const name=$("custName").value.trim(),phone=$("custPhone").value.trim();
-  const city=$("custCity").value,area=$("custArea").value;
-  const service=$("custService").value,problem=$("custProblem").value.trim(),preferredTech=$("custTech").value;
-  if(!name||!phone||!city||!area||!service||!problem)return msg("requestMessage","يرجى إكمال جميع البيانات.","error");
-  const id=db.ref("requests/"+user.uid).push().key;
-  const record={id,uid:user.uid,name,phone,city,area,service,problem,preferredTech,status:"جديد",createdAt:Date.now(),assignedTech:null,countedAsCompleted:false};
-  await db.ref("requests/"+user.uid+"/"+id).set(record);
-  msg("requestMessage","تم إرسال طلبك بنجاح. احتفظ برقم الطلب: "+id,"success");
+  const user=await ensureSignedIn();if(!user.isAnonymous)throw new Error("استخدم نموذج الطلب كزبون.");
+  const name=$("custName").value.trim(),phone=$("custPhone").value.trim(),city=$("custCity").value,area=$("custArea").value;
+  const neighborhood=$("custNeighborhood").value.trim(),service=$("custService").value,problem=$("custProblem").value.trim(),techUid=$("custTech").value;
+  if(!name||!phone||!city||!service||!problem)return msg("requestMessage","أكمل الاسم والهاتف والمحافظة والخدمة ووصف المشكلة.","error");
+  if(city!=="ALL"&&!area)return msg("requestMessage","اختر القضاء أولاً.","error");
+  if(!techUid)return msg("requestMessage","اختر فنياً قبل إرسال الطلب.","error");
+  const tech=publicTechs.find(t=>t.uid===techUid);if(!tech||tech.approved===false)throw new Error("الفني المختار غير متاح.");
+  const id=db.ref("requests/"+user.uid).push().key,now=Date.now();
+  const record={id,uid:user.uid,name,phone,city:city==="ALL"?"كل المحافظات":city,area:area||"كل الأقضية",neighborhood,service,problem,preferredTech:techUid,assignedTech:techUid,assignedTechName:tech.name,status:"بانتظار رد الفني",createdAt:now,countedAsCompleted:false,rated:false};
+  const job={id,customerUid:user.uid,customerName:name,customerPhone:phone,service,city:record.city,area:record.area,neighborhood,problem,status:"بانتظار رد الفني",createdAt:now};
+  const u={};u["requests/"+user.uid+"/"+id]=record;u["technicianJobs/"+techUid+"/"+id]=job;
+  await db.ref().update(u);
+  msg("requestMessage","تم إرسال الطلب إلى "+tech.name+". رقم الطلب: "+id,"success");
   $("trackId").value=id;
  }catch(e){console.error(e);msg("requestMessage",e.message||friendlyAuthError(e),"error")}
 }
@@ -523,8 +363,65 @@ async function trackRequest(){
  try{
   const user=await ensureSignedIn(),s=await db.ref("requests/"+user.uid+"/"+id).once("value"),r=s.val();
   if(!r)return msg("trackResult","لم يتم العثور على الطلب في هذا الجهاز. استخدم الجهاز الذي أرسلته منه.","error");
-  $("trackResult").innerHTML=`<div class="notice success"><b>حالة الطلب:</b> ${esc(r.status||"قيد المراجعة")}<br><b>الخدمة:</b> ${esc(r.service)}<br><b>المحافظة:</b> ${esc(r.city)}<br><b>القضاء:</b> ${esc(r.area)}<br><b>رقم الطلب:</b> ${esc(r.id)}</div>`;
- }catch(e){msg("trackResult","تعذر الوصول إلى الطلب. تأكد من الاتصال واستخدم الجهاز الذي أرسلت منه الطلب.","error")}
+  let html=`<div class="notice success"><b>حالة الطلب:</b> ${esc(r.status)}<br><b>الخدمة:</b> ${esc(r.service)}<br><b>الفني:</b> ${esc(r.assignedTechName||"لم يحدد")}<br><b>المحافظة:</b> ${esc(r.city)}<br><b>القضاء:</b> ${esc(r.area)}<br><b>رقم الطلب:</b> ${esc(r.id)}`;
+  if(r.status==="مقبول من الفني"&&r.assignedTechPhone){
+   const tel=String(r.assignedTechPhone).replace(/[^\d+]/g,"");
+   const wa=String(r.assignedTechPhone).replace(/\D/g,"");
+   html+=`<hr><b>رقم هاتف الفني:</b> ${esc(r.assignedTechPhone)}<div class="actions"><a class="btn primary" href="tel:${esc(tel)}">اتصال مباشر</a><a class="btn secondary" target="_blank" rel="noopener" href="https://wa.me/${esc(wa)}">مراسلة واتساب</a></div>`;
+  }
+  html+="</div>";
+  if(r.status==="مكتمل"&&!r.rated){
+   html+=`<div class="card"><h3>قيّم تجربتك مع الفني</h3><p>اختر عدد النجوم واكتب تعليقك إن رغبت.</p><div id="ratingStars">${[1,2,3,4,5].map(n=>`<button class="rating-button" onclick="chooseRating(${n})">★</button>`).join("")}</div><div class="field"><label>تعليقك (اختياري)</label><textarea id="ratingComment" placeholder="اكتب رأيك بالخدمة"></textarea></div><button class="btn primary" onclick="submitRating('${esc(id)}','${esc(r.assignedTech)}')">إرسال التقييم</button></div>`;
+  }else if(r.rated){html+='<div class="notice success">شكراً لك، تم تسجيل تقييمك لهذا الطلب.</div>'}
+  $("trackResult").innerHTML=html;
+ }catch(e){console.error(e);msg("trackResult","تعذر الوصول إلى الطلب. تأكد من الاتصال واستخدم الجهاز الذي أرسلت منه الطلب.","error")}
+}
+function chooseRating(n){
+ ratingChoice=n;
+ document.querySelectorAll("#ratingStars .rating-button").forEach((b,i)=>b.classList.toggle("active",i<n));
+}
+async function submitRating(requestId,techUid){
+ try{
+  if(ratingChoice<1||ratingChoice>5)return alert("اختر تقييماً من نجمة إلى خمس نجوم.");
+  const user=await ensureSignedIn();if(!user.isAnonymous)return alert("يجب تقييم الطلب من حساب الزبون الذي أرسله.");
+  const reqRef=db.ref("requests/"+user.uid+"/"+requestId),snap=await reqRef.once("value"),r=snap.val();
+  if(!r||r.status!=="مكتمل")return alert("التقييم متاح بعد إكمال العمل فقط.");
+  if(r.rated)return alert("سبق تقييم هذا الطلب.");
+  if(r.assignedTech!==techUid)return alert("الفني غير مطابق للطلب.");
+  const ratingRef=db.ref("technicianRatings/"+techUid+"/"+requestId);
+  const existing=await ratingRef.once("value");if(existing.exists())return alert("هذا الطلب تم تقييمه سابقاً.");
+  const comment=$("ratingComment")?.value.trim()||"",now=Date.now();
+  await ratingRef.set({requestId,customerUid:user.uid,stars:ratingChoice,comment,createdAt:now});
+  const tSnap=await db.ref("technicians/"+techUid).once("value"),t=tSnap.val();
+  if(!t)throw new Error("لم يتم العثور على الفني.");
+  const sum=(Number(t.ratingSum)||0)+ratingChoice,count=(Number(t.ratingCount)||0)+1,avg=sum/count;
+  const updates={};
+  updates["technicians/"+techUid+"/ratingSum"]=sum;updates["technicians/"+techUid+"/ratingCount"]=count;updates["technicians/"+techUid+"/ratingAverage"]=avg;
+  updates["publicTechnicians/"+techUid+"/ratingSum"]=sum;updates["publicTechnicians/"+techUid+"/ratingCount"]=count;updates["publicTechnicians/"+techUid+"/ratingAverage"]=avg;
+  updates["requests/"+user.uid+"/"+requestId+"/rated"]=true;updates["requests/"+user.uid+"/"+requestId+"/ratedAt"]=now;
+  await db.ref().update(updates);
+  ratingChoice=0;await loadPublicTechs();alert("شكراً لك، تم إرسال تقييمك.");await trackRequest();
+ }catch(e){console.error(e);alert(friendlyAuthError(e))}
+}
+async function technicianDecision(id,decision){
+ if(!currentUser||currentRole!=="technician")return alert("سجل دخولك بحساب الفني.");
+ if(!["مقبول","مرفوض"].includes(decision))return;
+ try{
+  const ref=db.ref("technicianJobs/"+currentUser.uid+"/"+id),snap=await ref.once("value"),job=snap.val();
+  if(!job)return alert("لم يتم العثور على الطلب.");
+  if(job.status!=="بانتظار رد الفني")return alert("تم الرد على هذا الطلب سابقاً.");
+  const newStatus=decision==="مقبول"?"مقبول من الفني":"مرفوض من الفني",now=Date.now(),updates={};
+  updates["technicianJobs/"+currentUser.uid+"/"+id+"/status"]=newStatus;
+  updates["technicianJobs/"+currentUser.uid+"/"+id+"/respondedAt"]=now;
+  updates["requests/"+job.customerUid+"/"+id+"/status"]=newStatus;
+  updates["requests/"+job.customerUid+"/"+id+"/respondedAt"]=now;
+  if(decision==="مقبول"){
+   updates["requests/"+job.customerUid+"/"+id+"/assignedTechPhone"]=currentTech.phone||"";
+   updates["requests/"+job.customerUid+"/"+id+"/assignedTechName"]=currentTech.name||"";
+  }
+  await db.ref().update(updates);await renderTechAccount();
+  alert(decision==="مقبول"?"تم قبول الطلب، وسيظهر رقمك للزبون.":"تم رفض الطلب.");
+ }catch(e){console.error(e);alert(friendlyAuthError(e))}
 }
 async function loadAdminData(){
  if(currentRole!=="admin")return;
@@ -532,76 +429,35 @@ async function loadAdminData(){
   const [r,t]=await Promise.all([db.ref("requests").once("value"),db.ref("technicians").once("value")]);
   requests=[];technicians=[];
   r.forEach(u=>u.forEach(q=>requests.push({...q.val(),uid:u.key,id:q.key})));
-  t.forEach(s=>technicians.push({...s.val(),uid:s.key}));
-  renderAdmin();
- }catch(e){console.error(e);alert(friendlyAuthError(e))}
+  t.forEach(s=>technicians.push({...s.val(),uid:s.key}));renderAdmin();
+ }catch(e){alert(friendlyAuthError(e))}
 }
 function renderAdmin(){
- $("adminStats").innerHTML=`<div class="card"><div class="muted">الطلبات</div><div class="stat">${requests.length}</div></div><div class="card"><div class="muted">الفنيون</div><div class="stat">${technicians.length}</div></div><div class="card"><div class="muted">طلبات جديدة</div><div class="stat">${requests.filter(r=>r.status==="جديد").length}</div></div>`;
- $("adminRequests").innerHTML=requests.length?requests.slice().reverse().map(r=>`
- <div class="list-item"><h4>${esc(r.service)} — ${esc(r.status)}</h4>
- <div class="muted">الزبون: ${esc(r.name)} | الهاتف: ${esc(r.phone)}</div>
- <div class="muted">${esc(r.city)} — ${esc(r.area)}</div><p>${esc(r.problem)}</p>
- <div class="muted">رقم الطلب: ${esc(r.id)}</div>
- <div class="field"><label>إسناد إلى فني</label><select id="assign-${esc(r.id)}"><option value="">اختر فنياً</option>
- ${technicians.filter(t=>t.approved!==false&&(t.subscriptionStatus==="فعال"||(Number(t.freeJobsUsed)||0)<3)).map(t=>`<option value="${esc(t.uid)}" ${r.assignedTech===t.uid?"selected":""}>${esc(t.name)} — ${esc(t.service)}</option>`).join("")}</select></div>
- <div class="actions"><button class="secondary" onclick="assignRequest('${esc(r.uid)}','${esc(r.id)}')">إسناد الطلب</button><button class="light" onclick="setStatus('${esc(r.uid)}','${esc(r.id)}','قيد التنفيذ')">قيد التنفيذ</button><button class="primary" onclick="setStatus('${esc(r.uid)}','${esc(r.id)}','مكتمل')">مكتمل</button></div></div>`).join(""):'<div class="empty">لا توجد طلبات حالياً.</div>';
- $("adminTechs").innerHTML=technicians.length?technicians.map(t=>`
- <div class="list-item"><h4>${esc(t.name)} <span class="badge ${t.approved===false?"orange":"green"}">${t.approved===false?"موقوف":"نشط"}</span></h4>
- <div class="muted">${esc(t.service)} — ${esc(t.city)} / ${esc(t.area)}</div>
- <div class="muted">الأعمال المكتملة: ${Number(t.completedJobs)||0} | المجانية المستخدمة: ${Number(t.freeJobsUsed)||0}/3</div>
- <div class="muted">الاشتراك: ${esc(t.subscriptionStatus||"غير فعال")}</div>
- <div class="actions"><button class="secondary" onclick="setSubscription('${esc(t.uid)}','فعال')">تفعيل الاشتراك</button><button class="light" onclick="setSubscription('${esc(t.uid)}','غير فعال')">إيقاف الاشتراك</button><button class="danger" onclick="toggleTech('${esc(t.uid)}',${t.approved===false})">${t.approved===false?"إعادة تفعيل الفني":"إيقاف الفني"}</button></div></div>`).join(""):'<div class="empty">لا يوجد فنيون.</div>';
+ $("adminStats").innerHTML=`<div class="card"><div class="muted">الطلبات</div><div class="stat">${requests.length}</div></div><div class="card"><div class="muted">الفنيون</div><div class="stat">${technicians.length}</div></div><div class="card"><div class="muted">بانتظار الرد</div><div class="stat">${requests.filter(r=>r.status==="بانتظار رد الفني").length}</div></div>`;
+ $("adminRequests").innerHTML=requests.length?requests.slice().reverse().map(r=>`<div class="list-item"><h4>${esc(r.service)} — ${esc(r.status)}</h4><div class="muted">الزبون: ${esc(r.name)} | الهاتف: ${esc(r.phone)}</div><div class="muted">${esc(r.city)} — ${esc(r.area)}</div><div class="muted">الفني: ${esc(r.assignedTechName||"غير محدد")}</div><p>${esc(r.problem)}</p><div class="muted">رقم الطلب: ${esc(r.id)}</div><div class="actions"><button class="light" onclick="adminSetStatus('${esc(r.uid)}','${esc(r.id)}','قيد التنفيذ')">قيد التنفيذ</button><button class="primary" onclick="adminComplete('${esc(r.uid)}','${esc(r.id)}')">مكتمل</button></div></div>`).join(""):'<div class="empty">لا توجد طلبات.</div>';
+ $("adminTechs").innerHTML=technicians.length?technicians.map(t=>`<div class="list-item">${techPhoto(t,true)}<h4>${esc(t.name)} <span class="badge ${t.approved===false?"orange":"green"}">${t.approved===false?"موقوف":"نشط"}</span></h4><div class="muted">${esc(t.service)} — ${esc(t.city)} / ${esc(t.area)}</div><div class="stars">${stars(t.ratingAverage)}</div><div class="muted">التقييم: ${Number(t.ratingAverage||0).toFixed(1)} من 5 (${Number(t.ratingCount)||0})</div><div class="muted">الأعمال المكتملة: ${Number(t.completedJobs)||0} | المجانية: ${Number(t.freeJobsUsed)||0}/3</div><div class="muted">الاشتراك: ${esc(t.subscriptionStatus||"غير فعال")}</div><div class="actions"><button class="secondary" onclick="setSubscription('${esc(t.uid)}','فعال')">تفعيل الاشتراك</button><button class="light" onclick="setSubscription('${esc(t.uid)}','غير فعال')">إيقاف الاشتراك</button><button class="danger" onclick="toggleTech('${esc(t.uid)}',${t.approved===false})">${t.approved===false?"إعادة تفعيل":"إيقاف الفني"}</button></div></div>`).join(""):'<div class="empty">لا يوجد فنيون.</div>';
 }
-async function assignRequest(requestUid,id){
+async function adminSetStatus(uid,id,status){
+ try{const r=requests.find(x=>x.uid===uid&&x.id===id);if(!r)return;const u={};u["requests/"+uid+"/"+id+"/status"]=status;u["requests/"+uid+"/"+id+"/updatedAt"]=Date.now();if(r.assignedTech)u["technicianJobs/"+r.assignedTech+"/"+id+"/status"]=status;await db.ref().update(u);await loadAdminData()}catch(e){alert(friendlyAuthError(e))}
+}
+async function adminComplete(uid,id){
  try{
-  const r=requests.find(x=>x.uid===requestUid&&x.id===id),techUid=$("assign-"+id)?.value;
-  if(!r||!techUid)return alert("اختر فنياً أولاً.");
-  const t=technicians.find(x=>x.uid===techUid);
-  if(!t||t.approved===false)return alert("هذا الفني غير متاح.");
-  if(t.subscriptionStatus!=="فعال"&&(Number(t.freeJobsUsed)||0)>=3)return alert("استنفد الفني أعماله المجانية الثلاثة ويحتاج إلى اشتراك.");
-  if(r.countedAsCompleted)return alert("هذا الطلب مكتمل سابقاً ولا يمكن إعادة إسناده.");
-  const now=Date.now(),job={id:r.id,service:r.service,city:r.city,area:r.area,problem:r.problem,status:"تم إسناده",assignedAt:now,createdAt:r.createdAt};
-  const u={};
-  if(r.assignedTech&&r.assignedTech!==techUid)u["technicianJobs/"+r.assignedTech+"/"+id]=null;
-  u["requests/"+requestUid+"/"+id+"/assignedTech"]=techUid;
-  u["requests/"+requestUid+"/"+id+"/assignedTechName"]=t.name;
-  u["requests/"+requestUid+"/"+id+"/status"]="تم إسناده";
-  u["requests/"+requestUid+"/"+id+"/assignedAt"]=now;
-  u["technicianJobs/"+techUid+"/"+id]=job;
+  const r=requests.find(x=>x.uid===uid&&x.id===id);if(!r||r.countedAsCompleted)return alert("هذا الطلب مكتمل سابقاً.");
+  if(!r.assignedTech)return alert("لا يوجد فني مرتبط بالطلب.");
+  const t=technicians.find(x=>x.uid===r.assignedTech);if(!t)return alert("تعذر العثور على الفني.");
+  const subscribed=t.subscriptionStatus==="فعال",used=Number(t.freeJobsUsed)||0;
+  if(!subscribed&&used>=3)return alert("الفني استنفد أعماله المجانية. فعّل اشتراكه أولاً.");
+  const u={},now=Date.now();
+  u["requests/"+uid+"/"+id+"/status"]="مكتمل";u["requests/"+uid+"/"+id+"/countedAsCompleted"]=true;u["requests/"+uid+"/"+id+"/completedAt"]=now;
+  u["technicians/"+t.uid+"/completedJobs"]=(Number(t.completedJobs)||0)+1;
+  if(!subscribed)u["technicians/"+t.uid+"/freeJobsUsed"]=used+1;
+  u["technicianJobs/"+t.uid+"/"+id+"/status"]="مكتمل";u["technicianJobs/"+t.uid+"/"+id+"/countedAsCompleted"]=true;
   await db.ref().update(u);await loadAdminData();
  }catch(e){alert(friendlyAuthError(e))}
 }
-async function setStatus(requestUid,id,status){
- try{
-  const r=requests.find(x=>x.uid===requestUid&&x.id===id);if(!r||!["قيد التنفيذ","مكتمل"].includes(status))return;
-  const u={};u["requests/"+requestUid+"/"+id+"/status"]=status;u["requests/"+requestUid+"/"+id+"/updatedAt"]=Date.now();
-  if(status==="مكتمل"&&!r.countedAsCompleted){
-   if(!r.assignedTech)return alert("أسند الطلب إلى فني قبل إكماله.");
-   const t=technicians.find(x=>x.uid===r.assignedTech);if(!t)return alert("تعذر العثور على بيانات الفني.");
-   const subscribed=t.subscriptionStatus==="فعال",used=Number(t.freeJobsUsed)||0;
-   if(!subscribed&&used>=3)return alert("الفني استنفد أعماله المجانية. فعّل اشتراكه أولاً.");
-   u["technicians/"+t.uid+"/completedJobs"]=(Number(t.completedJobs)||0)+1;
-   if(!subscribed)u["technicians/"+t.uid+"/freeJobsUsed"]=used+1;
-   u["requests/"+requestUid+"/"+id+"/countedAsCompleted"]=true;
-   u["requests/"+requestUid+"/"+id+"/completedAt"]=Date.now();
-   u["technicianJobs/"+t.uid+"/"+id+"/status"]="مكتمل";
-   u["technicianJobs/"+t.uid+"/"+id+"/countedAsCompleted"]=true;
-  }else if(r.assignedTech)u["technicianJobs/"+r.assignedTech+"/"+id+"/status"]=status;
-  await db.ref().update(u);await loadAdminData();
- }catch(e){alert(friendlyAuthError(e))}
-}
-async function setSubscription(uid,status){
- try{await db.ref("technicians/"+uid+"/subscriptionStatus").set(status);await loadAdminData()}
- catch(e){alert(friendlyAuthError(e))}
-}
+async function setSubscription(uid,status){try{await db.ref("technicians/"+uid+"/subscriptionStatus").set(status);await loadAdminData()}catch(e){alert(friendlyAuthError(e))}}
 async function toggleTech(uid,activate){
- try{
-  const approved=!!activate,u={};
-  u["technicians/"+uid+"/approved"]=approved;u["publicTechnicians/"+uid+"/approved"]=approved;
-  await db.ref().update(u);await loadAdminData();await loadPublicTechs();
-  if(currentUser?.uid===uid&&!approved){currentRole="suspended";await renderTechAccount()}
- }catch(e){alert(friendlyAuthError(e))}
+ try{const approved=!!activate,u={};u["technicians/"+uid+"/approved"]=approved;u["publicTechnicians/"+uid+"/approved"]=approved;await db.ref().update(u);await loadAdminData();await loadPublicTechs();if(currentUser?.uid===uid&&!approved){currentRole="suspended";await renderTechAccount()}}catch(e){alert(friendlyAuthError(e))}
 }
 async function renderTechAccount(){
  if(!currentUser||!["technician","suspended"].includes(currentRole))return;
@@ -609,31 +465,25 @@ async function renderTechAccount(){
  try{
   const s=await db.ref("technicians/"+uid).once("value");currentTech=s.val();if(!currentTech)return;
   const suspended=currentTech.approved===false;if(suspended)currentRole="suspended";
-
-  /* محاولة إصلاح بطاقة الظهور العامة عند فتح حساب الفني */
-  if(!suspended){
-   try{await syncPublicTechnician(uid,currentTech)}
-   catch(syncError){console.error("Public technician sync:",syncError)}
-  }
-
+  if(!suspended)try{await syncPublicTechnician(uid,currentTech)}catch(e){console.error(e)}
   const used=Number(currentTech.freeJobsUsed)||0;
-  $("techSummary").innerHTML=`<h3>مرحباً ${esc(currentTech.name)}</h3><p>${esc(currentTech.service)} — ${esc(currentTech.city)} / ${esc(currentTech.area)}</p>
+  $("techSummary").innerHTML=`${techPhoto(currentTech)}<h3>مرحباً ${esc(currentTech.name)}</h3>
+  <p>${esc(currentTech.service)} — ${esc(currentTech.city)} / ${esc(currentTech.area)} ${esc(currentTech.neighborhood)}</p>
+  <div class="stars">${stars(currentTech.ratingAverage)}</div><p class="muted">${Number(currentTech.ratingAverage||0).toFixed(1)} من 5 — ${Number(currentTech.ratingCount)||0} تقييم</p>
   ${suspended?'<div class="notice error">حسابك موقوف حالياً. راجع إدارة صخر.</div>':`
-  <p>الأعمال المكتملة: <b>${Number(currentTech.completedJobs)||0}</b></p>
-  <p>الأعمال المجانية المستخدمة: <b>${used} من 3</b></p>
+  <p>الأعمال المكتملة: <b>${Number(currentTech.completedJobs)||0}</b></p><p>الأعمال المجانية المستخدمة: <b>${used} من 3</b></p>
   <p>الاشتراك: <span class="badge ${currentTech.subscriptionStatus==="فعال"?"green":"orange"}">${esc(currentTech.subscriptionStatus||"غير فعال")}</span></p>
-  <div class="notice">الاشتراك الشهري: 5,000 دينار عراقي<br>الاشتراك السنوي: 50,000 دينار عراقي<br>يتم تفعيل الاشتراك يدوياً بعد تأكيد الدفع.</div>`}`;
-  $("techJobsArea").classList.toggle("hidden",suspended);
-  if(suspended){$("techJobs").innerHTML="";return}
-  const j=await db.ref("technicianJobs/"+uid).once("value"),jobs=[];
-  j.forEach(x=>jobs.push({...x.val(),id:x.key}));
-  $("techJobs").innerHTML=jobs.length?jobs.map(x=>`<div class="list-item"><h4>${esc(x.service)} — ${esc(x.status)}</h4><div class="muted">${esc(x.city)} — ${esc(x.area)}</div><p>${esc(x.problem)}</p><div class="muted">رقم العمل: ${esc(x.id)}</div></div>`).join(""):'<div class="empty">لا توجد أعمال مسندة إليك حالياً.</div>';
+  <div class="notice">الاشتراك الشهري: 5,000 دينار عراقي<br>الاشتراك السنوي: 50,000 دينار عراقي<br>يتم تفعيل الاشتراك يدوياً بعد تأكيد الدفع.</div>
+  <hr><h3>تعديل الملف الشخصي</h3><div class="field"><label>رقم الهاتف</label><input id="editTechPhone" value="${esc(currentTech.phone||"")}"></div>
+  <div class="field"><label>نبذة عن الخبرة</label><textarea id="editTechBio">${esc(currentTech.bio||"")}</textarea></div>
+  <div class="field"><label>تغيير الصورة الشخصية</label><input id="editTechPhoto" type="file" accept="image/*"></div>
+  <button class="btn primary" onclick="saveTechProfile()">حفظ التعديلات</button>`}`;
+  $("techJobsArea").classList.toggle("hidden",suspended);if(suspended){$("techJobs").innerHTML="";return}
+  const j=await db.ref("technicianJobs/"+uid).once("value"),jobs=[];j.forEach(x=>jobs.push({...x.val(),id:x.key}));
+  $("techJobs").innerHTML=jobs.length?jobs.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0)).map(x=>`<div class="list-item"><h4>${esc(x.service)} — ${esc(x.status)}</h4><div class="muted">الزبون: ${esc(x.customerName||"")}</div><div class="muted">الهاتف: ${esc(x.customerPhone||"")}</div><div class="muted">${esc(x.city)} — ${esc(x.area)} ${esc(x.neighborhood)}</div><p>${esc(x.problem)}</p><div class="muted">رقم الطلب: ${esc(x.id)}</div>${x.status==="بانتظار رد الفني"?`<div class="actions"><button class="primary" onclick="technicianDecision('${esc(x.id)}','مقبول')">قبول الطلب</button><button class="danger" onclick="technicianDecision('${esc(x.id)}','مرفوض')">رفض الطلب</button></div>`:""}</div>`).join(""):'<div class="empty">لا توجد طلبات مرسلة إليك حالياً.</div>';
  }catch(e){console.error(e);$("techJobs").textContent=friendlyAuthError(e)}
 }
-
-setupLocations();
-renderServices();
-initFirebase();
+setupLocations();renderServices();initFirebase();
 </script>
 </body>
 </html>
