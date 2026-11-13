@@ -862,7 +862,6 @@ function techPhoto(t,small=false){
 function renderPublicTechs(){
  const el=$("publicTechList");
  if(!el)return;
- // إذا كان المستخدم الحالي فني، لا نعرضه في القائمة العامة أو نستثنيه إذا تطلب الأمر
  const list = publicTechs.filter(t => !currentUser || t.uid !== currentUser.uid);
  if(!list.length){
   el.innerHTML='<div class="empty">لا يوجد فنيون مسجلون متاحون حالياً.</div>';
@@ -904,7 +903,6 @@ function renderMatchingTechs(){
  }
 
  const matches=publicTechs.filter(t=>{
-  // منع الفني من رؤية أو طلب نفسه عند إرسال طلب جديد
   if(currentUser && currentUser.uid === t.uid) return false;
   
   const loc=city==="ALL"||(t.city===city&&(!area||t.area===area));
@@ -1122,7 +1120,6 @@ async function renderTechAccount(){
    </div>`;
   }
 
-  // تعبئة حقول تعديل البروفايل ببيانات الفني الحالية
   if($("editTechName")) $("editTechName").value = currentTech.name || "";
   if($("editTechCity")) {
    $("editTechCity").innerHTML = '<option value="">اختر المحافظة</option>' + Object.keys(DISTRICTS).map(x=>`<option value="${esc(x)}" ${x===currentTech.city?'selected':''}>${esc(x)}</option>`).join("");
@@ -1173,7 +1170,6 @@ async function renderTechAccount(){
  }catch(e){}
 }
 
-// دالة حفظ التعديلات على بروفايل الفني
 async function saveTechAccountProfile() {
  if(!currentUser || !["technician","suspended"].includes(currentRole)) return;
  const uid = currentUser.uid;
