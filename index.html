@@ -32,7 +32,7 @@ body {
   min-height: 100vh;
 }
 
-/* العلامة المائية الخلفية بالاسم الجديد logo.png.jpeg بدون إطار */
+/* العلامة المائية الخلفية بالاسم logo.png.jpeg بدون إطار */
 body::before {
   content: "";
   position: fixed;
@@ -58,10 +58,10 @@ header, main, footer, .modal {
 button, input, select, textarea { font: inherit; }
 button { cursor: pointer; border: 0; }
 
-/* Header & Navigation - تعديل حجم اللوجو وإلغاء الإطار الدائري */
-header { background: var(--burgundy); padding: 10px 4%; display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; border-bottom: 2px solid var(--gold); position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+/* Header & Navigation - لوجو كبير وبارز بدون إطار دائري */
+header { background: var(--burgundy); padding: 12px 4%; display: flex; align-items: center; justify-content: space-between; gap: 15px; flex-wrap: wrap; border-bottom: 2px solid var(--gold); position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
 .brand { display: flex; align-items: center; gap: 10px; cursor: pointer; }
-.brand img { height: 55px; width: auto; object-fit: contain; border: none; border-radius: 0; filter: drop-shadow(0 2px 5px rgba(0,0,0,0.4)); }
+.brand img { height: 85px; width: auto; object-fit: contain; border: none; border-radius: 0; filter: drop-shadow(0 3px 6px rgba(0,0,0,0.5)); }
 nav { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
 nav button { color: #fff; background: rgba(255,255,255,0.1); padding: 8px 14px; border-radius: 20px; border: 1px solid rgba(255,195,41,0.3); font-size: 12px; font-weight: 700; transition: all .2s; }
 nav button:hover, nav button.primary-nav { background: var(--gold); color: var(--burgundy-dark); border-color: var(--gold); }
@@ -105,7 +105,6 @@ nav button:hover, nav button.primary-nav { background: var(--gold); color: var(-
 .secondary { background: #e6f4ea; color: var(--green); }
 .danger { background: #fee2e2; color: #dc2626; }
 .light { background: #f3f4f6; color: var(--text-main); }
-.whatsapp-btn { background: #25D366; color: #fff; border: 1px solid #1ebe5d; }
 
 .field { margin: 15px 0; }
 .field label { display: block; font-weight: 800; font-size: 13px; margin-bottom: 6px; color: var(--burgundy); }
@@ -164,6 +163,7 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
   <button onclick="showSection('home')">الرئيسية</button>
   <button onclick="showSection('services')">خدماتنا</button>
   <button onclick="showSection('technicians')">الفنيون</button>
+  <button onclick="showSection('reviewsChat')">دردشة تقييم الخدمات</button>
   <button id="authNavBtn" onclick="handleAuthNav()" class="primary-nav">تسجيل الدخول</button>
  </nav>
 </header>
@@ -211,27 +211,52 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  <div class="grid" id="publicTechList"><div class="empty">جارٍ تحميل الفنيين المتاحين...</div></div>
 </section>
 
-<!-- قسم تسجيل الفني: تم إلغاء البريد وكلمة المرور وتوثيق الواتساب -->
+<!-- قسم دردشة تقييم الخدمات -->
+<section id="reviewsChat" class="container hidden">
+ <h2 class="section-title">دردشة تقييم الخدمات</h2>
+ <div class="card" style="max-width:700px;margin:0 auto 25px">
+  <div class="notice">شاركنا رأيك وملاحظتك حول الخدمات، وتقييمك يهمنا لتطوير أداء المنصة.</div>
+  <div class="field"><label>اسمك الكريم</label><input id="reviewName" placeholder="اسمك الكامل"></div>
+  <div class="field">
+   <label>التقييم بالنجوم</label>
+   <select id="reviewStars">
+    <option value="5">⭐⭐⭐⭐⭐ (ممتاز جداً)</option>
+    <option value="4">⭐⭐⭐⭐ (جيد جداً)</option>
+    <option value="3">⭐⭐⭐ (جيد)</option>
+    <option value="2">⭐⭐ (مقبول)</option>
+    <option value="1">⭐ (ضعيف)</option>
+   </select>
+  </div>
+  <div class="field"><label>رأيك أو ملاحظتك (مثل الدردشة)</label><textarea id="reviewText" placeholder="اكتب ملاحظتك أو تعليقك هنا..."></textarea></div>
+  <button class="btn primary" style="width:100%" onclick="submitReview()">إرسال التقييم والملاحظة</button>
+  <div id="reviewMessage"></div>
+ </div>
+ <h3 class="section-title" style="font-size:18px;color:#fff">آراء وتقييمات الزبائن</h3>
+ <div id="reviewsList"><div class="empty">جارٍ تحميل التقييمات...</div></div>
+</section>
+
+<!-- قسم تسجيل الفني برقم الهاتف وكلمة السر الآمنة -->
 <section id="join" class="container hidden">
  <h2 class="section-title">انضم إلى شبكة فنيي صخر</h2>
  <div class="card" style="max-width:700px;margin:0 auto">
-  <div class="notice">للفني 3 أعمال مكتملة مجاناً بالكامل، وبعدها يحتاج لاشتراك رمزي لمواصلة استقبال الطلبات بلا حدود. التسجيل يتم عبر رقم الهاتف والتوثيق بالواتساب.</div>
+  <div class="notice">للفني 3 أعمال مكتملة مجاناً بالكامل، وبعدها يحتاج لاشتراك رمزي لمواصلة استقبال الطلبات بلا حدود. التسجيل آمن برقم الهاتف وكلمة السر.</div>
   <div class="row">
    <div class="field"><label>الاسم الكامل</label><input id="regName" placeholder="مثال: أحمد عودة"></div>
-   <div class="field"><label>رقم الهاتف (الخاص بالواتساب)</label><input id="regPhone" inputmode="tel" placeholder="07800000000"></div>
+   <div class="field"><label>رقم الهاتف</label><input id="regPhone" inputmode="tel" placeholder="07800000000"></div>
   </div>
   <div class="row">
+   <div class="field"><label>كلمة المرور الخاصة بالحساب</label><input id="regPassword" type="password" placeholder="6 أحرف أو أرقام على الأقل"></div>
    <div class="field"><label>المحافظة</label><select id="regCity"><option value="">اختر المحافظة</option></select></div>
-   <div class="field"><label>القضاء</label><select id="regArea" disabled><option value="">اختر المحافظة أولاً</option></select></div>
   </div>
   <div class="row">
+   <div class="field"><label>القضاء</label><select id="regArea" disabled><option value="">اختر المحافظة أولاً</option></select></div>
    <div class="field"><label>المنطقة أو الحي</label><input id="regNeighborhood" placeholder="مثال: البندقية"></div>
-   <div class="field"><label>الاختصاص الرئيسي</label><select id="regService"></select></div>
   </div>
+  <div class="field"><label>الاختصاص الرئيسي</label><select id="regService"></select></div>
   <div class="field"><label>نبذة عن خبرتك ومهاراتك</label><textarea id="regBio" placeholder="اكتب نبذة مختصرة عن خبرتك..."></textarea></div>
   <div class="field"><label>الصورة الشخصية للفني</label><input id="regPhoto" type="file" accept="image/*"><img id="regPreview" class="avatar hidden" alt="معاينة"></div>
   
-  <button class="btn whatsapp-btn" style="width:100%;margin-top:10px;font-size:15px;" onclick="registerTechViaWhatsApp()">💬 تسجيل الحساب والتحقق عبر الواتساب</button>
+  <button class="btn primary" style="width:100%;margin-top:10px;font-size:15px;" onclick="registerTechWithPassword()">تسجيل حساب فني جديد</button>
   <div id="regMessage"></div>
  </div>
 </section>
@@ -306,13 +331,14 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  </div>
 </div>
 
-<!-- نافذة تسجيل الدخول برقم الهاتف -->
+<!-- نافذة تسجيل الدخول الآمنة برقم الهاتف وكلمة المرور -->
 <div class="modal hidden" id="loginModal">
  <div class="modal-box">
-  <div class="modal-head"><h3>تسجيل الدخول برقم الهاتف</h3><div class="close" onclick="closeModal('loginModal')">✕</div></div>
-  <div class="notice">أدخل رقم هاتفك المسجل للدخول إلى حسابك كفني.</div>
+  <div class="modal-head"><h3>تسجيل الدخول الآمن</h3><div class="close" onclick="closeModal('loginModal')">✕</div></div>
+  <div class="notice">أدخل رقم هاتفك وكلمة المرور الخاصة بك. (رقم المدير: 07805017009)</div>
   <div class="field"><label>رقم الهاتف</label><input id="loginPhone" inputmode="tel" placeholder="07800000000"></div>
-  <button class="btn primary" style="width:100%" onclick="loginWithPhone()">دخول إلى الحساب</button>
+  <div class="field"><label>كلمة المرور</label><input id="loginPassword" type="password" placeholder="••••••••"></div>
+  <button class="btn primary" style="width:100%" onclick="loginWithPhonePassword()">دخول إلى الحساب</button>
   <button class="btn light" style="width:100%;margin-top:10px" onclick="closeModal('loginModal');showSection('join')">ليس لديك حساب؟ تسجيل فني جديد</button>
   <div id="loginMessage"></div>
  </div>
@@ -364,7 +390,7 @@ const DISTRICTS={
 "واسط":["الكوت","النعمانية","الحي","الصويرة","العزيزية"]
 };
 
-let db=null,storage=null,currentUser=null,currentRole="guest",currentTech=null;
+let auth=null,db=null,storage=null,currentUser=null,currentRole="guest",currentTech=null;
 let publicTechs=[],requests=[],technicians=[];
 let chosenCustomerCity="",pendingService=null;
 let techJobsListener=null;
@@ -393,13 +419,14 @@ const showSection=id=>{
  $(id)?.classList.remove("hidden");
  window.scrollTo({top:0,behavior:"smooth"});
  if(id==="technicians")loadPublicTechs();
+ if(id==="reviewsChat")loadReviews();
  if(id==="admin"&&currentRole==="admin")loadAdminData();
  if(id==="techAccount"&&["technician","suspended"].includes(currentRole))renderTechAccount();
 };
 
 const closeModal=id=>$(id).classList.add("hidden");
 const openLogin=()=>{$("loginMessage").innerHTML="";$("loginModal").classList.remove("hidden")};
-const openDisclaimer=()=>{$("disclaimerModal").classList.remove("hidden")};
+const openDisclaimer=()=>{$("disclaimerModal").classList.add("hidden"); $("disclaimerModal").classList.remove("hidden")}; // fixed
 
 function handleAuthNav() {
   if(currentRole === "admin") {
@@ -411,7 +438,6 @@ function handleAuthNav() {
   }
 }
 
-// تحديث زر الهيدر ليصبح "الملف الشخصي" عند تسجيل الدخول
 function updateNavAuthButton() {
   const btn = $("authNavBtn");
   if(!btn) return;
@@ -566,25 +592,56 @@ function renderServices(){
 function initFirebase(){
  try{
   if(!firebase.apps.length)firebase.initializeApp(firebaseConfig);
+  auth=firebase.auth();
   db=firebase.database();
   storage=firebase.storage();
+  auth.onAuthStateChanged(onAuthChanged);
   loadPublicTechs();
-  checkLocalSession();
  }catch(e){console.error(e);}
 }
 
-function checkLocalSession(){
- const savedUid=localStorage.getItem("sakhrTechUid");
- const savedRole=localStorage.getItem("sakhrRole");
- if(savedUid && savedRole){
-  currentRole=savedRole;
-  db.ref("technicians/"+savedUid).once("value").then(snap=>{
-   if(snap.exists()){
-    currentTech=snap.val();
-    currentUser={uid:savedUid};
-    updateNavAuthButton();
-   }
-  });
+async function resolveRole(user){
+ if(!user||user.isAnonymous)return {role:"guest",tech:null};
+ if(user.email==="07805017009@sakhr.app")return {role:"admin",tech:null};
+ const t=await db.ref("technicians/"+user.uid).once("value");
+ if(t.exists()){
+  const tech=t.val();
+  return {role:tech.approved===false?"suspended":"technician",tech};
+ }
+ return {role:"unknown",tech:null};
+}
+
+async function onAuthChanged(user){
+ currentUser=user;
+ currentRole="guest";
+ currentTech=null;
+
+ if(techJobsListener) { techJobsListener.off(); techJobsListener=null; }
+ if(!user){ 
+  updateNavAuthButton();
+  try{await auth.signInAnonymously()}catch(e){} 
+  return; 
+ }
+
+ try{
+  const result=await resolveRole(user);
+  currentRole=result.role;
+  currentTech=result.tech;
+  updateNavAuthButton();
+
+  if(currentRole==="admin"){
+   closeModal("customerLocationModal");
+   showSection("admin");
+   loadAdminData();
+  }else if(["technician","suspended"].includes(currentRole)){
+   closeModal("customerLocationModal");
+   showSection("techAccount");
+   renderTechAccount();
+  }else{
+   showCustomerLocation();
+  }
+ }catch(e){
+  updateNavAuthButton();
  }
 }
 
@@ -618,10 +675,11 @@ async function syncPublicTechnician(uid,p){
  await db.ref("publicTechnicians/"+uid).update(data);
 }
 
-// تسجيل الفني برقم الهاتف والتحقق عبر الواتساب
-async function registerTechViaWhatsApp(){
+// تسجيل الفني برقم الهاتف وكلمة المرور الآمنة
+async function registerTechWithPassword(){
  const name=$("regName").value.trim();
  const phone=$("regPhone").value.trim();
+ const password=$("regPassword").value;
  const city=$("regCity").value;
  const area=$("regArea").value;
  const neighborhood=$("regNeighborhood").value.trim();
@@ -629,14 +687,18 @@ async function registerTechViaWhatsApp(){
  const bio=$("regBio").value.trim();
  const file=$("regPhoto").files[0];
 
- if(!name||!phone||!city||!area||!service)
-  return msg("regMessage","أكمل الاسم، رقم الهاتف، المحافظة، القضاء والاختصاص.","error");
+ if(!name||!phone||!password||!city||!area||!service)
+  return msg("regMessage","أكمل الاسم، رقم الهاتف، كلمة المرور، المحافظة، القضاء والاختصاص.","error");
 
+ let createdUser=null,profileSaved=false;
  try{
-  msg("regMessage","جاري تجهيز وتوثيق الحساب عبر الواتساب...","notice");
-  const uid="tech_"+Date.now();
+  msg("regMessage","جاري إنشاء حساب الفني الآمن...","notice");
+  const emailPseudo = phone + "@sakhr.app";
+  const c=await auth.createUserWithEmailAndPassword(emailPseudo, password);
+  createdUser=c.user;
+  
   let photoURL="";
-  if(file) photoURL=await uploadTechPhoto(uid,file);
+  if(file) photoURL=await uploadTechPhoto(createdUser.uid, file);
 
   const profile={
    name,phone,city,area,neighborhood,service,bio,photoURL,
@@ -644,38 +706,37 @@ async function registerTechViaWhatsApp(){
    ratingSum:0, ratingCount:0, ratingAverage:0, createdAt:Date.now()
   };
 
-  await db.ref("technicians/"+uid).set(profile);
-  await syncPublicTechnician(uid,profile);
+  await db.ref("technicians/"+createdUser.uid).set(profile);
+  profileSaved=true;
+  await syncPublicTechnician(createdUser.uid, profile);
 
-  localStorage.setItem("sakhrTechUid", uid);
-  localStorage.setItem("sakhrRole", "technician");
-  currentUser={uid};
-  currentRole="technician";
-  currentTech=profile;
+  currentUser=createdUser; currentRole="technician"; currentTech=profile;
   updateNavAuthButton();
-
-  // فتح الواتساب للتحقق وتأكيد الرقم
-  const waMsg = encodeURIComponent(`مرحباً، أريد تأكيد وتفعيل حسابي كفني في منصة صخر.\nالاسم: ${name}\nرقم الهاتف: ${phone}\nالمحافظة: ${city} - ${area}`);
-  window.open(`https://wa.me/?text=${waMsg}`, '_blank');
-
   showSection("techAccount");
   await renderTechAccount();
  }catch(e){
   msg("regMessage",e.message,"error");
+  if(createdUser&&!profileSaved){ try{await createdUser.delete()}catch(_){} }
  }
 }
 
-// تسجيل الدخول برقم الهاتف حصراً
-async function loginWithPhone(){
+// تسجيل الدخول الآمن برقم الهاتف وكلمة المرور (يدعم المدير والفنيين)
+async function loginWithPhonePassword(){
  const phone=$("loginPhone").value.trim();
- if(!phone) return msg("loginMessage","أدخل رقم الهاتف المسجل.","error");
+ const password=$("loginPassword").value;
+ if(!phone||!password) return msg("loginMessage","أدخل رقم الهاتف وكلمة المرور.","error");
 
  try{
-  // فحص إذا كان الرقم مدير (للإدارة) أو فني
-  if(phone === "07800000000"){
+  // تحقق إذا كان المدير
+  if(phone === "07805017009"){
+   const adminEmail = "07805017009@sakhr.app";
+   try {
+    await auth.signInWithEmailAndPassword(adminEmail, password);
+   } catch(err) {
+    // إذا لم يكن الحساب منشأ بعد في فايربيس، أنشئه تلقائياً للمدير
+    await auth.createUserWithEmailAndPassword(adminEmail, password);
+   }
    currentRole="admin";
-   localStorage.setItem("sakhrRole", "admin");
-   localStorage.setItem("sakhrTechUid", "admin");
    closeModal("loginModal"); closeModal("customerLocationModal");
    updateNavAuthButton();
    showSection("admin");
@@ -683,22 +744,15 @@ async function loginWithPhone(){
    return;
   }
 
-  const s=await db.ref("technicians").orderByChild("phone").equalTo(phone).once("value");
+  // تسجيل دخول الفنيين
+  const emailPseudo = phone + "@sakhr.app";
+  const c = await auth.signInWithEmailAndPassword(emailPseudo, password);
+  const s = await db.ref("technicians/"+c.user.uid).once("value");
   if(!s.exists()){
-   return msg("loginMessage","رقم الهاتف غير مسجل كفني. يرجى التسجيل أولاً.","error");
+   return msg("loginMessage","الحساب غير مسجل كفني.","error");
   }
-
-  let techData=null, techUid="";
-  s.forEach(child=>{
-   techUid=child.key;
-   techData=child.val();
-  });
-
-  localStorage.setItem("sakhrTechUid", techUid);
-  localStorage.setItem("sakhrRole", techData.approved===false?"suspended":"technician");
-  currentUser={uid:techUid};
-  currentRole=techData.approved===false?"suspended":"technician";
-  currentTech=techData;
+  currentRole = s.val().approved===false?"suspended":"technician";
+  currentTech = s.val();
   updateNavAuthButton();
 
   closeModal("loginModal");
@@ -706,15 +760,14 @@ async function loginWithPhone(){
   showSection("techAccount");
   renderTechAccount();
  }catch(e){
-  msg("loginMessage",e.message,"error");
+  msg("loginMessage","خطأ في رقم الهاتف أو كلمة المرور: "+e.message,"error");
  }
 }
 
 async function logout(){
  try{
   if(techJobsListener) { techJobsListener.off(); techJobsListener=null; }
-  localStorage.removeItem("sakhrTechUid");
-  localStorage.removeItem("sakhrRole");
+  await auth.signOut();
   currentRole="guest"; currentTech=null; currentUser=null;
   updateNavAuthButton();
   showSection("home");
@@ -881,6 +934,51 @@ async function submitRequest(){
   msg("requestMessage","تم إرسال طلبك بنجاح! رقم الطلب: "+id,"success");
  }catch(e){
   msg("requestMessage",e.message,"error");
+ }
+}
+
+/* وظائف دردشة تقييم الخدمات */
+async function submitReview(){
+ const name=$("reviewName").value.trim();
+ const stars=$("reviewStars").value;
+ const text=$("reviewText").value.trim();
+
+ if(!name||!text) return msg("reviewMessage","املأ الاسم ورأيك بالملاحظة.","error");
+
+ try{
+  const id=db.ref("reviews").push().key;
+  const rev={ id, name, stars:Number(stars), text, createdAt:Date.now() };
+  await db.ref("reviews/"+id).set(rev);
+  $("reviewName").value="";
+  $("reviewText").value="";
+  msg("reviewMessage","تم إرسال تقييمك بنجاح في دردشة التقييمات!","success");
+  loadReviews();
+ }catch(e){
+  msg("reviewMessage",e.message,"error");
+ }
+}
+
+async function loadReviews(){
+ const el=$("reviewsList");
+ if(!el)return;
+ try{
+  const s=await db.ref("reviews").once("value");
+  const data=s.val()||{};
+  const list=Object.values(data).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+  if(!list.length){
+   el.innerHTML='<div class="empty">لا توجد تقييمات أو ملاحظات مضافة بعد. كن أول المشاركين!</div>';
+   return;
+  }
+  el.innerHTML=list.map(r=>`
+  <div class="list-item" style="background:#fff9ef;">
+   <div style="display:flex;justify-content:space-between;align-items:center">
+    <h4 style="margin:0;color:var(--burgundy)">${esc(r.name)}</h4>
+    <div class="stars">${"★".repeat(r.stars)}${"☆".repeat(5-r.stars)}</div>
+   </div>
+   <p style="margin:10px 0 0;font-size:14px;line-height:1.6;color:var(--text-main)">${esc(r.text)}</p>
+  </div>`).join("");
+ }catch(e){
+  el.innerHTML='<div class="empty">تعذر تحميل التقييمات حالياً.</div>';
  }
 }
 
