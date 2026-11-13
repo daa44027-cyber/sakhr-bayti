@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -17,8 +16,42 @@ header{background:linear-gradient(120deg,var(--wine2),var(--wine));color:white;p
 .brand{display:flex;align-items:center;gap:10px}.logo{width:55px;height:55px;object-fit:contain}.brand h1{font-size:23px;margin:0;font-weight:900}.brand small{display:block;color:var(--gold);font-size:12px}
 nav{display:flex;gap:7px;flex-wrap:wrap}nav button{color:white;background:#ffffff12;padding:9px 12px;border-radius:12px;border:1px solid #ffc65b55;font-size:13px;box-shadow:0 4px 0 #290313}
 .hero-poster{position:relative;width:min(100%,760px);margin:18px auto 0;overflow:hidden;border-radius:18px;box-shadow:0 12px 30px #4a071d35}.hero-poster img{display:block;width:100%;height:auto}
-.poster-action{position:absolute;border:0;background:transparent;color:transparent;z-index:2;border-radius:40px}.poster-order{left:3%;top:44%;width:94%;height:8%}.poster-service{height:15%;width:23%}
-.poster-service.s1{right:1%;top:53%}.poster-service.s2{right:26%;top:53%}.poster-service.s3{right:51%;top:53%}.poster-service.s4{right:76%;top:53%}.poster-service.s5{right:1%;top:69%}.poster-service.s6{right:26%;top:69%}.poster-service.s7{right:51%;top:69%}.poster-service.s8{right:76%;top:69%}.poster-menu{top:1%;left:1%;width:14%;height:6%}
+
+/* أزرار الصورة: ستة أزرار خدمات وزر الطلب السريع */
+.poster-action{
+ position:absolute;
+ border:0;
+ background:transparent;
+ color:transparent;
+ z-index:2;
+ border-radius:40px;
+ transition:transform .15s ease,background .15s ease;
+ cursor:pointer;
+ -webkit-tap-highlight-color:transparent;
+ touch-action:manipulation;
+}
+.poster-action:active{
+ transform:scale(.94);
+ background:#ffc32935;
+}
+.poster-order{
+ right:2%;
+ top:44%;
+ width:36%;
+ height:8%;
+}
+.poster-service{
+ height:15%;
+ width:31%;
+}
+.poster-service.s1{right:2%;top:53%}
+.poster-service.s2{right:34.5%;top:53%}
+.poster-service.s3{right:67%;top:53%}
+.poster-service.s4{right:2%;top:69%}
+.poster-service.s5{right:34.5%;top:69%}
+.poster-service.s6{right:67%;top:69%}
+.poster-menu{top:1%;left:1%;width:14%;height:6%}
+
 .container{width:min(1100px,92%);margin:30px auto}.section-title{font-size:23px;color:var(--wine);margin:0 0 18px}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px}
 .card{background:linear-gradient(145deg,#fff,#fff7e9);border:1px solid var(--line);border-radius:17px;padding:19px;box-shadow:0 7px 0 #d9b98e,0 11px 22px #4b071d12}
@@ -61,8 +94,6 @@ hr{border:0;border-top:1px solid var(--line);margin:20px 0}button:disabled{opaci
   <button class="poster-action poster-service s4" onclick="chooseService('بناء وترميم')">بناء وترميم</button>
   <button class="poster-action poster-service s5" onclick="chooseService('أجهزة منزلية')">أجهزة منزلية</button>
   <button class="poster-action poster-service s6" onclick="chooseService('كهربائيات')">كهربائيات</button>
-  <button class="poster-action poster-service s7" onclick="chooseService('نجارة')">نجارة</button>
-  <button class="poster-action poster-service s8" onclick="chooseService('تنظيف')">تنظيف</button>
  </div>
 </section>
 <section id="services" class="container hidden"><h2 class="section-title">خدماتنا</h2><div class="grid" id="allServices"></div></section>
