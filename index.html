@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -105,7 +106,6 @@ hr{border:0;border-top:1px solid var(--line);margin:20px 0}button:disabled{opaci
 
 <footer><strong>صخر | بيتي للصيانة</strong><br>فنيون محترفون .. لخدمتكم دائماً</footer>
 
-<!-- نافذة اختيار المحافظة عند أول دخول للزبون -->
 <div class="modal hidden" id="customerLocationModal">
  <div class="modal-box">
   <div class="modal-head"><h3>أهلاً بك في صخر</h3></div>
@@ -331,7 +331,6 @@ async function uploadTechPhoto(uid,file){
  return await snap.ref.getDownloadURL();
 }
 
-/* بيانات الفني العامة لا تتضمن رقم الهاتف */
 async function syncPublicTechnician(uid,p){
  const data={
   uid,
@@ -632,38 +631,43 @@ function selectTechnician(uid){
  renderMatchingTechs();
 }
 
+/* الإصلاح: فتح نافذة الطلب لا ينتظر تسجيل الدخول أو تحميل الفنيين */
 async function openRequest(service=""){
- try{
-  const saved=localStorage.getItem("sakhrCustomerCity")||"";
+ const saved=localStorage.getItem("sakhrCustomerCity")||"";
 
-  if(!saved){
-   pendingService=service;
-   $("initialCustomerCity").value="";
-   $("customerLocationModal").classList.remove("hidden");
-   return;
-  }
-
-  chosenCustomerCity=saved;
-  $("custCity").value=saved;
-  setDistricts("custArea",saved);
-
-  await ensureSignedIn();
-  await loadPublicTechs();
-
-  $("requestMessage").innerHTML="";
-  $("custService").value=service||SERVICES[0];
-  $("requestModal").classList.remove("hidden");
-
-  selectedTechUid="";
-  $("custTech").value="";
-  renderMatchingTechs();
- }catch(e){
-  msg("requestMessage",friendlyAuthError(e),"error");
+ if(!saved){
+  pendingService=service;
+  $("initialCustomerCity").value="";
+  $("customerLocationModal").classList.remove("hidden");
+  return;
  }
+
+ chosenCustomerCity=saved;
+ $("custCity").value=saved;
+ setDistricts("custArea",saved);
+
+ $("requestMessage").innerHTML="";
+ $("custService").value=service||SERVICES[0];
+
+ selectedTechUid="";
+ $("custTech").value="";
+
+ $("requestModal").classList.remove("hidden");
+
+ if(db){
+  await loadPublicTechs();
+ }
+
+ renderMatchingTechs();
 }
 
-function quickOrder(){openRequest("")}
-function chooseService(s){openRequest(s)}
+function quickOrder(){
+ openRequest("");
+}
+
+function chooseService(s){
+ openRequest(s);
+}
 
 async function submitRequest(){
  try{
