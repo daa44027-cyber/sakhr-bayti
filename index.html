@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -254,7 +253,7 @@ button:disabled{opacity:.55;cursor:not-allowed}
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 <script>
 const firebaseConfig={
- apiKey:"AIzaSyBXApuXQQrF9rYcH_VkB_mzqIx8pFbUxLI",
+ apiKey:"AIzaSyBXApuXQQF9rYcH_VkB_mzqIx8pFbUxLI",
  authDomain:"sakhr-bayti-ec9e4.firebaseapp.com",
  databaseURL:"https://sakhr-bayti-ec9e4-default-rtdb.europe-west1.firebasedatabase.app",
  projectId:"sakhr-bayti-ec9e4",
@@ -346,6 +345,28 @@ async function ensureSignedIn(){
  if(!auth.currentUser)await auth.signInAnonymously();
  return auth.currentUser;
 }
+
+/* إنشاء أو تحديث بطاقة الفني العامة بعد حفظ ملفه الخاص */
+async function syncPublicTechnician(uid,profile){
+ if(!uid||!profile)throw new Error("بيانات الفني غير مكتملة.");
+ if(profile.approved===false){
+  await db.ref("publicTechnicians/"+uid+"/approved").set(false);
+  return;
+ }
+ const publicProfile={
+  uid,
+  name:profile.name||"",
+  phone:profile.phone||"",
+  city:profile.city||"",
+  area:profile.area||"",
+  service:profile.service||"",
+  bio:profile.bio||"",
+  approved:true,
+  createdAt:profile.createdAt||Date.now()
+ };
+ await db.ref("publicTechnicians/"+uid).set(publicProfile);
+}
+
 async function resolveRole(user){
  if(!user||user.isAnonymous)return {role:"guest",tech:null};
  const a=await db.ref("admins/"+user.uid).once("value");
@@ -390,7 +411,12 @@ async function login(){
   if(version!==authVersion||auth.currentUser?.uid!==c.user.uid)return;
   currentUser=c.user;currentRole=result.role;currentTech=result.tech;
   if(result.role==="admin"){closeModal("loginModal");showSection("admin");await loadAdminData()}
-  else if(result.role==="technician"){closeModal("loginModal");showSection("techAccount");await renderTechAccount()}
+  else if(result.role==="technician"){
+   closeModal("loginModal");
+   try{await syncPublicTechnician(c.user.uid,result.tech)}
+   catch(syncError){console.error("Public technician sync:",syncError)}
+   showSection("techAccount");await renderTechAccount()
+  }
   else if(result.role==="suspended")msg("loginMessage","حسابك موقوف حالياً. تواصل مع إدارة صخر.","error");
   else msg("loginMessage","هذا الحساب غير مسجل كفني أو مدير.","error");
  }catch(e){console.error(e);msg("loginMessage",friendlyAuthError(e),"error")}
@@ -399,6 +425,8 @@ async function logout(){
  try{await auth.signOut();currentRole="guest";currentTech=null;showSection("home")}
  catch(e){alert(friendlyAuthError(e))}
 }
+
+/* التسجيل: نحفظ سجل الفني أولاً، ثم ننشئ بطاقته العامة */
 async function registerTech(){
  const name=$("regName").value.trim(),phone=$("regPhone").value.trim();
  const city=$("regCity").value,area=$("regArea").value;
@@ -406,23 +434,59 @@ async function registerTech(){
  const email=$("regEmail").value.trim(),password=$("regPassword").value;
  if(!name||!phone||!city||!area||!service||!email||!password)return msg("regMessage","يرجى إكمال جميع البيانات.","error");
  if(password.length<6)return msg("regMessage","كلمة المرور يجب ألا تقل عن 6 أحرف.","error");
+
  let createdUser=null;
+ let profileSaved=false;
+
  try{
-  const c=await auth.createUserWithEmailAndPassword(email,password);createdUser=c.user;
+  const c=await auth.createUserWithEmailAndPassword(email,password);
+  createdUser=c.user;
+
   const uid=createdUser.uid,now=Date.now();
-  const profile={name,phone,city,area,service,bio,approved:true,subscriptionStatus:"غير فعال",freeJobsUsed:0,completedJobs:0,createdAt:now};
-  const publicProfile={uid,name,phone,city,area,service,bio,approved:true,createdAt:now};
-  const updates={};updates["technicians/"+uid]=profile;updates["publicTechnicians/"+uid]=publicProfile;
-  await db.ref().update(updates);
-  currentUser=createdUser;currentRole="technician";currentTech=profile;
-  msg("regMessage","تم إنشاء حسابك بنجاح. لديك 3 أعمال مجانية.","success");
-  showSection("techAccount");await renderTechAccount();
+  const profile={
+   name,phone,city,area,service,bio,
+   approved:true,
+   subscriptionStatus:"غير فعال",
+   freeJobsUsed:0,
+   completedJobs:0,
+   createdAt:now
+  };
+
+  /* الخطوة الأولى: حفظ بيانات الفني الخاصة */
+  await db.ref("technicians/"+uid).set(profile);
+  profileSaved=true;
+
+  currentUser=createdUser;
+  currentRole="technician";
+  currentTech=profile;
+
+  /* الخطوة الثانية: نشر بياناته للزبائن */
+  try{
+   await syncPublicTechnician(uid,profile);
+   msg("regMessage","تم إنشاء حسابك بنجاح وظهور بياناتك للزبائن. لديك 3 أعمال مجانية.","success");
+  }catch(publicError){
+   console.error("Public profile save failed:",publicError);
+   msg("regMessage","تم إنشاء حسابك وحفظ بياناتك بنجاح، لكن تعذّر إظهارك للزبائن حالياً. حسابك محفوظ، وسنحاول مزامنة بياناتك عند دخولك مرة أخرى.","error");
+  }
+
+  showSection("techAccount");
+  await renderTechAccount();
+
  }catch(e){
-  console.error(e);let cleanup="";
-  if(createdUser){try{await createdUser.delete()}catch(_){cleanup=" تعذر حذف حساب الدخول الذي أُنشئ؛ احتفظ بالبريد."}try{if(!auth.currentUser)await auth.signInAnonymously()}catch(_){}}
+  console.error(e);
+  let cleanup="";
+
+  /* لا نحذف حساب الدخول إذا كان سجل الفني قد حُفظ */
+  if(createdUser&&!profileSaved){
+   try{await createdUser.delete()}
+   catch(_){cleanup=" تعذر حذف حساب الدخول الذي أُنشئ؛ احتفظ بالبريد."}
+   try{if(!auth.currentUser)await auth.signInAnonymously()}catch(_){}
+  }
+
   msg("regMessage",friendlyAuthError(e)+cleanup,"error");
  }
 }
+
 async function loadPublicTechs(){
  if(!db)return;
  try{
@@ -545,6 +609,13 @@ async function renderTechAccount(){
  try{
   const s=await db.ref("technicians/"+uid).once("value");currentTech=s.val();if(!currentTech)return;
   const suspended=currentTech.approved===false;if(suspended)currentRole="suspended";
+
+  /* محاولة إصلاح بطاقة الظهور العامة عند فتح حساب الفني */
+  if(!suspended){
+   try{await syncPublicTechnician(uid,currentTech)}
+   catch(syncError){console.error("Public technician sync:",syncError)}
+  }
+
   const used=Number(currentTech.freeJobsUsed)||0;
   $("techSummary").innerHTML=`<h3>مرحباً ${esc(currentTech.name)}</h3><p>${esc(currentTech.service)} — ${esc(currentTech.city)} / ${esc(currentTech.area)}</p>
   ${suspended?'<div class="notice error">حسابك موقوف حالياً. راجع إدارة صخر.</div>':`
