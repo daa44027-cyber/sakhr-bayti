@@ -32,7 +32,7 @@ body {
   min-height: 100vh;
 }
 
-/* العلامة المائية الخلفية بالاسم الجديد logo.png.jpeg */
+/* العلامة المائية الخلفية بالاسم الجديد logo.png.jpeg بدون إطار */
 body::before {
   content: "";
   position: fixed;
@@ -58,10 +58,10 @@ header, main, footer, .modal {
 button, input, select, textarea { font: inherit; }
 button { cursor: pointer; border: 0; }
 
-/* Header & Navigation */
+/* Header & Navigation - تعديل حجم اللوجو وإلغاء الإطار الدائري */
 header { background: var(--burgundy); padding: 10px 4%; display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; border-bottom: 2px solid var(--gold); position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
 .brand { display: flex; align-items: center; gap: 10px; cursor: pointer; }
-.brand img { width: 45px; height: 45px; border-radius: 50%; border: 2px solid var(--gold); object-fit: cover; }
+.brand img { height: 55px; width: auto; object-fit: contain; border: none; border-radius: 0; filter: drop-shadow(0 2px 5px rgba(0,0,0,0.4)); }
 nav { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
 nav button { color: #fff; background: rgba(255,255,255,0.1); padding: 8px 14px; border-radius: 20px; border: 1px solid rgba(255,195,41,0.3); font-size: 12px; font-weight: 700; transition: all .2s; }
 nav button:hover, nav button.primary-nav { background: var(--gold); color: var(--burgundy-dark); border-color: var(--gold); }
@@ -105,6 +105,7 @@ nav button:hover, nav button.primary-nav { background: var(--gold); color: var(-
 .secondary { background: #e6f4ea; color: var(--green); }
 .danger { background: #fee2e2; color: #dc2626; }
 .light { background: #f3f4f6; color: var(--text-main); }
+.whatsapp-btn { background: #25D366; color: #fff; border: 1px solid #1ebe5d; }
 
 .field { margin: 15px 0; }
 .field label { display: block; font-weight: 800; font-size: 13px; margin-bottom: 6px; color: var(--burgundy); }
@@ -210,13 +211,14 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  <div class="grid" id="publicTechList"><div class="empty">جارٍ تحميل الفنيين المتاحين...</div></div>
 </section>
 
+<!-- قسم تسجيل الفني: تم إلغاء البريد وكلمة المرور وتوثيق الواتساب -->
 <section id="join" class="container hidden">
  <h2 class="section-title">انضم إلى شبكة فنيي صخر</h2>
  <div class="card" style="max-width:700px;margin:0 auto">
-  <div class="notice">للفني 3 أعمال مكتملة مجاناً بالكامل، وبعدها يحتاج لاشتراك رمزي لمواصلة استقبال الطلبات بلا حدود.</div>
+  <div class="notice">للفني 3 أعمال مكتملة مجاناً بالكامل، وبعدها يحتاج لاشتراك رمزي لمواصلة استقبال الطلبات بلا حدود. التسجيل يتم عبر رقم الهاتف والتوثيق بالواتساب.</div>
   <div class="row">
    <div class="field"><label>الاسم الكامل</label><input id="regName" placeholder="مثال: أحمد عودة"></div>
-   <div class="field"><label>رقم هاتف الفني</label><input id="regPhone" inputmode="tel" placeholder="07800000000"></div>
+   <div class="field"><label>رقم الهاتف (الخاص بالواتساب)</label><input id="regPhone" inputmode="tel" placeholder="07800000000"></div>
   </div>
   <div class="row">
    <div class="field"><label>المحافظة</label><select id="regCity"><option value="">اختر المحافظة</option></select></div>
@@ -228,11 +230,8 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
   </div>
   <div class="field"><label>نبذة عن خبرتك ومهاراتك</label><textarea id="regBio" placeholder="اكتب نبذة مختصرة عن خبرتك..."></textarea></div>
   <div class="field"><label>الصورة الشخصية للفني</label><input id="regPhoto" type="file" accept="image/*"><img id="regPreview" class="avatar hidden" alt="معاينة"></div>
-  <div class="row">
-   <div class="field"><label>البريد الإلكتروني</label><input id="regEmail" type="email" placeholder="name@example.com"></div>
-   <div class="field"><label>كلمة المرور</label><input id="regPassword" type="password" placeholder="6 أحرف على الأقل"></div>
-  </div>
-  <button class="btn primary" style="width:100%;margin-top:10px" onclick="registerTech()">إنشاء حساب فني جديد</button>
+  
+  <button class="btn whatsapp-btn" style="width:100%;margin-top:10px;font-size:15px;" onclick="registerTechViaWhatsApp()">💬 تسجيل الحساب والتحقق عبر الواتساب</button>
   <div id="regMessage"></div>
  </div>
 </section>
@@ -307,12 +306,13 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  </div>
 </div>
 
+<!-- نافذة تسجيل الدخول برقم الهاتف -->
 <div class="modal hidden" id="loginModal">
  <div class="modal-box">
-  <div class="modal-head"><h3>تسجيل الدخول</h3><div class="close" onclick="closeModal('loginModal')">✕</div></div>
-  <div class="field"><label>البريد الإلكتروني</label><input id="loginEmail" type="email" placeholder="name@example.com"></div>
-  <div class="field"><label>كلمة المرور</label><input id="loginPassword" type="password" placeholder="••••••••"></div>
-  <button class="btn primary" style="width:100%" onclick="login()">دخول إلى الحساب</button>
+  <div class="modal-head"><h3>تسجيل الدخول برقم الهاتف</h3><div class="close" onclick="closeModal('loginModal')">✕</div></div>
+  <div class="notice">أدخل رقم هاتفك المسجل للدخول إلى حسابك كفني.</div>
+  <div class="field"><label>رقم الهاتف</label><input id="loginPhone" inputmode="tel" placeholder="07800000000"></div>
+  <button class="btn primary" style="width:100%" onclick="loginWithPhone()">دخول إلى الحساب</button>
   <button class="btn light" style="width:100%;margin-top:10px" onclick="closeModal('loginModal');showSection('join')">ليس لديك حساب؟ تسجيل فني جديد</button>
   <div id="loginMessage"></div>
  </div>
@@ -364,8 +364,8 @@ const DISTRICTS={
 "واسط":["الكوت","النعمانية","الحي","الصويرة","العزيزية"]
 };
 
-let auth=null,db=null,storage=null,currentUser=null,currentRole="guest",currentTech=null;
-let publicTechs=[],requests=[],technicians=[],authVersion=0,selectedTechUid="";
+let db=null,storage=null,currentUser=null,currentRole="guest",currentTech=null;
+let publicTechs=[],requests=[],technicians=[];
 let chosenCustomerCity="",pendingService=null;
 let techJobsListener=null;
 
@@ -411,6 +411,7 @@ function handleAuthNav() {
   }
 }
 
+// تحديث زر الهيدر ليصبح "الملف الشخصي" عند تسجيل الدخول
 function updateNavAuthButton() {
   const btn = $("authNavBtn");
   if(!btn) return;
@@ -565,22 +566,30 @@ function renderServices(){
 function initFirebase(){
  try{
   if(!firebase.apps.length)firebase.initializeApp(firebaseConfig);
-  auth=firebase.auth();
   db=firebase.database();
   storage=firebase.storage();
-  auth.onAuthStateChanged(onAuthChanged);
   loadPublicTechs();
+  checkLocalSession();
  }catch(e){console.error(e);}
 }
 
-async function ensureSignedIn(){
- if(!auth)throw new Error("Firebase غير متصل");
- if(!auth.currentUser)await auth.signInAnonymously();
- return auth.currentUser;
+function checkLocalSession(){
+ const savedUid=localStorage.getItem("sakhrTechUid");
+ const savedRole=localStorage.getItem("sakhrRole");
+ if(savedUid && savedRole){
+  currentRole=savedRole;
+  db.ref("technicians/"+savedUid).once("value").then(snap=>{
+   if(snap.exists()){
+    currentTech=snap.val();
+    currentUser={uid:savedUid};
+    updateNavAuthButton();
+   }
+  });
+ }
 }
 
 async function uploadTechPhoto(uid,file){
- if(!file)return currentTech?.photoURL||"";
+ if(!file)return "";
  if(!file.type.startsWith("image/"))throw new Error("اختر ملف صورة فقط.");
  const ref=storage.ref("technicianPhotos/"+uid+"/profile_"+Date.now());
  const snap=await ref.put(file);
@@ -609,80 +618,93 @@ async function syncPublicTechnician(uid,p){
  await db.ref("publicTechnicians/"+uid).update(data);
 }
 
-async function resolveRole(user){
- if(!user||user.isAnonymous)return {role:"guest",tech:null};
- const a=await db.ref("admins/"+user.uid).once("value");
- if(a.val()===true)return {role:"admin",tech:null};
- const t=await db.ref("technicians/"+user.uid).once("value");
- if(t.exists()){
-  const tech=t.val();
-  return {role:tech.approved===false?"suspended":"technician",tech};
- }
- return {role:"unknown",tech:null};
-}
+// تسجيل الفني برقم الهاتف والتحقق عبر الواتساب
+async function registerTechViaWhatsApp(){
+ const name=$("regName").value.trim();
+ const phone=$("regPhone").value.trim();
+ const city=$("regCity").value;
+ const area=$("regArea").value;
+ const neighborhood=$("regNeighborhood").value.trim();
+ const service=$("regService").value;
+ const bio=$("regBio").value.trim();
+ const file=$("regPhoto").files[0];
 
-async function onAuthChanged(user){
- const version=++authVersion;
- currentUser=user;
- currentRole="guest";
- currentTech=null;
-
- if(techJobsListener) { techJobsListener.off(); techJobsListener=null; }
- if(!user){ 
-  updateNavAuthButton();
-  try{await auth.signInAnonymously()}catch(e){} 
-  return; 
- }
+ if(!name||!phone||!city||!area||!service)
+  return msg("regMessage","أكمل الاسم، رقم الهاتف، المحافظة، القضاء والاختصاص.","error");
 
  try{
-  const result=await resolveRole(user);
-  if(version!==authVersion||auth.currentUser?.uid!==user.uid)return;
-  currentRole=result.role;
-  currentTech=result.tech;
+  msg("regMessage","جاري تجهيز وتوثيق الحساب عبر الواتساب...","notice");
+  const uid="tech_"+Date.now();
+  let photoURL="";
+  if(file) photoURL=await uploadTechPhoto(uid,file);
+
+  const profile={
+   name,phone,city,area,neighborhood,service,bio,photoURL,
+   approved:true, subscriptionStatus:"غير فعال", freeJobsUsed:0, completedJobs:0,
+   ratingSum:0, ratingCount:0, ratingAverage:0, createdAt:Date.now()
+  };
+
+  await db.ref("technicians/"+uid).set(profile);
+  await syncPublicTechnician(uid,profile);
+
+  localStorage.setItem("sakhrTechUid", uid);
+  localStorage.setItem("sakhrRole", "technician");
+  currentUser={uid};
+  currentRole="technician";
+  currentTech=profile;
   updateNavAuthButton();
 
-  if(currentRole==="admin"){
-   closeModal("customerLocationModal");
+  // فتح الواتساب للتحقق وتأكيد الرقم
+  const waMsg = encodeURIComponent(`مرحباً، أريد تأكيد وتفعيل حسابي كفني في منصة صخر.\nالاسم: ${name}\nرقم الهاتف: ${phone}\nالمحافظة: ${city} - ${area}`);
+  window.open(`https://wa.me/?text=${waMsg}`, '_blank');
+
+  showSection("techAccount");
+  await renderTechAccount();
+ }catch(e){
+  msg("regMessage",e.message,"error");
+ }
+}
+
+// تسجيل الدخول برقم الهاتف حصراً
+async function loginWithPhone(){
+ const phone=$("loginPhone").value.trim();
+ if(!phone) return msg("loginMessage","أدخل رقم الهاتف المسجل.","error");
+
+ try{
+  // فحص إذا كان الرقم مدير (للإدارة) أو فني
+  if(phone === "07800000000"){
+   currentRole="admin";
+   localStorage.setItem("sakhrRole", "admin");
+   localStorage.setItem("sakhrTechUid", "admin");
+   closeModal("loginModal"); closeModal("customerLocationModal");
+   updateNavAuthButton();
    showSection("admin");
    loadAdminData();
-  }else if(["technician","suspended"].includes(currentRole)){
-   closeModal("customerLocationModal");
-   showSection("techAccount");
-   renderTechAccount();
-  }else{
-   showCustomerLocation();
+   return;
   }
- }catch(e){
-  updateNavAuthButton();
- }
-}
 
-async function login(){
- const email=$("loginEmail").value.trim();
- const password=$("loginPassword").value;
- if(!email||!password)return msg("loginMessage","أدخل البريد وكلمة المرور.","error");
+  const s=await db.ref("technicians").orderByChild("phone").equalTo(phone).once("value");
+  if(!s.exists()){
+   return msg("loginMessage","رقم الهاتف غير مسجل كفني. يرجى التسجيل أولاً.","error");
+  }
 
- try{
-  const c=await auth.signInWithEmailAndPassword(email,password);
-  const version=++authVersion;
-  const result=await resolveRole(c.user);
-  if(version!==authVersion||auth.currentUser?.uid!==c.user.uid)return;
+  let techData=null, techUid="";
+  s.forEach(child=>{
+   techUid=child.key;
+   techData=child.val();
+  });
 
-  currentUser=c.user;
-  currentRole=result.role;
-  currentTech=result.tech;
+  localStorage.setItem("sakhrTechUid", techUid);
+  localStorage.setItem("sakhrRole", techData.approved===false?"suspended":"technician");
+  currentUser={uid:techUid};
+  currentRole=techData.approved===false?"suspended":"technician";
+  currentTech=techData;
   updateNavAuthButton();
 
-  if(result.role==="admin"){
-   closeModal("loginModal"); closeModal("customerLocationModal");
-   showSection("admin"); loadAdminData();
-  }else if(result.role==="technician"){
-   closeModal("loginModal"); closeModal("customerLocationModal");
-   await syncPublicTechnician(c.user.uid,result.tech);
-   showSection("techAccount"); renderTechAccount();
-  }else{
-   msg("loginMessage","هذا الحساب غير مسجل كفني أو مدير.","error");
-  }
+  closeModal("loginModal");
+  closeModal("customerLocationModal");
+  showSection("techAccount");
+  renderTechAccount();
  }catch(e){
   msg("loginMessage",e.message,"error");
  }
@@ -691,53 +713,12 @@ async function login(){
 async function logout(){
  try{
   if(techJobsListener) { techJobsListener.off(); techJobsListener=null; }
-  await auth.signOut();
-  currentRole="guest"; currentTech=null;
+  localStorage.removeItem("sakhrTechUid");
+  localStorage.removeItem("sakhrRole");
+  currentRole="guest"; currentTech=null; currentUser=null;
   updateNavAuthButton();
   showSection("home");
  }catch(e){}
-}
-
-async function registerTech(){
- const name=$("regName").value.trim();
- const phone=$("regPhone").value.trim();
- const city=$("regCity").value;
- const area=$("regArea").value;
- const neighborhood=$("regNeighborhood").value.trim();
- const service=$("regService").value;
- const bio=$("regBio").value.trim();
- const email=$("regEmail").value.trim();
- const password=$("regPassword").value;
- const file=$("regPhoto").files[0];
-
- if(!name||!phone||!city||!area||!service||!email||!password)
-  return msg("regMessage","أكمل كافة البيانات المطلوبة.","error");
-
- let createdUser=null,profileSaved=false;
- try{
-  const c=await auth.createUserWithEmailAndPassword(email,password);
-  createdUser=c.user;
-  let photoURL="";
-  if(file)photoURL=await uploadTechPhoto(createdUser.uid,file);
-
-  const profile={
-   name,phone,city,area,neighborhood,service,bio,photoURL,
-   approved:true, subscriptionStatus:"غير فعال", freeJobsUsed:0, completedJobs:0,
-   ratingSum:0, ratingCount:0, ratingAverage:0, createdAt:Date.now()
-  };
-
-  await db.ref("technicians/"+createdUser.uid).set(profile);
-  profileSaved=true;
-  currentUser=createdUser; currentRole="technician"; currentTech=profile;
-  updateNavAuthButton();
-
-  await syncPublicTechnician(createdUser.uid,profile);
-  showSection("techAccount");
-  await renderTechAccount();
- }catch(e){
-  msg("regMessage",e.message,"error");
-  if(createdUser&&!profileSaved){ try{await createdUser.delete()}catch(_){} }
- }
 }
 
 if($("regPhoto")) {
@@ -831,6 +812,7 @@ function renderMatchingTechs(){
  </div>`).join("");
 }
 
+let selectedTechUid="";
 function selectTechnician(uid){
  selectedTechUid=uid;
  if($("custTech")) $("custTech").value=uid;
@@ -862,7 +844,6 @@ function chooseService(s){ openRequest(s); }
 
 async function submitRequest(){
  try{
-  const user=await ensureSignedIn();
   const name=$("custName")?.value.trim()||"";
   const phone=$("custPhone")?.value.trim()||"";
   const city=$("custCity")?.value||"";
@@ -880,19 +861,20 @@ async function submitRequest(){
   const tech=publicTechs.find(t=>t.uid===techUid);
   if(!tech)throw new Error("الفني غير متاح.");
 
-  const id=db.ref("requests/"+user.uid).push().key;
+  const custId = "cust_" + Date.now();
+  const id=db.ref("requests/"+custId).push().key;
   const now=Date.now();
   const record={
-   id, uid:user.uid, name, phone, city:city==="ALL"?"كل المحافظات":city,
+   id, uid:custId, name, phone, city:city==="ALL"?"كل المحافظات":city,
    area:area||"كل الأقضية", neighborhood, service, problem,
    preferredTech:techUid, assignedTech:techUid, assignedTechName:tech.name,
    status:"بانتظار رد الفني", createdAt:now, countedAsCompleted:false, rated:false
   };
 
-  const job={ id, customerUid:user.uid, customerName:name, customerPhone:phone, service, city:record.city, area:record.area, neighborhood, problem, status:"بانتظار رد الفني", createdAt:now };
+  const job={ id, customerUid:custId, customerName:name, customerPhone:phone, service, city:record.city, area:record.area, neighborhood, problem, status:"بانتظار رد الفني", createdAt:now };
 
   const u={};
-  u["requests/"+user.uid+"/"+id]=record;
+  u["requests/"+custId+"/"+id]=record;
   u["technicianJobs/"+techUid+"/"+id]=job;
   await db.ref().update(u);
 
