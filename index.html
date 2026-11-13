@@ -283,6 +283,28 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  <h2 class="section-title"><span class="online-dot" title="متصل الآن"></span> الملف الشخصي - لوحة تحكم الفني</h2>
  <div id="techAlertBox"></div>
  <div id="techSummary" class="card" style="margin-bottom:20px"></div>
+ 
+ <!-- لوحة تعديل البروفايل الخاصة بالفني -->
+ <div class="card" style="margin-bottom:20px; color:var(--text-main);">
+  <h3 style="color:var(--burgundy); margin-top:0; font-weight:900;">تعديل الملف الشخصي والمعلومات</h3>
+  <div class="row">
+   <div class="field"><label>الاسم الكامل</label><input id="editTechName" placeholder="الاسم"></div>
+   <div class="field"><label>الاختصاص</label><select id="editTechService"></select></div>
+  </div>
+  <div class="row">
+   <div class="field"><label>المحافظة</label><select id="editTechCity" onchange="setDistricts('editTechArea', this.value)"></select></div>
+   <div class="field"><label>القضاء</label><select id="editTechArea"><option value="">اختر القضاء</option></select></div>
+  </div>
+  <div class="row">
+   <div class="field"><label>المنطقة أو الحي</label><input id="editTechNeighborhood" placeholder="مثال: البندقية"></div>
+   <div class="field"><label>رقم الهاتف</label><input id="editTechPhone" inputmode="tel" placeholder="07800000000"></div>
+  </div>
+  <div class="field"><label>نبذة عن خبرتك</label><textarea id="editTechBio" placeholder="نبذة مختصرة..."></textarea></div>
+  <div class="field"><label>تحديث الصورة الشخصية (اختياري)</label><input id="editTechPhotoFile" type="file" accept="image/*"></div>
+  <button class="btn primary" style="width:100%; margin-top:10px;" onclick="saveTechAccountProfile()">حفظ تعديلات البروفايل</button>
+  <div id="editProfileMessage"></div>
+ </div>
+
  <div id="techJobsArea">
   <h3 class="section-title" style="font-size:18px;color:#fff">طلبات الزبائن الواردة إليك</h3>
   <div id="techJobs"></div>
@@ -840,11 +862,13 @@ function techPhoto(t,small=false){
 function renderPublicTechs(){
  const el=$("publicTechList");
  if(!el)return;
- if(!publicTechs.length){
+ // إذا كان المستخدم الحالي فني، لا نعرضه في القائمة العامة أو نستثنيه إذا تطلب الأمر
+ const list = publicTechs.filter(t => !currentUser || t.uid !== currentUser.uid);
+ if(!list.length){
   el.innerHTML='<div class="empty">لا يوجد فنيون مسجلون متاحون حالياً.</div>';
   return;
  }
- el.innerHTML=publicTechs.map(t=>`
+ el.innerHTML=list.map(t=>`
  <div class="card tech-card">
   <div style="position:absolute;top:15px;left:15px;" title="فني متاح"><span class="online-dot"></span></div>
   ${techPhoto(t)}
@@ -880,6 +904,9 @@ function renderMatchingTechs(){
  }
 
  const matches=publicTechs.filter(t=>{
+  // منع الفني من رؤية أو طلب نفسه عند إرسال طلب جديد
+  if(currentUser && currentUser.uid === t.uid) return false;
+  
   const loc=city==="ALL"||(t.city===city&&(!area||t.area===area));
   const hood=!neighborhood||String(t.neighborhood||"").toLowerCase().includes(neighborhood);
   const subActive=t.subscriptionStatus==="فعال";
@@ -976,7 +1003,6 @@ async function submitRequest(){
 
   msg("requestMessage","تم إرسال طلبك بنجاح! رقم الطلب: "+id,"success");
   
-  // تفعيل الاستماع لتحديثات حالة الطلب للزبون لعرض زر الواتساب عند القبول
   listenToCustomerOrderStatus(custId, id, tech.phone);
  }catch(e){
   msg("requestMessage",e.message,"error");
@@ -1096,6 +1122,20 @@ async function renderTechAccount(){
    </div>`;
   }
 
+  // تعبئة حقول تعديل البروفايل ببيانات الفني الحالية
+  if($("editTechName")) $("editTechName").value = currentTech.name || "";
+  if($("editTechCity")) {
+   $("editTechCity").innerHTML = '<option value="">اختر المحافظة</option>' + Object.keys(DISTRICTS).map(x=>`<option value="${esc(x)}" ${x===currentTech.city?'selected':''}>${esc(x)}</option>`).join("");
+   setDistricts("editTechArea", currentTech.city);
+   if($("editTechArea")) $("editTechArea").value = currentTech.area || "";
+  }
+  if($("editTechService")) {
+   $("editTechService").innerHTML = SERVICES.map(s=>`<option value="${esc(s)}" ${s===currentTech.service?'selected':''}>${esc(s)}</option>`).join("");
+  }
+  if($("editTechNeighborhood")) $("editTechNeighborhood").value = currentTech.neighborhood || "";
+  if($("editTechPhone")) $("editTechPhone").value = currentTech.phone || "";
+  if($("editTechBio")) $("editTechBio").value = currentTech.bio || "";
+
   if(techJobsListener) techJobsListener.off();
   let isInitialLoad = true;
   techJobsListener = db.ref("technicianJobs/"+uid);
@@ -1131,6 +1171,46 @@ async function renderTechAccount(){
    }
   });
  }catch(e){}
+}
+
+// دالة حفظ التعديلات على بروفايل الفني
+async function saveTechAccountProfile() {
+ if(!currentUser || !["technician","suspended"].includes(currentRole)) return;
+ const uid = currentUser.uid;
+ const name = $("editTechName").value.trim();
+ const service = $("editTechService").value;
+ const city = $("editTechCity").value;
+ const area = $("editTechArea").value;
+ const neighborhood = $("editTechNeighborhood").value.trim();
+ const phone = $("editTechPhone").value.trim();
+ const bio = $("editTechBio").value.trim();
+ const file = $("editTechPhotoFile").files[0];
+
+ if(!name || !phone || !city || !area || !service) {
+  return msg("editProfileMessage", "أكمل الحقول الأساسية (الاسم، الهاتف، المحافظة، القضاء، الاختصاص).", "error");
+ }
+
+ try {
+  msg("editProfileMessage", "جاري حفظ التعديلات...", "notice");
+  let photoURL = currentTech.photoURL || "";
+  if(file) {
+   photoURL = await uploadTechPhoto(uid, file);
+  }
+
+  const updated = {
+   ...currentTech,
+   name, service, city, area, neighborhood, phone, bio, photoURL
+  };
+
+  await db.ref("technicians/"+uid).update(updated);
+  await syncPublicTechnician(uid, updated);
+  currentTech = updated;
+  msg("editProfileMessage", "تم حفظ وتحديث تعديلات البروفايل بنجاح!", "success");
+  renderTechAccount();
+  loadPublicTechs();
+ } catch(e) {
+  msg("editProfileMessage", "خطأ في الحفظ: "+e.message, "error");
+ }
 }
 
 async function loadAdminData(){
