@@ -328,7 +328,7 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
 <footer>
  <strong>صخر | منصة الصيانة المنزلية المعتمدة</strong><br>بيتك يستاهل الأفضل دائماً
  <div class="footer-links">
-  <button onclick="openDisclaimer()"> شروط الاستخدام</button>
+  <button onclick="openDisclaimer()">إخلاء المسؤولية وشروط الاستخدام</button>
  </div>
 </footer>
 
@@ -374,7 +374,7 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  </div>
 </div>
 
-<!-- نافذة تسجيل الدخول الآمنة برقم الهاتف وكلمة المرور (بدون إظهار رقم المدير للعامة) -->
+<!-- نافذة تسجيل الدخول الآمنة برقم الهاتف وكلمة المرور -->
 <div class="modal hidden" id="loginModal">
  <div class="modal-box">
   <div class="modal-head"><h3>تسجيل الدخول الآمن</h3><div class="close" onclick="closeModal('loginModal')">✕</div></div>
@@ -449,7 +449,6 @@ const $=id=>document.getElementById(id);
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const msg=(id,text,type="notice")=>{const el=$(id);if(el)el.innerHTML='<div class="notice '+type+'">'+esc(text)+'</div>'};
 
-// ميزة العين السحرية لإظهار وإخفاء كلمة المرور
 function togglePassword(inputId, btn) {
   const input = $(inputId);
   if (!input) return;
@@ -738,7 +737,6 @@ async function syncPublicTechnician(uid,p){
  await db.ref("publicTechnicians/"+uid).update(data);
 }
 
-// تسجيل الفني برقم الهاتف وكلمة المرور الآمنة
 async function registerTechWithPassword(){
  const name=$("regName").value.trim();
  const phone=$("regPhone").value.trim();
@@ -783,7 +781,6 @@ async function registerTechWithPassword(){
  }
 }
 
-// تسجيل الدخول الآمن برقم الهاتف وكلمة المرور
 async function loginWithPhonePassword(){
  const phone=$("loginPhone").value.trim();
  const password=$("loginPassword").value;
@@ -1209,14 +1206,7 @@ async function saveTechAccountProfile() {
  }
 }
 
-async function loadAdminData(){
- if(currentRole!=="admin")return;
- try{
-  const [r,t]=await Promise.all([db.ref("requests").once("value"),db.ref("technicians").once("value")]);
-  requests=[]; technicians=[];
-  r.forEach(u=>u.forEach(q=>requests.push({...q.val(),uid:u.key,id:q.key})));
-  t.forEach(s=>technicians.push({...s.val(),uid:s.key}));
-  // تفعيل أو إلغاء تفعيل اشتراك الفني من تليفون المدير
+// دوال إدارة الاشتراكات والأعمال المجانية من لوحة المدير
 async function toggleTechSubscription(techUid, currentStatus) {
     const newStatus = currentStatus === "فعال" ? "غير فعال" : "فعال";
     try {
@@ -1229,7 +1219,6 @@ async function toggleTechSubscription(techUid, currentStatus) {
     }
 }
 
-// تصفير عدد الأعمال المجانية للفني
 async function resetTechFreeJobs(techUid) {
     try {
         await db.ref("technicians/" + techUid).update({ freeJobsUsed: 0 });
@@ -1240,9 +1229,19 @@ async function resetTechFreeJobs(techUid) {
         alert("خطأ: " + e.message);
     }
 }
+
+async function loadAdminData(){
+ if(currentRole!=="admin")return;
+ try{
+  const [r,t]=await Promise.all([db.ref("requests").once("value"),db.ref("technicians").once("value")]);
+  requests=[]; technicians=[];
+  r.forEach(u=>u.forEach(q=>requests.push({...q.val(),uid:u.key,id:q.key})));
+  t.forEach(s=>technicians.push({...s.val(),uid:s.key}));
+  renderAdmin();
  }catch(e){}
 }
 
+function renderAdmin(){
  if($("adminStats")) {
   $("adminStats").innerHTML=`
   <div class="card"><div class="muted">إجمالي الطلبات</div><div class="stat">${requests.length}</div></div>
@@ -1268,19 +1267,6 @@ async function resetTechFreeJobs(techUid) {
     <button class="btn light" onclick="resetTechFreeJobs('${esc(t.uid)}')">تصفير الأعمال المجانية</button>
    </div>
   </div>`).join("") : '<div class="empty">لا يوجد فنيون مسجلون.</div>';
- }
-}
- if($("adminStats")) {
-  $("adminStats").innerHTML=`
-  <div class="card"><div class="muted">إجمالي الطلبات</div><div class="stat">${requests.length}</div></div>
-  <div class="card"><div class="muted">إجمالي الفنيين</div><div class="stat">${technicians.length}</div></div>`;
- }
- if($("adminRequests")) {
-  $("adminRequests").innerHTML=requests.length?requests.map(r=>`
-  <div class="list-item">
-   <h4>${esc(r.service)} — ${esc(r.status)}</h4>
-   <div class="muted">الزبون: ${esc(r.name)} | الهاتف: ${esc(r.phone)}</div>
-  </div>`).join(""):'<div class="empty">لا توجد طلبات.</div>';
  }
 }
 
