@@ -20,6 +20,7 @@
   --card-bg: #ffffff;
   --border-gold: #f3d08a;
   --green: #16845b;
+  --online-green: #22c55e;
 }
 
 * { box-sizing: border-box; }
@@ -32,7 +33,7 @@ body {
   min-height: 100vh;
 }
 
-/* العلامة المائية الخلفية بالاسم logo.png.jpeg بدون إطار */
+/* العلامة المائية الخلفية بالاسم logo.jpg بدون إطار */
 body::before {
   content: "";
   position: fixed;
@@ -41,7 +42,7 @@ body::before {
   transform: translate(-50%, -50%);
   width: min(480px, 85vw);
   height: min(480px, 85vw);
-  background-image: url('logo.png.jpeg');
+  background-image: url('logo.jpg');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -102,6 +103,8 @@ nav button:hover, nav button.primary-nav { background: var(--gold); color: var(-
 .btn { padding: 12px 18px; border-radius: 12px; font-weight: 900; display: inline-block; text-decoration: none; text-align: center; transition: all .2s; font-size: 14px; cursor: pointer; }
 .primary { background: var(--burgundy); color: var(--gold); border: 1px solid var(--gold); }
 .primary:hover { background: var(--burgundy-dark); }
+.whatsapp-btn { background: #25d366; color: #fff; border: 1px solid #1ebe5d; display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
+.whatsapp-btn:hover { background: #1eb954; }
 .secondary { background: #e6f4ea; color: var(--green); }
 .danger { background: #fee2e2; color: #dc2626; }
 .light { background: #f3f4f6; color: var(--text-main); }
@@ -110,6 +113,12 @@ nav button:hover, nav button.primary-nav { background: var(--gold); color: var(-
 .field label { display: block; font-weight: 800; font-size: 13px; margin-bottom: 6px; color: var(--burgundy); }
 .field input, .field select, .field textarea { width: 100%; padding: 12px; border: 1px solid #d9b98e; border-radius: 12px; background: #fff9ef; outline: none; color: var(--text-main); font-size: 14px; font-weight: 700; }
 .field textarea { min-height: 90px; resize: vertical; }
+
+/* Password Field with Eye Toggle */
+.password-wrapper { position: relative; }
+.password-wrapper input { padding-left: 45px; }
+.toggle-password { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); background: transparent; border: none; cursor: pointer; font-size: 16px; color: var(--text-muted); }
+
 .row { display: flex; gap: 12px; flex-wrap: wrap; }
 .row > * { flex: 1; min-width: 140px; }
 .hidden { display: none !important; }
@@ -119,10 +128,13 @@ nav button:hover, nav button.primary-nav { background: var(--gold); color: var(-
 .error { background: #f8d7da; color: #842029; border-color: #f5c2c7; }
 
 .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; background: var(--burgundy); color: var(--gold); font-size: 11px; font-weight: 900; border: 1px solid var(--gold); }
-.tech-card { display: flex; flex-direction: column; gap: 12px; background: #fff; color: var(--text-main); }
+.tech-card { display: flex; flex-direction: column; gap: 12px; background: #fff; color: var(--text-main); position: relative; }
 .tech-card .btn { width: 100%; }
 .muted { color: var(--text-muted); font-size: 13px; font-weight: 600; }
 .empty { text-align: center; padding: 40px; color: var(--text-muted); background: #fff; border-radius: 16px; border: 2px dashed #d9b98e; font-weight: 700; }
+
+/* Online Status Indicator (الضوء الأخضر) */
+.online-dot { display: inline-block; width: 12px; height: 12px; background-color: var(--online-green); border-radius: 50%; border: 2px solid #fff; box-shadow: 0 0 4px var(--online-green); vertical-align: middle; margin-right: 5px; }
 
 /* Modals */
 .modal { position: fixed; inset: 0; background: rgba(53,19,35,0.85); backdrop-filter: blur(5px); display: flex; align-items: center; justify-content: center; padding: 15px; z-index: 1000; }
@@ -157,7 +169,7 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
 
 <header>
  <div class="brand" onclick="showSection('home')">
-  <img src="logo.png.jpeg" alt="لوغو صخر الرسمي">
+  <img src="logo.jpg" alt="لوغو صخر الرسمي">
  </div>
  <nav id="navMenu">
   <button onclick="showSection('home')">الرئيسية</button>
@@ -235,7 +247,7 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  <div id="reviewsList"><div class="empty">جارٍ تحميل التقييمات...</div></div>
 </section>
 
-<!-- قسم تسجيل الفني برقم الهاتف وكلمة السر الآمنة -->
+<!-- قسم تسجيل الفني برقم الهاتف وكلمة السر الآمنة مع العين السحرية -->
 <section id="join" class="container hidden">
  <h2 class="section-title">انضم إلى شبكة فنيي صخر</h2>
  <div class="card" style="max-width:700px;margin:0 auto">
@@ -245,7 +257,13 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
    <div class="field"><label>رقم الهاتف</label><input id="regPhone" inputmode="tel" placeholder="07800000000"></div>
   </div>
   <div class="row">
-   <div class="field"><label>كلمة المرور الخاصة بالحساب</label><input id="regPassword" type="password" placeholder="6 أحرف أو أرقام على الأقل"></div>
+   <div class="field">
+    <label>كلمة المرور الخاصة بالحساب</label>
+    <div class="password-wrapper">
+     <input id="regPassword" type="password" placeholder="6 أحرف أو أرقام على الأقل">
+     <button type="button" class="toggle-password" onclick="togglePassword('regPassword', this)">👁️</button>
+    </div>
+   </div>
    <div class="field"><label>المحافظة</label><select id="regCity"><option value="">اختر المحافظة</option></select></div>
   </div>
   <div class="row">
@@ -262,7 +280,7 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
 </section>
 
 <section id="techAccount" class="container hidden">
- <h2 class="section-title">الملف الشخصي - لوحة تحكم الفني</h2>
+ <h2 class="section-title"><span class="online-dot" title="متصل الآن"></span> الملف الشخصي - لوحة تحكم الفني</h2>
  <div id="techAlertBox"></div>
  <div id="techSummary" class="card" style="margin-bottom:20px"></div>
  <div id="techJobsArea">
@@ -328,16 +346,25 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
   
   <button class="btn primary" style="width:100%;margin-top:15px" onclick="submitRequest()">إرسال الطلب للفني المختار الآن</button>
   <div id="requestMessage"></div>
+  
+  <!-- منطقة متابعة حالة الطلب للزبون مع زر الواتساب عند القبول -->
+  <div id="customerTrackingArea" style="margin-top:20px;"></div>
  </div>
 </div>
 
-<!-- نافذة تسجيل الدخول الآمنة برقم الهاتف وكلمة المرور -->
+<!-- نافذة تسجيل الدخول الآمنة برقم الهاتف وكلمة المرور (بدون إظهار رقم المدير للعامة) -->
 <div class="modal hidden" id="loginModal">
  <div class="modal-box">
   <div class="modal-head"><h3>تسجيل الدخول الآمن</h3><div class="close" onclick="closeModal('loginModal')">✕</div></div>
-  <div class="notice">أدخل رقم هاتفك وكلمة المرور الخاصة بك. (رقم المدير: 07805017009)</div>
+  <div class="notice">أدخل رقم هاتفك وكلمة المرور الخاصة بك للمتابعة.</div>
   <div class="field"><label>رقم الهاتف</label><input id="loginPhone" inputmode="tel" placeholder="07800000000"></div>
-  <div class="field"><label>كلمة المرور</label><input id="loginPassword" type="password" placeholder="••••••••"></div>
+  <div class="field">
+   <label>كلمة المرور</label>
+   <div class="password-wrapper">
+    <input id="loginPassword" type="password" placeholder="••••••••">
+    <button type="button" class="toggle-password" onclick="togglePassword('loginPassword', this)">👁️</button>
+   </div>
+  </div>
   <button class="btn primary" style="width:100%" onclick="loginWithPhonePassword()">دخول إلى الحساب</button>
   <button class="btn light" style="width:100%;margin-top:10px" onclick="closeModal('loginModal');showSection('join')">ليس لديك حساب؟ تسجيل فني جديد</button>
   <div id="loginMessage"></div>
@@ -393,11 +420,25 @@ const DISTRICTS={
 let auth=null,db=null,storage=null,currentUser=null,currentRole="guest",currentTech=null;
 let publicTechs=[],requests=[],technicians=[];
 let chosenCustomerCity="",pendingService=null;
-let techJobsListener=null;
+let techJobsListener=null, customerOrderStatusListener=null;
+let activeRequestId = null;
 
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const msg=(id,text,type="notice")=>{const el=$(id);if(el)el.innerHTML='<div class="notice '+type+'">'+esc(text)+'</div>'};
+
+// ميزة العين السحرية لإظهار وإخفاء كلمة المرور
+function togglePassword(inputId, btn) {
+  const input = $(inputId);
+  if (!input) return;
+  if (input.type === "password") {
+    input.type = "text";
+    btn.textContent = "🙈";
+  } else {
+    input.type = "password";
+    btn.textContent = "👁️";
+  }
+}
 
 function playAlertBeep() {
   try {
@@ -426,7 +467,7 @@ const showSection=id=>{
 
 const closeModal=id=>$(id).classList.add("hidden");
 const openLogin=()=>{$("loginMessage").innerHTML="";$("loginModal").classList.remove("hidden")};
-const openDisclaimer=()=>{$("disclaimerModal").classList.add("hidden"); $("disclaimerModal").classList.remove("hidden")}; // fixed
+const openDisclaimer=()=>{$("disclaimerModal").classList.add("hidden"); $("disclaimerModal").classList.remove("hidden")};
 
 function handleAuthNav() {
   if(currentRole === "admin") {
@@ -720,20 +761,18 @@ async function registerTechWithPassword(){
  }
 }
 
-// تسجيل الدخول الآمن برقم الهاتف وكلمة المرور (يدعم المدير والفنيين)
+// تسجيل الدخول الآمن برقم الهاتف وكلمة المرور
 async function loginWithPhonePassword(){
  const phone=$("loginPhone").value.trim();
  const password=$("loginPassword").value;
  if(!phone||!password) return msg("loginMessage","أدخل رقم الهاتف وكلمة المرور.","error");
 
  try{
-  // تحقق إذا كان المدير
   if(phone === "07805017009"){
    const adminEmail = "07805017009@sakhr.app";
    try {
     await auth.signInWithEmailAndPassword(adminEmail, password);
    } catch(err) {
-    // إذا لم يكن الحساب منشأ بعد في فايربيس، أنشئه تلقائياً للمدير
     await auth.createUserWithEmailAndPassword(adminEmail, password);
    }
    currentRole="admin";
@@ -744,7 +783,6 @@ async function loginWithPhonePassword(){
    return;
   }
 
-  // تسجيل دخول الفنيين
   const emailPseudo = phone + "@sakhr.app";
   const c = await auth.signInWithEmailAndPassword(emailPseudo, password);
   const s = await db.ref("technicians/"+c.user.uid).once("value");
@@ -767,6 +805,7 @@ async function loginWithPhonePassword(){
 async function logout(){
  try{
   if(techJobsListener) { techJobsListener.off(); techJobsListener=null; }
+  if(customerOrderStatusListener) { customerOrderStatusListener.off(); customerOrderStatusListener=null; }
   await auth.signOut();
   currentRole="guest"; currentTech=null; currentUser=null;
   updateNavAuthButton();
@@ -807,6 +846,7 @@ function renderPublicTechs(){
  }
  el.innerHTML=publicTechs.map(t=>`
  <div class="card tech-card">
+  <div style="position:absolute;top:15px;left:15px;" title="فني متاح"><span class="online-dot"></span></div>
   ${techPhoto(t)}
   <div style="text-align:center">
    <h4>${esc(t.name)}</h4>
@@ -857,7 +897,7 @@ function renderMatchingTechs(){
   <div style="display:flex;gap:12px;align-items:center">
    ${techPhoto(t,true)}
    <div style="flex:1">
-    <h4 style="margin:0">${esc(t.name)}</h4>
+    <h4 style="margin:0"><span class="online-dot"></span> ${esc(t.name)}</h4>
     <div style="font-size:12px" class="muted">📍 ${esc(t.city)} / ${esc(t.area)}</div>
     <div class="stars" style="font-size:14px">${"★".repeat(Math.round(t.ratingAverage||0))}${"☆".repeat(5-Math.round(t.ratingAverage||0))}</div>
    </div>
@@ -884,6 +924,7 @@ async function openRequest(service="", preselectedUid=""){
  setDistricts("custArea",saved);
 
  if($("requestMessage")) $("requestMessage").innerHTML="";
+ if($("customerTrackingArea")) $("customerTrackingArea").innerHTML="";
  if($("custService")) $("custService").value=service||SERVICES[0];
  selectedTechUid=preselectedUid||"";
  if($("custTech")) $("custTech").value=selectedTechUid;
@@ -916,7 +957,9 @@ async function submitRequest(){
 
   const custId = "cust_" + Date.now();
   const id=db.ref("requests/"+custId).push().key;
+  activeRequestId = id;
   const now=Date.now();
+  
   const record={
    id, uid:custId, name, phone, city:city==="ALL"?"كل المحافظات":city,
    area:area||"كل الأقضية", neighborhood, service, problem,
@@ -932,9 +975,40 @@ async function submitRequest(){
   await db.ref().update(u);
 
   msg("requestMessage","تم إرسال طلبك بنجاح! رقم الطلب: "+id,"success");
+  
+  // تفعيل الاستماع لتحديثات حالة الطلب للزبون لعرض زر الواتساب عند القبول
+  listenToCustomerOrderStatus(custId, id, tech.phone);
  }catch(e){
   msg("requestMessage",e.message,"error");
  }
+}
+
+function listenToCustomerOrderStatus(custId, reqId, techPhone) {
+  if(customerOrderStatusListener) customerOrderStatusListener.off();
+  customerOrderStatusListener = db.ref("requests/"+custId+"/"+reqId);
+  customerOrderStatusListener.on("value", snap => {
+    const req = snap.val();
+    if(!req) return;
+    const trackingArea = $("customerTrackingArea");
+    if(!trackingArea) return;
+
+    if(req.status === "مقبول من الفني") {
+      const cleanPhone = (req.assignedTechPhone || techPhone || "").replace(/\D/g,'');
+      trackingArea.innerHTML = `
+       <div class="notice success" style="text-align:center;">
+        <b>🎉 وافق الفني على طلبك!</b><br>تواصل معه فوراً عبر الواتساب لتنسيق الموعد:
+        <div style="margin-top:12px;">
+         <a href="https://wa.me/${cleanPhone}?text=مرحباً، لقد قبلت طلبي لصيانة ${encodeURIComponent(req.service)} عبر منصة صخر" target="_blank" class="btn whatsapp-btn" style="width:100%;justify-content:center;">
+          💬 فتح محادثة الواتساب مع الفني
+         </a>
+        </div>
+       </div>`;
+    } else if(req.status === "مرفوض من الفني") {
+      trackingArea.innerHTML = `<div class="notice error" style="text-align:center;">عذراً، اعتذر الفني عن قبول الطلب حالياً. يجدر بك اختيار فني آخر.</div>`;
+    } else {
+      trackingArea.innerHTML = `<div class="notice" style="text-align:center;">⏳ حالة الطلب: بانتظار رد الفني المختار...</div>`;
+    }
+  });
 }
 
 /* وظائف دردشة تقييم الخدمات */
@@ -1015,7 +1089,7 @@ async function renderTechAccount(){
    $("techSummary").innerHTML=`
    ${techPhoto(currentTech)}
    <div style="text-align:center">
-    <h3 style="margin:5px 0">${esc(currentTech.name)}</h3>
+    <h3 style="margin:5px 0"><span class="online-dot"></span> ${esc(currentTech.name)}</h3>
     <span class="badge">${esc(currentTech.service)}</span>
     <div class="muted" style="margin-top:5px">📍 ${esc(currentTech.city)} / ${esc(currentTech.area)}</div>
     <div class="stars" style="margin-top:8px">${"★".repeat(Math.round(currentTech.ratingAverage||0))}${"☆".repeat(5-Math.round(currentTech.ratingAverage||0))}</div>
@@ -1045,6 +1119,12 @@ async function renderTechAccount(){
      <div class="actions">
       <button class="btn primary" onclick="technicianDecision('${esc(x.id)}','مقبول')">قبول الطلب</button>
       <button class="btn danger" onclick="technicianDecision('${esc(x.id)}','مرفوض')">رفض</button>
+     </div>`:""}
+     ${x.status==="مقبول من الفني"?`
+     <div class="actions">
+      <a href="https://wa.me/${(x.customerPhone||"").replace(/\D/g,'')}?text=مرحباً بك، أنا الفني من منصة صخر بخصوص طلب صيانة ${encodeURIComponent(x.service)}" target="_blank" class="btn whatsapp-btn">
+       💬 مراسلة الزبون عبر الواتساب
+      </a>
      </div>`:""}
     </div>`).join("")
     : '<div class="empty">لا توجد طلبات جديدة.</div>';
