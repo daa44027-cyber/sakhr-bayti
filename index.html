@@ -46,6 +46,8 @@ nav{display:flex;gap:7px;flex-wrap:wrap}nav button{color:white;background:#fffff
 .avatar{width:92px;height:92px;border-radius:50%;object-fit:cover;border:3px solid var(--gold);background:#fff0cf;display:block;margin:5px auto 12px}.avatar.small{width:65px;height:65px;margin:0}
 .stars{color:#e5a000;font-size:22px;letter-spacing:2px}.rating-button{background:none;color:#d99a00;font-size:28px;padding:2px}.rating-button.active{color:#f0a900}
 footer{background:linear-gradient(120deg,var(--wine2),var(--wine));color:#ffe6a6;text-align:center;padding:27px;margin-top:45px;font-size:13px;line-height:2;border-top:3px solid var(--gold)}
+.footer-links{margin-top:10px;display:flex;justify-content:center;gap:15px;flex-wrap:wrap}
+.footer-links button{background:transparent;color:#ffc329;border:0;text-decoration:underline;cursor:pointer;font-size:12px}
 hr{border:0;border-top:1px solid var(--line);margin:20px 0}button:disabled{opacity:.55;cursor:not-allowed}
 @media(max-width:600px){header{justify-content:center;text-align:center}nav{justify-content:center}nav button{padding:7px 9px;font-size:12px}.brand{justify-content:center}.container{margin:24px auto}.hero-poster{margin-top:8px;border-radius:0}}
 </style>
@@ -96,7 +98,9 @@ hr{border:0;border-top:1px solid var(--line);margin:20px 0}button:disabled{opaci
 </section>
 
 <section id="techAccount" class="container hidden">
- <h2 class="section-title">حساب الفني</h2><div id="techSummary" class="card"></div>
+ <h2 class="section-title">حساب الفني</h2>
+ <div id="techAlertBox"></div>
+ <div id="techSummary" class="card"></div>
  <div id="techJobsArea"><h3>طلبات الزبائن المرسلة إليك</h3><div id="techJobs"></div></div>
  <button class="btn danger" onclick="logout()">تسجيل الخروج</button>
 </section>
@@ -107,7 +111,12 @@ hr{border:0;border-top:1px solid var(--line);margin:20px 0}button:disabled{opaci
 </section>
 </main>
 
-<footer><strong>صخر | بيتي للصيانة</strong><br>فنيون محترفون .. لخدمتكم دائماً</footer>
+<footer>
+ <strong>صخر | بيتي للصيانة</strong><br>فنيون محترفون .. لخدمتكم دائماً
+ <div class="footer-links">
+  <button onclick="openDisclaimer()">إخلاء المسؤولية وشروط الاستخدام</button>
+ </div>
+</footer>
 
 <div class="modal hidden" id="customerLocationModal">
  <div class="modal-box">
@@ -145,6 +154,16 @@ hr{border:0;border-top:1px solid var(--line);margin:20px 0}button:disabled{opaci
  <div class="field"><label>البريد الإلكتروني</label><input id="loginEmail" type="email"></div><div class="field"><label>كلمة المرور</label><input id="loginPassword" type="password"></div>
  <button class="btn primary" onclick="login()">دخول</button><button class="btn light" onclick="closeModal('loginModal');showSection('join')">تسجيل فني جديد</button><div id="loginMessage"></div>
 </div></div>
+
+<div class="modal hidden" id="disclaimerModal">
+ <div class="modal-box">
+  <div class="modal-head"><h3>إخلاء المسؤولية وشروط الاستخدام</h3><button class="close" onclick="closeModal('disclaimerModal')">✕</button></div>
+  <p style="line-height:2; font-size:14px; margin-top:15px; color:#351323;">
+   منصة <b>"صخر"</b> هي أداة تقنية ووسيط إعلاني رقمي فقط تربط بين العميل (الزبون) والفني المستقل. لا تتحمل إدارة المنصة أي مسؤولية قانونية، أو مادية، أو أخلاقية عن جودة العمل، أو الأخطاء المهنية، أو الخلافات، أو أي أضرار قد تحدث بين الطرفين نتيجة الاتفاق أو تنفيذ أعمال الصيانة. استخدامك للتطبيق يعتبر موافقة تامة على هذه الشروط.
+  </p>
+  <button class="btn primary" style="width:100%; margin-top:15px;" onclick="closeModal('disclaimerModal')">فهمت وقبلت</button>
+ </div>
+</div>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
@@ -185,10 +204,26 @@ const DISTRICTS={
 let auth=null,db=null,storage=null,currentUser=null,currentRole="guest",currentTech=null;
 let publicTechs=[],requests=[],technicians=[],authVersion=0,selectedTechUid="",ratingChoice=0;
 let chosenCustomerCity="",pendingService=null;
+let techJobsListener=null;
 
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const msg=(id,text,type="notice")=>{const el=$(id);if(el)el.innerHTML='<div class="notice '+type+'">'+esc(text)+'</div>'};
+
+function playAlertBeep() {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(587.33, ctx.currentTime);
+    gain.gain.setValueAtTime(0.2, ctx.currentTime);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start();
+    osc.stop(ctx.currentTime + 0.3);
+  } catch(e) {}
+}
 
 const showSection=id=>{
  document.querySelectorAll("main section").forEach(s=>s.classList.add("hidden"));
@@ -201,6 +236,7 @@ const showSection=id=>{
 
 const closeModal=id=>$(id).classList.add("hidden");
 const openLogin=()=>{$("loginMessage").innerHTML="";$("loginModal").classList.remove("hidden")};
+const openDisclaimer=()=>{$("disclaimerModal").classList.remove("hidden")};
 
 function setupLocations(){
  const cityOptions=Object.keys(DISTRICTS).map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("");
@@ -395,6 +431,11 @@ async function onAuthChanged(user){
  currentRole="guest";
  currentTech=null;
 
+ if(techJobsListener) {
+  techJobsListener.off();
+  techJobsListener=null;
+ }
+
  if(!user){
   try{await auth.signInAnonymously()}catch(e){console.error(e)}
   return;
@@ -459,6 +500,10 @@ async function login(){
 
 async function logout(){
  try{
+  if(techJobsListener) {
+   techJobsListener.off();
+   techJobsListener=null;
+  }
   await auth.signOut();
   currentRole="guest";
   currentTech=null;
@@ -1127,28 +1172,44 @@ async function renderTechAccount(){
    return;
   }
 
-  const j=await db.ref("technicianJobs/"+uid).once("value");
-  const jobs=[];
-  j.forEach(x=>jobs.push({...x.val(),id:x.key}));
+  if(techJobsListener) techJobsListener.off();
+  let isInitialLoad = true;
 
-  if($("techJobs")) {
-   $("techJobs").innerHTML=jobs.length
-   ?jobs.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0)).map(x=>`
-   <div class="list-item">
-    <h4>${esc(x.service)} — ${esc(x.status)}</h4>
-    <div class="muted">الزبون: ${esc(x.customerName||"")}</div>
-    <div class="muted">الهاتف: ${esc(x.customerPhone||"")}</div>
-    <div class="muted">${esc(x.city)} — ${esc(x.area)} ${esc(x.neighborhood)}</div>
-    <p>${esc(x.problem)}</p>
-    <div class="muted">رقم الطلب: ${esc(x.id)}</div>
-    ${x.status==="بانتظار رد الفني"?`
-    <div class="actions">
-     <button class="primary" onclick="technicianDecision('${esc(x.id)}','مقبول')">قبول الطلب</button>
-     <button class="danger" onclick="technicianDecision('${esc(x.id)}','مرفوض')">رفض الطلب</button>
-    </div>`:""}
-   </div>`).join("")
-   :'<div class="empty">لا توجد طلبات مرسلة إليك حالياً.</div>';
-  }
+  techJobsListener = db.ref("technicianJobs/"+uid);
+  techJobsListener.on("value", snapshot => {
+   const jobs = [];
+   snapshot.forEach(x => jobs.push({...x.val(), id: x.key}));
+
+   if(!isInitialLoad) {
+    const hasNewPending = jobs.some(x => x.status === "بانتظار رد الفني");
+    if(hasNewPending) {
+     playAlertBeep();
+     if($("techAlertBox")) {
+      $("techAlertBox").innerHTML = '<div class="notice success" style="font-weight:900;">🔔 وصلك طلب صيانة جديد! راجع القائمة أدناه.</div>';
+     }
+    }
+   }
+   isInitialLoad = false;
+
+   if($("techJobs")) {
+    $("techJobs").innerHTML = jobs.length
+    ? jobs.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0)).map(x => `
+    <div class="list-item">
+     <h4>${esc(x.service)} — ${esc(x.status)}</h4>
+     <div class="muted">الزبون: ${esc(x.customerName || "")}</div>
+     <div class="muted">الهاتف: ${esc(x.customerPhone || "")}</div>
+     <div class="muted">${esc(x.city)} — ${esc(x.area)} ${esc(x.neighborhood)}</div>
+     <p>${esc(x.problem)}</p>
+     <div class="muted">رقم الطلب: ${esc(x.id)}</div>
+     ${x.status === "بانتظار رد الفني" ? `
+     <div class="actions">
+      <button class="primary" onclick="technicianDecision('${esc(x.id)}','مقبول')">قبول الطلب</button>
+      <button class="danger" onclick="technicianDecision('${esc(x.id)}','مرفوض')">رفض الطلب</button>
+     </div>` : ""}
+    </div>`).join("")
+    : '<div class="empty">لا توجد طلبات مرسلة إليك حالياً.</div>';
+   }
+  });
 
  }catch(e){
   console.error(e);
