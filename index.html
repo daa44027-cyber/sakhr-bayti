@@ -16,34 +16,10 @@ header{background:linear-gradient(120deg,var(--wine2),var(--wine));color:white;p
 .brand{display:flex;align-items:center;gap:10px}.logo{width:55px;height:55px;object-fit:contain}.brand h1{font-size:23px;margin:0;font-weight:900}.brand small{display:block;color:var(--gold);font-size:12px}
 nav{display:flex;gap:7px;flex-wrap:wrap}nav button{color:white;background:#ffffff12;padding:9px 12px;border-radius:12px;border:1px solid #ffc65b55;font-size:13px;box-shadow:0 4px 0 #290313}
 .hero-poster{position:relative;width:min(100%,760px);margin:18px auto 0;overflow:hidden;border-radius:18px;box-shadow:0 12px 30px #4a071d35}.hero-poster img{display:block;width:100%;height:auto}
-
-/* أزرار الصورة: ستة أزرار خدمات وزر الطلب السريع */
-.poster-action{
- position:absolute;
- border:0;
- background:transparent;
- color:transparent;
- z-index:2;
- border-radius:40px;
- transition:transform .15s ease,background .15s ease;
- cursor:pointer;
- -webkit-tap-highlight-color:transparent;
- touch-action:manipulation;
-}
-.poster-action:active{
- transform:scale(.94);
- background:#ffc32935;
-}
-.poster-order{
- right:2%;
- top:44%;
- width:36%;
- height:8%;
-}
-.poster-service{
- height:15%;
- width:31%;
-}
+.poster-action{position:absolute;border:0;background:transparent;color:transparent;z-index:2;border-radius:40px;transition:transform .15s ease,background .15s ease;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.poster-action:active{transform:scale(.94);background:#ffc32935}
+.poster-order{right:2%;top:44%;width:36%;height:8%}
+.poster-service{height:15%;width:31%}
 .poster-service.s1{right:2%;top:53%}
 .poster-service.s2{right:34.5%;top:53%}
 .poster-service.s3{right:67%;top:53%}
@@ -51,7 +27,6 @@ nav{display:flex;gap:7px;flex-wrap:wrap}nav button{color:white;background:#fffff
 .poster-service.s5{right:34.5%;top:69%}
 .poster-service.s6{right:67%;top:69%}
 .poster-menu{top:1%;left:1%;width:14%;height:6%}
-
 .container{width:min(1100px,92%);margin:30px auto}.section-title{font-size:23px;color:var(--wine);margin:0 0 18px}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px}
 .card{background:linear-gradient(145deg,#fff,#fff7e9);border:1px solid var(--line);border-radius:17px;padding:19px;box-shadow:0 7px 0 #d9b98e,0 11px 22px #4b071d12}
@@ -82,6 +57,7 @@ hr{border:0;border-top:1px solid var(--line);margin:20px 0}button:disabled{opaci
   <button onclick="showSection('home')">الرئيسية</button><button onclick="showSection('services')">خدماتنا</button><button onclick="showSection('technicians')">الفنيون</button><button onclick="showSection('track')">متابعة الطلب</button><button onclick="openLogin()">دخول</button>
  </nav>
 </header>
+
 <main>
 <section id="home">
  <div class="hero-poster">
@@ -96,6 +72,7 @@ hr{border:0;border-top:1px solid var(--line);margin:20px 0}button:disabled{opaci
   <button class="poster-action poster-service s6" onclick="chooseService('كهربائيات')">كهربائيات</button>
  </div>
 </section>
+
 <section id="services" class="container hidden"><h2 class="section-title">خدماتنا</h2><div class="grid" id="allServices"></div></section>
 <section id="technicians" class="container hidden"><h2 class="section-title">الفنيون المسجلون</h2><div class="grid" id="publicTechList"><div class="empty">جارٍ تحميل الفنيين...</div></div></section>
 <section id="track" class="container hidden">
@@ -113,28 +90,53 @@ hr{border:0;border-top:1px solid var(--line);margin:20px 0}button:disabled{opaci
  <button class="btn primary" onclick="registerTech()">إنشاء حساب فني</button><div id="regMessage"></div>
  </div>
 </section>
+
 <section id="techAccount" class="container hidden">
  <h2 class="section-title">حساب الفني</h2><div id="techSummary" class="card"></div>
  <div id="techJobsArea"><h3>طلبات الزبائن المرسلة إليك</h3><div id="techJobs"></div></div>
  <button class="btn danger" onclick="logout()">تسجيل الخروج</button>
 </section>
+
 <section id="admin" class="container hidden">
  <h2 class="section-title">لوحة إدارة صخر</h2><div class="grid" id="adminStats"></div><hr><h3>طلبات الزبائن</h3><div id="adminRequests"></div><hr><h3>إدارة الفنيين والاشتراكات</h3><div id="adminTechs"></div>
  <button class="btn danger" onclick="logout()">تسجيل الخروج</button>
 </section>
 </main>
+
 <footer><strong>صخر | بيتي للصيانة</strong><br>فنيون محترفون .. لخدمتكم دائماً</footer>
+
+<!-- نافذة اختيار المحافظة عند أول دخول للزبون -->
+<div class="modal hidden" id="customerLocationModal">
+ <div class="modal-box">
+  <div class="modal-head"><h3>أهلاً بك في صخر</h3></div>
+  <div class="notice">حتى نعرض لك الفنيين المناسبين، نحتاج أولاً معرفة محافظتك.</div>
+  <div class="field">
+   <label>أنت من أي محافظة؟</label>
+   <select id="initialCustomerCity">
+    <option value="">اختر محافظتك</option>
+    <option value="ALL">البحث في جميع المحافظات</option>
+   </select>
+  </div>
+  <button class="btn primary" style="width:100%" onclick="confirmCustomerLocation()">متابعة</button>
+  <div id="initialLocationMessage"></div>
+ </div>
+</div>
 
 <div class="modal hidden" id="requestModal"><div class="modal-box">
  <div class="modal-head"><h3>طلب صيانة جديد</h3><button class="close" onclick="closeModal('requestModal')">✕</button></div>
- <div class="field"><label>الاسم</label><input id="custName"></div><div class="field"><label>رقم الهاتف</label><input id="custPhone" inputmode="tel"></div>
+ <div class="field"><label>الاسم</label><input id="custName"></div>
+ <div class="field"><label>رقم الهاتف</label><input id="custPhone" inputmode="tel"></div>
  <div class="field"><label>المحافظة</label><select id="custCity"><option value="">اختر المحافظة</option><option value="ALL">كل المحافظات</option></select></div>
  <div class="field"><label>القضاء</label><select id="custArea" disabled><option value="">اختر المحافظة أولاً</option></select></div>
- <div class="field"><label>المنطقة أو الحي (اختياري)</label><input id="custNeighborhood"></div><div class="field"><label>نوع الخدمة</label><select id="custService"></select></div>
- <div class="field"><label>وصف المشكلة</label><textarea id="custProblem"></textarea></div><div class="notice">اختر الفني المناسب من القائمة التي تظهر حسب اختصاصه وموقعه.</div>
- <div id="matchingTechs"><div class="empty">اختر المحافظة والخدمة لعرض الفنيين.</div></div><input type="hidden" id="custTech">
+ <div class="field"><label>المنطقة أو الحي (اختياري)</label><input id="custNeighborhood"></div>
+ <div class="field"><label>نوع الخدمة</label><select id="custService"></select></div>
+ <div class="field"><label>وصف المشكلة</label><textarea id="custProblem"></textarea></div>
+ <div class="notice">تظهر هنا أسماء الفنيين المسجلين في محافظتك واختصاصك فقط.</div>
+ <div id="matchingTechs"><div class="empty">اختر المحافظة والخدمة لعرض الفنيين.</div></div>
+ <input type="hidden" id="custTech">
  <button class="btn primary" onclick="submitRequest()">إرسال الطلب للفني المختار</button><div id="requestMessage"></div>
 </div></div>
+
 <div class="modal hidden" id="loginModal"><div class="modal-box">
  <div class="modal-head"><h3>تسجيل الدخول</h3><button class="close" onclick="closeModal('loginModal')">✕</button></div>
  <div class="field"><label>البريد الإلكتروني</label><input id="loginEmail" type="email"></div><div class="field"><label>كلمة المرور</label><input id="loginPassword" type="password"></div>
@@ -145,6 +147,7 @@ hr{border:0;border-top:1px solid var(--line);margin:20px 0}button:disabled{opaci
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
+
 <script>
 const firebaseConfig={
  apiKey:"AIzaSyBXApuXQQF9rYcH_VkB_mzqIx8pFbUxLI",
@@ -155,7 +158,9 @@ const firebaseConfig={
  messagingSenderId:"289076783578",
  appId:"1:289076783578:web:a999386e30d1a7af6578e3"
 };
+
 const SERVICES=["كهربائيات","سباكة","تبريد وتكييف","بناء وترميم","صبغ وديكور","نجارة","تنظيف","أجهزة منزلية"];
+
 const DISTRICTS={
 "بغداد":["الرصافة","الكرخ","الأعظمية","الصدر","الكاظمية","المنصور","الدورة","أبو غريب","المدائن","المحمودية","الطارمية","التاجي"],
 "البصرة":["البصرة","الزبير","أبو الخصيب","الفاو","شط العرب","القرنة","المدينة","الهارثة","الدير"],
@@ -173,61 +178,150 @@ const DISTRICTS={
 "ميسان":["العمارة","المجر الكبير","الكحلاء","الميمونة","قلعة صالح","علي الغربي","علي الشرقي"],
 "واسط":["الكوت","النعمانية","الحي","الصويرة","العزيزية","بدرة","الزبيدية"]
 };
-let auth=null,db=null,storage=null,currentUser=null,currentRole="guest",currentTech=null,publicTechs=[],requests=[],technicians=[],authVersion=0,selectedTechUid="",ratingChoice=0;
+
+let auth=null,db=null,storage=null,currentUser=null,currentRole="guest",currentTech=null;
+let publicTechs=[],requests=[],technicians=[],authVersion=0,selectedTechUid="",ratingChoice=0;
+let chosenCustomerCity="",pendingService=null;
+
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const msg=(id,text,type="notice")=>{const el=$(id);if(el)el.innerHTML='<div class="notice '+type+'">'+esc(text)+'</div>'};
+
 const showSection=id=>{
  document.querySelectorAll("main section").forEach(s=>s.classList.add("hidden"));
- $(id)?.classList.remove("hidden");window.scrollTo({top:0,behavior:"smooth"});
+ $(id)?.classList.remove("hidden");
+ window.scrollTo({top:0,behavior:"smooth"});
  if(id==="technicians")loadPublicTechs();
  if(id==="admin"&&currentRole==="admin")loadAdminData();
  if(id==="techAccount"&&["technician","suspended"].includes(currentRole))renderTechAccount();
 };
+
 const closeModal=id=>$(id).classList.add("hidden");
 const openLogin=()=>{$("loginMessage").innerHTML="";$("loginModal").classList.remove("hidden")};
+
 function setupLocations(){
- $("regCity").innerHTML='<option value="">اختر المحافظة</option>'+Object.keys(DISTRICTS).map(x=>`<option>${esc(x)}</option>`).join("");
- $("custCity").innerHTML='<option value="">اختر المحافظة</option><option value="ALL">كل المحافظات</option>'+Object.keys(DISTRICTS).map(x=>`<option>${esc(x)}</option>`).join("");
+ const cityOptions=Object.keys(DISTRICTS).map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("");
+ $("regCity").innerHTML='<option value="">اختر المحافظة</option>'+cityOptions;
+ $("custCity").innerHTML='<option value="">اختر المحافظة</option><option value="ALL">كل المحافظات</option>'+cityOptions;
+ $("initialCustomerCity").innerHTML='<option value="">اختر محافظتك</option><option value="ALL">البحث في جميع المحافظات</option>'+cityOptions;
+
  $("regCity").addEventListener("change",()=>setDistricts("regArea",$("regCity").value));
- $("custCity").addEventListener("change",()=>{setDistricts("custArea",$("custCity").value);selectedTechUid="";$("custTech").value="";renderMatchingTechs()});
- ["custArea","custNeighborhood","custService"].forEach(id=>$(id).addEventListener("input",()=>{selectedTechUid="";$("custTech").value="";renderMatchingTechs()}));
- ["custArea","custService"].forEach(id=>$(id).addEventListener("change",()=>{selectedTechUid="";$("custTech").value="";renderMatchingTechs()}));
+
+ $("custCity").addEventListener("change",()=>{
+  const city=$("custCity").value;
+  chosenCustomerCity=city;
+  if(city)localStorage.setItem("sakhrCustomerCity",city);
+  setDistricts("custArea",city);
+  selectedTechUid="";$("custTech").value="";
+  renderMatchingTechs();
+ });
+
+ ["custArea","custNeighborhood","custService"].forEach(id=>{
+  $(id).addEventListener("input",()=>{
+   selectedTechUid="";$("custTech").value="";renderMatchingTechs();
+  });
+ });
+
+ ["custArea","custService"].forEach(id=>{
+  $(id).addEventListener("change",()=>{
+   selectedTechUid="";$("custTech").value="";renderMatchingTechs();
+  });
+ });
+
+ const saved=localStorage.getItem("sakhrCustomerCity")||"";
+ if(saved){
+  chosenCustomerCity=saved;
+  $("custCity").value=saved;
+  setDistricts("custArea",saved);
+ }
 }
+
 function setDistricts(id,city){
- const list=DISTRICTS[city]||[];$(id).disabled=!list.length;
- $(id).innerHTML=list.length?'<option value="">اختر القضاء</option>'+list.map(x=>`<option>${esc(x)}</option>`).join(""):'<option value="">كل الأقضية</option>';
+ const list=DISTRICTS[city]||[];
+ $(id).disabled=!list.length;
+ $(id).innerHTML=list.length
+  ?'<option value="">اختر القضاء</option>'+list.map(x=>`<option>${esc(x)}</option>`).join("")
+  :'<option value="">كل الأقضية</option>';
 }
-function fillSelect(id){$(id).innerHTML=SERVICES.map(s=>`<option>${esc(s)}</option>`).join("")}
+
+function showCustomerLocation(){
+ const saved=localStorage.getItem("sakhrCustomerCity")||"";
+ if(saved){
+  chosenCustomerCity=saved;
+  $("custCity").value=saved;
+  setDistricts("custArea",saved);
+  return;
+ }
+ $("customerLocationModal").classList.remove("hidden");
+}
+
+function confirmCustomerLocation(){
+ const city=$("initialCustomerCity").value;
+ if(!city)return msg("initialLocationMessage","اختَر محافظتك أولاً.","error");
+
+ chosenCustomerCity=city;
+ localStorage.setItem("sakhrCustomerCity",city);
+ $("custCity").value=city;
+ setDistricts("custArea",city);
+ $("initialLocationMessage").innerHTML="";
+ closeModal("customerLocationModal");
+
+ if(pendingService!==null){
+  const service=pendingService;
+  pendingService=null;
+  openRequest(service);
+ }
+}
+
+function fillSelect(id){
+ $(id).innerHTML=SERVICES.map(s=>`<option>${esc(s)}</option>`).join("");
+}
+
 function renderServices(){
  const icons=["⚡","🚰","❄️","🧱","🎨","🪚","🧹","🔌"];
  $("allServices").innerHTML=SERVICES.map((s,i)=>`<div class="card service-card" onclick="chooseService('${s}')"><div class="service-icon">${icons[i]}</div><h3>${esc(s)}</h3><span class="badge">اطلب الخدمة</span></div>`).join("");
- fillSelect("regService");fillSelect("custService");
+ fillSelect("regService");
+ fillSelect("custService");
 }
+
 function initFirebase(){
  try{
   if(!firebase.apps.length)firebase.initializeApp(firebaseConfig);
-  auth=firebase.auth();db=firebase.database();storage=firebase.storage();
-  auth.onAuthStateChanged(onAuthChanged);loadPublicTechs();
- }catch(e){console.error(e);alert("تعذر تشغيل Firebase.")}
+  auth=firebase.auth();
+  db=firebase.database();
+  storage=firebase.storage();
+  auth.onAuthStateChanged(onAuthChanged);
+  loadPublicTechs();
+ }catch(e){
+  console.error(e);
+  alert("تعذر تشغيل Firebase.");
+ }
 }
+
 async function ensureSignedIn(){
  if(!auth)throw new Error("Firebase غير متصل");
  if(!auth.currentUser)await auth.signInAnonymously();
  return auth.currentUser;
 }
+
 function friendlyAuthError(err){
  const code=err?.code||"unknown";
  const m={
- "auth/invalid-credential":"بيانات الدخول غير صحيحة.","auth/wrong-password":"كلمة المرور غير صحيحة.",
- "auth/user-not-found":"هذا البريد غير مسجل.","auth/too-many-requests":"محاولات كثيرة. انتظر قليلاً.",
+ "auth/invalid-credential":"بيانات الدخول غير صحيحة.",
+ "auth/wrong-password":"كلمة المرور غير صحيحة.",
+ "auth/user-not-found":"هذا البريد غير مسجل.",
+ "auth/too-many-requests":"محاولات كثيرة. انتظر قليلاً.",
  "auth/operation-not-allowed":"فعّل تسجيل البريد والدخول المجهول في Firebase.",
- "auth/network-request-failed":"مشكلة اتصال بالإنترنت.","auth/email-already-in-use":"هذا البريد مستخدم مسبقاً.",
- "auth/weak-password":"كلمة المرور يجب أن تكون 6 أحرف على الأقل.","auth/invalid-email":"البريد غير صحيح.",
- "PERMISSION_DENIED":"قواعد Firebase منعت العملية.","storage/unauthorized":"قواعد Firebase Storage لا تسمح برفع الصورة."
+ "auth/network-request-failed":"مشكلة اتصال بالإنترنت.",
+ "auth/email-already-in-use":"هذا البريد مستخدم مسبقاً.",
+ "auth/weak-password":"كلمة المرور يجب أن تكون 6 أحرف على الأقل.",
+ "auth/invalid-email":"البريد غير صحيح.",
+ "PERMISSION_DENIED":"قواعد Firebase منعت العملية.",
+ "storage/unauthorized":"قواعد Firebase Storage لا تسمح برفع الصورة."
  };
  return (m[code]||err?.message||"حدث خطأ.")+" ("+code+")";
 }
+
 async function uploadTechPhoto(uid,file){
  if(!file)return currentTech?.photoURL||"";
  if(!file.type.startsWith("image/"))throw new Error("اختر ملف صورة فقط.");
@@ -236,285 +330,771 @@ async function uploadTechPhoto(uid,file){
  const snap=await ref.put(file);
  return await snap.ref.getDownloadURL();
 }
+
+/* بيانات الفني العامة لا تتضمن رقم الهاتف */
 async function syncPublicTechnician(uid,p){
  const data={
- uid,name:p.name||"",phone:p.phone||"",city:p.city||"",area:p.area||"",
- neighborhood:p.neighborhood||"",service:p.service||"",bio:p.bio||"",
- photoURL:p.photoURL||"",approved:p.approved!==false,
- ratingSum:Number(p.ratingSum)||0,ratingCount:Number(p.ratingCount)||0,
- ratingAverage:Number(p.ratingAverage)||0,createdAt:p.createdAt||Date.now()
+  uid,
+  name:p.name||"",
+  city:p.city||"",
+  area:p.area||"",
+  neighborhood:p.neighborhood||"",
+  service:p.service||"",
+  bio:p.bio||"",
+  photoURL:p.photoURL||"",
+  approved:p.approved!==false,
+  ratingSum:Number(p.ratingSum)||0,
+  ratingCount:Number(p.ratingCount)||0,
+  ratingAverage:Number(p.ratingAverage)||0,
+  createdAt:p.createdAt||Date.now()
  };
  await db.ref("publicTechnicians/"+uid).update(data);
  if(p.approved===false)await db.ref("publicTechnicians/"+uid+"/approved").set(false);
 }
+
 async function resolveRole(user){
  if(!user||user.isAnonymous)return {role:"guest",tech:null};
  const a=await db.ref("admins/"+user.uid).once("value");
  if(a.val()===true)return {role:"admin",tech:null};
  const t=await db.ref("technicians/"+user.uid).once("value");
- if(t.exists()){const tech=t.val();return {role:tech.approved===false?"suspended":"technician",tech}}
+ if(t.exists()){
+  const tech=t.val();
+  return {role:tech.approved===false?"suspended":"technician",tech};
+ }
  return {role:"unknown",tech:null};
 }
+
 async function onAuthChanged(user){
- const version=++authVersion;currentUser=user;currentRole="guest";currentTech=null;
- if(!user){try{await auth.signInAnonymously()}catch(e){console.error(e)}return}
+ const version=++authVersion;
+ currentUser=user;
+ currentRole="guest";
+ currentTech=null;
+
+ if(!user){
+  try{await auth.signInAnonymously()}catch(e){console.error(e)}
+  return;
+ }
+
  try{
   const result=await resolveRole(user);
   if(version!==authVersion||auth.currentUser?.uid!==user.uid)return;
-  currentRole=result.role;currentTech=result.tech;
-  if(currentRole==="admin"){showSection("admin");loadAdminData()}
-  else if(["technician","suspended"].includes(currentRole)){showSection("techAccount");renderTechAccount()}
+
+  currentRole=result.role;
+  currentTech=result.tech;
+
+  if(currentRole==="admin"){
+   closeModal("customerLocationModal");
+   showSection("admin");
+   loadAdminData();
+  }else if(["technician","suspended"].includes(currentRole)){
+   closeModal("customerLocationModal");
+   showSection("techAccount");
+   renderTechAccount();
+  }else{
+   showCustomerLocation();
+  }
  }catch(e){console.error(e)}
 }
+
 async function login(){
- const email=$("loginEmail").value.trim(),password=$("loginPassword").value;
+ const email=$("loginEmail").value.trim();
+ const password=$("loginPassword").value;
  if(!email||!password)return msg("loginMessage","أدخل البريد وكلمة المرور.","error");
+
  try{
-  const c=await auth.signInWithEmailAndPassword(email,password),version=++authVersion;
+  const c=await auth.signInWithEmailAndPassword(email,password);
+  const version=++authVersion;
   const result=await resolveRole(c.user);
   if(version!==authVersion||auth.currentUser?.uid!==c.user.uid)return;
-  currentUser=c.user;currentRole=result.role;currentTech=result.tech;
-  if(result.role==="admin"){closeModal("loginModal");showSection("admin");loadAdminData()}
-  else if(result.role==="technician"){closeModal("loginModal");await syncPublicTechnician(c.user.uid,result.tech);showSection("techAccount");renderTechAccount()}
-  else if(result.role==="suspended")msg("loginMessage","حسابك موقوف حالياً. تواصل مع الإدارة.","error");
-  else msg("loginMessage","هذا الحساب غير مسجل كفني أو مدير.","error");
- }catch(e){msg("loginMessage",friendlyAuthError(e),"error")}
-}
-async function logout(){try{await auth.signOut();currentRole="guest";currentTech=null;showSection("home")}catch(e){alert(friendlyAuthError(e))}}
-async function registerTech(){
- const name=$("regName").value.trim(),phone=$("regPhone").value.trim(),city=$("regCity").value,area=$("regArea").value;
- const neighborhood=$("regNeighborhood").value.trim(),service=$("regService").value,bio=$("regBio").value.trim();
- const email=$("regEmail").value.trim(),password=$("regPassword").value,file=$("regPhoto").files[0];
- if(!name||!phone||!city||!area||!service||!email||!password)return msg("regMessage","أكمل البيانات المطلوبة.","error");
- if(password.length<6)return msg("regMessage","كلمة المرور 6 أحرف على الأقل.","error");
- let createdUser=null,profileSaved=false;
- try{
-  const c=await auth.createUserWithEmailAndPassword(email,password);createdUser=c.user;
-  let photoURL="";
-  if(file)photoURL=await uploadTechPhoto(createdUser.uid,file);
-  const now=Date.now();
-  const profile={name,phone,city,area,neighborhood,service,bio,photoURL,approved:true,subscriptionStatus:"غير فعال",freeJobsUsed:0,completedJobs:0,ratingSum:0,ratingCount:0,ratingAverage:0,createdAt:now};
-  await db.ref("technicians/"+createdUser.uid).set(profile);profileSaved=true;
-  currentUser=createdUser;currentRole="technician";currentTech=profile;
-  await syncPublicTechnician(createdUser.uid,profile);
-  msg("regMessage","تم إنشاء حسابك. لديك 3 أعمال مجانية.","success");
-  showSection("techAccount");await renderTechAccount();
+
+  currentUser=c.user;
+  currentRole=result.role;
+  currentTech=result.tech;
+
+  if(result.role==="admin"){
+   closeModal("loginModal");
+   closeModal("customerLocationModal");
+   showSection("admin");
+   loadAdminData();
+  }else if(result.role==="technician"){
+   closeModal("loginModal");
+   closeModal("customerLocationModal");
+   await syncPublicTechnician(c.user.uid,result.tech);
+   showSection("techAccount");
+   renderTechAccount();
+  }else if(result.role==="suspended"){
+   msg("loginMessage","حسابك موقوف حالياً. تواصل مع الإدارة.","error");
+  }else{
+   msg("loginMessage","هذا الحساب غير مسجل كفني أو مدير.","error");
+  }
  }catch(e){
-  console.error(e);msg("regMessage",friendlyAuthError(e),"error");
-  if(createdUser&&!profileSaved){try{await createdUser.delete()}catch(_){}}
+  msg("loginMessage",friendlyAuthError(e),"error");
  }
 }
+
+async function logout(){
+ try{
+  await auth.signOut();
+  currentRole="guest";
+  currentTech=null;
+  showSection("home");
+ }catch(e){alert(friendlyAuthError(e))}
+}
+
+async function registerTech(){
+ const name=$("regName").value.trim();
+ const phone=$("regPhone").value.trim();
+ const city=$("regCity").value;
+ const area=$("regArea").value;
+ const neighborhood=$("regNeighborhood").value.trim();
+ const service=$("regService").value;
+ const bio=$("regBio").value.trim();
+ const email=$("regEmail").value.trim();
+ const password=$("regPassword").value;
+ const file=$("regPhoto").files[0];
+
+ if(!name||!phone||!city||!area||!service||!email||!password)
+  return msg("regMessage","أكمل البيانات المطلوبة.","error");
+
+ if(password.length<6)
+  return msg("regMessage","كلمة المرور 6 أحرف على الأقل.","error");
+
+ let createdUser=null,profileSaved=false;
+
+ try{
+  const c=await auth.createUserWithEmailAndPassword(email,password);
+  createdUser=c.user;
+
+  let photoURL="";
+  if(file)photoURL=await uploadTechPhoto(createdUser.uid,file);
+
+  const now=Date.now();
+  const profile={
+   name,phone,city,area,neighborhood,service,bio,photoURL,
+   approved:true,
+   subscriptionStatus:"غير فعال",
+   freeJobsUsed:0,
+   completedJobs:0,
+   ratingSum:0,
+   ratingCount:0,
+   ratingAverage:0,
+   createdAt:now
+  };
+
+  await db.ref("technicians/"+createdUser.uid).set(profile);
+  profileSaved=true;
+
+  currentUser=createdUser;
+  currentRole="technician";
+  currentTech=profile;
+
+  await syncPublicTechnician(createdUser.uid,profile);
+  msg("regMessage","تم إنشاء حسابك. لديك 3 أعمال مجانية.","success");
+  showSection("techAccount");
+  await renderTechAccount();
+ }catch(e){
+  console.error(e);
+  msg("regMessage",friendlyAuthError(e),"error");
+  if(createdUser&&!profileSaved){
+   try{await createdUser.delete()}catch(_){}
+  }
+ }
+}
+
 $("regPhoto").addEventListener("change",()=>{
- const f=$("regPhoto").files[0];if(!f)return;
- if(!f.type.startsWith("image/"))return msg("regMessage","الملف المختار ليس صورة.","error");
- $("regPreview").src=URL.createObjectURL(f);$("regPreview").classList.remove("hidden");
+ const f=$("regPhoto").files[0];
+ if(!f)return;
+ if(!f.type.startsWith("image/"))
+  return msg("regMessage","الملف المختار ليس صورة.","error");
+ $("regPreview").src=URL.createObjectURL(f);
+ $("regPreview").classList.remove("hidden");
 });
+
 async function saveTechProfile(){
  if(!currentUser||currentRole!=="technician")return;
+
  try{
-  const file=$("editTechPhoto").files[0];let photoURL=currentTech.photoURL||"";
+  const file=$("editTechPhoto").files[0];
+  let photoURL=currentTech.photoURL||"";
   if(file)photoURL=await uploadTechPhoto(currentUser.uid,file);
-  const bio=$("editTechBio").value.trim(),phone=$("editTechPhone").value.trim();
+
+  const bio=$("editTechBio").value.trim();
+  const phone=$("editTechPhone").value.trim();
   if(!phone)return alert("أدخل رقم الهاتف.");
+
   const updates={phone,bio,photoURL};
   await db.ref("technicians/"+currentUser.uid).update(updates);
   currentTech={...currentTech,...updates};
+
   await syncPublicTechnician(currentUser.uid,currentTech);
   alert("تم تحديث بياناتك وصورتك الشخصية.");
-  await renderTechAccount();await loadPublicTechs();
+  await renderTechAccount();
+  await loadPublicTechs();
  }catch(e){alert(friendlyAuthError(e))}
 }
+
 async function loadPublicTechs(){
  if(!db)return;
+
  try{
-  const s=await db.ref("publicTechnicians").once("value"),data=s.val()||{};
-  publicTechs=Object.entries(data).map(([uid,t])=>({...t,uid})).filter(t=>t.approved!==false);
-  renderPublicTechs();renderMatchingTechs();
+  const s=await db.ref("publicTechnicians").once("value");
+  const data=s.val()||{};
+  publicTechs=Object.entries(data)
+   .map(([uid,t])=>({...t,uid}))
+   .filter(t=>t.approved!==false);
+
+  renderPublicTechs();
+  renderMatchingTechs();
  }catch(e){console.error(e)}
 }
-function stars(n){n=Number(n)||0;return "★".repeat(Math.round(n))+"☆".repeat(5-Math.round(n))}
+
+function stars(n){
+ n=Number(n)||0;
+ return "★".repeat(Math.round(n))+"☆".repeat(5-Math.round(n));
+}
+
 function techPhoto(t,small=false){
  const cls=small?"avatar small":"avatar";
  return `<img class="${cls}" src="${esc(t.photoURL||"")}" alt="صورة الفني" onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2250%22 fill=%22%23fff0cf%22/%3E%3Ctext x=%2250%22 y=%2264%22 font-size=%2250%22 text-anchor=%22middle%22%3E👤%3C/text%3E%3C/svg%3E'">`;
 }
+
 function renderPublicTechs(){
- const el=$("publicTechList");if(!el)return;
- if(!publicTechs.length){el.innerHTML='<div class="empty">لا يوجد فنيون متاحون حالياً.</div>';return}
- el.innerHTML=publicTechs.map(t=>`<div class="card tech-card">${techPhoto(t)}
- <h3>${esc(t.name)}</h3><span class="badge green">${esc(t.service)}</span>
- <div class="stars">${stars(t.ratingAverage)}</div><div class="muted">${Number(t.ratingAverage||0).toFixed(1)} من 5 — ${Number(t.ratingCount)||0} تقييم</div>
- <div class="muted">${esc(t.city)} — ${esc(t.area)} ${esc(t.neighborhood)}</div><p>${esc(t.bio||"فني مسجل في صخر")}</p>
- <button class="btn primary" onclick="chooseService('${esc(t.service)}')">اطلب هذا الاختصاص</button></div>`).join("");
+ const el=$("publicTechList");
+ if(!el)return;
+
+ if(!publicTechs.length){
+  el.innerHTML='<div class="empty">لا يوجد فنيون متاحون حالياً.</div>';
+  return;
+ }
+
+ el.innerHTML=publicTechs.map(t=>`
+ <div class="card tech-card">
+  ${techPhoto(t)}
+  <h3>${esc(t.name)}</h3>
+  <span class="badge green">${esc(t.service)}</span>
+  <div class="stars">${stars(t.ratingAverage)}</div>
+  <div class="muted">${Number(t.ratingAverage||0).toFixed(1)} من 5 — ${Number(t.ratingCount)||0} تقييم</div>
+  <div class="muted">${esc(t.city)} — ${esc(t.area)} ${esc(t.neighborhood)}</div>
+  <p>${esc(t.bio||"فني مسجل في صخر")}</p>
+  <button class="btn primary" onclick="chooseService('${esc(t.service)}')">اطلب هذا الاختصاص</button>
+ </div>`).join("");
 }
+
 function renderMatchingTechs(){
- const box=$("matchingTechs");if(!box)return;
- const city=$("custCity").value,area=$("custArea").value,neighborhood=$("custNeighborhood").value.trim().toLowerCase(),service=$("custService").value;
- if(!city||!service){box.innerHTML='<div class="empty">اختر المحافظة ونوع الخدمة لعرض الفنيين.</div>';return}
- if(city!=="ALL"&&!area){box.innerHTML='<div class="empty">اختر القضاء حتى نعرض الفنيين.</div>';return}
+ const box=$("matchingTechs");
+ if(!box)return;
+
+ const city=$("custCity").value;
+ const area=$("custArea").value;
+ const neighborhood=$("custNeighborhood").value.trim().toLowerCase();
+ const service=$("custService").value;
+
+ if(!city||!service){
+  box.innerHTML='<div class="empty">اختر المحافظة ونوع الخدمة لعرض الفنيين.</div>';
+  return;
+ }
+
+ if(city!=="ALL"&&!area){
+  box.innerHTML='<div class="empty">اختر القضاء حتى نعرض الفنيين في منطقتك.</div>';
+  return;
+ }
+
  const matches=publicTechs.filter(t=>{
   const loc=city==="ALL"||(t.city===city&&(!area||t.area===area));
   const hood=!neighborhood||String(t.neighborhood||"").toLowerCase().includes(neighborhood);
   return loc&&hood&&t.service===service&&t.approved!==false;
  });
- if(!matches.length){box.innerHTML='<div class="empty">لا يوجد فني بهذا الاختصاص في الموقع المحدد حالياً.</div>';return}
- box.innerHTML=matches.map(t=>`<div class="tech-choice ${selectedTechUid===t.uid?"selected":""}">
- <div class="row" style="align-items:center">${techPhoto(t,true)}<div><h4>${esc(t.name)}</h4><div class="stars">${stars(t.ratingAverage)}</div><div class="muted">${Number(t.ratingAverage||0).toFixed(1)} (${Number(t.ratingCount)||0} تقييم)</div></div></div>
- <div class="muted">${esc(t.service)} | ${esc(t.city)} — ${esc(t.area)} ${esc(t.neighborhood)}</div><p>${esc(t.bio||"فني مسجل في صخر")}</p>
- <button class="btn ${selectedTechUid===t.uid?"secondary":"light"}" onclick="selectTechnician('${esc(t.uid)}')">${selectedTechUid===t.uid?"تم اختيار هذا الفني":"اختيار الفني"}</button></div>`).join("");
+
+ if(!matches.length){
+  box.innerHTML='<div class="empty">لا يوجد فني بهذا الاختصاص في محافظتك أو موقعك المحدد حالياً.</div>';
+  return;
+ }
+
+ box.innerHTML=matches.map(t=>`
+ <div class="tech-choice ${selectedTechUid===t.uid?"selected":""}">
+  <div class="row" style="align-items:center">
+   ${techPhoto(t,true)}
+   <div>
+    <h4>${esc(t.name)}</h4>
+    <div class="stars">${stars(t.ratingAverage)}</div>
+    <div class="muted">${Number(t.ratingAverage||0).toFixed(1)} (${Number(t.ratingCount)||0} تقييم)</div>
+   </div>
+  </div>
+  <div class="muted">${esc(t.service)} | ${esc(t.city)} — ${esc(t.area)} ${esc(t.neighborhood)}</div>
+  <p>${esc(t.bio||"فني مسجل في صخر")}</p>
+  <button class="btn ${selectedTechUid===t.uid?"secondary":"light"}" onclick="selectTechnician('${esc(t.uid)}')">${selectedTechUid===t.uid?"تم اختيار هذا الفني":"اختيار الفني"}</button>
+ </div>`).join("");
 }
-function selectTechnician(uid){selectedTechUid=uid;$("custTech").value=uid;renderMatchingTechs()}
+
+function selectTechnician(uid){
+ selectedTechUid=uid;
+ $("custTech").value=uid;
+ renderMatchingTechs();
+}
+
 async function openRequest(service=""){
  try{
-  await ensureSignedIn();await loadPublicTechs();$("requestMessage").innerHTML="";
-  $("custService").value=service||SERVICES[0];$("requestModal").classList.remove("hidden");
-  selectedTechUid="";$("custTech").value="";renderMatchingTechs();
- }catch(e){msg("requestMessage",friendlyAuthError(e),"error")}
+  const saved=localStorage.getItem("sakhrCustomerCity")||"";
+
+  if(!saved){
+   pendingService=service;
+   $("initialCustomerCity").value="";
+   $("customerLocationModal").classList.remove("hidden");
+   return;
+  }
+
+  chosenCustomerCity=saved;
+  $("custCity").value=saved;
+  setDistricts("custArea",saved);
+
+  await ensureSignedIn();
+  await loadPublicTechs();
+
+  $("requestMessage").innerHTML="";
+  $("custService").value=service||SERVICES[0];
+  $("requestModal").classList.remove("hidden");
+
+  selectedTechUid="";
+  $("custTech").value="";
+  renderMatchingTechs();
+ }catch(e){
+  msg("requestMessage",friendlyAuthError(e),"error");
+ }
 }
-function quickOrder(){openRequest("")}function chooseService(s){openRequest(s)}
+
+function quickOrder(){openRequest("")}
+function chooseService(s){openRequest(s)}
+
 async function submitRequest(){
  try{
-  const user=await ensureSignedIn();if(!user.isAnonymous)throw new Error("استخدم نموذج الطلب كزبون.");
-  const name=$("custName").value.trim(),phone=$("custPhone").value.trim(),city=$("custCity").value,area=$("custArea").value;
-  const neighborhood=$("custNeighborhood").value.trim(),service=$("custService").value,problem=$("custProblem").value.trim(),techUid=$("custTech").value;
-  if(!name||!phone||!city||!service||!problem)return msg("requestMessage","أكمل الاسم والهاتف والمحافظة والخدمة ووصف المشكلة.","error");
-  if(city!=="ALL"&&!area)return msg("requestMessage","اختر القضاء أولاً.","error");
-  if(!techUid)return msg("requestMessage","اختر فنياً قبل إرسال الطلب.","error");
-  const tech=publicTechs.find(t=>t.uid===techUid);if(!tech||tech.approved===false)throw new Error("الفني المختار غير متاح.");
-  const id=db.ref("requests/"+user.uid).push().key,now=Date.now();
-  const record={id,uid:user.uid,name,phone,city:city==="ALL"?"كل المحافظات":city,area:area||"كل الأقضية",neighborhood,service,problem,preferredTech:techUid,assignedTech:techUid,assignedTechName:tech.name,status:"بانتظار رد الفني",createdAt:now,countedAsCompleted:false,rated:false};
-  const job={id,customerUid:user.uid,customerName:name,customerPhone:phone,service,city:record.city,area:record.area,neighborhood,problem,status:"بانتظار رد الفني",createdAt:now};
-  const u={};u["requests/"+user.uid+"/"+id]=record;u["technicianJobs/"+techUid+"/"+id]=job;
+  const user=await ensureSignedIn();
+  if(!user.isAnonymous)throw new Error("استخدم نموذج الطلب كزبون.");
+
+  const name=$("custName").value.trim();
+  const phone=$("custPhone").value.trim();
+  const city=$("custCity").value;
+  const area=$("custArea").value;
+  const neighborhood=$("custNeighborhood").value.trim();
+  const service=$("custService").value;
+  const problem=$("custProblem").value.trim();
+  const techUid=$("custTech").value;
+
+  if(!name||!phone||!city||!service||!problem)
+   return msg("requestMessage","أكمل الاسم والهاتف والمحافظة والخدمة ووصف المشكلة.","error");
+
+  if(city!=="ALL"&&!area)
+   return msg("requestMessage","اختر القضاء أولاً.","error");
+
+  if(!techUid)
+   return msg("requestMessage","اختر فنياً قبل إرسال الطلب.","error");
+
+  const tech=publicTechs.find(t=>t.uid===techUid);
+  if(!tech||tech.approved===false)
+   throw new Error("الفني المختار غير متاح.");
+
+  if(tech.service!==service)
+   throw new Error("الفني المختار لا يطابق الاختصاص المطلوب.");
+
+  if(city!=="ALL"&&tech.city!==city)
+   throw new Error("الفني المختار لا يعمل في المحافظة المحددة.");
+
+  const id=db.ref("requests/"+user.uid).push().key;
+  const now=Date.now();
+
+  const record={
+   id,uid:user.uid,name,phone,
+   city:city==="ALL"?"كل المحافظات":city,
+   area:area||"كل الأقضية",
+   neighborhood,service,problem,
+   preferredTech:techUid,
+   assignedTech:techUid,
+   assignedTechName:tech.name,
+   status:"بانتظار رد الفني",
+   createdAt:now,
+   countedAsCompleted:false,
+   rated:false
+  };
+
+  const job={
+   id,
+   customerUid:user.uid,
+   customerName:name,
+   customerPhone:phone,
+   service,
+   city:record.city,
+   area:record.area,
+   neighborhood,
+   problem,
+   status:"بانتظار رد الفني",
+   createdAt:now
+  };
+
+  const u={};
+  u["requests/"+user.uid+"/"+id]=record;
+  u["technicianJobs/"+techUid+"/"+id]=job;
+
   await db.ref().update(u);
+
   msg("requestMessage","تم إرسال الطلب إلى "+tech.name+". رقم الطلب: "+id,"success");
   $("trackId").value=id;
- }catch(e){console.error(e);msg("requestMessage",e.message||friendlyAuthError(e),"error")}
+ }catch(e){
+  console.error(e);
+  msg("requestMessage",e.message||friendlyAuthError(e),"error");
+ }
 }
+
 async function trackRequest(){
- const id=$("trackId").value.trim();if(!id)return msg("trackResult","أدخل رقم الطلب.","error");
+ const id=$("trackId").value.trim();
+ if(!id)return msg("trackResult","أدخل رقم الطلب.","error");
+
  try{
-  const user=await ensureSignedIn(),s=await db.ref("requests/"+user.uid+"/"+id).once("value"),r=s.val();
-  if(!r)return msg("trackResult","لم يتم العثور على الطلب في هذا الجهاز. استخدم الجهاز الذي أرسلته منه.","error");
+  const user=await ensureSignedIn();
+  const s=await db.ref("requests/"+user.uid+"/"+id).once("value");
+  const r=s.val();
+
+  if(!r)
+   return msg("trackResult","لم يتم العثور على الطلب في هذا الجهاز. استخدم الجهاز الذي أرسلته منه.","error");
+
   let html=`<div class="notice success"><b>حالة الطلب:</b> ${esc(r.status)}<br><b>الخدمة:</b> ${esc(r.service)}<br><b>الفني:</b> ${esc(r.assignedTechName||"لم يحدد")}<br><b>المحافظة:</b> ${esc(r.city)}<br><b>القضاء:</b> ${esc(r.area)}<br><b>رقم الطلب:</b> ${esc(r.id)}`;
+
   if(r.status==="مقبول من الفني"&&r.assignedTechPhone){
    const tel=String(r.assignedTechPhone).replace(/[^\d+]/g,"");
    const wa=String(r.assignedTechPhone).replace(/\D/g,"");
    html+=`<hr><b>رقم هاتف الفني:</b> ${esc(r.assignedTechPhone)}<div class="actions"><a class="btn primary" href="tel:${esc(tel)}">اتصال مباشر</a><a class="btn secondary" target="_blank" rel="noopener" href="https://wa.me/${esc(wa)}">مراسلة واتساب</a></div>`;
   }
+
   html+="</div>";
+
   if(r.status==="مكتمل"&&!r.rated){
    html+=`<div class="card"><h3>قيّم تجربتك مع الفني</h3><p>اختر عدد النجوم واكتب تعليقك إن رغبت.</p><div id="ratingStars">${[1,2,3,4,5].map(n=>`<button class="rating-button" onclick="chooseRating(${n})">★</button>`).join("")}</div><div class="field"><label>تعليقك (اختياري)</label><textarea id="ratingComment" placeholder="اكتب رأيك بالخدمة"></textarea></div><button class="btn primary" onclick="submitRating('${esc(id)}','${esc(r.assignedTech)}')">إرسال التقييم</button></div>`;
-  }else if(r.rated){html+='<div class="notice success">شكراً لك، تم تسجيل تقييمك لهذا الطلب.</div>'}
+  }else if(r.rated){
+   html+='<div class="notice success">شكراً لك، تم تسجيل تقييمك لهذا الطلب.</div>';
+  }
+
   $("trackResult").innerHTML=html;
- }catch(e){console.error(e);msg("trackResult","تعذر الوصول إلى الطلب. تأكد من الاتصال واستخدم الجهاز الذي أرسلت منه الطلب.","error")}
+ }catch(e){
+  console.error(e);
+  msg("trackResult","تعذر الوصول إلى الطلب. تأكد من الاتصال واستخدم الجهاز الذي أرسلت منه الطلب.","error");
+ }
 }
+
 function chooseRating(n){
  ratingChoice=n;
  document.querySelectorAll("#ratingStars .rating-button").forEach((b,i)=>b.classList.toggle("active",i<n));
 }
+
 async function submitRating(requestId,techUid){
  try{
-  if(ratingChoice<1||ratingChoice>5)return alert("اختر تقييماً من نجمة إلى خمس نجوم.");
-  const user=await ensureSignedIn();if(!user.isAnonymous)return alert("يجب تقييم الطلب من حساب الزبون الذي أرسله.");
-  const reqRef=db.ref("requests/"+user.uid+"/"+requestId),snap=await reqRef.once("value"),r=snap.val();
-  if(!r||r.status!=="مكتمل")return alert("التقييم متاح بعد إكمال العمل فقط.");
+  if(ratingChoice<1||ratingChoice>5)
+   return alert("اختر تقييماً من نجمة إلى خمس نجوم.");
+
+  const user=await ensureSignedIn();
+  if(!user.isAnonymous)
+   return alert("يجب تقييم الطلب من حساب الزبون الذي أرسله.");
+
+  const reqRef=db.ref("requests/"+user.uid+"/"+requestId);
+  const snap=await reqRef.once("value");
+  const r=snap.val();
+
+  if(!r||r.status!=="مكتمل")
+   return alert("التقييم متاح بعد إكمال العمل فقط.");
+
   if(r.rated)return alert("سبق تقييم هذا الطلب.");
   if(r.assignedTech!==techUid)return alert("الفني غير مطابق للطلب.");
+
   const ratingRef=db.ref("technicianRatings/"+techUid+"/"+requestId);
-  const existing=await ratingRef.once("value");if(existing.exists())return alert("هذا الطلب تم تقييمه سابقاً.");
-  const comment=$("ratingComment")?.value.trim()||"",now=Date.now();
-  await ratingRef.set({requestId,customerUid:user.uid,stars:ratingChoice,comment,createdAt:now});
-  const tSnap=await db.ref("technicians/"+techUid).once("value"),t=tSnap.val();
+  const existing=await ratingRef.once("value");
+  if(existing.exists())return alert("هذا الطلب تم تقييمه سابقاً.");
+
+  const comment=$("ratingComment")?.value.trim()||"";
+  const now=Date.now();
+
+  await ratingRef.set({
+   requestId,
+   customerUid:user.uid,
+   stars:ratingChoice,
+   comment,
+   createdAt:now
+  });
+
+  const tSnap=await db.ref("technicians/"+techUid).once("value");
+  const t=tSnap.val();
   if(!t)throw new Error("لم يتم العثور على الفني.");
-  const sum=(Number(t.ratingSum)||0)+ratingChoice,count=(Number(t.ratingCount)||0)+1,avg=sum/count;
+
+  const sum=(Number(t.ratingSum)||0)+ratingChoice;
+  const count=(Number(t.ratingCount)||0)+1;
+  const avg=sum/count;
   const updates={};
-  updates["technicians/"+techUid+"/ratingSum"]=sum;updates["technicians/"+techUid+"/ratingCount"]=count;updates["technicians/"+techUid+"/ratingAverage"]=avg;
-  updates["publicTechnicians/"+techUid+"/ratingSum"]=sum;updates["publicTechnicians/"+techUid+"/ratingCount"]=count;updates["publicTechnicians/"+techUid+"/ratingAverage"]=avg;
-  updates["requests/"+user.uid+"/"+requestId+"/rated"]=true;updates["requests/"+user.uid+"/"+requestId+"/ratedAt"]=now;
+
+  updates["technicians/"+techUid+"/ratingSum"]=sum;
+  updates["technicians/"+techUid+"/ratingCount"]=count;
+  updates["technicians/"+techUid+"/ratingAverage"]=avg;
+  updates["publicTechnicians/"+techUid+"/ratingSum"]=sum;
+  updates["publicTechnicians/"+techUid+"/ratingCount"]=count;
+  updates["publicTechnicians/"+techUid+"/ratingAverage"]=avg;
+  updates["requests/"+user.uid+"/"+requestId+"/rated"]=true;
+  updates["requests/"+user.uid+"/"+requestId+"/ratedAt"]=now;
+
   await db.ref().update(updates);
-  ratingChoice=0;await loadPublicTechs();alert("شكراً لك، تم إرسال تقييمك.");await trackRequest();
- }catch(e){console.error(e);alert(friendlyAuthError(e))}
+
+  ratingChoice=0;
+  await loadPublicTechs();
+  alert("شكراً لك، تم إرسال تقييمك.");
+  await trackRequest();
+ }catch(e){
+  console.error(e);
+  alert(friendlyAuthError(e));
+ }
 }
+
 async function technicianDecision(id,decision){
- if(!currentUser||currentRole!=="technician")return alert("سجل دخولك بحساب الفني.");
+ if(!currentUser||currentRole!=="technician")
+  return alert("سجل دخولك بحساب الفني.");
+
  if(!["مقبول","مرفوض"].includes(decision))return;
+
  try{
-  const ref=db.ref("technicianJobs/"+currentUser.uid+"/"+id),snap=await ref.once("value"),job=snap.val();
+  const ref=db.ref("technicianJobs/"+currentUser.uid+"/"+id);
+  const snap=await ref.once("value");
+  const job=snap.val();
+
   if(!job)return alert("لم يتم العثور على الطلب.");
-  if(job.status!=="بانتظار رد الفني")return alert("تم الرد على هذا الطلب سابقاً.");
-  const newStatus=decision==="مقبول"?"مقبول من الفني":"مرفوض من الفني",now=Date.now(),updates={};
+  if(job.status!=="بانتظار رد الفني")
+   return alert("تم الرد على هذا الطلب سابقاً.");
+
+  const newStatus=decision==="مقبول"?"مقبول من الفني":"مرفوض من الفني";
+  const now=Date.now();
+  const updates={};
+
   updates["technicianJobs/"+currentUser.uid+"/"+id+"/status"]=newStatus;
   updates["technicianJobs/"+currentUser.uid+"/"+id+"/respondedAt"]=now;
   updates["requests/"+job.customerUid+"/"+id+"/status"]=newStatus;
   updates["requests/"+job.customerUid+"/"+id+"/respondedAt"]=now;
+
   if(decision==="مقبول"){
    updates["requests/"+job.customerUid+"/"+id+"/assignedTechPhone"]=currentTech.phone||"";
    updates["requests/"+job.customerUid+"/"+id+"/assignedTechName"]=currentTech.name||"";
   }
-  await db.ref().update(updates);await renderTechAccount();
+
+  await db.ref().update(updates);
+  await renderTechAccount();
   alert(decision==="مقبول"?"تم قبول الطلب، وسيظهر رقمك للزبون.":"تم رفض الطلب.");
- }catch(e){console.error(e);alert(friendlyAuthError(e))}
+ }catch(e){
+  console.error(e);
+  alert(friendlyAuthError(e));
+ }
 }
+
 async function loadAdminData(){
  if(currentRole!=="admin")return;
+
  try{
-  const [r,t]=await Promise.all([db.ref("requests").once("value"),db.ref("technicians").once("value")]);
-  requests=[];technicians=[];
+  const [r,t]=await Promise.all([
+   db.ref("requests").once("value"),
+   db.ref("technicians").once("value")
+  ]);
+
+  requests=[];
+  technicians=[];
+
   r.forEach(u=>u.forEach(q=>requests.push({...q.val(),uid:u.key,id:q.key})));
-  t.forEach(s=>technicians.push({...s.val(),uid:s.key}));renderAdmin();
+  t.forEach(s=>technicians.push({...s.val(),uid:s.key}));
+
+  renderAdmin();
  }catch(e){alert(friendlyAuthError(e))}
 }
+
 function renderAdmin(){
- $("adminStats").innerHTML=`<div class="card"><div class="muted">الطلبات</div><div class="stat">${requests.length}</div></div><div class="card"><div class="muted">الفنيون</div><div class="stat">${technicians.length}</div></div><div class="card"><div class="muted">بانتظار الرد</div><div class="stat">${requests.filter(r=>r.status==="بانتظار رد الفني").length}</div></div>`;
- $("adminRequests").innerHTML=requests.length?requests.slice().reverse().map(r=>`<div class="list-item"><h4>${esc(r.service)} — ${esc(r.status)}</h4><div class="muted">الزبون: ${esc(r.name)} | الهاتف: ${esc(r.phone)}</div><div class="muted">${esc(r.city)} — ${esc(r.area)}</div><div class="muted">الفني: ${esc(r.assignedTechName||"غير محدد")}</div><p>${esc(r.problem)}</p><div class="muted">رقم الطلب: ${esc(r.id)}</div><div class="actions"><button class="light" onclick="adminSetStatus('${esc(r.uid)}','${esc(r.id)}','قيد التنفيذ')">قيد التنفيذ</button><button class="primary" onclick="adminComplete('${esc(r.uid)}','${esc(r.id)}')">مكتمل</button></div></div>`).join(""):'<div class="empty">لا توجد طلبات.</div>';
- $("adminTechs").innerHTML=technicians.length?technicians.map(t=>`<div class="list-item">${techPhoto(t,true)}<h4>${esc(t.name)} <span class="badge ${t.approved===false?"orange":"green"}">${t.approved===false?"موقوف":"نشط"}</span></h4><div class="muted">${esc(t.service)} — ${esc(t.city)} / ${esc(t.area)}</div><div class="stars">${stars(t.ratingAverage)}</div><div class="muted">التقييم: ${Number(t.ratingAverage||0).toFixed(1)} من 5 (${Number(t.ratingCount)||0})</div><div class="muted">الأعمال المكتملة: ${Number(t.completedJobs)||0} | المجانية: ${Number(t.freeJobsUsed)||0}/3</div><div class="muted">الاشتراك: ${esc(t.subscriptionStatus||"غير فعال")}</div><div class="actions"><button class="secondary" onclick="setSubscription('${esc(t.uid)}','فعال')">تفعيل الاشتراك</button><button class="light" onclick="setSubscription('${esc(t.uid)}','غير فعال')">إيقاف الاشتراك</button><button class="danger" onclick="toggleTech('${esc(t.uid)}',${t.approved===false})">${t.approved===false?"إعادة تفعيل":"إيقاف الفني"}</button></div></div>`).join(""):'<div class="empty">لا يوجد فنيون.</div>';
+ $("adminStats").innerHTML=`
+ <div class="card"><div class="muted">الطلبات</div><div class="stat">${requests.length}</div></div>
+ <div class="card"><div class="muted">الفنيون</div><div class="stat">${technicians.length}</div></div>
+ <div class="card"><div class="muted">بانتظار الرد</div><div class="stat">${requests.filter(r=>r.status==="بانتظار رد الفني").length}</div></div>`;
+
+ $("adminRequests").innerHTML=requests.length
+ ?requests.slice().reverse().map(r=>`
+ <div class="list-item">
+  <h4>${esc(r.service)} — ${esc(r.status)}</h4>
+  <div class="muted">الزبون: ${esc(r.name)} | الهاتف: ${esc(r.phone)}</div>
+  <div class="muted">${esc(r.city)} — ${esc(r.area)}</div>
+  <div class="muted">الفني: ${esc(r.assignedTechName||"غير محدد")}</div>
+  <p>${esc(r.problem)}</p>
+  <div class="muted">رقم الطلب: ${esc(r.id)}</div>
+  <div class="actions">
+   <button class="light" onclick="adminSetStatus('${esc(r.uid)}','${esc(r.id)}','قيد التنفيذ')">قيد التنفيذ</button>
+   <button class="primary" onclick="adminComplete('${esc(r.uid)}','${esc(r.id)}')">مكتمل</button>
+  </div>
+ </div>`).join("")
+ :'<div class="empty">لا توجد طلبات.</div>';
+
+ $("adminTechs").innerHTML=technicians.length
+ ?technicians.map(t=>`
+ <div class="list-item">
+  ${techPhoto(t,true)}
+  <h4>${esc(t.name)} <span class="badge ${t.approved===false?"orange":"green"}">${t.approved===false?"موقوف":"نشط"}</span></h4>
+  <div class="muted">${esc(t.service)} — ${esc(t.city)} / ${esc(t.area)}</div>
+  <div class="stars">${stars(t.ratingAverage)}</div>
+  <div class="muted">التقييم: ${Number(t.ratingAverage||0).toFixed(1)} من 5 (${Number(t.ratingCount)||0})</div>
+  <div class="muted">الأعمال المكتملة: ${Number(t.completedJobs)||0} | المجانية: ${Number(t.freeJobsUsed)||0}/3</div>
+  <div class="muted">الاشتراك: ${esc(t.subscriptionStatus||"غير فعال")}</div>
+  <div class="actions">
+   <button class="secondary" onclick="setSubscription('${esc(t.uid)}','فعال')">تفعيل الاشتراك</button>
+   <button class="light" onclick="setSubscription('${esc(t.uid)}','غير فعال')">إيقاف الاشتراك</button>
+   <button class="danger" onclick="toggleTech('${esc(t.uid)}',${t.approved===false})">${t.approved===false?"إعادة تفعيل":"إيقاف الفني"}</button>
+  </div>
+ </div>`).join("")
+ :'<div class="empty">لا يوجد فنيون.</div>';
 }
+
 async function adminSetStatus(uid,id,status){
- try{const r=requests.find(x=>x.uid===uid&&x.id===id);if(!r)return;const u={};u["requests/"+uid+"/"+id+"/status"]=status;u["requests/"+uid+"/"+id+"/updatedAt"]=Date.now();if(r.assignedTech)u["technicianJobs/"+r.assignedTech+"/"+id+"/status"]=status;await db.ref().update(u);await loadAdminData()}catch(e){alert(friendlyAuthError(e))}
+ try{
+  const r=requests.find(x=>x.uid===uid&&x.id===id);
+  if(!r)return;
+
+  const u={};
+  u["requests/"+uid+"/"+id+"/status"]=status;
+  u["requests/"+uid+"/"+id+"/updatedAt"]=Date.now();
+
+  if(r.assignedTech)
+   u["technicianJobs/"+r.assignedTech+"/"+id+"/status"]=status;
+
+  await db.ref().update(u);
+  await loadAdminData();
+ }catch(e){alert(friendlyAuthError(e))}
 }
+
 async function adminComplete(uid,id){
  try{
-  const r=requests.find(x=>x.uid===uid&&x.id===id);if(!r||r.countedAsCompleted)return alert("هذا الطلب مكتمل سابقاً.");
+  const r=requests.find(x=>x.uid===uid&&x.id===id);
+  if(!r||r.countedAsCompleted)
+   return alert("هذا الطلب مكتمل سابقاً.");
+
   if(!r.assignedTech)return alert("لا يوجد فني مرتبط بالطلب.");
-  const t=technicians.find(x=>x.uid===r.assignedTech);if(!t)return alert("تعذر العثور على الفني.");
-  const subscribed=t.subscriptionStatus==="فعال",used=Number(t.freeJobsUsed)||0;
-  if(!subscribed&&used>=3)return alert("الفني استنفد أعماله المجانية. فعّل اشتراكه أولاً.");
+
+  const t=technicians.find(x=>x.uid===r.assignedTech);
+  if(!t)return alert("تعذر العثور على الفني.");
+
+  const subscribed=t.subscriptionStatus==="فعال";
+  const used=Number(t.freeJobsUsed)||0;
+
+  if(!subscribed&&used>=3)
+   return alert("الفني استنفد أعماله المجانية. فعّل اشتراكه أولاً.");
+
   const u={},now=Date.now();
-  u["requests/"+uid+"/"+id+"/status"]="مكتمل";u["requests/"+uid+"/"+id+"/countedAsCompleted"]=true;u["requests/"+uid+"/"+id+"/completedAt"]=now;
+
+  u["requests/"+uid+"/"+id+"/status"]="مكتمل";
+  u["requests/"+uid+"/"+id+"/countedAsCompleted"]=true;
+  u["requests/"+uid+"/"+id+"/completedAt"]=now;
   u["technicians/"+t.uid+"/completedJobs"]=(Number(t.completedJobs)||0)+1;
-  if(!subscribed)u["technicians/"+t.uid+"/freeJobsUsed"]=used+1;
-  u["technicianJobs/"+t.uid+"/"+id+"/status"]="مكتمل";u["technicianJobs/"+t.uid+"/"+id+"/countedAsCompleted"]=true;
-  await db.ref().update(u);await loadAdminData();
+
+  if(!subscribed)
+   u["technicians/"+t.uid+"/freeJobsUsed"]=used+1;
+
+  u["technicianJobs/"+t.uid+"/"+id+"/status"]="مكتمل";
+  u["technicianJobs/"+t.uid+"/"+id+"/countedAsCompleted"]=true;
+
+  await db.ref().update(u);
+  await loadAdminData();
  }catch(e){alert(friendlyAuthError(e))}
 }
-async function setSubscription(uid,status){try{await db.ref("technicians/"+uid+"/subscriptionStatus").set(status);await loadAdminData()}catch(e){alert(friendlyAuthError(e))}}
-async function toggleTech(uid,activate){
- try{const approved=!!activate,u={};u["technicians/"+uid+"/approved"]=approved;u["publicTechnicians/"+uid+"/approved"]=approved;await db.ref().update(u);await loadAdminData();await loadPublicTechs();if(currentUser?.uid===uid&&!approved){currentRole="suspended";await renderTechAccount()}}catch(e){alert(friendlyAuthError(e))}
+
+async function setSubscription(uid,status){
+ try{
+  await db.ref("technicians/"+uid+"/subscriptionStatus").set(status);
+  await loadAdminData();
+ }catch(e){alert(friendlyAuthError(e))}
 }
+
+async function toggleTech(uid,activate){
+ try{
+  const approved=!!activate,u={};
+  u["technicians/"+uid+"/approved"]=approved;
+  u["publicTechnicians/"+uid+"/approved"]=approved;
+
+  await db.ref().update(u);
+  await loadAdminData();
+  await loadPublicTechs();
+
+  if(currentUser?.uid===uid&&!approved){
+   currentRole="suspended";
+   await renderTechAccount();
+  }
+ }catch(e){alert(friendlyAuthError(e))}
+}
+
 async function renderTechAccount(){
  if(!currentUser||!["technician","suspended"].includes(currentRole))return;
+
  const uid=currentUser.uid;
+
  try{
-  const s=await db.ref("technicians/"+uid).once("value");currentTech=s.val();if(!currentTech)return;
-  const suspended=currentTech.approved===false;if(suspended)currentRole="suspended";
-  if(!suspended)try{await syncPublicTechnician(uid,currentTech)}catch(e){console.error(e)}
+  const s=await db.ref("technicians/"+uid).once("value");
+  currentTech=s.val();
+  if(!currentTech)return;
+
+  const suspended=currentTech.approved===false;
+  if(suspended)currentRole="suspended";
+
+  if(!suspended){
+   try{await syncPublicTechnician(uid,currentTech)}catch(e){console.error(e)}
+  }
+
   const used=Number(currentTech.freeJobsUsed)||0;
-  $("techSummary").innerHTML=`${techPhoto(currentTech)}<h3>مرحباً ${esc(currentTech.name)}</h3>
+
+  $("techSummary").innerHTML=`
+  ${techPhoto(currentTech)}
+  <h3>مرحباً ${esc(currentTech.name)}</h3>
   <p>${esc(currentTech.service)} — ${esc(currentTech.city)} / ${esc(currentTech.area)} ${esc(currentTech.neighborhood)}</p>
-  <div class="stars">${stars(currentTech.ratingAverage)}</div><p class="muted">${Number(currentTech.ratingAverage||0).toFixed(1)} من 5 — ${Number(currentTech.ratingCount)||0} تقييم</p>
+  <div class="stars">${stars(currentTech.ratingAverage)}</div>
+  <p class="muted">${Number(currentTech.ratingAverage||0).toFixed(1)} من 5 — ${Number(currentTech.ratingCount)||0} تقييم</p>
   ${suspended?'<div class="notice error">حسابك موقوف حالياً. راجع إدارة صخر.</div>':`
-  <p>الأعمال المكتملة: <b>${Number(currentTech.completedJobs)||0}</b></p><p>الأعمال المجانية المستخدمة: <b>${used} من 3</b></p>
+  <p>الأعمال المكتملة: <b>${Number(currentTech.completedJobs)||0}</b></p>
+  <p>الأعمال المجانية المستخدمة: <b>${used} من 3</b></p>
   <p>الاشتراك: <span class="badge ${currentTech.subscriptionStatus==="فعال"?"green":"orange"}">${esc(currentTech.subscriptionStatus||"غير فعال")}</span></p>
   <div class="notice">الاشتراك الشهري: 5,000 دينار عراقي<br>الاشتراك السنوي: 50,000 دينار عراقي<br>يتم تفعيل الاشتراك يدوياً بعد تأكيد الدفع.</div>
-  <hr><h3>تعديل الملف الشخصي</h3><div class="field"><label>رقم الهاتف</label><input id="editTechPhone" value="${esc(currentTech.phone||"")}"></div>
+  <hr>
+  <h3>تعديل الملف الشخصي</h3>
+  <div class="field"><label>رقم الهاتف</label><input id="editTechPhone" value="${esc(currentTech.phone||"")}"></div>
   <div class="field"><label>نبذة عن الخبرة</label><textarea id="editTechBio">${esc(currentTech.bio||"")}</textarea></div>
   <div class="field"><label>تغيير الصورة الشخصية</label><input id="editTechPhoto" type="file" accept="image/*"></div>
   <button class="btn primary" onclick="saveTechProfile()">حفظ التعديلات</button>`}`;
-  $("techJobsArea").classList.toggle("hidden",suspended);if(suspended){$("techJobs").innerHTML="";return}
-  const j=await db.ref("technicianJobs/"+uid).once("value"),jobs=[];j.forEach(x=>jobs.push({...x.val(),id:x.key}));
-  $("techJobs").innerHTML=jobs.length?jobs.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0)).map(x=>`<div class="list-item"><h4>${esc(x.service)} — ${esc(x.status)}</h4><div class="muted">الزبون: ${esc(x.customerName||"")}</div><div class="muted">الهاتف: ${esc(x.customerPhone||"")}</div><div class="muted">${esc(x.city)} — ${esc(x.area)} ${esc(x.neighborhood)}</div><p>${esc(x.problem)}</p><div class="muted">رقم الطلب: ${esc(x.id)}</div>${x.status==="بانتظار رد الفني"?`<div class="actions"><button class="primary" onclick="technicianDecision('${esc(x.id)}','مقبول')">قبول الطلب</button><button class="danger" onclick="technicianDecision('${esc(x.id)}','مرفوض')">رفض الطلب</button></div>`:""}</div>`).join(""):'<div class="empty">لا توجد طلبات مرسلة إليك حالياً.</div>';
- }catch(e){console.error(e);$("techJobs").textContent=friendlyAuthError(e)}
+
+  $("techJobsArea").classList.toggle("hidden",suspended);
+
+  if(suspended){
+   $("techJobs").innerHTML="";
+   return;
+  }
+
+  const j=await db.ref("technicianJobs/"+uid).once("value");
+  const jobs=[];
+  j.forEach(x=>jobs.push({...x.val(),id:x.key}));
+
+  $("techJobs").innerHTML=jobs.length
+  ?jobs.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0)).map(x=>`
+  <div class="list-item">
+   <h4>${esc(x.service)} — ${esc(x.status)}</h4>
+   <div class="muted">الزبون: ${esc(x.customerName||"")}</div>
+   <div class="muted">الهاتف: ${esc(x.customerPhone||"")}</div>
+   <div class="muted">${esc(x.city)} — ${esc(x.area)} ${esc(x.neighborhood)}</div>
+   <p>${esc(x.problem)}</p>
+   <div class="muted">رقم الطلب: ${esc(x.id)}</div>
+   ${x.status==="بانتظار رد الفني"?`
+   <div class="actions">
+    <button class="primary" onclick="technicianDecision('${esc(x.id)}','مقبول')">قبول الطلب</button>
+    <button class="danger" onclick="technicianDecision('${esc(x.id)}','مرفوض')">رفض الطلب</button>
+   </div>`:""}
+  </div>`).join("")
+  :'<div class="empty">لا توجد طلبات مرسلة إليك حالياً.</div>';
+
+ }catch(e){
+  console.error(e);
+  $("techJobs").textContent=friendlyAuthError(e);
+ }
 }
-setupLocations();renderServices();initFirebase();
+
+setupLocations();
+renderServices();
+initFirebase();
 </script>
 </body>
 </html>
