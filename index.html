@@ -279,30 +279,15 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  </div>
 </section>
 
+<!-- لوحة تحكم الفني المرتبة والمختصرة -->
 <section id="techAccount" class="container hidden">
  <h2 class="section-title"><span class="online-dot" title="متصل الآن"></span> الملف الشخصي - لوحة تحكم الفني</h2>
  <div id="techAlertBox"></div>
  <div id="techSummary" class="card" style="margin-bottom:20px"></div>
  
- <!-- لوحة تعديل البروفايل الخاصة بالفني -->
- <div class="card" style="margin-bottom:20px; color:var(--text-main);">
-  <h3 style="color:var(--burgundy); margin-top:0; font-weight:900;">تعديل الملف الشخصي والمعلومات</h3>
-  <div class="row">
-   <div class="field"><label>الاسم الكامل</label><input id="editTechName" placeholder="الاسم"></div>
-   <div class="field"><label>الاختصاص</label><select id="editTechService"></select></div>
-  </div>
-  <div class="row">
-   <div class="field"><label>المحافظة</label><select id="editTechCity" onchange="setDistricts('editTechArea', this.value)"></select></div>
-   <div class="field"><label>القضاء</label><select id="editTechArea"><option value="">اختر القضاء</option></select></div>
-  </div>
-  <div class="row">
-   <div class="field"><label>المنطقة أو الحي</label><input id="editTechNeighborhood" placeholder="مثال: البندقية"></div>
-   <div class="field"><label>رقم الهاتف</label><input id="editTechPhone" inputmode="tel" placeholder="07800000000"></div>
-  </div>
-  <div class="field"><label>نبذة عن خبرتك</label><textarea id="editTechBio" placeholder="نبذة مختصرة..."></textarea></div>
-  <div class="field"><label>تحديث الصورة الشخصية (اختياري)</label><input id="editTechPhotoFile" type="file" accept="image/*"></div>
-  <button class="btn primary" style="width:100%; margin-top:10px;" onclick="saveTechAccountProfile()">حفظ تعديلات البروفايل</button>
-  <div id="editProfileMessage"></div>
+ <!-- زر مرتب لفتح نافذة تعديل البروفايل بدل إطالة الصفحة -->
+ <div style="text-align:center; margin-bottom:25px;">
+  <button class="btn primary" style="padding: 12px 25px; font-size: 15px;" onclick="openTechEditModal()">⚙️ تعديل الملف الشخصي والمعلومات</button>
  </div>
 
  <div id="techJobsArea">
@@ -346,6 +331,27 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
   </div>
   <button class="btn primary" style="width:100%" onclick="confirmCustomerLocation()">تأكيد والانتقال للمنصة</button>
   <div id="initialLocationMessage"></div>
+ </div>
+</div>
+
+<!-- نافذة تعديل البروفايل الخاصة بالفني (منبثقة لمنع إطالة الصفحة) -->
+<div class="modal hidden" id="techEditModal">
+ <div class="modal-box">
+  <div class="modal-head"><h3>تعديل الملف الشخصي والمعلومات</h3><div class="close" onclick="closeModal('techEditModal')">✕</div></div>
+  <div class="field"><label>الاسم الكامل</label><input id="editTechName" placeholder="الاسم"></div>
+  <div class="row">
+   <div class="field"><label>المحافظة</label><select id="editTechCity" onchange="setDistricts('editTechArea', this.value)"></select></div>
+   <div class="field"><label>القضاء</label><select id="editTechArea"><option value="">اختر القضاء</option></select></div>
+  </div>
+  <div class="row">
+   <div class="field"><label>المنطقة أو الحي</label><input id="editTechNeighborhood" placeholder="مثال: البندقية"></div>
+   <div class="field"><label>رقم الهاتف</label><input id="editTechPhone" inputmode="tel" placeholder="07800000000"></div>
+  </div>
+  <div class="field"><label>الاختصاص</label><select id="editTechService"></select></div>
+  <div class="field"><label>نبذة عن خبرتك</label><textarea id="editTechBio" placeholder="نبذة مختصرة..."></textarea></div>
+  <div class="field"><label>تحديث الصورة الشخصية (اختياري)</label><input id="editTechPhotoFile" type="file" accept="image/*"></div>
+  <button class="btn primary" style="width:100%; margin-top:10px;" onclick="saveTechAccountProfile()">حفظ تعديلات البروفايل</button>
+  <div id="editProfileMessage"></div>
  </div>
 </div>
 
@@ -429,7 +435,7 @@ const DISTRICTS={
 "صلاح الدين":["تكريت","سامراء","بيجي","بلد","الدجيل","الشرقاط","طوز خورماتو"],
 "ديالى":["بعقوبة","المقدادية","الخالص","خانقين"],
 "الأنبار":["الرمادي","الفلوجة","حديثة","هيت","القائم"],
-"بابل":["الحلة","المسيب","المحاويل","الهاشمية"],
+"bابل":["الحلة","المسيب","المحاويل","الهاشمية"],
 "كربلاء":["كربلاء","الهندية","عين التمر"],
 "النجف":["النجف","الكوفة","المناذرة","المشخاب"],
 "القادسية":["الديوانية","عفك","الشامية","الحمزة"],
@@ -489,6 +495,7 @@ const showSection=id=>{
 const closeModal=id=>$(id).classList.add("hidden");
 const openLogin=()=>{$("loginMessage").innerHTML="";$("loginModal").classList.remove("hidden")};
 const openDisclaimer=()=>{$("disclaimerModal").classList.add("hidden"); $("disclaimerModal").classList.remove("hidden")};
+const openTechEditModal=()=>{$("editProfileMessage").innerHTML="";$("techEditModal").classList.remove("hidden")};
 
 function handleAuthNav() {
   if(currentRole === "admin") {
@@ -1199,6 +1206,7 @@ async function saveTechAccountProfile() {
   await syncPublicTechnician(uid, updated);
   currentTech = updated;
   msg("editProfileMessage", "تم حفظ وتحديث تعديلات البروفايل بنجاح!", "success");
+  closeModal('techEditModal');
   renderTechAccount();
   loadPublicTechs();
  } catch(e) {
@@ -1206,7 +1214,6 @@ async function saveTechAccountProfile() {
  }
 }
 
-// دوال إدارة الاشتراكات والأعمال المجانية من لوحة المدير
 async function toggleTechSubscription(techUid, currentStatus) {
     const newStatus = currentStatus === "فعال" ? "غير فعال" : "فعال";
     try {
