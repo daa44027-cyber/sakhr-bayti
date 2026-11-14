@@ -479,13 +479,13 @@ function playAlertBeep() {
 }
 
 const showSection=id=>{
- document.querySelectorAll("main section").forEach(s=>s.classList.add("hidden"));
- $(id)?.classList.remove("hidden");
- window.scrollTo({top:0,behavior:"smooth"});
- if(id==="technicians")loadPublicTechs();
- if(id==="reviewsChat")loadReviews();
- if(id==="admin"&&currentRole==="admin")loadAdminData();
- if(id==="techAccount"&&["technician","suspended"].includes(currentRole))renderTechAccount();
+  document.querySelectorAll("main section").forEach(s=>s.classList.add("hidden"));
+  $(id)?.classList.remove("hidden");
+  window.scrollTo({top:0,behavior:"smooth"});
+  if(id==="technicians")loadPublicTechs();
+  if(id==="reviewsChat")loadReviews();
+  if(id==="admin"&&currentRole==="admin")loadAdminData();
+  if(id==="techAccount"&&["technician","suspended"].includes(currentRole))renderTechAccount();
 };
 
 const closeModal=id=>$(id).classList.add("hidden");
@@ -516,494 +516,494 @@ function updateNavAuthButton() {
 }
 
 function setupLocations(){
- const cityOptions=Object.keys(DISTRICTS).map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("");
- if($("regCity")) $("regCity").innerHTML='<option value="">اختر المحافظة</option>'+cityOptions;
- if($("custCity")) $("custCity").innerHTML='<option value="">اختر المحافظة</option><option value="ALL">كل المحافظات</option>'+cityOptions;
- if($("initialCustomerCity")) $("initialCustomerCity").innerHTML='<option value="">اختر محافظتك</option><option value="ALL">البحث في جميع المحافظات</option>'+cityOptions;
- if($("quickCitySelect")) $("quickCitySelect").innerHTML='<option value="">اختر المحافظة</option><option value="ALL">كل المحافظات</option>'+cityOptions;
+  const cityOptions=Object.keys(DISTRICTS).map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("");
+  if($("regCity")) $("regCity").innerHTML='<option value="">اختر المحافظة</option>'+cityOptions;
+  if($("custCity")) $("custCity").innerHTML='<option value="">اختر المحافظة</option><option value="ALL">كل المحافظات</option>'+cityOptions;
+  if($("initialCustomerCity")) $("initialCustomerCity").innerHTML='<option value="">اختر محافظتك</option><option value="ALL">البحث في جميع المحافظات</option>'+cityOptions;
+  if($("quickCitySelect")) $("quickCitySelect").innerHTML='<option value="">اختر المحافظة</option><option value="ALL">كل المحافظات</option>'+cityOptions;
 
- if($("regCity")) {
-  $("regCity").addEventListener("change",()=>setDistricts("regArea",$("regCity").value));
- }
-
- if($("custCity")) {
-  $("custCity").addEventListener("change",()=>{
-   const city=$("custCity").value;
-   chosenCustomerCity=city;
-   if(city)localStorage.setItem("sakhrCustomerCity",city);
-   setDistricts("custArea",city);
-   selectedTechUid="";
-   if($("custTech")) $("custTech").value="";
-   renderMatchingTechs();
-  });
- }
-
- ["custArea","custService"].forEach(id=>{
-  if($(id)) {
-   $(id).addEventListener("change",()=>{
-    selectedTechUid="";
-    if($("custTech")) $("custTech").value="";
-    renderMatchingTechs();
-   });
+  if($("regCity")) {
+    $("regCity").addEventListener("change",()=>setDistricts("regArea",$("regCity").value));
   }
- });
 
- if($("custNeighborhood")) {
-  $("custNeighborhood").addEventListener("input",()=>{
-   selectedTechUid="";
-   if($("custTech")) $("custTech").value="";
-   renderMatchingTechs();
+  if($("custCity")) {
+    $("custCity").addEventListener("change",()=>{
+      const city=$("custCity").value;
+      chosenCustomerCity=city;
+      if(city)localStorage.setItem("sakhrCustomerCity",city);
+      setDistricts("custArea",city);
+      selectedTechUid="";
+      if($("custTech")) $("custTech").value="";
+      renderMatchingTechs();
+    });
+  }
+
+  ["custArea","custService"].forEach(id=>{
+    if($(id)) {
+      $(id).addEventListener("change",()=>{
+        selectedTechUid="";
+        if($("custTech")) $("custTech").value="";
+        renderMatchingTechs();
+      });
+    }
   });
- }
 
- const saved=localStorage.getItem("sakhrCustomerCity")||"";
- if(saved){
-  chosenCustomerCity=saved;
-  if($("quickCitySelect")) $("quickCitySelect").value=saved;
-  if($("custCity")) $("custCity").value=saved;
-  setDistricts("custArea",saved);
- }
+  if($("custNeighborhood")) {
+    $("custNeighborhood").addEventListener("input",()=>{
+      selectedTechUid="";
+      if($("custTech")) $("custTech").value="";
+      renderMatchingTechs();
+    });
+  }
+
+  const saved=localStorage.getItem("sakhrCustomerCity")||"";
+  if(saved){
+    chosenCustomerCity=saved;
+    if($("quickCitySelect")) $("quickCitySelect").value=saved;
+    if($("custCity")) $("custCity").value=saved;
+    setDistricts("custArea",saved);
+  }
 }
 
 function setDistricts(id,city){
- const el=$(id);
- if(!el) return;
- if(city==="ALL"||!city){
-  el.disabled=true;
-  el.innerHTML='<option value="">كل الأقضية</option>';
-  return;
- }
- const list=DISTRICTS[city]||[];
- el.disabled=!list.length;
- el.innerHTML=list.length
-  ?'<option value="">اختر القضاء</option>'+list.map(x=>`<option>${esc(x)}</option>`).join("")
-  :'<option value="">كل الأقضية</option>';
+  const el=$(id);
+  if(!el) return;
+  if(city==="ALL"||!city){
+    el.disabled=true;
+    el.innerHTML='<option value="">كل الأقضية</option>';
+    return;
+  }
+  const list=DISTRICTS[city]||[];
+  el.disabled=!list.length;
+  el.innerHTML=list.length
+    ?'<option value="">اختر القضاء</option>'+list.map(x=>`<option>${esc(x)}</option>`).join("")
+    :'<option value="">كل الأقضية</option>';
 }
 
 function showCustomerLocation(){
- const saved=localStorage.getItem("sakhrCustomerCity")||"";
- if(saved){
-  chosenCustomerCity=saved;
-  if($("quickCitySelect")) $("quickCitySelect").value=saved;
-  if($("custCity")) $("custCity").value=saved;
-  setDistricts("custArea",saved);
-  return;
- }
- if($("customerLocationModal")) $("customerLocationModal").classList.remove("hidden");
+  const saved=localStorage.getItem("sakhrCustomerCity")||"";
+  if(saved){
+    chosenCustomerCity=saved;
+    if($("quickCitySelect")) $("quickCitySelect").value=saved;
+    if($("custCity")) $("custCity").value=saved;
+    setDistricts("custArea",saved);
+    return;
+  }
+  if($("customerLocationModal")) $("customerLocationModal").classList.remove("hidden");
 }
 
 function confirmCustomerLocation(){
- const city=$("initialCustomerCity").value;
- if(!city)return msg("initialLocationMessage","اختَر محافظتك أولاً.","error");
+  const city=$("initialCustomerCity").value;
+  if(!city)return msg("initialLocationMessage","اختَر محافظتك أولاً.","error");
 
- chosenCustomerCity=city;
- localStorage.setItem("sakhrCustomerCity",city);
- if($("quickCitySelect")) $("quickCitySelect").value=city;
- if($("custCity")) $("custCity").value=city;
- setDistricts("custArea",city);
- if($("initialLocationMessage")) $("initialLocationMessage").innerHTML="";
- closeModal("customerLocationModal");
+  chosenCustomerCity=city;
+  localStorage.setItem("sakhrCustomerCity",city);
+  if($("quickCitySelect")) $("quickCitySelect").value=city;
+  if($("custCity")) $("custCity").value=city;
+  setDistricts("custArea",city);
+  if($("initialLocationMessage")) $("initialLocationMessage").innerHTML="";
+  closeModal("customerLocationModal");
 
- if(pendingService!==null){
-  const service=pendingService;
-  pendingService=null;
-  openRequest(service);
- }
+  if(pendingService!==null){
+    const service=pendingService;
+    pendingService=null;
+    openRequest(service);
+  }
 }
 
 function fillSelect(id){
- const el=$(id);
- if(el) el.innerHTML=SERVICES.map(s=>`<option>${esc(s)}</option>`).join("");
+  const el=$(id);
+  if(el) el.innerHTML=SERVICES.map(s=>`<option>${esc(s)}</option>`).join("");
 }
 
 function quickCityChanged(){
- const val=$("quickCitySelect").value;
- if(val){
-  chosenCustomerCity=val;
-  localStorage.setItem("sakhrCustomerCity",val);
- }
+  const val=$("quickCitySelect").value;
+  if(val){
+    chosenCustomerCity=val;
+    localStorage.setItem("sakhrCustomerCity",val);
+  }
 }
 
 function executeQuickSearch(){
- const city=$("quickCitySelect").value;
- const service=$("quickServiceSelect").value;
- if(!city) return alert("اختر المحافظة أولاً");
- chosenCustomerCity=city;
- localStorage.setItem("sakhrCustomerCity",city);
- openRequest(service);
+  const city=$("quickCitySelect").value;
+  const service=$("quickServiceSelect").value;
+  if(!city) return alert("اختر المحافظة أولاً");
+  chosenCustomerCity=city;
+  localStorage.setItem("sakhrCustomerCity",city);
+  openRequest(service);
 }
 
 function renderServices(){
- const icons=["❄️","🎨","🚰","💡","🛠️","🧱","🪚","🧹"];
- const renderTo = (id) => {
-  const el=$(id);
-  if(el) {
-   el.innerHTML=SERVICES.map((s,i)=>`
-    <div class="service-card" onclick="chooseService('${s}')">
-     <div class="service-icon">${icons[i]}</div>
-     <h3>${esc(s)}</h3>
-     <div class="arrow-badge">➔</div>
-    </div>`).join("");
-  }
- };
- renderTo("allServices");
- renderTo("allServicesPage");
+  const icons=["❄️","🎨","🚰","💡","🛠️","🧱","🪚","🧹"];
+  const renderTo = (id) => {
+    const el=$(id);
+    if(el) {
+      el.innerHTML=SERVICES.map((s,i)=>`
+        <div class="service-card" onclick="chooseService('${s}')">
+          <div class="service-icon">${icons[i]}</div>
+          <h3>${esc(s)}</h3>
+          <div class="arrow-badge">➔</div>
+        </div>`).join("");
+    }
+  };
+  renderTo("allServices");
+  renderTo("allServicesPage");
 
- fillSelect("regService");
- fillSelect("custService");
- fillSelect("quickServiceSelect");
+  fillSelect("regService");
+  fillSelect("custService");
+  fillSelect("quickServiceSelect");
 }
 
 function initFirebase(){
- try{
-  if(!firebase.apps.length)firebase.initializeApp(firebaseConfig);
-  auth=firebase.auth();
-  db=firebase.database();
-  storage=firebase.storage();
-  auth.onAuthStateChanged(onAuthChanged);
-  loadPublicTechs();
- }catch(e){
-  console.log("Firebase Init Notice:", e);
- }
+  try{
+    if(!firebase.apps.length)firebase.initializeApp(firebaseConfig);
+    auth=firebase.auth();
+    db=firebase.database();
+    storage=firebase.storage();
+    auth.onAuthStateChanged(onAuthChanged);
+    loadPublicTechs();
+  }catch(e){
+    console.log("Firebase Init Notice:", e);
+  }
 }
 
 async function resolveRole(user){
- if(!user||user.isAnonymous)return {role:"guest",tech:null};
- if(user.email==="07805017009@sakhr.app")return {role:"admin",tech:null};
- const t=await db.ref("technicians/"+user.uid).once("value");
- if(t.exists()){
-  const tech=t.val();
-  return {role:tech.approved===false?"suspended":"technician",tech};
- }
- return {role:"unknown",tech:null};
+  if(!user||user.isAnonymous)return {role:"guest",tech:null};
+  if(user.email==="07805017009@sakhr.app")return {role:"admin",tech:null};
+  const t=await db.ref("technicians/"+user.uid).once("value");
+  if(t.exists()){
+    const tech=t.val();
+    return {role:tech.approved===false?"suspended":"technician",tech};
+  }
+  return {role:"unknown",tech:null};
 }
 
 async function onAuthChanged(user){
- currentUser=user;
- currentRole="guest";
- currentTech=null;
+  currentUser=user;
+  currentRole="guest";
+  currentTech=null;
 
- if(techJobsListener) { techJobsListener.off(); techJobsListener=null; }
- if(!user){ 
-  updateNavAuthButton();
-  try{ await auth.signInAnonymously(); }catch(e){} 
-  return; 
- }
-
- try{
-  const result=await resolveRole(user);
-  currentRole=result.role;
-  currentTech=result.tech;
-  updateNavAuthButton();
-
-  if(currentRole==="admin"){
-   closeModal("customerLocationModal");
-   showSection("admin");
-   loadAdminData();
-  }else if(["technician","suspended"].includes(currentRole)){
-   closeModal("customerLocationModal");
-   showSection("techAccount");
-   renderTechAccount();
-  }else{
-   showCustomerLocation();
+  if(techJobsListener) { techJobsListener.off(); techJobsListener=null; }
+  if(!user){ 
+    updateNavAuthButton();
+    try{ await auth.signInAnonymously(); }catch(e){} 
+    return; 
   }
- }catch(e){
-  updateNavAuthButton();
- }
+
+  try{
+    const result=await resolveRole(user);
+    currentRole=result.role;
+    currentTech=result.tech;
+    updateNavAuthButton();
+
+    if(currentRole==="admin"){
+      closeModal("customerLocationModal");
+      showSection("admin");
+      loadAdminData();
+    }else if(["technician","suspended"].includes(currentRole)){
+      closeModal("customerLocationModal");
+      showSection("techAccount");
+      renderTechAccount();
+    }else{
+      showCustomerLocation();
+    }
+  }catch(e){
+    updateNavAuthButton();
+  }
 }
 
 async function uploadTechPhoto(uid,file){
- if(!file)return "";
- if(!file.type.startsWith("image/"))throw new Error("اختر ملف صورة فقط.");
- const ref=storage.ref("technicianPhotos/"+uid+"/profile_"+Date.now());
- const snap=await ref.put(file);
- return await snap.ref.getDownloadURL();
+  if(!file)return "";
+  if(!file.type.startsWith("image/"))throw new Error("اختر ملف صورة فقط.");
+  const ref=storage.ref("technicianPhotos/"+uid+"/profile_"+Date.now());
+  const snap=await ref.put(file);
+  return await snap.ref.getDownloadURL();
 }
 
 async function syncPublicTechnician(uid,p){
- const data={
-  uid,
-  name:p.name||"",
-  phone:p.phone||"",
-  city:p.city||"",
-  area:p.area||"",
-  neighborhood:p.neighborhood||"",
-  service:p.service||"",
-  bio:p.bio||"",
-  photoURL:p.photoURL||"",
-  approved:p.approved!==false,
-  subscriptionStatus:p.subscriptionStatus||"غير فعال",
-  freeJobsUsed:Number(p.freeJobsUsed)||0,
-  ratingSum:Number(p.ratingSum)||0,
-  ratingCount:Number(p.ratingCount)||0,
-  ratingAverage:Number(p.ratingAverage)||0,
-  createdAt:p.createdAt||Date.now()
- };
- await db.ref("publicTechnicians/"+uid).update(data);
+  const data={
+    uid,
+    name:p.name||"",
+    phone:p.phone||"",
+    city:p.city||"",
+    area:p.area||"",
+    neighborhood:p.neighborhood||"",
+    service:p.service||"",
+    bio:p.bio||"",
+    photoURL:p.photoURL||"",
+    approved:p.approved!==false,
+    subscriptionStatus:p.subscriptionStatus||"غير فعال",
+    freeJobsUsed:Number(p.freeJobsUsed)||0,
+    ratingSum:Number(p.ratingSum)||0,
+    ratingCount:Number(p.ratingCount)||0,
+    ratingAverage:Number(p.ratingAverage)||0,
+    createdAt:p.createdAt||Date.now()
+  };
+  await db.ref("publicTechnicians/"+uid).update(data);
 }
 
 async function registerTechWithPassword(){
- const name=$("regName").value.trim();
- const phone=$("regPhone").value.trim();
- const password=$("regPassword").value;
- const city=$("regCity").value;
- const area=$("regArea").value;
- const neighborhood=$("regNeighborhood").value.trim();
- const service=$("regService").value;
- const bio=$("regBio").value.trim();
- const file=$("regPhoto").files[0];
+  const name=$("regName").value.trim();
+  const phone=$("regPhone").value.trim();
+  const password=$("regPassword").value;
+  const city=$("regCity").value;
+  const area=$("regArea").value;
+  const neighborhood=$("regNeighborhood").value.trim();
+  const service=$("regService").value;
+  const bio=$("regBio").value.trim();
+  const file=$("regPhoto").files[0];
 
- if(!name||!phone||!password||!city||!area||!service)
-  return msg("regMessage","أكمل الاسم، رقم الهاتف، كلمة المرور، المحافظة، القضاء والاختصاص.","error");
+  if(!name||!phone||!password||!city||!area||!service)
+    return msg("regMessage","أكمل الاسم، رقم الهاتف، كلمة المرور، المحافظة، القضاء والاختصاص.","error");
 
- let createdUser=null,profileSaved=false;
- try{
-  msg("regMessage","جاري إنشاء حساب الفني الآمن...","notice");
-  const emailPseudo = phone + "@sakhr.app";
-  const c=await auth.createUserWithEmailAndPassword(emailPseudo, password);
-  createdUser=c.user;
-  
-  let photoURL="";
-  if(file) photoURL=await uploadTechPhoto(createdUser.uid, file);
+  let createdUser=null,profileSaved=false;
+  try{
+    msg("regMessage","جاري إنشاء حساب الفني الآمن...","notice");
+    const emailPseudo = phone + "@sakhr.app";
+    const c=await auth.createUserWithEmailAndPassword(emailPseudo, password);
+    createdUser=c.user;
+    
+    let photoURL="";
+    if(file) photoURL=await uploadTechPhoto(createdUser.uid, file);
 
-  const profile={
-   name,phone,city,area,neighborhood,service,bio,photoURL,
-   approved:true, subscriptionStatus:"غير فعال", freeJobsUsed:0, completedJobs:0,
-   ratingSum:0, ratingCount:0, ratingAverage:0, createdAt:Date.now()
-  };
+    const profile={
+      name,phone,city,area,neighborhood,service,bio,photoURL,
+      approved:true, subscriptionStatus:"غير فعال", freeJobsUsed:0, completedJobs:0,
+      ratingSum:0, ratingCount:0, ratingAverage:0, createdAt:Date.now()
+    };
 
-  await db.ref("technicians/"+createdUser.uid).set(profile);
-  profileSaved=true;
-  await syncPublicTechnician(createdUser.uid, profile);
+    await db.ref("technicians/"+createdUser.uid).set(profile);
+    profileSaved=true;
+    await syncPublicTechnician(createdUser.uid, profile);
 
-  currentUser=createdUser; currentRole="technician"; currentTech=profile;
-  updateNavAuthButton();
-  showSection("techAccount");
-  await renderTechAccount();
- }catch(e){
-  msg("regMessage",e.message,"error");
-  if(createdUser&&!profileSaved){ try{await createdUser.delete()}catch(_){} }
- }
+    currentUser=createdUser; currentRole="technician"; currentTech=profile;
+    updateNavAuthButton();
+    showSection("techAccount");
+    await renderTechAccount();
+  }catch(e){
+    msg("regMessage",e.message,"error");
+    if(createdUser&&!profileSaved){ try{await createdUser.delete()}catch(_){} }
+  }
 }
 
 async function loginWithPhonePassword(){
- const phone=$("loginPhone").value.trim();
- const password=$("loginPassword").value;
- if(!phone||!password) return msg("loginMessage","أدخل رقم الهاتف وكلمة المرور.","error");
+  const phone=$("loginPhone").value.trim();
+  const password=$("loginPassword").value;
+  if(!phone||!password) return msg("loginMessage","أدخل رقم الهاتف وكلمة المرور.","error");
 
- try{
-  if(phone === "07805017009"){
-   const adminEmail = "07805017009@sakhr.app";
-   try {
-    await auth.signInWithEmailAndPassword(adminEmail, password);
-   } catch(err) {
-    await auth.createUserWithEmailAndPassword(adminEmail, password);
-   }
-   currentRole="admin";
-   closeModal("loginModal"); closeModal("customerLocationModal");
-   updateNavAuthButton();
-   showSection("admin");
-   loadAdminData();
-   return;
+  try{
+    if(phone === "07805017009"){
+      const adminEmail = "07805017009@sakhr.app";
+      try {
+        await auth.signInWithEmailAndPassword(adminEmail, password);
+      } catch(err) {
+        await auth.createUserWithEmailAndPassword(adminEmail, password);
+      }
+      currentRole="admin";
+      closeModal("loginModal"); closeModal("customerLocationModal");
+      updateNavAuthButton();
+      showSection("admin");
+      loadAdminData();
+      return;
+    }
+
+    const emailPseudo = phone + "@sakhr.app";
+    const c = await auth.signInWithEmailAndPassword(emailPseudo, password);
+    const s = await db.ref("technicians/"+c.user.uid).once("value");
+    if(!s.exists()){
+      return msg("loginMessage","الحساب غير مسجل كفني.","error");
+    }
+    currentRole = s.val().approved===false?"suspended":"technician";
+    currentTech = s.val();
+    updateNavAuthButton();
+
+    closeModal("loginModal");
+    closeModal("customerLocationModal");
+    showSection("techAccount");
+    renderTechAccount();
+  }catch(e){
+    msg("loginMessage","خطأ في رقم الهاتف أو كلمة المرور: "+e.message,"error");
   }
-
-  const emailPseudo = phone + "@sakhr.app";
-  const c = await auth.signInWithEmailAndPassword(emailPseudo, password);
-  const s = await db.ref("technicians/"+c.user.uid).once("value");
-  if(!s.exists()){
-   return msg("loginMessage","الحساب غير مسجل كفني.","error");
-  }
-  currentRole = s.val().approved===false?"suspended":"technician";
-  currentTech = s.val();
-  updateNavAuthButton();
-
-  closeModal("loginModal");
-  closeModal("customerLocationModal");
-  showSection("techAccount");
-  renderTechAccount();
- }catch(e){
-  msg("loginMessage","خطأ في رقم الهاتف أو كلمة المرور: "+e.message,"error");
- }
 }
 
 async function logout(){
- try{
-  if(techJobsListener) { techJobsListener.off(); techJobsListener=null; }
-  if(customerOrderStatusListener) { customerOrderStatusListener.off(); customerOrderStatusListener=null; }
-  await auth.signOut();
-  currentRole="guest"; currentTech=null; currentUser=null;
-  updateNavAuthButton();
-  showSection("home");
- }catch(e){}
+  try{
+    if(techJobsListener) { techJobsListener.off(); techJobsListener=null; }
+    if(customerOrderStatusListener) { customerOrderStatusListener.off(); customerOrderStatusListener=null; }
+    await auth.signOut();
+    currentRole="guest"; currentTech=null; currentUser=null;
+    updateNavAuthButton();
+    showSection("home");
+  }catch(e){}
 }
 
 if($("regPhoto")) {
- $("regPhoto").addEventListener("change",()=>{
-  const f=$("regPhoto").files[0];
-  if(!f)return;
-  $("regPreview").src=URL.createObjectURL(f);
-  $("regPreview").classList.remove("hidden");
- });
+  $("regPhoto").addEventListener("change",()=>{
+    const f=$("regPhoto").files[0];
+    if(!f)return;
+    $("regPreview").src=URL.createObjectURL(f);
+    $("regPreview").classList.remove("hidden");
+  });
 }
 
 async function loadPublicTechs(){
- if(!db)return;
- try{
-  const s=await db.ref("publicTechnicians").once("value");
-  const data=s.val()||{};
-  publicTechs=Object.entries(data).map(([uid,t])=>({...t,uid})).filter(t=>t.approved!==false);
-  renderPublicTechs(); renderMatchingTechs();
- }catch(e){}
+  if(!db)return;
+  try{
+    const s=await db.ref("publicTechnicians").once("value");
+    const data=s.val()||{};
+    publicTechs=Object.entries(data).map(([uid,t])=>({...t,uid})).filter(t=>t.approved!==false);
+    renderPublicTechs(); renderMatchingTechs();
+  }catch(e){}
 }
 
 function techPhoto(t,small=false){
- const cls=small?"avatar small":"avatar";
- return `<img class="${cls}" src="${esc(t.photoURL||"")}" alt="صورة الفني" onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2250%22 fill=%22%23fff5df%22/%3E%3Ctext x=%2250%22 y=%2264%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22%23650d2c%22%3E👤%3C/text%3E%3C/svg%3E'">`;
+  const cls=small?"avatar small":"avatar";
+  return `<img class="${cls}" src="${esc(t.photoURL||"")}" alt="صورة الفني" onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2250%22 fill=%22%23fff5df%22/%3E%3Ctext x=%2250%22 y=%2264%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22%23650d2c%22%3E👤%3C/text%3E%3C/svg%3E'">`;
 }
 
 function renderPublicTechs(){
- const el=$("publicTechList");
- if(!el)return;
- const list = publicTechs.filter(t => !currentUser || t.uid !== currentUser.uid);
- if(!list.length){
-  el.innerHTML='<div class="empty">لا يوجد فنيون مسجلون متاحون حالياً.</div>';
-  return;
- }
- el.innerHTML=list.map(t=>`
- <div class="card tech-card">
-  <div style="position:absolute;top:15px;left:15px;" title="فني متاح"><span class="online-dot"></span></div>
-  ${techPhoto(t)}
-  <div style="text-align:center">
-   <h4>${esc(t.name)}</h4>
-   <span class="badge">${esc(t.service)}</span>
-  </div>
-  <div style="text-align:center">
-   <div class="stars">${"★".repeat(Math.round(t.ratingAverage||0))}${"☆".repeat(5-Math.round(t.ratingAverage||0))}</div>
-   <div class="muted">${Number(t.ratingAverage||0).toFixed(1)} من 5 (${Number(t.ratingCount||0)} تقييم)</div>
-  </div>
-  <div class="muted" style="text-align:center">📍 ${esc(t.city)} — ${esc(t.area)} ${esc(t.neighborhood)}</div>
-  <p style="font-size:13px;color:var(--text-main);margin:0;line-height:1.5">${esc(t.bio||"فني معتمد في منصة صخر")}</p>
-  <button class="btn primary" onclick="chooseServiceDirect('${esc(t.service)}','${esc(t.uid)}')">اطلب هذا الفني مباشرة</button>
- </div>`).join("");
+  const el=$("publicTechList");
+  if(!el)return;
+  const list = publicTechs.filter(t => !currentUser || t.uid !== currentUser.uid);
+  if(!list.length){
+    el.innerHTML='<div class="empty">لا يوجد فنيون مسجلون متاحون حالياً.</div>';
+    return;
+  }
+  el.innerHTML=list.map(t=>`
+  <div class="card tech-card">
+    <div style="position:absolute;top:15px;left:15px;" title="فني متاح"><span class="online-dot"></span></div>
+    ${techPhoto(t)}
+    <div style="text-align:center">
+      <h4>${esc(t.name)}</h4>
+      <span class="badge">${esc(t.service)}</span>
+    </div>
+    <div style="text-align:center">
+      <div class="stars">${"★".repeat(Math.round(t.ratingAverage||0))}${"☆".repeat(5-Math.round(t.ratingAverage||0))}</div>
+      <div class="muted">${Number(t.ratingAverage||0).toFixed(1)} من 5 (${Number(t.ratingCount||0)} تقييم)</div>
+    </div>
+    <div class="muted" style="text-align:center">📍 ${esc(t.city)} — ${esc(t.area)} ${esc(t.neighborhood)}</div>
+    <p style="font-size:13px;color:var(--text-main);margin:0;line-height:1.5">${esc(t.bio||"فني معتمد في منصة صخر")}</p>
+    <button class="btn primary" onclick="chooseServiceDirect('${esc(t.service)}','${esc(t.uid)}')">اطلب هذا الفني مباشرة</button>
+  </div>`).join("");
 }
 
 function renderMatchingTechs(){
- const box=$("matchingTechs");
- if(!box)return;
- const city=$("custCity")?.value||"";
- const area=$("custArea")?.value||"";
- const neighborhood=$("custNeighborhood")?.value.trim().toLowerCase()||"";
- const service=$("custService")?.value||"";
+  const box=$("matchingTechs");
+  if(!box)return;
+  const city=$("custCity")?.value||"";
+  const area=$("custArea")?.value||"";
+  const neighborhood=$("custNeighborhood")?.value.trim().toLowerCase()||"";
+  const service=$("custService")?.value||"";
 
- if(!city||!service){
-  box.innerHTML='<div class="empty">اختر المحافظة ونوع الخدمة لعرض الفنيين.</div>';
-  return;
- }
- if(city!=="ALL"&&!area){
-  box.innerHTML='<div class="empty">اختر القضاء لتحديد الفنيين القريبين.</div>';
-  return;
- }
+  if(!city||!service){
+    box.innerHTML='<div class="empty">اختر المحافظة ونوع الخدمة لعرض الفنيين.</div>';
+    return;
+  }
+  if(city!=="ALL"&&!area){
+    box.innerHTML='<div class="empty">اختر القضاء لتحديد الفنيين القريبين.</div>';
+    return;
+  }
 
- const matches=publicTechs.filter(t=>{
-  if(currentUser && currentUser.uid === t.uid) return false;
-  const loc=city==="ALL"||(t.city===city&&(!area||t.area===area));
-  const hood=!neighborhood||String(t.neighborhood||"").toLowerCase().includes(neighborhood);
-  const subActive=t.subscriptionStatus==="فعال";
-  const freeUsed=Number(t.freeJobsUsed)||0;
-  return loc&&hood&&t.service===service&&t.approved!==false&&(subActive||freeUsed<3);
- });
+  const matches=publicTechs.filter(t=>{
+    if(currentUser && currentUser.uid === t.uid) return false;
+    const loc=city==="ALL"||(t.city===city&&(!area||t.area===area));
+    const hood=!neighborhood||String(t.neighborhood||"").toLowerCase().includes(neighborhood);
+    const subActive=t.subscriptionStatus==="فعال";
+    const freeUsed=Number(t.freeJobsUsed)||0;
+    return loc&&hood&&t.service===service&&t.approved!==false&&(subActive||freeUsed<3);
+  });
 
- if(!matches.length){
-  box.innerHTML='<div class="empty">لا يوجد فني متاح بهذا الاختصاص في منطقته حالياً.</div>';
-  return;
- }
+  if(!matches.length){
+    box.innerHTML='<div class="empty">لا يوجد فني متاح بهذا الاختصاص في منطقته حالياً.</div>';
+    return;
+  }
 
- box.innerHTML=matches.map(t=>`
- <div class="tech-choice ${selectedTechUid===t.uid?"selected":""}" onclick="selectTechnician('${esc(t.uid)}')">
-  <div style="display:flex;gap:12px;align-items:center">
-   ${techPhoto(t,true)}
-   <div style="flex:1">
-    <h4 style="margin:0"><span class="online-dot"></span> ${esc(t.name)}</h4>
-    <div style="font-size:12px" class="muted">📍 ${esc(t.city)} / ${esc(t.area)}</div>
-    <div class="stars" style="font-size:14px">${"★".repeat(Math.round(t.ratingAverage||0))}${"☆".repeat(5-Math.round(t.ratingAverage||0))}</div>
-   </div>
-  </div>
- </div>`).join("");
+  box.innerHTML=matches.map(t=>`
+  <div class="tech-choice ${selectedTechUid===t.uid?"selected":""}" onclick="selectTechnician('${esc(t.uid)}')">
+    <div style="display:flex;gap:12px;align-items:center">
+      ${techPhoto(t,true)}
+      <div style="flex:1">
+        <h4 style="margin:0"><span class="online-dot"></span> ${esc(t.name)}</h4>
+        <div style="font-size:12px" class="muted">📍 ${esc(t.city)} / ${esc(t.area)}</div>
+        <div class="stars" style="font-size:14px">${"★".repeat(Math.round(t.ratingAverage||0))}${"☆".repeat(5-Math.round(t.ratingAverage||0))}</div>
+      </div>
+    </div>
+  </div>`).join("");
 }
 
 let selectedTechUid="";
 function selectTechnician(uid){
- selectedTechUid=uid;
- if($("custTech")) $("custTech").value=uid;
- renderMatchingTechs();
+  selectedTechUid=uid;
+  if($("custTech")) $("custTech").value=uid;
+  renderMatchingTechs();
 }
 
 async function openRequest(service="", preselectedUid=""){
- const saved=localStorage.getItem("sakhrCustomerCity")||"";
- if(!saved){
-  pendingService=service;
-  if($("customerLocationModal")) $("customerLocationModal").classList.remove("hidden");
-  return;
- }
- chosenCustomerCity=saved;
- if($("custCity")) $("custCity").value=saved;
- setDistricts("custArea",saved);
+  const saved=localStorage.getItem("sakhrCustomerCity")||"";
+  if(!saved){
+    pendingService=service;
+    if($("customerLocationModal")) $("customerLocationModal").classList.remove("hidden");
+    return;
+  }
+  chosenCustomerCity=saved;
+  if($("custCity")) $("custCity").value=saved;
+  setDistricts("custArea",saved);
 
- if($("requestMessage")) $("requestMessage").innerHTML="";
- if($("customerTrackingArea")) $("customerTrackingArea").innerHTML="";
- if($("custService")) $("custService").value=service||SERVICES[0];
- selectedTechUid=preselectedUid||"";
- if($("custTech")) $("custTech").value=selectedTechUid;
- if($("requestModal")) $("requestModal").classList.remove("hidden");
- await loadPublicTechs();
- renderMatchingTechs();
+  if($("requestMessage")) $("requestMessage").innerHTML="";
+  if($("customerTrackingArea")) $("customerTrackingArea").innerHTML="";
+  if($("custService")) $("custService").value=service||SERVICES[0];
+  selectedTechUid=preselectedUid||"";
+  if($("custTech")) $("custTech").value=selectedTechUid;
+  if($("requestModal")) $("requestModal").classList.remove("hidden");
+  await loadPublicTechs();
+  renderMatchingTechs();
 }
 
 async function chooseServiceDirect(service, techUid){ await openRequest(service, techUid); }
 function chooseService(s){ openRequest(s); }
 
 async function submitRequest(){
- try{
-  const name=$("custName")?.value.trim()||"";
-  const phone=$("custPhone")?.value.trim()||"";
-  const city=$("custCity")?.value||"";
-  const area=$("custArea")?.value||"";
-  const neighborhood=$("custNeighborhood")?.value.trim()||"";
-  const service=$("custService")?.value||"";
-  const problem=$("custProblem")?.value.trim()||"";
-  const techUid=$("custTech")?.value||"";
+  try{
+    const name=$("custName")?.value.trim()||"";
+    const phone=$("custPhone")?.value.trim()||"";
+    const city=$("custCity")?.value||"";
+    const area=$("custArea")?.value||"";
+    const neighborhood=$("custNeighborhood")?.value.trim()||"";
+    const service=$("custService")?.value||"";
+    const problem=$("custProblem")?.value.trim()||"";
+    const techUid=$("custTech")?.value||"";
 
-  if(!name||!phone||!city||!service||!problem)
-   return msg("requestMessage","أكمل الاسم، الهاتف، والمحافظة والخدمة ووصف المشكلة.","error");
-  if(!techUid)
-   return msg("requestMessage","اختر فنياً من القائمة قبل الإرسال.","error");
+    if(!name||!phone||!city||!service||!problem)
+      return msg("requestMessage","أكمل الاسم، الهاتف، والمحافظة والخدمة ووصف المشكلة.","error");
+    if(!techUid)
+      return msg("requestMessage","اختر فنياً من القائمة قبل الإرسال.","error");
 
-  const tech=publicTechs.find(t=>t.uid===techUid);
-  if(!tech)throw new Error("الفني غير متاح.");
+    const tech=publicTechs.find(t=>t.uid===techUid);
+    if(!tech)throw new Error("الفني غير متاح.");
 
-  const custId = "cust_" + Date.now();
-  const id=db.ref("requests/"+custId).push().key;
-  const now=Date.now();
-  
-  const record={
-   id, uid:custId, name, phone, city:city==="ALL"?"كل المحافظات":city,
-   area:area||"كل الأقضية", neighborhood, service, problem,
-   preferredTech:techUid, assignedTech:techUid, assignedTechName:tech.name,
-   status:"بانتظار رد الفني", createdAt:now, countedAsCompleted:false, rated:false
-  };
+    const custId = "cust_" + Date.now();
+    const id=db.ref("requests/"+custId).push().key;
+    const now=Date.now();
+    
+    const record={
+      id, uid:custId, name, phone, city:city==="ALL"?"كل المحافظات":city,
+      area:area||"كل الأقضية", neighborhood, service, problem,
+      preferredTech:techUid, assignedTech:techUid, assignedTechName:tech.name,
+      status:"بانتظار رد الفني", createdAt:now, countedAsCompleted:false, rated:false
+    };
 
-  const job={ id, customerUid:custId, customerName:name, customerPhone:phone, service, city:record.city, area:record.area, neighborhood, problem, status:"بانتظار رد الفني", createdAt:now };
+    const job={ id, customerUid:custId, customerName:name, customerPhone:phone, service, city:record.city, area:record.area, neighborhood, problem, status:"بانتظار رد الفني", createdAt:now };
 
-  const u={};
-  u["requests/"+custId+"/"+id]=record;
-  u["technicianJobs/"+techUid+"/"+id]=job;
-  await db.ref().update(u);
+    const u={};
+    u["requests/"+custId+"/"+id]=record;
+    u["technicianJobs/"+techUid+"/"+id]=job;
+    await db.ref().update(u);
 
-  msg("requestMessage","تم إرسال طلبك بنجاح! رقم الطلب: "+id,"success");
-  listenToCustomerOrderStatus(custId, id, tech.phone);
- }catch(e){
-  msg("requestMessage",e.message,"error");
- }
+    msg("requestMessage","تم إرسال طلبك بنجاح! رقم الطلب: "+id,"success");
+    listenToCustomerOrderStatus(custId, id, tech.phone);
+  }catch(e){
+    msg("requestMessage",e.message,"error");
+  }
 }
 
 function listenToCustomerOrderStatus(custId, reqId, techPhone) {
@@ -1035,195 +1035,189 @@ function listenToCustomerOrderStatus(custId, reqId, techPhone) {
 }
 
 async function submitReview(){
- const name=$("reviewName").value.trim();
- const stars=$("reviewStars").value;
- const text=$("reviewText").value.trim();
+  const name=$("reviewName").value.trim();
+  const stars=$("reviewStars").value;
+  const text=$("reviewText").value.trim();
 
- if(!name||!text) return msg("reviewMessage","املأ الاسم ورأيك بالملاحظة.","error");
+  if(!name||!text) return msg("reviewMessage","املأ الاسم ورأيك بالملاحظة.","error");
 
- try{
-  const id=db.ref("reviews").push().key;
-  const rev={ id, name, stars:Number(stars), text, createdAt:Date.now() };
-  await db.ref("reviews/"+id).set(rev);
-  $("reviewName").value="";
-  $("reviewText").value="";
-  msg("reviewMessage","تم إرسال تقييمك بنجاح في دردشة التقييمات!","success");
-  loadReviews();
- }catch(e){
-  msg("reviewMessage",e.message,"error");
- }
+  try{
+    const id=db.ref("reviews").push().key;
+    const rev={ id, name, stars:Number(stars), text, createdAt:Date.now() };
+    await db.ref("reviews/"+id).set(rev);
+    $("reviewName").value="";
+    $("reviewText").value="";
+    msg("reviewMessage","تم إرسال تقييمك بنجاح في دردشة التقييمات!","success");
+    loadReviews();
+  }catch(e){
+    msg("reviewMessage",e.message,"error");
+  }
 }
 
 async function loadReviews(){
- const el=$("reviewsList");
- if(!el)return;
- try{
-  const s=await db.ref("reviews").once("value");
-  const data=s.val()||{};
-  const list=Object.values(data).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
-  if(!list.length){
-   el.innerHTML='<div class="empty">لا توجد تقييمات أو ملاحظات مضافة بعد. كن أول المشاركين!</div>';
-   return;
+  const el=$("reviewsList");
+  if(!el)return;
+  try{
+    const s=await db.ref("reviews").once("value");
+    const data=s.val()||{};
+    const list=Object.values(data).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+    if(!list.length){
+      el.innerHTML='<div class="empty">لا توجد تقييمات أو ملاحظات مضافة بعد. كن أول المشاركين!</div>';
+      return;
+    }
+    el.innerHTML=list.map(r=>`
+    <div class="list-item" style="background:#fff9ef;">
+     <div style="display:flex;justify-content:space-between;align-items:center">
+      <h4 style="margin:0;color:var(--burgundy)">${esc(r.name)}</h4>
+      <div class="stars">${"★".repeat(r.stars)}${"☆".repeat(5-r.stars)}</div>
+     </div>
+     <p style="margin:10px 0 0;font-size:14px;line-height:1.6;color:var(--text-main)">${esc(r.text)}</p>
+    </div>`).join("");
+  }catch(e){
+    el.innerHTML='<div class="empty">تعذر تحميل التقييمات حالياً.</div>';
   }
-  el.innerHTML=list.map(r=>`
-  <div class="list-item" style="background:#fff9ef;">
-   <div style="display:flex;justify-content:space-between;align-items:center">
-    <h4 style="margin:0;color:var(--burgundy)">${esc(r.name)}</h4>
-    <div class="stars">${"★".repeat(r.stars)}${"☆".repeat(5-r.stars)}</div>
-   </div>
-   <p style="margin:10px 0 0;font-size:14px;line-height:1.6;color:var(--text-main)">${esc(r.text)}</p>
-  </div>`).join("");
- }catch(e){
-  el.innerHTML='<div class="empty">تعذر تحميل التقييمات حالياً.</div>';
- }
 }
 
 async function technicianDecision(id,decision){
- if(!currentUser||currentRole!=="technician")return;
- try{
-  const ref=db.ref("technicianJobs/"+currentUser.uid+"/"+id);
-  const snap=await ref.once("value");
-  const job=snap.val();
-  if(!job)return;
+  if(!currentUser||currentRole!=="technician")return;
+  try{
+    const ref=db.ref("technicianJobs/"+currentUser.uid+"/"+id);
+    const snap=await ref.once("value");
+    const job=snap.val();
+    if(!job)return;
 
-  const newStatus=decision==="مقبول"?"مقبول من الفني":"مرفوض من الفني";
-  const u={};
-  u["technicianJobs/"+currentUser.uid+"/"+id+"/status"]=newStatus;
-  u["requests/"+job.customerUid+"/"+id+"/status"]=newStatus;
-  if(decision==="مقبول"){
-   u["requests/"+job.customerUid+"/"+id+"/assignedTechPhone"]=currentTech.phone||"";
-  }
-  await db.ref().update(u);
-  await renderTechAccount();
-  alert(decision==="مقبول"?"تم قبول الطلب.":"تم رفض الطلب.");
- }catch(e){}
+    const newStatus=decision==="مقبول"?"مقبول من الفني":"مرفوض من الفني";
+    const u={};
+    u["technicianJobs/"+currentUser.uid+"/"+id+"/status"]=newStatus;
+    u["requests/"+job.customerUid+"/"+id+"/status"]=newStatus;
+    if(decision==="مقبول"){
+      u["requests/"+job.customerUid+"/"+id+"/assignedTechPhone"]=currentTech.phone||"";
+    }
+    await db.ref().update(u);
+    await renderTechAccount();
+    alert(decision==="مقبول"?"تم قبول الطلب.":"تم رفض الطلب.");
+  }catch(e){}
 }
 
 async function renderTechAccount(){
- if(!currentUser||!["technician","suspended"].includes(currentRole))return;
- const uid=currentUser.uid;
- try{
-  const s=await db.ref("technicians/"+uid).once("value");
-  currentTech=s.val();
-  if(!currentTech)return;
+  if(!currentUser||!["technician","suspended"].includes(currentRole))return;
+  const uid=currentUser.uid;
+  try{
+    const s=await db.ref("technicians/"+uid).once("value");
+    currentTech=s.val();
+    if(!currentTech)return;
 
-  if($("techSummary")) {
-   $("techSummary").innerHTML=`
-   ${techPhoto(currentTech)}
-   <div style="text-align:center">
-    <h3 style="margin:5px 0"><span class="online-dot"></span> ${esc(currentTech.name)}</h3>
-    <span class="badge">${esc(currentTech.service)}</span>
-    <div class="muted" style="margin-top:5px">📍 ${esc(currentTech.city)} / ${esc(currentTech.area)}</div>
-    <div class="stars" style="margin-top:8px">${"★".repeat(Math.round(currentTech.ratingAverage||0))}${"☆".repeat(5-Math.round(currentTech.ratingAverage||0))}</div>
-   </div>`;
-  }
+    if($("techSummary")) {
+      $("techSummary").innerHTML=`
+      ${techPhoto(currentTech)}
+      <div style="text-align:center">
+        <h3 style="margin:5px 0"><span class="online-dot"></span> ${esc(currentTech.name)}</h3>
+        <span class="badge">${esc(currentTech.service)}</span>
+        <div class="muted" style="margin-top:5px">📍 ${esc(currentTech.city)} / ${esc(currentTech.area)}</div>
+        <div class="stars" style="margin-top:8px">${"★".repeat(Math.round(currentTech.ratingAverage||0))}${"☆".repeat(5-Math.round(currentTech.ratingAverage||0))}</div>
+      </div>`;
+    }
 
-  const subStatus = currentTech.subscriptionStatus || "غير فعال";
-  const freeUsed = Number(currentTech.freeJobsUsed || 0);
-  if($("techSubDetails")) {
-   $("techSubDetails").innerHTML = `
-    حالة الاشتراك: <b style="color:${subStatus==='فعال'?'var(--green)':'var(--danger)'};">${subStatus}</b><br>
-    الأعمال المجانية المستهلكة: <b>${freeUsed} من 3 أعمال مجانية</b>
-    ${subStatus !== "فعال" && freeUsed >= 3 ? `
-     <div class="notice error" style="margin-top:10px; font-size:13px;">
-      ⚠️ لقد استنفذت أعمالك المجانية الـ 3. لاستمرار استقبال طلبات الزبائن بلا حدود، يرجى تحويل الاشتراك عبر <b>زين كاش</b> أو <b>الماستر الشخصي</b> إلى رقم الإدارة:
-      <br><b style="font-size:15px; color:var(--burgundy);">07805017009</b> (ثم أرسل لقطة إيصال للإدارة عبر الواتساب للتفعيل الفوري).
-     </div>
-    ` : `
-     <div class="notice" style="margin-top:10px; font-size:13px;">
-      💡 لتجديد اشتراكك بكل سهولة، حول رسم الاشتراك إلى زين كاش الإدارة (<b>07805017009</b>) وأرسل الإيصال للإدارة لتفعيل حسابك فوراً.
-     </div>
-    `;
-  }
+    const subStatus = currentTech.subscriptionStatus || "غير فعال";
+    const freeUsed = Number(currentTech.freeJobsUsed || 0);
+    if($("techSubDetails")) {
+      let subNoticeHtml = "";
+      if(subStatus !== "فعال" && freeUsed >= 3) {
+        subNoticeHtml = '<div class="notice error" style="margin-top:10px; font-size:13px;">⚠️ لقد استنفذت أعمالك المجانية الـ 3. لاستمرار استقبال طلبات الزبائن بلا حدود، يرجى تحويل الاشتراك عبر <b>زين كاش</b> أو <b>الماستر الشخصي</b> إلى رقم الإدارة:<br><b style="font-size:15px; color:var(--burgundy);">07805017009</b> (ثم أرسل لقطة إيصال للإدارة عبر الواتساب للتفعيل الفوري).</div>';
+      } else {
+        subNoticeHtml = '<div class="notice" style="margin-top:10px; font-size:13px;">💡 لتجديد اشتراكك بكل سهولة، حول رسم الاشتراك إلى زين كاش الإدارة (<b>07805017009</b>) وأرسل الإيصال للإدارة لتفعيل حسابك فوراً.</div>';
+      }
+      $("techSubDetails").innerHTML = 'حالة الاشتراك: <b style="color:' + (subStatus==='فعال'?'var(--green)':'var(--danger)') + ';">' + esc(subStatus) + '</b><br>الأعمال المجانية المستهلكة: <b>' + freeUsed + ' من 3 أعمال مجانية</b>' + subNoticeHtml;
+    }
 
-  if($("editTechName")) $("editTechName").value = currentTech.name || "";
-  if($("editTechCity")) {
-   $("editTechCity").innerHTML = '<option value="">اختر المحافظة</option>' + Object.keys(DISTRICTS).map(x=>`<option value="${esc(x)}" ${x===currentTech.city?'selected':''}>${esc(x)}</option>`).join("");
-   setDistricts("editTechArea", currentTech.city);
-   if($("editTechArea")) $("editTechArea").value = currentTech.area || "";
-  }
-  if($("editTechService")) {
-   $("editTechService").innerHTML = SERVICES.map(s=>`<option value="${esc(s)}" ${s===currentTech.service?'selected':''}>${esc(s)}</option>`).join("");
-  }
-  if($("editTechNeighborhood")) $("editTechNeighborhood").value = currentTech.neighborhood || "";
-  if($("editTechPhone")) $("editTechPhone").value = currentTech.phone || "";
-  if($("editTechBio")) $("editTechBio").value = currentTech.bio || "";
+    if($("editTechName")) $("editTechName").value = currentTech.name || "";
+    if($("editTechCity")) {
+      $("editTechCity").innerHTML = '<option value="">اختر المحافظة</option>' + Object.keys(DISTRICTS).map(x=>`<option value="${esc(x)}" ${x===currentTech.city?'selected':''}>${esc(x)}</option>`).join("");
+      setDistricts("editTechArea", currentTech.city);
+      if($("editTechArea")) $("editTechArea").value = currentTech.area || "";
+    }
+    if($("editTechService")) {
+      $("editTechService").innerHTML = SERVICES.map(s=>`<option value="${esc(s)}" ${s===currentTech.service?'selected':''}>${esc(s)}</option>`).join("");
+    }
+    if($("editTechNeighborhood")) $("editTechNeighborhood").value = currentTech.neighborhood || "";
+    if($("editTechPhone")) $("editTechPhone").value = currentTech.phone || "";
+    if($("editTechBio")) $("editTechBio").value = currentTech.bio || "";
 
-  if(techJobsListener) techJobsListener.off();
-  let isInitialLoad = true;
-  techJobsListener = db.ref("technicianJobs/"+uid);
-  techJobsListener.on("value", snapshot => {
-   const jobs = [];
-   snapshot.forEach(x => jobs.push({...x.val(), id: x.key}));
-   if(!isInitialLoad && jobs.some(x => x.status === "بانتظار رد الفني")) {
-    playAlertBeep();
-    if($("techAlertBox")) $("techAlertBox").innerHTML = '<div class="notice success" style="font-weight:900">🔔 وصلك طلب صيانة جديد!</div>';
-   }
-   isInitialLoad = false;
+    if(techJobsListener) techJobsListener.off();
+    let isInitialLoad = true;
+    techJobsListener = db.ref("technicianJobs/"+uid);
+    techJobsListener.on("value", snapshot => {
+      const jobs = [];
+      snapshot.forEach(x => jobs.push({...x.val(), id: x.key}));
+      if(!isInitialLoad && jobs.some(x => x.status === "بانتظار رد الفني")) {
+        playAlertBeep();
+        if($("techAlertBox")) $("techAlertBox").innerHTML = '<div class="notice success" style="font-weight:900">🔔 وصلك طلب صيانة جديد!</div>';
+      }
+      isInitialLoad = false;
 
-   if($("techJobs")) {
-    $("techJobs").innerHTML = jobs.length
-    ? jobs.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0)).map(x=>`
-    <div class="list-item">
-     <h4>${esc(x.service)} — ${esc(x.status)}</h4>
-     <div class="muted">الزبون: <b>${esc(x.customerName||"")}</b> | الهاتف: <b>${esc(x.customerPhone||"")}</b></div>
-     <p style="margin:8px 0">${esc(x.problem)}</p>
-     ${x.status==="بانتظار رد الفني"?`
-     <div class="actions">
-      <button class="btn primary" onclick="technicianDecision('${esc(x.id)}','مقبول')">قبول الطلب</button>
-      <button class="btn danger" onclick="technicianDecision('${esc(x.id)}','مرفوض')">رفض</button>
-     </div>`:""}
-     ${x.status==="مقبول من الفني"?`
-     <div class="actions">
-      <a href="https://wa.me/${formatWhatsApp(x.customerPhone)}?text=مرحباً بك، أنا الفني من منصة صخر بخصوص طلب صيانة ${encodeURIComponent(x.service)}" target="_blank" class="btn whatsapp-btn">
-       💬 مراسلة الزبون عبر الواتساب
-      </a>
-     </div>`:""}
-    </div>`).join("")
-    : '<div class="empty">لا توجد طلبات جديدة.</div>';
-   }
-  });
- }catch(e){}
+      if($("techJobs")) {
+        $("techJobs").innerHTML = jobs.length
+        ? jobs.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0)).map(x=>`
+        <div class="list-item">
+          <h4>${esc(x.service)} — ${esc(x.status)}</h4>
+          <div class="muted">الزبون: <b>${esc(x.customerName||"")}</b> | الهاتف: <b>${esc(x.customerPhone||"")}</b></div>
+          <p style="margin:8px 0">${esc(x.problem)}</p>
+          ${x.status==="بانتظار رد الفني"?`
+          <div class="actions">
+           <button class="btn primary" onclick="technicianDecision('${esc(x.id)}','مقبول')">قبول الطلب</button>
+           <button class="btn danger" onclick="technicianDecision('${esc(x.id)}','مرفوض')">رفض</button>
+          </div>`:""}
+          ${x.status==="مقبول من الفني"?`
+          <div class="actions">
+           <a href="https://wa.me/${formatWhatsApp(x.customerPhone)}?text=مرحباً بك، أنا الفني من منصة صخر بخصوص طلب صيانة ${encodeURIComponent(x.service)}" target="_blank" class="btn whatsapp-btn">
+            💬 مراسلة الزبون عبر الواتساب
+           </a>
+          </div>`:""}
+        </div>`).join("")
+        : '<div class="empty">لا توجد طلبات جديدة.</div>';
+      }
+    });
+  }catch(e){}
 }
 
 async function saveTechAccountProfile() {
- if(!currentUser || !["technician","suspended"].includes(currentRole)) return;
- const uid = currentUser.uid;
- const name = $("editTechName").value.trim();
- const service = $("editTechService").value;
- const city = $("editTechCity").value;
- const area = $("editTechArea").value;
- const neighborhood = $("editTechNeighborhood").value.trim();
- const phone = $("editTechPhone").value.trim();
- const bio = $("editTechBio").value.trim();
- const file = $("editTechPhotoFile").files[0];
+  if(!currentUser || !["technician","suspended"].includes(currentRole)) return;
+  const uid = currentUser.uid;
+  const name = $("editTechName").value.trim();
+  const service = $("editTechService").value;
+  const city = $("editTechCity").value;
+  const area = $("editTechArea").value;
+  const neighborhood = $("editTechNeighborhood").value.trim();
+  const phone = $("editTechPhone").value.trim();
+  const bio = $("editTechBio").value.trim();
+  const file = $("editTechPhotoFile").files[0];
 
- if(!name || !phone || !city || !area || !service) {
-  return msg("editProfileMessage", "أكمل الحقول الأساسية (الاسم، الهاتف، المحافظة، القضاء، الاختصاص).", "error");
- }
-
- try {
-  msg("editProfileMessage", "جاري حفظ التعديلات...", "notice");
-  let photoURL = currentTech.photoURL || "";
-  if(file) {
-   photoURL = await uploadTechPhoto(uid, file);
+  if(!name || !phone || !city || !area || !service) {
+    return msg("editProfileMessage", "أكمل الحقول الأساسية (الاسم، الهاتف، المحافظة، القضاء، الاختصاص).", "error");
   }
 
-  const updated = {
-   ...currentTech,
-   name, service, city, area, neighborhood, phone, bio, photoURL
-  };
+  try {
+    msg("editProfileMessage", "جاري حفظ التعديلات...", "notice");
+    let photoURL = currentTech.photoURL || "";
+    if(file) {
+      photoURL = await uploadTechPhoto(uid, file);
+    }
 
-  await db.ref("technicians/"+uid).update(updated);
-  await syncPublicTechnician(uid, updated);
-  currentTech = updated;
-  msg("editProfileMessage", "تم حفظ وتحديث تعديلات البروفايل بنجاح!", "success");
-  closeModal('techEditModal');
-  renderTechAccount();
-  loadPublicTechs();
- } catch(e) {
-  msg("editProfileMessage", "خطأ في الحفظ: "+e.message, "error");
- }
+    const updated = {
+      ...currentTech,
+      name, service, city, area, neighborhood, phone, bio, photoURL
+    };
+
+    await db.ref("technicians/"+uid).update(updated);
+    await syncPublicTechnician(uid, updated);
+    currentTech = updated;
+    msg("editProfileMessage", "تم حفظ وتحديث تعديلات البروفايل بنجاح!", "success");
+    closeModal('techEditModal');
+    renderTechAccount();
+    loadPublicTechs();
+  } catch(e) {
+    msg("editProfileMessage", "خطأ في الحفظ: "+e.message, "error");
+  }
 }
 
 async function toggleTechSubscription(techUid, currentStatus) {
@@ -1250,46 +1244,45 @@ async function resetTechFreeJobs(techUid) {
 }
 
 async function loadAdminData(){
- if(currentRole!=="admin")return;
- try{
-  const [r,t]=await Promise.all([db.ref("requests").once("value"),db.ref("technicians").once("value")]);
-  requests=[]; technicians=[];
-  r.forEach(u=>u.forEach(q=>requests.push({...q.val(),uid:u.key,id:q.key})));
-  t.forEach(s=>technicians.push({...s.val(),uid:s.key}));
-  renderAdmin();
- }catch(e){}
+  if(currentRole!=="admin")return;
+  try{
+    const [r,t]=await Promise.all([db.ref("requests").once("value"),db.ref("technicians").once("value")]);
+    requests=[]; technicians=[];
+    r.forEach(u=>u.forEach(q=>requests.push({...q.val(),uid:u.key,id:q.key})));
+    t.forEach(s=>technicians.push({...s.val(),uid:s.key}));
+    renderAdmin();
+  }catch(e){}
 }
 
 function renderAdmin(){
- if($("adminStats")) {
-  $("adminStats").innerHTML=`
-  <div class="card"><div class="muted">إجمالي الطلبات</div><div class="stat">${requests.length}</div></div>
-  <div class="card"><div class="muted">إجمالي الفنيين</div><div class="stat">${technicians.length}</div></div>`;
- }
- if($("adminRequests")) {
-  $("adminRequests").innerHTML=requests.length?requests.map(r=>`
-  <div class="list-item">
-   <h4>${esc(r.service)} — ${esc(r.status)}</h4>
-   <div class="muted">الزبون: ${esc(r.name)} | الهاتف: ${esc(r.phone)}</div>
-  </div>`).join(""):'<div class="empty">لا توجد طلبات.</div>';
- }
- if($("adminTechs")) {
-  $("adminTechs").innerHTML = technicians.length ? technicians.map(t=>`
-  <div class="list-item" style="background:#fff9ef;">
-   <h4>${esc(t.name)} — <span class="badge">${esc(t.service)}</span></h4>
-   <div class="muted">الهاتف: ${esc(t.phone)} | المحافظة: ${esc(t.city)} / ${esc(t.area)}</div>
-   <div class="muted" style="margin-top:5px;">حالة الاشتراك: <b>${esc(t.subscriptionStatus || "غير فعال")}</b> | الأعمال المجانية المستهلكة: <b>${Number(t.freeJobsUsed || 0)} من 3</b></div>
-   <div class="actions" style="margin-top:10px;">
-    <button class="btn ${t.subscriptionStatus === 'فعال' ? 'danger' : 'primary'}" onclick="toggleTechSubscription('${esc(t.uid)}','${esc(t.subscriptionStatus || "غير فعال")}')">
-     ${t.subscriptionStatus === 'فعال' ? 'إلغاء تفعيل الاشتراك' : 'تفعيل الاشتراك'}
-    </button>
-    <button class="btn light" onclick="resetTechFreeJobs('${esc(t.uid)}')">تصفير الأعمال المجانية</button>
-   </div>
-  </div>`).join("") : '<div class="empty">لا يوجد فنيون مسجلون.</div>';
- }
+  if($("adminStats")) {
+    $("adminStats").innerHTML=`
+    <div class="card"><div class="muted">إجمالي الطلبات</div><div class="stat">${requests.length}</div></div>
+    <div class="card"><div class="muted">إجمالي الفنيين</div><div class="stat">${technicians.length}</div></div>`;
+  }
+  if($("adminRequests")) {
+    $("adminRequests").innerHTML=requests.length?requests.map(r=>`
+    <div class="list-item">
+      <h4>${esc(r.service)} — ${esc(r.status)}</h4>
+      <div class="muted">الزبون: ${esc(r.name)} | الهاتف: ${esc(r.phone)}</div>
+    </div>`).join(""):'<div class="empty">لا توجد طلبات.</div>';
+  }
+  if($("adminTechs")) {
+    $("adminTechs").innerHTML = technicians.length ? technicians.map(t=>`
+    <div class="list-item" style="background:#fff9ef;">
+      <h4>${esc(t.name)} — <span class="badge">${esc(t.service)}</span></h4>
+      <div class="muted">الهاتف: ${esc(t.phone)} | المحافظة: ${esc(t.city)} / ${esc(t.area)}</div>
+      <div class="muted" style="margin-top:5px;">حالة الاشتراك: <b>${esc(t.subscriptionStatus || "غير فعال")}</b> | الأعمال المجانية المستهلكة: <b>${Number(t.freeJobsUsed || 0)} من 3</b></div>
+      <div class="actions" style="margin-top:10px;">
+       <button class="btn ${t.subscriptionStatus === 'فعال' ? 'danger' : 'primary'}" onclick="toggleTechSubscription('${esc(t.uid)}','${esc(t.subscriptionStatus || "غير فعال")}')">
+        ${t.subscriptionStatus === 'فعال' ? 'إلغاء تفعيل الاشتراك' : 'تفعيل الاشتراك'}
+       </button>
+       <button class="btn light" onclick="resetTechFreeJobs('${esc(t.uid)}')">تصفير الأعمال المجانية</button>
+      </div>
+    </div>`).join("") : '<div class="empty">لا يوجد فنيون مسجلون.</div>';
+  }
 }
 
-// التشغيل المباشر الآمن لمنع أي تعليق بالأزرار
 setupLocations();
 renderServices();
 initFirebase();
