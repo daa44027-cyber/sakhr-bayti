@@ -21,6 +21,7 @@
   --border-gold: #f3d08a;
   --green: #16845b;
   --online-green: #22c55e;
+  --offline-gray: #9ca3af;
 }
 html { scroll-behavior: smooth; }
 * { box-sizing: border-box; }
@@ -73,7 +74,6 @@ nav button:hover, nav button.primary-nav { background: var(--gold); color: var(-
 .cta-btn { background: linear-gradient(135deg, #ffdb57, #e99a12); color: var(--burgundy-dark); padding: 10px 22px; border-radius: 24px; font-weight: 900; font-size: 14px; border: 2px solid #fff; box-shadow: 0 4px 15px rgba(233,154,18,0.4); display: inline-flex; align-items: center; gap: 6px; text-decoration: none; transition: transform .2s; }
 .cta-btn:active { transform: scale(0.95); }
 
-/* شريط الإعلانات المتحرك من اليسار إلى اليمين */
 .announcement-container {
   background: var(--burgundy);
   border-bottom: 2px solid var(--gold);
@@ -107,7 +107,6 @@ nav button:hover, nav button.primary-nav { background: var(--gold); color: var(-
 .container { width: min(1100px, 92%); margin: 0 auto 40px; }
 .section-title { font-size: 18px; color: var(--gold); margin: 25px 0 15px; font-weight: 900; text-align: center; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
 
-/* شبكة الخدمات: كل اثنين بجانب بعضهما (2 في 2) وبأحجام أصغر متناسقة */
 .services-grid { 
   display: grid; 
   grid-template-columns: repeat(2, 1fr); 
@@ -160,6 +159,7 @@ nav button:hover, nav button.primary-nav { background: var(--gold); color: var(-
 .empty { text-align: center; padding: 35px; color: var(--text-muted); background: #fff; border-radius: 14px; border: 2px dashed #d9b98e; font-weight: 700; }
 
 .online-dot { display: inline-block; width: 10px; height: 10px; background-color: var(--online-green); border-radius: 50%; border: 2px solid #fff; box-shadow: 0 0 3px var(--online-green); vertical-align: middle; margin-right: 4px; }
+.offline-dot { display: inline-block; width: 10px; height: 10px; background-color: var(--offline-gray); border-radius: 50%; border: 2px solid #fff; box-shadow: 0 0 3px var(--offline-gray); vertical-align: middle; margin-right: 4px; }
 
 .modal { position: fixed; inset: 0; background: rgba(53,19,35,0.85); backdrop-filter: blur(5px); display: flex; align-items: center; justify-content: center; padding: 12px; z-index: 1000; }
 .modal-box { background: #fff; color: var(--text-main); border-radius: 20px; padding: 22px; width: min(480px, 100%); max-height: 90vh; overflow: auto; box-shadow: 0 20px 40px rgba(0,0,0,0.5); border: 3px solid var(--gold); }
@@ -225,15 +225,10 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
   </div>
  </div>
 
- <!-- الشريط الإعلاني المتحرك تحت الخط الأصفر للواجهة الرئيسية -->
  <div class="announcement-container">
   <div id="globalAnnouncementBar" class="announcement-bar">
    📢 أهلاً بكم في منصة صخر للصيانة المنزلية - تواصل مع أفضل الفنيين المعتمدين في منطقتك بكل سهولة.
   </div>
- </div>
-
- <div class="container" style="margin-top:20px;">
-  <!-- تم إزالة أقسام الخدمات من الواجهة الرئيسية بناءً على طلب المدير -->
  </div>
 
  <div class="trust-bar">
@@ -243,7 +238,6 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  </div>
 </section>
 
-<!-- صفحة خدماتنا مع الأزرار المرتبة شبكياً (2 في 2) وبحجم مناسب -->
 <section id="services" class="container hidden">
  <h2 class="section-title">جميع خدمات الصيانة</h2>
  <div class="services-grid" id="allServicesPage"></div>
@@ -309,9 +303,18 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
 </section>
 
 <section id="techAccount" class="container hidden">
- <h2 class="section-title"><span class="online-dot" title="متصل الآن"></span> الملف الشخصي - لوحة تحكم الفني</h2>
+ <h2 class="section-title">الملف الشخصي - لوحة تحكم الفني</h2>
  <div id="techAlertBox"></div>
  <div id="techSummary" class="card" style="margin-bottom:15px"></div>
+
+ <div class="card" style="margin-bottom:15px; background:#fff9ef; border:2px solid var(--gold);">
+  <h3 style="color:var(--burgundy); margin-top:0; font-size:15px; font-weight:900;">🟢 حالة التواجد (متاح لاستقبال الطلبات)</h3>
+  <div style="font-size:13px; color:var(--text-main); margin-bottom:10px;">يمكنك تفعيل حالتك لتكون ظاهراً للزبائن أو إيقافها عندما تكون مشغولاً:</div>
+  <div style="display:flex; gap:10px; align-items:center;">
+   <button type="button" id="toggleAvailableBtn" class="btn primary" onclick="toggleTechAvailability()"></button>
+  </div>
+  <div id="availabilityMsg" style="margin-top:6px; font-size:12px; font-weight:700;"></div>
+ </div>
  
  <div id="techSubscriptionCard" class="card" style="margin-bottom:15px; background:#fff9ef; border:2px solid var(--gold);">
   <h3 style="color:var(--burgundy); margin-top:0; font-weight:900; font-size:15px;">💳 حالة الاشتراك والأعمال المجانية</h3>
@@ -356,7 +359,6 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  </div>
 </footer>
 
-<!-- نافذة تحديد موقع الزبون (المحافظة والقضاء) عند الدخول (لا تظهر للمدير) -->
 <div class="modal hidden" id="customerLocationModal">
  <div class="modal-box">
   <div class="modal-head"><h3>أهلاً بك في منصة صخر</h3><div class="close" onclick="closeCustomerLocationModal()">✕</div></div>
@@ -399,31 +401,17 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  </div>
 </div>
 
-<div class="modal hidden" id="requestModal">
- <div class="modal-box">
-  <div class="modal-head"><h3>إرسال طلب صيانة سريع</h3><div class="close" onclick="closeModal('requestModal')">✕</div></div>
-  <div class="field"><label>اسمك الكريم</label><input id="custName" placeholder="اسمك الكامل"></div>
-  <div class="field"><label>رقم هاتفك للتواصل</label><input id="custPhone" inputmode="tel" placeholder="07800000000"></div>
-  <div class="row">
-   <div class="field"><label>المحافظة</label><select id="custCity"><option value="">اختر المحافظة</option><option value="ALL">كل المحافظات</option></select></div>
-   <div class="field"><label>القضاء</label><select id="custArea" disabled><option value="">اختر المحافظة أولاً</option></select></div>
+<!-- نافذة رسالة الطلب المباشر للمدير (بدون لغوة أو واجهات معقدة) -->
+<div class="modal hidden" id="adminDirectRequestModal">
+ <div class="modal-box" style="text-align: center;">
+  <div class="modal-head"><h3>إرسال طلب صيانة</h3><div class="close" onclick="closeModal('adminDirectRequestModal')">✕</div></div>
+  <div style="font-size: 16px; font-weight: 800; color: var(--burgundy); margin: 20px 0;" id="adminDirectRequestText">
+   الطلب قيد التنفيذ، بانتظار موافقة الفني...
   </div>
-  <div class="field"><label>المنطقة أو الحي السكني (اختياري)</label><input id="custNeighborhood" placeholder="مثال: البندقية"></div>
-  <div class="field"><label>الخدمة المطلوبة</label><select id="custService"></select></div>
-  <div class="field"><label>وصف المشكلة أو العطل بالتفصيل</label><textarea id="custProblem" placeholder="اكتب تفاصيل العطل..."></textarea></div>
-  
-  <div class="section-title" style="font-size:15px;margin:12px 0 8px;color:var(--burgundy);text-align:right">اختر الفني المناسب:</div>
-  <div id="matchingTechs"><div class="empty">اختر المحافظة والقضاء والخدمة لعرض الفنيين المتاحين.</div></div>
-  <input type="hidden" id="custTech">
-  
-  <button class="btn primary" style="width:100%;margin-top:12px" onclick="submitRequest()">إرسال الطلب للفني المختار الآن</button>
-  <div id="requestMessage"></div>
-  
-  <div id="customerTrackingArea" style="margin-top:15px;"></div>
+  <button class="btn primary" style="width: 100%;" onclick="closeModal('adminDirectRequestModal')">حسناً</button>
  </div>
 </div>
 
-<!-- نافذة تسجيل الدخول للمدير أو الفنيين -->
 <div class="modal hidden" id="loginModal">
  <div class="modal-box">
   <form onsubmit="event.preventDefault(); loginWithPhonePassword();">
@@ -580,24 +568,6 @@ function setupLocations(){
     });
   }
 
-  ["custArea","custService"].forEach(id=>{
-    if($(id)) {
-      $(id).addEventListener("change", ()=>{
-        selectedTechUid = "";
-        if($("custTech")) $("custTech").value = "";
-        renderMatchingTechs();
-      });
-    }
-  });
-
-  if($("custNeighborhood")) {
-    $("custNeighborhood").addEventListener("input", ()=>{
-      selectedTechUid = "";
-      if($("custTech")) $("custTech").value = "";
-      renderMatchingTechs();
-    });
-  }
-
   const savedCity = localStorage.getItem("sakhrCustomerCity") || "";
   const savedArea = localStorage.getItem("sakhrCustomerArea") || "";
   if(savedCity) {
@@ -631,7 +601,6 @@ function onInitialCityChanged() {
 }
 
 function showCustomerLocationModalIfNeeded() {
-  // المدير أو الفني لا تظهر لهم نافذة تحديد موقع الزبون
   if(currentRole === "admin" || currentRole === "technician" || currentRole === "suspended") return;
   const savedCity = localStorage.getItem("sakhrCustomerCity");
   const savedArea = localStorage.getItem("sakhrCustomerArea");
@@ -715,7 +684,6 @@ function renderServices(){
   };
   renderTo("allServicesPage");
   fillSelect("regService");
-  fillSelect("custService");
   fillSelect("quickServiceSelect");
 }
 
@@ -796,6 +764,7 @@ async function syncPublicTechnician(uid, p){
     name: p.name||"", phone: p.phone||"", city: p.city||"", area: p.area||"",
     neighborhood: p.neighborhood||"", service: p.service||"", bio: p.bio||"",
     photoURL: p.photoURL||"", approved: p.approved!==false,
+    available: p.available !== false,
     subscriptionStatus: p.subscriptionStatus||"غير فعال",
     freeJobsUsed: Number(p.freeJobsUsed)||0,
     ratingSum: Number(p.ratingSum)||0, ratingCount: Number(p.ratingCount)||0,
@@ -830,7 +799,7 @@ async function registerTechWithPassword(){
 
     const profile = {
       name, phone, city, area, neighborhood, service, bio, photoURL,
-      approved: true, subscriptionStatus: "غير فعال", freeJobsUsed: 0, completedJobs: 0,
+      approved: true, available: true, subscriptionStatus: "غير فعال", freeJobsUsed: 0, completedJobs: 0,
       ratingSum: 0, ratingCount: 0, ratingAverage: 0, createdAt: Date.now()
     };
 
@@ -919,7 +888,7 @@ async function loadPublicTechs(){
     const s = await db.ref("publicTechnicians").once("value");
     const data = s.val() || {};
     publicTechs = Object.entries(data).map(([uid,t])=>({...t,uid})).filter(t=>t.approved !== false);
-    renderPublicTechs(); renderMatchingTechs();
+    renderPublicTechs();
   }catch(e){}
 }
 
@@ -945,261 +914,85 @@ function renderPublicTechs(){
     el.innerHTML = '<div class="empty">لا يوجد فنيون مسجلون متاحون في قضائك حالياً.</div>';
     return;
   }
-  el.innerHTML = list.map(t=>`
-  <div class="card tech-card">
-    <div style="position:absolute;top:12px;left:12px;" title="فني متاح"><span class="online-dot"></span></div>
-    ${techPhoto(t)}
-    <div style="text-align:center">
-      <h4>${esc(t.name)}</h4>
-      <span class="badge">${esc(t.service)}</span>
-    </div>
-    <div style="text-align:center">
-      <div class="stars">${"★".repeat(Math.round(t.ratingAverage||0))}${"☆".repeat(5-Math.round(t.ratingAverage||0))}</div>
-      <div class="muted">${Number(t.ratingAverage||0).toFixed(1)} من 5 (${Number(t.ratingCount||0)} تقييم)</div>
-    </div>
-    <div class="muted" style="text-align:center">📍 ${esc(t.city)} — ${esc(t.area)} ${esc(t.neighborhood)}</div>
-    <p style="font-size:12px;color:var(--text-main);margin:0;line-height:1.4">${esc(t.bio||"فني معتمد في منصة صخر")}</p>
-    <button class="btn primary" onclick="chooseServiceDirect('${esc(t.service)}','${esc(t.uid)}')">اطلب هذا الفني مباشرة</button>
-  </div>`).join("");
-}
-
-function renderMatchingTechs(){
-  const box = $("matchingTechs");
-  if(!box) return;
-  const city = $("custCity")?.value || "";
-  const area = $("custArea")?.value || "";
-  const neighborhood = $("custNeighborhood")?.value.trim().toLowerCase() || "";
-  const service = $("custService")?.value || "";
-
-  if(!city || !service){
-    box.innerHTML = '<div class="empty">اختر المحافظة ونوع الخدمة لعرض الفنيين.</div>';
-    return;
-  }
-  if(city !== "ALL" && !area && currentRole !== "admin"){
-    box.innerHTML = '<div class="empty">اختر القضاء لتحديد الفنيين القريبين في قضائك.</div>';
-    return;
-  }
-
-  const matches = publicTechs.filter(t => {
-    if(currentUser && currentUser.uid === t.uid) return false;
-    const loc = currentRole === "admin" || city === "ALL" || (t.city === city && (!area || t.area === area));
-    const hood = !neighborhood || String(t.neighborhood||"").toLowerCase().includes(neighborhood);
-    const subActive = t.subscriptionStatus === "فعال";
-    const freeUsed = Number(t.freeJobsUsed) || 0;
-    return loc && hood && t.service === service && t.approved !== false && (subActive || freeUsed < 3);
-  });
-
-  if(!matches.length){
-    box.innerHTML = '<div class="empty">لا يوجد فني متاح بهذا الاختصاص حالياً.</div>';
-    return;
-  }
-
-  box.innerHTML = matches.map(t=>`
-  <div class="tech-choice ${selectedTechUid===t.uid?"selected":""}" onclick="selectTechnician('${esc(t.uid)}')">
-    <div style="display:flex;gap:10px;align-items:center">
-      ${techPhoto(t,true)}
-      <div style="flex:1">
-        <h4 style="margin:0"><span class="online-dot"></span> ${esc(t.name)}</h4>
-        <div style="font-size:11px" class="muted">📍 ${esc(t.city)} / ${esc(t.area)}</div>
-        <div class="stars" style="font-size:13px">${"★".repeat(Math.round(t.ratingAverage||0))}${"☆".repeat(5-Math.round(t.ratingAverage||0))}</div>
+  el.innerHTML = list.map(t=>{
+    const isAvail = t.available !== false;
+    const dotClass = isAvail ? "online-dot" : "offline-dot";
+    const statusText = isAvail ? "متاح" : "غير متاح";
+    return `
+    <div class="card tech-card">
+      <div style="position:absolute;top:12px;left:12px;" title="${statusText}"><span class="${dotClass}"></span> <span style="font-size:11px;font-weight:700;color:${isAvail?'var(--online-green)':'var(--offline-gray)'}">${statusText}</span></div>
+      ${techPhoto(t)}
+      <div style="text-align:center">
+        <h4>${esc(t.name)}</h4>
+        <span class="badge">${esc(t.service)}</span>
       </div>
-    </div>
-  </div>`).join("");
+      <div style="text-align:center">
+        <div class="stars">${"★".repeat(Math.round(t.ratingAverage||0))}${"☆".repeat(5-Math.round(t.ratingAverage||0))}</div>
+        <div class="muted">${Number(t.ratingAverage||0).toFixed(1)} من 5 (${Number(t.ratingCount||0)} تقييم)</div>
+      </div>
+      <div class="muted" style="text-align:center">📍 ${esc(t.city)} — ${esc(t.area)} ${esc(t.neighborhood)}</div>
+      <p style="font-size:12px;color:var(--text-main);margin:0;line-height:1.4">${esc(t.bio||"فني معتمد في منصة صخر")}</p>
+      <button class="btn primary" onclick="chooseServiceDirect('${esc(t.service)}','${esc(t.uid)}')">اطلب هذا الفني مباشرة</button>
+    </div>`;
+  }).join("");
 }
 
-let selectedTechUid = "";
-function selectTechnician(uid){
-  selectedTechUid = uid;
-  if($("custTech")) $("custTech").value = uid;
-  renderMatchingTechs();
-}
-
-async function openRequest(service="", preselectedUid=""){
-  // إذا كان المستخدم هو المدير، استثناء نافذة موقع الزبون وفتح نافذة الطلب مباشرة بدون قيود
+// دالة طلب الفني مباشرة: إذا كان المدير يطلب فنياً، يتم إرسال الطلب فوراً وتظهر نافذة التأكيد البسيطة بدون لغوة
+async function chooseServiceDirect(service, techUid){
   if(currentRole === "admin") {
-    if($("requestMessage")) $("requestMessage").innerHTML = "";
-    if($("customerTrackingArea")) $("customerTrackingArea").innerHTML = "";
-    if($("custService")) $("custService").value = service || SERVICES[0];
-    selectedTechUid = preselectedUid || "";
-    if($("custTech")) $("custTech").value = selectedTechUid;
-    if($("custCity")) {
-      $("custCity").innerHTML = '<option value="ALL">كل المحافظات</option>' + Object.keys(DISTRICTS).map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("");
-      $("custCity").value = "ALL";
-      setDistricts("custArea", "ALL");
+    try {
+      const tech = publicTechs.find(t => t.uid === techUid);
+      if(!tech) throw new Error("الفني غير موجود.");
+      
+      const custId = "admin_manager";
+      const id = db.ref("requests/"+custId).push().key;
+      const now = Date.now();
+      
+      const record = {
+        id, uid: custId, name: "الإدارة (المدير)", phone: "07805017009", city: "كل المحافظات",
+        area: "كل الأقضية", neighborhood: "", service, problem: "طلب مباشر من إدارة المنصة",
+        preferredTech: techUid, assignedTech: techUid, assignedTechName: tech.name,
+        status: "بانتظار رد الفني", createdAt: now, countedAsCompleted: false, rated: false
+      };
+
+      const job = { id, customerUid: custId, customerName: "الإدارة (المدير)", customerPhone: "07805017009", service, city: "كل المحافظات", area: "كل الأقضية", neighborhood: "", problem: "طلب مباشر من إدارة المنصة", status: "بانتظار رد الفني", createdAt: now };
+
+      const u = {};
+      u["requests/"+custId+"/"+id] = record;
+      u["technicianJobs/"+techUid+"/"+id] = job;
+      await db.ref().update(u);
+
+      $("adminDirectRequestText").innerHTML = "تم إرسال الطلب إلى الفني (" + esc(tech.name) + ") بنجاح.<br>الطلب قيد التنفيذ، بانتظار موافقة الفني.";
+      $("adminDirectRequestModal").classList.remove("hidden");
+    } catch(e) {
+      alert("خطأ: " + e.message);
     }
-    if($("requestModal")) $("requestModal").classList.remove("hidden");
-    await loadPublicTechs();
-    renderMatchingTechs();
-    return;
-  }
-
-  const savedCity = chosenCustomerCity || localStorage.getItem("sakhrCustomerCity") || "";
-  const savedArea = chosenCustomerArea || localStorage.getItem("sakhrCustomerArea") || "";
-  
-  if(!savedCity || !savedArea){
-    pendingService = service;
-    $("customerLocationModal").classList.remove("hidden");
-    return;
-  }
-
-  chosenCustomerCity = savedCity;
-  chosenCustomerArea = savedArea;
-  if($("custCity")) $("custCity").value = savedCity;
-  setDistricts("custArea", savedCity);
-  if($("custArea")) $("custArea").value = savedArea;
-
-  if($("requestMessage")) $("requestMessage").innerHTML = "";
-  if($("customerTrackingArea")) $("customerTrackingArea").innerHTML = "";
-  if($("custService")) $("custService").value = service || SERVICES[0];
-  selectedTechUid = preselectedUid || "";
-  if($("custTech")) $("custTech").value = selectedTechUid;
-  if($("requestModal")) $("requestModal").classList.remove("hidden");
-  await loadPublicTechs();
-  renderMatchingTechs();
-}
-
-async function chooseServiceDirect(service, techUid){ await openRequest(service, techUid); }
-function chooseService(s){ openRequest(s); }
-
-async function submitRequest(){
-  try{
-    const name = $("custName")?.value.trim() || "";
-    const phone = $("custPhone")?.value.trim() || "";
-    const city = $("custCity")?.value || "";
-    const area = $("custArea")?.value || "";
-    const neighborhood = $("custNeighborhood")?.value.trim() || "";
-    const service = $("custService")?.value || "";
-    const problem = $("custProblem")?.value.trim() || "";
-    const techUid = $("custTech")?.value || "";
-
-    if(!name || !phone || !city || (city !== "ALL" && !area) || !service || !problem)
-      return msg("requestMessage", "أكمل كافة الحقول المطلوبة.", "error");
-    if(!techUid)
-      return msg("requestMessage", "اختر فنياً من القائمة قبل الإرسال.", "error");
-
-    const tech = publicTechs.find(t=>t.uid === techUid);
-    if(!tech) throw new Error("الفني غير متاح.");
-
-    const custId = currentRole === "admin" ? "admin_manager" : ("cust_" + Date.now());
-    const id = db.ref("requests/"+custId).push().key;
-    const now = Date.now();
-    
-    const record = {
-      id, uid: custId, name, phone, city: city==="ALL" ? "كل المحافظات" : city,
-      area: area || "كل الأقضية", neighborhood, service, problem,
-      preferredTech: techUid, assignedTech: techUid, assignedTechName: tech.name,
-      status: "بانتظار رد الفني", createdAt: now, countedAsCompleted: false, rated: false
-    };
-
-    const job = { id, customerUid: custId, customerName: name, customerPhone: phone, service, city: record.city, area: record.area, neighborhood, problem, status: "بانتظار رد الفني", createdAt: now };
-
-    const u = {};
-    u["requests/"+custId+"/"+id] = record;
-    u["technicianJobs/"+techUid+"/"+id] = job;
-    await db.ref().update(u);
-
-    if(currentRole === "admin") {
-      msg("requestMessage", "تم إرسال الطلب للفني بنجاح كمدير للنظام!", "success");
-    } else {
-      msg("requestMessage", "تم إرسال طلبك بنجاح! رقم الطلب: "+id, "success");
-      listenToCustomerOrderStatus(custId, id, tech.phone);
-    }
-  }catch(e){
-    msg("requestMessage", e.message, "error");
+  } else {
+    openRequest(service, techUid);
   }
 }
 
-function listenToCustomerOrderStatus(custId, reqId, techPhone) {
-  if(customerOrderStatusListener) customerOrderStatusListener.off();
-  customerOrderStatusListener = db.ref("requests/"+custId+"/"+reqId);
-  customerOrderStatusListener.on("value", snap => {
-    const req = snap.val();
-    if(!req) return;
-    const trackingArea = $("customerTrackingArea");
-    if(!trackingArea) return;
-
-    if(req.status === "مقبول من الفني") {
-      const cleanPhone = formatWhatsApp(req.assignedTechPhone || techPhone);
-      trackingArea.innerHTML = `
-       <div class="notice success" style="text-align:center;">
-        <b>🎉 وافق الفني على طلبك!</b><br>تواصل معه فوراً عبر الواتساب لتنسيق الموعد:
-        <div style="margin-top:10px;">
-         <a href="https://wa.me/${cleanPhone}?text=مرحباً، لقد قبلت طلبي لصيانة ${encodeURIComponent(req.service)} عبر منصة صخر" target="_blank" class="btn whatsapp-btn" style="width:100%;justify-content:center;">
-          💬 فتح محادثة الواتساب مع الفني
-         </a>
-        </div>
-       </div>`;
-    } else if(req.status === "مرفوض من الفني") {
-      trackingArea.innerHTML = `<div class="notice error" style="text-align:center;">عذراً، اعتذر الفني عن قبول الطلب حالياً. يرجى اختيار فني آخر.</div>`;
-    } else {
-      trackingArea.innerHTML = `<div class="notice" style="text-align:center;">⏳ حالة الطلب: بانتظار رد الفني المختار...</div>`;
-    }
-  });
-}
-
-async function submitReview(){
-  const name = $("reviewName").value.trim();
-  const stars = $("reviewStars").value;
-  const text = $("reviewText").value.trim();
-
-  if(!name || !text) return msg("reviewMessage", "املأ الاسم ورأيك بالملاحظة.", "error");
-
-  try{
-    const id = db.ref("reviews").push().key;
-    const rev = { id, name, stars: Number(stars), text, createdAt: Date.now() };
-    await db.ref("reviews/"+id).set(rev);
-    $("reviewName").value = "";
-    $("reviewText").value = "";
-    msg("reviewMessage", "تم إرسال تقييمك بنجاح في دردشة التقييمات!", "success");
-    loadReviews();
-  }catch(e){
-    msg("reviewMessage", e.message, "error");
+function chooseService(s){
+  if(currentRole === "admin") {
+    showSection("technicians");
+  } else {
+    openRequest(s);
   }
 }
 
-async function loadReviews(){
-  const el = $("reviewsList");
-  if(!el) return;
-  try{
-    const s = await db.ref("reviews").once("value");
-    const data = s.val() || {};
-    const list = Object.values(data).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
-    if(!list.length){
-      el.innerHTML = '<div class="empty">لا توجد تقييمات أو ملاحظات مضافة بعد. كن أول المشاركين!</div>';
-      return;
-    }
-    el.innerHTML = list.map(r=>`
-    <div class="list-item" style="background:#fff9ef;">
-     <div style="display:flex;justify-content:space-between;align-items:center">
-      <h4 style="margin:0;color:var(--burgundy)">${esc(r.name)}</h4>
-      <div class="stars">${"★".repeat(r.stars)}${"☆".repeat(5-r.stars)}</div>
-     </div>
-     <p style="margin:8px 0 0;font-size:13px;line-height:1.5;color:var(--text-main)">${esc(r.text)}</p>
-    </div>`).join("");
-  }catch(e){
-    el.innerHTML = '<div class="empty">تعذر تحميل التقييمات حالياً.</div>';
+async function toggleTechAvailability() {
+  if(!currentUser || !["technician","suspended"].includes(currentRole)) return;
+  const uid = currentUser.uid;
+  const newAvail = !(currentTech.available !== false);
+  try {
+    await db.ref("technicians/"+uid).update({ available: newAvail });
+    await db.ref("publicTechnicians/"+uid).update({ available: newAvail });
+    currentTech.available = newAvail;
+    renderTechAccount();
+    loadPublicTechs();
+  } catch(e) {
+    alert("خطأ: " + e.message);
   }
-}
-
-async function technicianDecision(id, decision){
-  if(!currentUser || currentRole !== "technician") return;
-  try{
-    const ref = db.ref("technicianJobs/"+currentUser.uid+"/"+id);
-    const snap = await ref.once("value");
-    const job = snap.val();
-    if(!job) return;
-
-    const newStatus = decision === "مقبول" ? "مقبول من الفني" : "مرفوض من الفني";
-    const u = {};
-    u["technicianJobs/"+currentUser.uid+"/"+id+"/status"] = newStatus;
-    u["requests/"+job.customerUid+"/"+id+"/status"] = newStatus;
-    if(decision === "مقبول"){
-      u["requests/"+job.customerUid+"/"+id+"/assignedTechPhone"] = currentTech.phone || "";
-    }
-    await db.ref().update(u);
-    await renderTechAccount();
-    alert(decision === "مقبول" ? "تم قبول الطلب." : "تم رفض الطلب.");
-  }catch(e){}
 }
 
 async function renderTechAccount(){
@@ -1211,14 +1004,26 @@ async function renderTechAccount(){
     if(!currentTech) return;
 
     if($("techSummary")) {
+      const isAvail = currentTech.available !== false;
+      const dotCls = isAvail ? "online-dot" : "offline-dot";
+      const statusLbl = isAvail ? "متاح لاستقبال الطلبات" : "غير متاح (مشغول / متوقف)";
       $("techSummary").innerHTML = `
       ${techPhoto(currentTech)}
       <div style="text-align:center">
-        <h3 style="margin:4px 0"><span class="online-dot"></span> ${esc(currentTech.name)}</h3>
+        <h3 style="margin:4px 0"><span class="${dotCls}"></span> ${esc(currentTech.name)}</h3>
+        <span style="font-size:12px; font-weight:800; color:${isAvail?'var(--online-green)':'var(--offline-gray)'}; display:block; margin:2px 0;">${statusLbl}</span>
         <span class="badge">${esc(currentTech.service)}</span>
         <div class="muted" style="margin-top:4px">📍 ${esc(currentTech.city)} / ${esc(currentTech.area)}</div>
         <div class="stars" style="margin-top:6px">${"★".repeat(Math.round(currentTech.ratingAverage||0))}${"☆".repeat(5-Math.round(currentTech.ratingAverage||0))}</div>
       </div>`;
+    }
+
+    const isAvailBtn = currentTech.available !== false;
+    const availBtn = $("toggleAvailableBtn");
+    if(availBtn) {
+      availBtn.innerText = isAvailBtn ? "🔴 إيقاف التواجد (تحويل إلى غير متاح)" : "🟢 تفعيل التواجد (تحويل إلى متاح)";
+      availBtn.className = isAvailBtn ? "btn danger" : "btn primary";
+      $("availabilityMsg").innerHTML = isAvailBtn ? "حالتك الحالية: <b>متاح</b> وتظهر للزبائن." : "حالتك الحالية: <b>غير متاح</b> ومخفي عن قوائم البحث.";
     }
 
     const subStatus = currentTech.subscriptionStatus || "غير فعال";
@@ -1319,7 +1124,6 @@ async function saveTechAccountProfile() {
   }
 }
 
-// الوظائف الخاصة بصلاحيات المدير الكاملة (حذف أي فني نهائياً، تفعيل الاشتراكات، عرض الهواتف والحسابات)
 async function toggleTechSubscription(techUid, currentStatus) {
   if(currentRole !== "admin") return;
   const newStatus = currentStatus === "فعال" ? "غير فعال" : "فعال";
@@ -1398,6 +1202,7 @@ function listenToAnnouncement() {
   });
 }
 
+// دالة تحميل بيانات المدير لتشمل كافة الفنيين المسجلين وتظهرهم بوضوح في لوحة التحكم
 async function loadAdminData(){
   if(currentRole !== "admin") return;
   try{
@@ -1453,6 +1258,30 @@ function renderAdmin(){
        <button class="btn danger" onclick="adminDeleteTechnician('${esc(t.uid)}','${esc(t.name)}')">حذف الفني نهائياً</button>
       </div>
     </div>`).join("") : '<div class="empty">لا يوجد فنيون مسجلون.</div>';
+  }
+}
+
+async function loadReviews(){
+  const el = $("reviewsList");
+  if(!el) return;
+  try{
+    const s = await db.ref("reviews").once("value");
+    const data = s.val() || {};
+    const list = Object.values(data).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+    if(!list.length){
+      el.innerHTML = '<div class="empty">لا توجد تقييمات أو ملاحظات مضافة بعد. كن أول المشاركين!</div>';
+      return;
+    }
+    el.innerHTML = list.map(r=>`
+    <div class="list-item" style="background:#fff9ef;">
+     <div style="display:flex;justify-content:space-between;align-items:center">
+      <h4 style="margin:0;color:var(--burgundy)">${esc(r.name)}</h4>
+      <div class="stars">${"★".repeat(r.stars)}${"☆".repeat(5-r.stars)}</div>
+     </div>
+     <p style="margin:8px 0 0;font-size:13px;line-height:1.5;color:var(--text-main)">${esc(r.text)}</p>
+    </div>`).join("");
+  }catch(e){
+    el.innerHTML = '<div class="empty">تعذر تحميل التقييمات حالياً.</div>';
   }
 }
 
