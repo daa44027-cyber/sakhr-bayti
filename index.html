@@ -1156,25 +1156,21 @@ async function renderTechAccount(){
       isInitialLoad = false;
 
       if($("techJobs")) {
-        $("techJobs").innerHTML = jobs.length
-        ? jobs.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0)).map(x=>`
-        <div class="list-item">
-          <h4>${esc(x.service)} — ${esc(x.status)}</h4>
-          <div class="muted">الزبون: <b>${esc(x.customerName||"")}</b> | الهاتف: <b>${esc(x.customerPhone||"")}</b></div>
-          <p style="margin:8px 0">${esc(x.problem)}</p>
-          ${x.status==="بانتظار رد الفني"?`
-          <div class="actions">
-           <button class="btn primary" onclick="technicianDecision('${esc(x.id)}','مقبول')">قبول الطلب</button>
-           <button class="btn danger" onclick="technicianDecision('${esc(x.id)}','مرفوض')">رفض</button>
-          </div>`:""}
-          ${x.status==="مقبول من الفني"?`
-          <div class="actions">
-           <a href="https://wa.me/${formatWhatsApp(x.customerPhone)}?text=مرحباً بك، أنا الفني من منصة صخر بخصوص طلب صيانة ${encodeURIComponent(x.service)}" target="_blank" class="btn whatsapp-btn">
-            💬 مراسلة الزبون عبر الواتساب
-           </a>
-          </div>`:""}
-        </div>`).join("")
-        : '<div class="empty">لا توجد طلبات جديدة.</div>';
+        if (!jobs.length) {
+          $("techJobs").innerHTML = '<div class="empty">لا توجد طلبات جديدة.</div>';
+        } else {
+          let jobsHtml = "";
+          jobs.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0)).forEach(x => {
+            let actionsHtml = "";
+            if(x.status === "بانتظار رد الفني") {
+              actionsHtml = '<div class="actions"><button class="btn primary" onclick="technicianDecision(\'' + esc(x.id) + '\',\'مقبول\')">قبول الطلب</button><button class="btn danger" onclick="technicianDecision(\'' + esc(x.id) + '\',\'مرفوض\')">رفض</button></div>';
+            } else if(x.status === "مقبول من الفني") {
+              actionsHtml = '<div class="actions"><a href="https://wa.me/' + formatWhatsApp(x.customerPhone) + '?text=مرحباً بك، أنا الفني من منصة صخر بخصوص طلب صيانة ' + encodeURIComponent(x.service) + '" target="_blank" class="btn whatsapp-btn">💬 مراسلة الزبون عبر الواتساب</a></div>';
+            }
+            jobsHtml += '<div class="list-item"><h4>' + esc(x.service) + ' — ' + esc(x.status) + '</h4><div class="muted">الزبون: <b>' + esc(x.customerName||"") + '</b> | الهاتف: <b>' + esc(x.customerPhone||"") + '</b></div><p style="margin:8px 0">' + esc(x.problem) + '</p>' + actionsHtml + '</div>';
+          });
+          $("techJobs").innerHTML = jobsHtml;
+        }
       }
     });
   }catch(e){}
