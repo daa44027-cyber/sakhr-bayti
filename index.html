@@ -33,7 +33,6 @@ body {
   min-height: 100vh;
 }
 
-/* العلامة المائية الخلفية بالاسم logo.png بدون إطار */
 body::before {
   content: "";
   position: fixed;
@@ -59,7 +58,6 @@ header, main, footer, .modal {
 button, input, select, textarea { font: inherit; }
 button { cursor: pointer; border: 0; }
 
-/* Header & Navigation - لوجو كبير وبارز بدون إطار دائري */
 header { background: var(--burgundy); padding: 12px 4%; display: flex; align-items: center; justify-content: space-between; gap: 15px; flex-wrap: wrap; border-bottom: 2px solid var(--gold); position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
 .brand { display: flex; align-items: center; gap: 10px; cursor: pointer; }
 .brand img { height: 85px; width: auto; object-fit: contain; border: none; border-radius: 0; filter: drop-shadow(0 3px 6px rgba(0,0,0,0.5)); }
@@ -67,7 +65,6 @@ nav { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
 nav button { color: #fff; background: rgba(255,255,255,0.1); padding: 8px 14px; border-radius: 20px; border: 1px solid rgba(255,195,41,0.3); font-size: 12px; font-weight: 700; transition: all .2s; }
 nav button:hover, nav button.primary-nav { background: var(--gold); color: var(--burgundy-dark); border-color: var(--gold); }
 
-/* Hero Banner */
 .hero-banner { background: linear-gradient(180deg, var(--burgundy), var(--burgundy-dark)); padding: 35px 4% 25px; text-align: center; position: relative; border-bottom: 3px solid var(--gold); box-shadow: inset 0 -10px 20px rgba(0,0,0,0.3); }
 .hero-banner h2 { font-size: 26px; margin: 0 0 5px; font-weight: 900; color: #fff; text-shadow: 0 2px 8px rgba(0,0,0,0.5); }
 .hero-banner .slogan { font-size: 32px; font-weight: 900; color: var(--gold); margin: 5px 0 10px; text-shadow: 0 3px 10px rgba(0,0,0,0.6); }
@@ -76,7 +73,6 @@ nav button:hover, nav button.primary-nav { background: var(--gold); color: var(-
 .cta-btn { background: linear-gradient(135deg, #ffdb57, #e99a12); color: var(--burgundy-dark); padding: 14px 28px; border-radius: 30px; font-weight: 900; font-size: 16px; border: 2px solid #fff; box-shadow: 0 6px 20px rgba(233,154,18,0.4); display: inline-flex; align-items: center; gap: 8px; text-decoration: none; transition: transform .2s; }
 .cta-btn:active { transform: scale(0.95); }
 
-/* Quick Search & Filter */
 .quick-search-box { background: rgba(255,255,255,0.95); padding: 12px; border-radius: 16px; display: flex; gap: 8px; max-width: 600px; margin: 20px auto 0; box-shadow: 0 10px 25px rgba(0,0,0,0.3); border: 2px solid var(--gold); }
 .quick-search-box select, .quick-search-box input { flex: 1; padding: 10px; border: 1px solid #d9b98e; border-radius: 10px; outline: none; background: #fff; color: var(--text-main); font-size: 13px; font-weight: 700; }
 .quick-search-box button { background: var(--burgundy); color: var(--gold); padding: 0 20px; border-radius: 10px; font-weight: 800; font-size: 13px; border: 1px solid var(--gold); }
@@ -84,7 +80,6 @@ nav button:hover, nav button.primary-nav { background: var(--gold); color: var(-
 .container { width: min(1100px, 92%); margin: 0 auto 40px; }
 .section-title { font-size: 20px; color: var(--gold); margin: 25px 0 15px; font-weight: 900; text-align: center; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
 
-/* Services Grid */
 .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 18px; }
 .service-card { background: linear-gradient(145deg, #d9822b, #8c251e); border: 2px solid var(--gold); border-radius: 20px; padding: 22px 15px; text-align: center; cursor: pointer; box-shadow: 0 8px 20px rgba(0,0,0,0.4); transition: transform .2s, box-shadow .2s; position: relative; overflow: hidden; }
 .service-card:hover { transform: translateY(-4px); box-shadow: 0 12px 25px rgba(255,195,41,0.3); }
@@ -93,12 +88,10 @@ nav button:hover, nav button.primary-nav { background: var(--gold); color: var(-
 .service-card h3 { font-size: 18px; margin: 5px 0 10px; color: #fff; font-weight: 900; text-shadow: 0 2px 4px rgba(0,0,0,0.4); }
 .service-card .arrow-badge { background: rgba(0,0,0,0.3); width: 30px; height: 30px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; color: var(--gold); font-size: 14px; border: 1px solid var(--gold); }
 
-/* Trust Footer Bar */
 .trust-bar { background: var(--burgundy-dark); border-top: 2px solid var(--gold); border-bottom: 2px solid var(--gold); padding: 15px 5%; display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap; gap: 15px; margin-top: 30px; text-align: center; }
 .trust-item { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 14px; color: var(--gold); }
 .trust-item span { font-size: 20px; }
 
-/* General Cards & Forms */
 .card { background: #fff; color: var(--text-main); border: 2px solid var(--gold); border-radius: 20px; padding: 22px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
 .btn { padding: 12px 18px; border-radius: 12px; font-weight: 900; display: inline-block; text-decoration: none; text-align: center; transition: all .2s; font-size: 14px; cursor: pointer; }
 .primary { background: var(--burgundy); color: var(--gold); border: 1px solid var(--gold); }
@@ -114,7 +107,6 @@ nav button:hover, nav button.primary-nav { background: var(--gold); color: var(-
 .field input, .field select, .field textarea { width: 100%; padding: 12px; border: 1px solid #d9b98e; border-radius: 12px; background: #fff9ef; outline: none; color: var(--text-main); font-size: 14px; font-weight: 700; }
 .field textarea { min-height: 90px; resize: vertical; }
 
-/* Password Field with Eye Toggle */
 .password-wrapper { position: relative; }
 .password-wrapper input { padding-left: 45px; }
 .toggle-password { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); background: transparent; border: none; cursor: pointer; font-size: 16px; color: var(--text-muted); }
@@ -133,10 +125,8 @@ nav button:hover, nav button.primary-nav { background: var(--gold); color: var(-
 .muted { color: var(--text-muted); font-size: 13px; font-weight: 600; }
 .empty { text-align: center; padding: 40px; color: var(--text-muted); background: #fff; border-radius: 16px; border: 2px dashed #d9b98e; font-weight: 700; }
 
-/* Online Status Indicator (الضوء الأخضر) */
 .online-dot { display: inline-block; width: 12px; height: 12px; background-color: var(--online-green); border-radius: 50%; border: 2px solid #fff; box-shadow: 0 0 4px var(--online-green); vertical-align: middle; margin-right: 5px; }
 
-/* Modals */
 .modal { position: fixed; inset: 0; background: rgba(53,19,35,0.85); backdrop-filter: blur(5px); display: flex; align-items: center; justify-content: center; padding: 15px; z-index: 1000; }
 .modal-box { background: #fff; color: var(--text-main); border-radius: 24px; padding: 24px; width: min(520px, 100%); max-height: 90vh; overflow: auto; box-shadow: 0 25px 50px rgba(0,0,0,0.5); border: 3px solid var(--gold); }
 .modal-head { display: flex; justify-content: space-between; align-items: center; color: var(--burgundy); margin-bottom: 15px; border-bottom: 2px solid #f3d08a; padding-bottom: 10px; }
@@ -223,7 +213,6 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  <div class="grid" id="publicTechList"><div class="empty">جارٍ تحميل الفنيين المتاحين...</div></div>
 </section>
 
-<!-- قسم دردشة تقييم الخدمات -->
 <section id="reviewsChat" class="container hidden">
  <h2 class="section-title">دردشة تقييم الخدمات</h2>
  <div class="card" style="max-width:700px;margin:0 auto 25px">
@@ -247,7 +236,6 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  <div id="reviewsList"><div class="empty">جارٍ تحميل التقييمات...</div></div>
 </section>
 
-<!-- قسم تسجيل الفني برقم الهاتف وكلمة السر الآمنة مع العين السحرية -->
 <section id="join" class="container hidden">
  <h2 class="section-title">انضم إلى شبكة فنيي صخر</h2>
  <div class="card" style="max-width:700px;margin:0 auto">
@@ -279,19 +267,16 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  </div>
 </section>
 
-<!-- لوحة تحكم الفني المرتبة والمختصرة مع إرشادات الاشتراك الإلكتروني -->
 <section id="techAccount" class="container hidden">
  <h2 class="section-title"><span class="online-dot" title="متصل الآن"></span> الملف الشخصي - لوحة تحكم الفني</h2>
  <div id="techAlertBox"></div>
  <div id="techSummary" class="card" style="margin-bottom:20px"></div>
  
- <!-- صندوق إرشادات الاشتراك وتجديد الحساب عبر زين كاش / الماستر الشخصي -->
  <div id="techSubscriptionCard" class="card" style="margin-bottom:20px; background:#fff9ef; border:2px solid var(--gold);">
   <h3 style="color:var(--burgundy); margin-top:0; font-weight:900;">💳 حالة الاشتراك والأعمال المجانية</h3>
   <div id="techSubDetails" style="font-size:14px; color:var(--text-main); line-height:1.8;"></div>
  </div>
 
- <!-- زر مرتب لفتح نافذة تعديل البروفايل -->
  <div style="text-align:center; margin-bottom:25px;">
   <button class="btn primary" style="padding: 12px 25px; font-size: 15px;" onclick="openTechEditModal()">⚙️ تعديل الملف الشخصي والمعلومات</button>
  </div>
@@ -323,7 +308,6 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  </div>
 </footer>
 
-<!-- Modals -->
 <div class="modal hidden" id="customerLocationModal">
  <div class="modal-box">
   <div class="modal-head"><h3>أهلاً بك في منصة صخر</h3><div class="close" onclick="closeModal('customerLocationModal')">✕</div></div>
@@ -340,7 +324,6 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  </div>
 </div>
 
-<!-- نافذة تعديل البروفايل الخاصة بالفني (منبثقة) -->
 <div class="modal hidden" id="techEditModal">
  <div class="modal-box">
   <div class="modal-head"><h3>تعديل الملف الشخصي والمعلومات</h3><div class="close" onclick="closeModal('techEditModal')">✕</div></div>
@@ -385,7 +368,6 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  </div>
 </div>
 
-<!-- نافذة تسجيل الدخول الآمنة -->
 <div class="modal hidden" id="loginModal">
  <div class="modal-box">
   <div class="modal-head"><h3>تسجيل الدخول الآمن</h3><div class="close" onclick="closeModal('loginModal')">✕</div></div>
@@ -454,13 +436,11 @@ let auth=null,db=null,storage=null,currentUser=null,currentRole="guest",currentT
 let publicTechs=[],requests=[],technicians=[];
 let chosenCustomerCity="",pendingService=null;
 let techJobsListener=null, customerOrderStatusListener=null;
-let activeRequestId = null;
 
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const msg=(id,text,type="notice")=>{const el=$(id);if(el)el.innerHTML='<div class="notice '+type+'">'+esc(text)+'</div>'};
 
-// دالة تنسيق أرقام الواتساب دولياً (إزالة الصفر وإضافة رمز العراق 964)
 function formatWhatsApp(phone) {
   let clean = (phone || "").replace(/\D/g, '');
   if (clean.startsWith('0')) {
@@ -682,7 +662,9 @@ function initFirebase(){
   storage=firebase.storage();
   auth.onAuthStateChanged(onAuthChanged);
   loadPublicTechs();
- }catch(e){console.error(e);}
+ }catch(e){
+  console.log("Firebase Init Notice:", e);
+ }
 }
 
 async function resolveRole(user){
@@ -704,7 +686,7 @@ async function onAuthChanged(user){
  if(techJobsListener) { techJobsListener.off(); techJobsListener=null; }
  if(!user){ 
   updateNavAuthButton();
-  try{await auth.signInAnonymously()}catch(e){} 
+  try{ await auth.signInAnonymously(); }catch(e){} 
   return; 
  }
 
@@ -924,7 +906,6 @@ function renderMatchingTechs(){
 
  const matches=publicTechs.filter(t=>{
   if(currentUser && currentUser.uid === t.uid) return false;
-  
   const loc=city==="ALL"||(t.city===city&&(!area||t.area===area));
   const hood=!neighborhood||String(t.neighborhood||"").toLowerCase().includes(neighborhood);
   const subActive=t.subscriptionStatus==="فعال";
@@ -1002,7 +983,6 @@ async function submitRequest(){
 
   const custId = "cust_" + Date.now();
   const id=db.ref("requests/"+custId).push().key;
-  activeRequestId = id;
   const now=Date.now();
   
   const record={
@@ -1020,7 +1000,6 @@ async function submitRequest(){
   await db.ref().update(u);
 
   msg("requestMessage","تم إرسال طلبك بنجاح! رقم الطلب: "+id,"success");
-  
   listenToCustomerOrderStatus(custId, id, tech.phone);
  }catch(e){
   msg("requestMessage",e.message,"error");
@@ -1055,7 +1034,6 @@ function listenToCustomerOrderStatus(custId, reqId, techPhone) {
   });
 }
 
-/* وظائف دردشة تقييم الخدمات */
 async function submitReview(){
  const name=$("reviewName").value.trim();
  const stars=$("reviewStars").value;
@@ -1140,7 +1118,6 @@ async function renderTechAccount(){
    </div>`;
   }
 
-  // عرض تفاصيل الاشتراك والأعمال المجانية وإرشادات الدفع (زين كاش / الماستر) للفني
   const subStatus = currentTech.subscriptionStatus || "غير فعال";
   const freeUsed = Number(currentTech.freeJobsUsed || 0);
   if($("techSubDetails")) {
@@ -1150,7 +1127,7 @@ async function renderTechAccount(){
     ${subStatus !== "فعال" && freeUsed >= 3 ? `
      <div class="notice error" style="margin-top:10px; font-size:13px;">
       ⚠️ لقد استنفذت أعمالك المجانية الـ 3. لاستمرار استقبال طلبات الزبائن بلا حدود، يرجى تحويل الاشتراك عبر <b>زين كاش</b> أو <b>الماستر الشخصي</b> إلى رقم الإدارة:
-      <br><b style="font-size:15px; color:var(--burgundy);">07805017009</b> (ثم أرسل لقطة écran الإيصال للإدارة عبر الواتساب للتفعيل الفوري).
+      <br><b style="font-size:15px; color:var(--burgundy);">07805017009</b> (ثم أرسل لقطة إيصال للإدارة عبر الواتساب للتفعيل الفوري).
      </div>
     ` : `
      <div class="notice" style="margin-top:10px; font-size:13px;">
@@ -1312,6 +1289,7 @@ function renderAdmin(){
  }
 }
 
+// التشغيل المباشر الآمن لمنع أي تعليق بالأزرار
 setupLocations();
 renderServices();
 initFirebase();
