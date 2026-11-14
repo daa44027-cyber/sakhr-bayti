@@ -216,7 +216,7 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
     <option value="ALL">كل المحافظات</option>
    </select>
    <select id="quickServiceSelect">
-    <option value="">اختر الاختصاص المطللوب</option>
+    <option value="">اختر الاختصاص المطلوب</option>
    </select>
    <button onclick="executeQuickSearch()">ابحث</button>
   </div>
@@ -329,13 +329,6 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
 
 <section id="admin" class="container hidden">
  <h2 class="section-title">الملف الشخصي - لوحة إدارة منصة صخر</h2>
- <div class="card" style="margin-bottom:20px; background:#fff9ef; border:2px solid var(--gold);">
-  <h3 style="color:var(--burgundy); margin-top:0; font-size:16px; font-weight:900;">📢 تعديل الشريط الإعلاني العام</h3>
-  <div class="field"><label>نص الإعلان الذي يظهر في الواجهة الرئيسية للجميع</label><input id="adminAnnouncementInput" placeholder="اكتب النص الإعلاني هنا..."></div>
-  <button class="btn primary" onclick="saveAdminAnnouncement()">تحديث الشريط الإعلاني</button>
-  <div id="adminAnnouncementMsg"></div>
- </div>
-
  <div class="services-grid" id="adminStats" style="margin-bottom:20px"></div>
  <hr style="border-color:#d9b98e">
  <h3 class="section-title" style="font-size:16px;color:#fff">إدارة طلبات الزبائن (مع تفاصيل الهواتف والحسابات)</h3>
@@ -343,6 +336,15 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  <hr style="border-color:#d9b98e">
  <h3 class="section-title" style="font-size:16px;color:#fff">إدارة الفنيين والمشتركين (حذف نهائي / عرض الأرقام / الاشتراكات)</h3>
  <div id="adminTechs"></div>
+
+ <!-- حقل تعديل الشريط الإعلاني العام أصبح في نهاية صفحة المدير تماماً مثل ما طلبت -->
+ <div class="card" style="margin-top:25px; background:#fff9ef; border:2px solid var(--gold);">
+  <h3 style="color:var(--burgundy); margin-top:0; font-size:16px; font-weight:900;">📢 تعديل الشريط الإعلاني العام</h3>
+  <div class="field"><label>نص الإعلان الذي يظهر في الواجهة الرئيسية للجميع</label><input id="adminAnnouncementInput" placeholder="اكتب النص الإعلاني هنا..."></div>
+  <button class="btn primary" onclick="saveAdminAnnouncement()">تحديث الشريط الإعلاني</button>
+  <div id="adminAnnouncementMsg"></div>
+ </div>
+
  <button class="btn danger" style="margin-top:25px" onclick="logout()">تسجيل الخروج كمدير</button>
 </section>
 </main>
@@ -398,7 +400,7 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  </div>
 </div>
 
-<!-- نافذة المحافظة والقضاء الإجبارية عند أول دخول -->
+<!-- نافذة المحافظة والقضاء الإجبارية عند أول دخول (تظهر فوراً بعد قبول الشروط) -->
 <div class="modal hidden" id="customerLocationModal">
  <div class="modal-box">
   <div class="modal-head"><h3>تحديد موقعك الجغرافي</h3></div>
@@ -664,7 +666,7 @@ function onInitialCityChanged() {
   setDistricts("initialCustomerArea", city);
 }
 
-// تدقيق وتفعيل نافذة الشروط والموقع عند أول دخول للزبون
+// دالة تدقيق وتفعيل نافذة الشروط ثم نافذة المحافظة والقضاء بشكل متسلسل ودقيق
 function checkInitialStartupModals() {
   if(currentRole === "admin" || currentRole === "technician" || currentRole === "suspended") return;
   const termsAccepted = localStorage.getItem("sakhrTermsAccepted");
@@ -685,7 +687,15 @@ function checkInitialStartupModals() {
 function acceptTerms() {
   localStorage.setItem("sakhrTermsAccepted", "true");
   closeModal("termsModal");
-  checkInitialStartupModals();
+  // فور قبول الشروط، تظهر نافذة تحديد المحافظة والقضاء بشكل متسلسل
+  setTimeout(() => {
+    const savedCity = localStorage.getItem("sakhrCustomerCity");
+    const savedArea = localStorage.getItem("sakhrCustomerArea");
+    if(!savedCity || !savedArea) {
+      $("initialLocationMessage").innerHTML = "";
+      $("customerLocationModal").classList.remove("hidden");
+    }
+  }, 200);
 }
 
 function confirmCustomerLocation(){
@@ -745,7 +755,9 @@ function renderServices(){
   };
   renderTo("allServicesPage");
   fillSelect("regService");
-  fillSelect("quickServiceSelect");
+  if($("quickServiceSelect")) {
+    $("quickServiceSelect").innerHTML = '<option value="">اختر الاختصاص المطلوب</option>' + SERVICES.map(s=>`<option value="${esc(s)}">${esc(s)}</option>`).join("");
+  }
 }
 
 function initFirebase(){
@@ -964,16 +976,21 @@ function renderPublicTechs(){
   if(!el) return;
   const userCity = chosenCustomerCity || "";
   const userArea = chosenCustomerArea || "";
+  const selectedService = $("quickServiceSelect") ? $("quickServiceSelect").value : "";
 
   const list = publicTechs.filter(t => {
     if(currentUser && currentUser.uid === t.uid) return false;
     if(currentRole === "admin") return true; 
+    
+    // فلترة الاختصاص بدقة تامة بناءً على اختيار الزبون
+    if(selectedService && t.service !== selectedService) return false;
+
     if(!userCity || userCity === "ALL") return true;
     return t.city === userCity && (!userArea || t.area === userArea);
   });
 
   if(!list.length){
-    el.innerHTML = '<div class="empty">لا يوجد فنيون مسجلون متاحون في قضائك حالياً.</div>';
+    el.innerHTML = '<div class="empty">لا يوجد فنيون مسجلون مطابقون لبحثك في هذه المنطقة حالياً.</div>';
     return;
   }
   el.innerHTML = list.map(t=>{
