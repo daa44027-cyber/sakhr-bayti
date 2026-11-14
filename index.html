@@ -210,13 +210,10 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
   
   <button class="cta-btn" onclick="showSection('technicians')">🛠️ اطلب خدمتك الآن</button>
 
+  <!-- تم إزالة خانة المحافظة من هنا وبقي الاختصاص فقط كما طلبت يا أبو عباس -->
   <div class="quick-search-box">
-   <select id="quickCitySelect" onchange="quickCityChanged()">
-    <option value="">اختر المحافظة</option>
-    <option value="ALL">كل المحافظات</option>
-   </select>
    <select id="quickServiceSelect">
-    <option value="">اختر الاختصاص المطلوب</option>
+    <option value="">اختر الاختصاص المطللوب</option>
    </select>
    <button onclick="executeQuickSearch()">ابحث</button>
   </div>
@@ -241,7 +238,7 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
 </section>
 
 <section id="technicians" class="container hidden">
- <h2 class="section-title">الفنيون المعتمدون والمتاحون</h2>
+ <h2 class="section-title">الفنيون المعتمدون والمتاحون في منطقتك</h2>
  <div class="techs-grid" id="publicTechList"><div class="empty">جارٍ تحميل الفنيين المتاحين...</div></div>
 </section>
 
@@ -285,6 +282,10 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
     </div>
    </div>
    <div class="field"><label>الاختصاص الرئيسي</label><select id="regService"></select></div>
+  </div>
+  <div class="row">
+   <div class="field"><label>المحافظة</label><select id="regCity" onchange="setDistricts('regArea', this.value)"></select></div>
+   <div class="field"><label>القضاء</label><select id="regArea"><option value="">اختر القضاء</option></select></div>
   </div>
   <div class="row">
    <div class="field"><label>المنطقة أو الحي</label><input id="regNeighborhood" placeholder="مثال: البندقية"></div>
@@ -331,13 +332,16 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  <h2 class="section-title">الملف الشخصي - لوحة إدارة منصة صخر</h2>
  <div class="services-grid" id="adminStats" style="margin-bottom:20px"></div>
  <hr style="border-color:#d9b98e">
- <h3 class="section-title" style="font-size:16px;color:#fff">إدارة طلبات الزبائن (مع تفاصيل الهواتف والحسابات)</h3>
+ <h3 class="section-title" style="font-size:16px;color:#fff">إدارة طلبات الزبائن (مع تفاصيل الهواتف الكاملة)</h3>
  <div id="adminRequests"></div>
+ <hr style="border-color:#d9b98e">
+ <h3 class="section-title" style="font-size:16px;color:#fff">إدارة طلبات إعادة تعيين كلمات المرور (النسيان)</h3>
+ <div id="adminPasswordRequests"><div class="empty">لا توجد طلبات استرجاع رمز حالياً.</div></div>
  <hr style="border-color:#d9b98e">
  <h3 class="section-title" style="font-size:16px;color:#fff">إدارة الفنيين والمشتركين (حذف نهائي / عرض الأرقام / الاشتراكات)</h3>
  <div id="adminTechs"></div>
 
- <!-- حقل تعديل الشريط الإعلاني العام أصبح في نهاية صفحة المدير تماماً مثل ما طلبت -->
+ <!-- حقل تعديل الشريط الإعلاني العام في نهاية صفحة المدير -->
  <div class="card" style="margin-top:25px; background:#fff9ef; border:2px solid var(--gold);">
   <h3 style="color:var(--burgundy); margin-top:0; font-size:16px; font-weight:900;">📢 تعديل الشريط الإعلاني العام</h3>
   <div class="field"><label>نص الإعلان الذي يظهر في الواجهة الرئيسية للجميع</label><input id="adminAnnouncementInput" placeholder="اكتب النص الإعلاني هنا..."></div>
@@ -365,12 +369,12 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  </div>
 </div>
 
-<!-- نافذة تأكيد الحذف المخصصة والمطابقة للتصميم -->
+<!-- نافذة تأكيد الحذف المخصصة -->
 <div class="modal hidden" id="customConfirmModal">
  <div class="modal-box" style="text-align: center;">
   <div class="modal-head"><h3>تأكيد العمل</h3><div class="close" onclick="closeModal('customConfirmModal')">✕</div></div>
   <div style="font-size: 15px; font-weight: 800; color: var(--burgundy); margin: 20px 0;" id="customConfirmText">
-   هل أنت متأكد من حذف هذا الطلب نهائياً؟
+   هل أنت متأكد من حذف هذا العنصر نهائياً؟
   </div>
   <div style="display: flex; gap: 10px;">
    <button class="btn danger" id="confirmYesBtn" style="flex: 1;">نعم، متأكد</button>
@@ -400,44 +404,35 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  </div>
 </div>
 
-<!-- نافذة المحافظة والقضاء الإجبارية عند أول دخول (تظهر فوراً بعد قبول الشروط) -->
+<!-- نافذة تسجيل دخول وتحديد موقع الزبون الموحدة عند أول دخول -->
 <div class="modal hidden" id="customerLocationModal">
  <div class="modal-box">
-  <div class="modal-head"><h3>تحديد موقعك الجغرافي</h3></div>
-  <div class="notice">اختر محافظتك والقضاء الخاص بك حتى نعرض لك الفنيين المتواجدين في منطقتك حصراً.</div>
+  <div class="modal-head"><h3>تسجيل حساب الزبون وتحديد الموقع</h3></div>
+  <div class="notice">أدخل بياناتك الشخصية وموقعك الجغرافي لنتمكن من عرض الفنيين المختصين المتواجدين في قضائك حصراً.</div>
+  <div class="field"><label>الاسم الكامل</label><input id="custInitName" placeholder="مثال: أحمد كريم"></div>
+  <div class="field"><label>رقم الهاتف</label><input id="custInitPhone" inputmode="tel" placeholder="07800000000"></div>
   <div class="field">
-   <label>المحافظة</label>
-   <select id="initialCustomerCity" onchange="onInitialCityChanged()">
-    <option value="">اختر محافظتك</option>
-    <option value="ALL">البحث في جميع المحافظات</option>
-   </select>
+   <label>كلمة المرور (الباسورد)</label>
+   <div class="password-wrapper">
+    <input id="custInitPassword" type="password" placeholder="6 أحرف أو أرقام على الأقل">
+    <button type="button" class="toggle-password" onclick="togglePassword('custInitPassword', this)">👁️</button>
+   </div>
   </div>
-  <div class="field">
-   <label>القضاء</label>
-   <select id="initialCustomerArea" disabled>
-    <option value="">اختر المحافظة أولاً</option>
-   </select>
+  <div class="row">
+   <div class="field"><label>المحافظة</label><select id="initialCustomerCity" onchange="onInitialCityChanged()"></select></div>
+   <div class="field"><label>القضاء</label><select id="initialCustomerArea" disabled><option value="">اختر المحافظة أولاً</option></select></div>
   </div>
-  <button class="btn primary" style="width:100%; margin-top:10px;" onclick="confirmCustomerLocation()">تأكيد والمتابعة</button>
+  <button class="btn primary" style="width:100%; margin-top:10px;" onclick="confirmCustomerOnboarding()">حفظ الدخول والمتابعة</button>
   <div id="initialLocationMessage"></div>
  </div>
 </div>
 
-<!-- نافذة طلب الفني المبسطة للزبون (اسم، هاتف، باسورد، وملاحظة) -->
+<!-- نافذة طلب الفني المبسطة للزبون -->
 <div class="modal hidden" id="customerOrderModal">
  <div class="modal-box">
   <div class="modal-head"><h3 id="orderModalTitle">طلب الفني المعتمد</h3><div class="close" onclick="closeModal('customerOrderModal')">✕</div></div>
-  <div class="notice">أدخل بياناتك الشخصية وكلمة المرور (لتسجيل حسابك الآمن) مع تفاصيل المشكلة لإرسال الطلب للفني مباشرة.</div>
-  <div class="field"><label>الاسم الكامل</label><input id="custOrderName" placeholder="مثال: أحمد كريم"></div>
-  <div class="field"><label>رقم الهاتف</label><input id="custOrderPhone" inputmode="tel" placeholder="07800000000"></div>
-  <div class="field">
-   <label>كلمة المرور (الباسورد)</label>
-   <div class="password-wrapper">
-    <input id="custOrderPassword" type="password" placeholder="6 أحرف أو أرقام على الأقل">
-    <button type="button" class="toggle-password" onclick="togglePassword('custOrderPassword', this)">👁️</button>
-   </div>
-  </div>
-  <div class="field"><label>الملاحظة أو تفاصيل المشكلة</label><textarea id="custOrderProblem" placeholder="اكتب تفاصيل العطل أو المشكلة هنا..."></textarea></div>
+  <div class="notice">اكتب تفاصيل العطل أو المشكلة لإرسال الطلب إلى الفني مباشرة.</div>
+  <div class="field"><label>الملاحظة أو تفاصيل المشكلة</label><textarea id="custOrderProblem" placeholder="اكتب تفاصيل العطل هنا..."></textarea></div>
   <button class="btn primary" style="width:100%; margin-top:10px;" onclick="submitCustomerOrder()">إرسال الطلب إلى الفني</button>
   <div id="custOrderMessage"></div>
  </div>
@@ -474,12 +469,13 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  </div>
 </div>
 
+<!-- نافذة تسجيل الدخول الآمن -->
 <div class="modal hidden" id="loginModal">
  <div class="modal-box">
   <form onsubmit="event.preventDefault(); loginWithPhonePassword();">
    <div class="modal-head"><h3>تسجيل الدخول الآمن</h3><div class="close" onclick="closeModal('loginModal')">✕</div></div>
    <div class="notice">أدخل رقم هاتفك (أو إيميل الإدارة) وكلمة المرور للمتابعة.</div>
-   <div class="field"><label>رقم الهاتف (للفني) أو الإيميل (للإدارة)</label><input id="loginPhone" placeholder="07800000000 أو الإيميل"></div>
+   <div class="field"><label>رقم الهاتف (للفني/الزبون) أو الإيميل (للإدارة)</label><input id="loginPhone" placeholder="07800000000 أو الإيميل"></div>
    <div class="field">
     <label>كلمة المرور</label>
     <div class="password-wrapper">
@@ -488,9 +484,21 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
     </div>
    </div>
    <button type="submit" class="btn primary" style="width:100%">دخول إلى الحساب</button>
-   <button type="button" class="btn light" style="width:100%;margin-top:8px" onclick="closeModal('loginModal');showSection('join')">تسجيل فني جديد</button>
+   <button type="button" class="btn light" style="width:100%;margin-top:6px" onclick="openForgotPasswordModal()">نسيت كلمة المرور؟ (طلب استرجاع)</button>
+   <button type="button" class="btn light" style="width:100%;margin-top:6px" onclick="closeModal('loginModal');showSection('join')">تسجيل فني جديد</button>
    <div id="loginMessage"></div>
   </form>
+ </div>
+</div>
+
+<!-- نافذة طلب استرجاع كلمة المرور (للمدير) -->
+<div class="modal hidden" id="forgotPasswordModal">
+ <div class="modal-box">
+  <div class="modal-head"><h3>طلب استرجاع كلمة المرور</h3><div class="close" onclick="closeModal('forgotPasswordModal')">✕</div></div>
+  <div class="notice">أدخل اسمك ورقم هاتفك وسنرسل طلباً مباشراً للمدير لمراجعة وتعيين رمز جديد لك.</div>
+  <div class="field"><label>الاسم الكامل</label><input id="forgotName" placeholder="اسمك الكريم"></div>
+  <div class="field"><label>رقم الهاتف المسجل</label><input id="forgotPhone" inputmode="tel" placeholder="07800000000"></div>
+  <button class="btn primary" style="width:100%; margin-top:10px;" onclick="submitForgotPasswordRequest()">إرسال طلب الاسترجاع للمدير</button>
  </div>
 </div>
 
@@ -541,7 +549,7 @@ const DISTRICTS={
 };
 
 let auth=null,db=null,storage=null,currentUser=null,currentRole="guest",currentTech=null;
-let publicTechs=[],requests=[],technicians=[];
+let publicTechs=[],requests=[],technicians=[],passwordRequests=[];
 let chosenCustomerCity="",chosenCustomerArea="",selectedTargetTech=null;
 let techJobsListener=null;
 
@@ -554,7 +562,6 @@ const formatWhatsApp=phone=>{
   return clean;
 };
 
-// دالة مخصصة لعرض التنبيهات بدلاً من الـ Alert الافتراضي المزعج
 function showCustomAlert(text) {
   $("customAlertText").innerText = text;
   $("customAlertModal").classList.remove("hidden");
@@ -611,6 +618,7 @@ function showSection(id) {
 
 function closeModal(id) { const m = $(id); if(m) m.classList.add("hidden"); }
 function openLogin() { $("loginMessage").innerHTML = ""; $("loginModal").classList.remove("hidden"); }
+function openForgotPasswordModal() { closeModal('loginModal'); $("forgotPasswordModal").classList.remove("hidden"); }
 function openDisclaimer() { $("disclaimerModal").classList.remove("hidden"); }
 function openTechEditModal() { $("editProfileMessage").innerHTML = ""; $("techEditModal").classList.remove("hidden"); }
 
@@ -634,31 +642,31 @@ function updateNavAuthButton() {
 
 function setupLocations(){
   const cityOptions = Object.keys(DISTRICTS).map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("");
-  if($("initialCustomerCity")) $("initialCustomerCity").innerHTML = '<option value="">اختر محافظتك</option><option value="ALL">البحث في جميع المحافظات</option>' + cityOptions;
-  if($("quickCitySelect")) $("quickCitySelect").innerHTML = '<option value="">اختر المحافظة</option><option value="ALL">كل المحافظات</option>' + cityOptions;
+  if($("initialCustomerCity")) $("initialCustomerCity").innerHTML = '<option value="">اختر محافظتك</option>' + cityOptions;
+  if($("regCity")) $("regCity").innerHTML = '<option value="">اختر المحافظة</option>' + cityOptions;
+  if($("editTechCity")) $("editTechCity").innerHTML = '<option value="">اختر المحافظة</option>' + cityOptions;
 
   const savedCity = localStorage.getItem("sakhrCustomerCity") || "";
   const savedArea = localStorage.getItem("sakhrCustomerArea") || "";
   if(savedCity) {
     chosenCustomerCity = savedCity;
     chosenCustomerArea = savedArea;
-    if($("quickCitySelect")) $("quickCitySelect").value = savedCity;
   }
 }
 
 function setDistricts(id, city){
   const el = $(id);
   if(!el) return;
-  if(city==="ALL" || !city){
+  if(!city){
     el.disabled = true;
-    el.innerHTML = '<option value="">كل الأقضية</option>';
+    el.innerHTML = '<option value="">اختر المحافظة أولاً</option>';
     return;
   }
   const list = DISTRICTS[city] || [];
   el.disabled = !list.length;
   el.innerHTML = list.length
     ? '<option value="">اختر القضاء</option>' + list.map(x=>`<option>${esc(x)}</option>`).join("")
-    : '<option value="">كل الأقضية</option>';
+    : '<option value="">لا توض أقضية</option>';
 }
 
 function onInitialCityChanged() {
@@ -666,16 +674,17 @@ function onInitialCityChanged() {
   setDistricts("initialCustomerArea", city);
 }
 
-// دالة تدقيق وتفعيل نافذة الشروط ثم نافذة المحافظة والقضاء بشكل متسلسل ودقيق
+// دالة تدقيق وتفعيل نافذة الشروط ثم نافذة تسجيل الدخول والموقع للزبون
 function checkInitialStartupModals() {
-  if(currentRole === "admin" || currentRole === "technician" || currentRole === "suspended") return;
+  if(currentRole === "admin" || currentRole === "technician" || currentRole === "suspended" || currentUser) return;
   const termsAccepted = localStorage.getItem("sakhrTermsAccepted");
   const savedCity = localStorage.getItem("sakhrCustomerCity");
   const savedArea = localStorage.getItem("sakhrCustomerArea");
+  const savedCustomerName = localStorage.getItem("sakhrCustomerName");
 
   if(!termsAccepted) {
     $("termsModal").classList.remove("hidden");
-  } else if(!savedCity || !savedArea) {
+  } else if(!savedCity || !savedArea || !savedCustomerName) {
     $("initialLocationMessage").innerHTML = "";
     $("customerLocationModal").classList.remove("hidden");
   } else {
@@ -687,33 +696,51 @@ function checkInitialStartupModals() {
 function acceptTerms() {
   localStorage.setItem("sakhrTermsAccepted", "true");
   closeModal("termsModal");
-  // فور قبول الشروط، تظهر نافذة تحديد المحافظة والقضاء بشكل متسلسل
   setTimeout(() => {
     const savedCity = localStorage.getItem("sakhrCustomerCity");
     const savedArea = localStorage.getItem("sakhrCustomerArea");
-    if(!savedCity || !savedArea) {
+    const savedCustomerName = localStorage.getItem("sakhrCustomerName");
+    if(!savedCity || !savedArea || !savedCustomerName) {
       $("initialLocationMessage").innerHTML = "";
       $("customerLocationModal").classList.remove("hidden");
     }
   }, 200);
 }
 
-function confirmCustomerLocation(){
+async function confirmCustomerOnboarding(){
+  const name = $("custInitName").value.trim();
+  const phone = $("custInitPhone").value.trim();
+  const password = $("custInitPassword").value;
   const city = $("initialCustomerCity").value;
   const area = $("initialCustomerArea").value;
-  if(!city || !area) {
-    showCustomAlert("يرجى اختيار المحافظة والقضاء معاً.");
+
+  if(!name || !phone || !password || !city || !area) {
+    showCustomAlert("يرجى إكمال جميع الحقول (الاسم، الهاتف، الباسورد، المحافظة والقضاء).");
     return;
   }
 
-  chosenCustomerCity = city;
-  chosenCustomerArea = area;
-  localStorage.setItem("sakhrCustomerCity", city);
-  localStorage.setItem("sakhrCustomerArea", area);
+  try {
+    const emailPseudo = phone + "@sakhr.app";
+    let cred;
+    try {
+      cred = await auth.createUserWithEmailAndPassword(emailPseudo, password);
+    } catch(e) {
+      cred = await auth.signInWithEmailAndPassword(emailPseudo, password);
+    }
 
-  if($("quickCitySelect")) $("quickCitySelect").value = city;
+    chosenCustomerCity = city;
+    chosenCustomerArea = area;
+    localStorage.setItem("sakhrCustomerCity", city);
+    localStorage.setItem("sakhrCustomerArea", area);
+    localStorage.setItem("sakhrCustomerName", name);
+    localStorage.setItem("sakhrCustomerPhone", phone);
 
-  closeModal("customerLocationModal");
+    closeModal("customerLocationModal");
+    showCustomAlert("أهلاً بك " + name + "! تم تسجيل دخولك وحفظ منطقتك بنجاح.");
+    loadPublicTechs();
+  } catch(e) {
+    showCustomAlert("خطأ في التسجيل: " + e.message);
+  }
 }
 
 function fillSelect(id){
@@ -721,22 +748,7 @@ function fillSelect(id){
   if(el) el.innerHTML = SERVICES.map(s=>`<option>${esc(s)}</option>`).join("");
 }
 
-function quickCityChanged(){
-  const val = $("quickCitySelect").value;
-  if(val){
-    chosenCustomerCity = val;
-    localStorage.setItem("sakhrCustomerCity", val);
-  }
-}
-
 function executeQuickSearch(){
-  const city = $("quickCitySelect").value;
-  if(!city) {
-    showCustomAlert("اختر المحافظة أولاً");
-    return;
-  }
-  chosenCustomerCity = city;
-  localStorage.setItem("sakhrCustomerCity", city);
   showSection("technicians");
 }
 
@@ -756,7 +768,7 @@ function renderServices(){
   renderTo("allServicesPage");
   fillSelect("regService");
   if($("quickServiceSelect")) {
-    $("quickServiceSelect").innerHTML = '<option value="">اختر الاختصاص المطلوب</option>' + SERVICES.map(s=>`<option value="${esc(s)}">${esc(s)}</option>`).join("");
+    $("quickServiceSelect").innerHTML = '<option value="">اختر الاختصاص المطللوب</option>' + SERVICES.map(s=>`<option value="${esc(s)}">${esc(s)}</option>`).join("");
   }
 }
 
@@ -850,16 +862,15 @@ async function registerTechWithPassword(){
   const name = $("regName").value.trim();
   const phone = $("regPhone").value.trim();
   const password = $("regPassword").value;
+  const city = $("regCity").value;
+  const area = $("regArea").value;
   const neighborhood = $("regNeighborhood").value.trim();
   const service = $("regService").value;
   const bio = $("regBio").value.trim();
   const file = $("regPhoto").files[0];
 
-  const city = chosenCustomerCity || "بغداد";
-  const area = chosenCustomerArea || "المركز";
-
-  if(!name || !phone || !password || !service)
-    return showCustomAlert("أكمل الاسم، رقم الهاتف، كلمة المرور والاختصاص.");
+  if(!name || !phone || !password || !city || !area || !service)
+    return showCustomAlert("أكمل جميع الحقول الأساسية للفني (الاسم، الهاتف، الباسورد، المحافظة، القضاء والاختصاص).");
 
   let createdUser = null, profileSaved = false;
   try{
@@ -919,7 +930,14 @@ async function loginWithPhonePassword(){
     const c = await auth.signInWithEmailAndPassword(emailPseudo, password);
     const s = await db.ref("technicians/"+c.user.uid).once("value");
     if(!s.exists()){
-      return showCustomAlert("الحساب غير مسجل كفني أو غير مصرح به.");
+      // إذا كان زبون مسجل مسبقاً
+      currentRole = "customer";
+      closeModal("loginModal");
+      closeModal("termsModal");
+      closeModal("customerLocationModal");
+      showCustomAlert("أهلاً بك مجدداً في منصة صخر!");
+      showSection("home");
+      return;
     }
     currentRole = s.val().approved === false ? "suspended" : "technician";
     currentTech = s.val();
@@ -932,6 +950,25 @@ async function loginWithPhonePassword(){
     renderTechAccount();
   }catch(e){
     showCustomAlert("خطأ في بيانات الدخول: "+e.message);
+  }
+}
+
+async function submitForgotPasswordRequest() {
+  const name = $("forgotName").value.trim();
+  const phone = $("forgotPhone").value.trim();
+  if(!name || !phone) {
+    showCustomAlert("يرجى إدخال الاسم ورقم الهاتف المسجل.");
+    return;
+  }
+  try {
+    const id = db.ref("passwordRequests").push().key;
+    await db.ref("passwordRequests/"+id).set({
+      name, phone, status: "قيد الانتظار", createdAt: Date.now()
+    });
+    closeModal("forgotPasswordModal");
+    showCustomAlert("تم إرسال طلب استرجاع كلمة المرور إلى المدير بنجاح. سيتم التواصل معك أو اعتماد الرمز قريباً.");
+  } catch(e) {
+    showCustomAlert("خطأ: " + e.message);
   }
 }
 
@@ -974,23 +1011,27 @@ function techPhoto(t, small=false){
 function renderPublicTechs(){
   const el = $("publicTechList");
   if(!el) return;
-  const userCity = chosenCustomerCity || "";
-  const userArea = chosenCustomerArea || "";
+  const userCity = chosenCustomerCity || localStorage.getItem("sakhrCustomerCity") || "";
+  const userArea = chosenCustomerArea || localStorage.getItem("sakhrCustomerArea") || "";
   const selectedService = $("quickServiceSelect") ? $("quickServiceSelect").value : "";
 
   const list = publicTechs.filter(t => {
     if(currentUser && currentUser.uid === t.uid) return false;
     if(currentRole === "admin") return true; 
     
-    // فلترة الاختصاص بدقة تامة بناءً على اختيار الزبون
+    // فلترة الاختصاص بدقة
     if(selectedService && t.service !== selectedService) return false;
 
-    if(!userCity || userCity === "ALL") return true;
-    return t.city === userCity && (!userArea || t.area === userArea);
+    // الشرط الحاسم: الفني يجب أن يكون ضمن نفس المحافظة والقضاء الخاص بالزبون حصراً
+    if(userCity && userArea) {
+      if(t.city !== userCity || t.area !== userArea) return false;
+    }
+
+    return true;
   });
 
   if(!list.length){
-    el.innerHTML = '<div class="empty">لا يوجد فنيون مسجلون مطابقون لبحثك في هذه المنطقة حالياً.</div>';
+    el.innerHTML = '<div class="empty">لا يوجد فنيون مسجلون ومتاحون في قضائك وحسب الاختصاص المطلوب حالياً.</div>';
     return;
   }
   el.innerHTML = list.map(t=>{
@@ -1045,13 +1086,10 @@ async function chooseServiceDirect(service, techUid){
       showCustomAlert("خطأ: " + e.message);
     }
   } else {
-    // للزبون العادي: تفتح نافذة مبسطة تطلب الاسم، الهاتف، الباسورد، والملاحظة
+    // الزبون العادي: يطلب تفاصيل العطل فقط لأن حسابه وموقعه مسجلان ومحفوظان مسبقاً
     selectedTargetTech = publicTechs.find(t => t.uid === techUid);
     if(!selectedTargetTech) return showCustomAlert("الفني غير موجود.");
     $("orderModalTitle").innerText = "طلب الفني: " + selectedTargetTech.name;
-    $("custOrderName").value = "";
-    $("custOrderPhone").value = "";
-    $("custOrderPassword").value = "";
     $("custOrderProblem").value = "";
     $("custOrderMessage").innerHTML = "";
     $("customerOrderModal").classList.remove("hidden");
@@ -1059,41 +1097,30 @@ async function chooseServiceDirect(service, techUid){
 }
 
 async function submitCustomerOrder() {
-  const name = $("custOrderName").value.trim();
-  const phone = $("custOrderPhone").value.trim();
-  const password = $("custOrderPassword").value;
   const problem = $("custOrderProblem").value.trim();
+  const custName = localStorage.getItem("sakhrCustomerName") || "زبون صخر";
+  const custPhone = localStorage.getItem("sakhrCustomerPhone") || "غير محدد";
 
-  if(!name || !phone || !password || !problem) {
-    showCustomAlert("يرجى إكمال الاسم، رقم الهاتف، كلمة المرور وتفاصيل المشكلة.");
+  if(!problem) {
+    showCustomAlert("يرجى كتابة تفاصيل العطل أو المشكلة.");
     return;
   }
 
   try {
-    let custId = currentUser ? currentUser.uid : "";
-    if(!currentUser || currentUser.isAnonymous) {
-      const emailPseudo = phone + "@sakhr.app";
-      try {
-        const cred = await auth.createUserWithEmailAndPassword(emailPseudo, password);
-        custId = cred.user.uid;
-      } catch(authErr) {
-        const cred = await auth.signInWithEmailAndPassword(emailPseudo, password);
-        custId = cred.user.uid;
-      }
-    }
-
+    let custId = currentUser ? currentUser.uid : (localStorage.getItem("sakhrCustomerUid") || "cust_" + Date.now());
     const techUid = selectedTargetTech.uid;
     const id = db.ref("requests/"+custId).push().key;
     const now = Date.now();
 
     const record = {
-      id, uid: custId, name, phone, city: chosenCustomerCity || "محافظتي",
-      area: chosenCustomerArea || "القضاء", neighborhood: "", service: selectedTargetTech.service, problem,
+      id, uid: custId, name: custName, phone: custPhone, city: chosenCustomerCity || localStorage.getItem("sakhrCustomerCity") || "محافظتي",
+      area: chosenCustomerArea || localStorage.getItem("sakhrCustomerArea") || "القضاء", neighborhood: "", service: selectedTargetTech.service, problem,
       preferredTech: techUid, assignedTech: techUid, assignedTechName: selectedTargetTech.name,
       status: "بانتظار رد الفني", createdAt: now, countedAsCompleted: false, rated: false
     };
 
-    const job = { id, customerUid: custId, customerName: name, customerPhone: phone, service: selectedTargetTech.service, city: chosenCustomerCity || "", area: chosenCustomerArea || "", neighborhood: "", problem, status: "بانتظار رد الفني", createdAt: now };
+    // ملاحظة أمنية صارمة: الفني لا يرى أرقام هواتف الزبائن مطلقاً، تظهر له فقط تفاصيل الخدمة والمشكلة
+    const job = { id, customerUid: custId, customerName: "زبون معتمد (محمي)", customerPhone: "محجوب (للإدارة فقط)", service: selectedTargetTech.service, city: chosenCustomerCity || "", area: chosenCustomerArea || "", neighborhood: "", problem, status: "بانتظار رد الفني", createdAt: now };
 
     const u = {};
     u["requests/"+custId+"/"+id] = record;
@@ -1167,7 +1194,7 @@ async function renderTechAccount(){
 
     if($("editTechName")) $("editTechName").value = currentTech.name || "";
     if($("editTechCity")) {
-      $("editTechCity").innerHTML = '<option value="">اختر المحافظة</option>' + Object.keys(DISTRICTS).map(x=>`<option value="${esc(x)}" ${x===currentTech.city?'selected':''}>${esc(x)}</option>`).join("");
+      $("editTechCity").value = currentTech.city || "";
       setDistricts("editTechArea", currentTech.city);
       if($("editTechArea")) $("editTechArea").value = currentTech.area || "";
     }
@@ -1200,9 +1227,10 @@ async function renderTechAccount(){
             if(x.status === "بانتظار رد الفني") {
               actionsHtml = '<div class="actions"><button class="btn primary" onclick="technicianDecision(\'' + esc(x.id) + '\',\'مقبول\')">قبول الطلب</button><button class="btn danger" onclick="technicianDecision(\'' + esc(x.id) + '\',\'مرفوض\')">رفض</button></div>';
             } else if(x.status === "مقبول من الفني") {
-              actionsHtml = '<div class="actions"><a href="https://wa.me/' + formatWhatsApp(x.customerPhone) + '?text=مرحباً بك، أنا الفني من منصة صخر بخصوص طلب صيانة ' + encodeURIComponent(x.service) + '" target="_blank" class="btn whatsapp-btn">💬 مراسلة الزبون عبر الواتساب</a></div>';
+              actionsHtml = '<div class="notice" style="margin-top:8px;">تم قبول الطلب. لتنسيق العمل يرجى مراجعة إدارة المنصة لربطك بالزبون.</div>';
             }
-            jobsHtml += '<div class="list-item"><h4>' + esc(x.service) + ' — ' + esc(x.status) + '</h4><div class="muted">الزبون: <b>' + esc(x.customerName||"") + '</b> | الهاتف: <b>' + esc(x.customerPhone||"") + '</b></div><p style="margin:6px 0">' + esc(x.problem) + '</p>' + actionsHtml + '</div>';
+            // الفني لا يرى أرقام هواتف الزبائن نهائياً (حسب توجيهك)
+            jobsHtml += '<div class="list-item"><h4>' + esc(x.service) + ' — ' + esc(x.status) + '</h4><div class="muted">الزبون: <b>زبون معتمد في المنطقة</b> | رقم الهاتف: <b style="color:var(--danger)">محجوب (متاحة لدى المدير فقط)</b></div><p style="margin:6px 0">' + esc(x.problem) + '</p>' + actionsHtml + '</div>';
           });
           $("techJobs").innerHTML = jobsHtml;
         }
@@ -1323,6 +1351,19 @@ async function adminDeleteRequest(custUid, reqId) {
   });
 }
 
+async function adminDeletePasswordRequest(reqId) {
+  if(currentRole !== "admin") return;
+  showCustomConfirm("هل أنت متأكد من حذف طلب استرجاع الرمز هذا بعد إتمام معالجته؟", async () => {
+    try {
+      await db.ref("passwordRequests/" + reqId).remove();
+      showCustomAlert("تم الحذف بنجاح.");
+      loadAdminData();
+    } catch(e) {
+      showCustomAlert("خطأ: " + e.message);
+    }
+  });
+}
+
 async function saveAdminAnnouncement() {
   if(currentRole !== "admin") return;
   const val = $("adminAnnouncementInput").value.trim();
@@ -1349,19 +1390,21 @@ function listenToAnnouncement() {
   });
 }
 
-// دالة تحميل بيانات المدير لضمان جلب كافة الفنيين المسجلين في النظام بلا استثناء
+// دالة تحميل بيانات المدير وجلب كافة الفنيين وطلبات الاسترجاع
 async function loadAdminData(){
   if(currentRole !== "admin") return;
   try{
-    const [r, t, ann] = await Promise.all([
+    const [r, t, p, ann] = await Promise.all([
       db.ref("requests").once("value"),
       db.ref("technicians").once("value"),
+      db.ref("passwordRequests").once("value"),
       db.ref("settings/announcement").once("value")
     ]);
     
-    requests = []; technicians = [];
+    requests = []; technicians = []; passwordRequests = [];
     r.forEach(u => u.forEach(q => requests.push({...q.val(), uid: u.key, id: q.key})));
     t.forEach(s => technicians.push({...s.val(), uid: s.key}));
+    p.forEach(x => passwordRequests.push({...x.val(), id: x.key}));
 
     if($("adminAnnouncementInput")) {
       $("adminAnnouncementInput").value = ann.val() || "";
@@ -1378,17 +1421,32 @@ function renderAdmin(){
     <div class="card" style="text-align:center"><div class="muted">إجمالي الفنيين المسجلين</div><div class="stat">${technicians.length}</div></div>`;
   }
   
+  // طلبات الزبائن مع تفاصيل الهواتف الكاملة للمدير حصراً
   if($("adminRequests")) {
     $("adminRequests").innerHTML = requests.length ? requests.map(r=>`
     <div class="list-item">
       <h4>${esc(r.service)} — الحالة: ${esc(r.status)}</h4>
-      <div class="muted">الزبون: <b>${esc(r.name)}</b> | الهاتف: <b style="color:var(--burgundy);">${esc(r.phone)}</b></div>
+      <div class="muted">الزبون: <b>${esc(r.name)}</b> | الهاتف الشخصي الكامل: <b style="color:var(--burgundy); font-size:14px;">${esc(r.phone)}</b></div>
       <div class="muted">الموقع: ${esc(r.city)} / ${esc(r.area)} (${esc(r.neighborhood||"")})</div>
       <p style="margin:5px 0; font-size:13px;">المشكلة: ${esc(r.problem)}</p>
       <div class="actions">
        <button class="btn danger" onclick="adminDeleteRequest('${esc(r.uid)}','${esc(r.id)}')">حذف الطلب</button>
       </div>
     </div>`).join("") : '<div class="empty">لا توجد طلبات مسجلة.</div>';
+  }
+
+  // قسم إدارة طلبات نسيان واسترجاع كلمة المرور (للمدير فقط)
+  if($("adminPasswordRequests")) {
+    $("adminPasswordRequests").innerHTML = passwordRequests.length ? passwordRequests.map(p=>`
+    <div class="list-item" style="background:#fff3cd; border-color:#e0a800;">
+      <h4>طلب استرجاع رمز جديد</h4>
+      <div class="muted">الاسم: <b>${esc(p.name)}</b> | رقم الهاتف: <b style="color:var(--burgundy); font-size:14px;">${esc(p.phone)}</b></div>
+      <div class="muted" style="margin-top:4px;">تاريخ الطلب: ${new Date(p.createdAt).toLocaleString('ar-IQ')}</div>
+      <div class="actions" style="margin-top:8px;">
+       <a href="https://wa.me/${formatWhatsApp(p.phone)}?text=مرحباً بك، بناءً على طلبك لاسترجاع كلمة المرور في منصة صخر، رمزك الجديد المؤقت هو..." target="_blank" class="btn whatsapp-btn">💬 تواصل عبر الواتساب لتزويده بالرمز</a>
+       <button class="btn danger" onclick="adminDeletePasswordRequest('${esc(p.id)}')">حذف الطلب بعد المعالجة</button>
+      </div>
+    </div>`).join("") : '<div class="empty">لا توجد طلبات استرجاع رمز حالياً.</div>';
   }
 
   if($("adminTechs")) {
