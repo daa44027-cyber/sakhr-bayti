@@ -478,21 +478,46 @@ function playAlertBeep() {
   } catch(e) {}
 }
 
-const showSection=id=>{
-  document.querySelectorAll("main section").forEach(s=>s.classList.add("hidden"));
-  $(id)?.classList.remove("hidden");
-  window.scrollTo({top:0,behavior:"smooth"});
-  if(id==="technicians")loadPublicTechs();
-  if(id==="reviewsChat")loadReviews();
-  if(id==="admin"&&currentRole==="admin")loadAdminData();
-  if(id==="techAccount"&&["technician","suspended"].includes(currentRole))renderTechAccount();
-};
+function showSection(id) {
+  document.querySelectorAll("main section").forEach(s => {
+    s.classList.add("hidden");
+  });
 
-const closeModal=id=>$(id).classList.add("hidden");
-const openLogin=()=>{$("loginMessage").innerHTML="";$("loginModal").classList.remove("hidden")};
-const openDisclaimer=()=>{$("disclaimerModal").classList.add("hidden"); $("disclaimerModal").classList.remove("hidden")};
-const openTechEditModal=()=>{$("editProfileMessage").innerHTML="";$("techEditModal").classList.remove("hidden")};
+  const section = $(id);
+  if (section) section.classList.remove("hidden");
 
+  window.scrollTo({ top: 0, behavior: "smooth" });
+
+  if (id === "technicians") loadPublicTechs();
+  if (id === "reviewsChat") loadReviews();
+  if (id === "admin" && currentRole === "admin") loadAdminData();
+
+  if (
+    id === "techAccount" &&
+    ["technician", "suspended"].includes(currentRole)
+  ) {
+    renderTechAccount();
+  }
+}
+
+function closeModal(id) {
+  const modal = $(id);
+  if (modal) modal.classList.add("hidden");
+}
+
+function openLogin() {
+  $("loginMessage").innerHTML = "";
+  $("loginModal").classList.remove("hidden");
+}
+
+function openDisclaimer() {
+  $("disclaimerModal").classList.remove("hidden");
+}
+
+function openTechEditModal() {
+  $("editProfileMessage").innerHTML = "";
+  $("techEditModal").classList.remove("hidden");
+}
 function handleAuthNav() {
   if(currentRole === "admin") {
     showSection("admin");
