@@ -238,7 +238,8 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
 
 <section id="join" class="container hidden">
  <h2 class="section-title">انضم إلى شبكة فنيي صخر</h2>
- <div class="card" style="max-width:700px;margin:0 auto">
+ <form class="card" style="max-width:700px;margin:0 auto"
+      onsubmit="event.preventDefault(); registerTechWithPassword();">
   <div class="notice">للفني 3 أعمال مكتملة مجاناً بالكامل، وبعدها يحتاج لاشتراك رمزي لمواصلة استقبال الطلبات بلا حدود. التسجيل آمن برقم الهاتف وكلمة السر.</div>
   <div class="row">
    <div class="field"><label>الاسم الكامل</label><input id="regName" placeholder="مثال: أحمد عودة"></div>
@@ -262,9 +263,9 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
   <div class="field"><label>نبذة عن خبرتك ومهاراتك</label><textarea id="regBio" placeholder="اكتب نبذة مختصرة عن خبرتك..."></textarea></div>
   <div class="field"><label>الصورة الشخصية للفني</label><input id="regPhoto" type="file" accept="image/*"><img id="regPreview" class="avatar hidden" alt="معاينة"></div>
   
-  <button class="btn primary" style="width:100%;margin-top:10px;font-size:15px;" onclick="registerTechWithPassword()">تسجيل حساب فني جديد</button>
+  <button type="submit" class="btn primary" style="width:100%;margin-top:10px;font-size:15px;">تسجيل حساب فني جديد</button>
   <div id="regMessage"></div>
- </div>
+</form>
 </section>
 
 <section id="techAccount" class="container hidden">
@@ -310,6 +311,7 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
 
 <div class="modal hidden" id="customerLocationModal">
  <div class="modal-box">
+  <form id="loginForm" onsubmit="event.preventDefault(); loginWithPhonePassword();">
   <div class="modal-head"><h3>أهلاً بك في منصة صخر</h3><div class="close" onclick="closeModal('customerLocationModal')">✕</div></div>
   <div class="notice">اختر محافظتك حتى نعرض لك الفنيين المتواجدين في منطقتك حصراً.</div>
   <div class="field">
@@ -380,9 +382,10 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
     <button type="button" class="toggle-password" onclick="togglePassword('loginPassword', this)">👁️</button>
    </div>
   </div>
-  <button class="btn primary" style="width:100%" onclick="loginWithPhonePassword()">دخول إلى الحساب</button>
+  <button type="submit" class="btn primary" style="width:100%">دخول إلى الحساب</button>
   <button class="btn light" style="width:100%;margin-top:10px" onclick="closeModal('loginModal');showSection('join')">ليس لديك حساب؟ تسجيل فني جديد</button>
   <div id="loginMessage"></div>
+  </form>
  </div>
 </div>
 
