@@ -279,13 +279,19 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  </div>
 </section>
 
-<!-- لوحة تحكم الفني المرتبة والمختصرة -->
+<!-- لوحة تحكم الفني المرتبة والمختصرة مع إرشادات الاشتراك الإلكتروني -->
 <section id="techAccount" class="container hidden">
  <h2 class="section-title"><span class="online-dot" title="متصل الآن"></span> الملف الشخصي - لوحة تحكم الفني</h2>
  <div id="techAlertBox"></div>
  <div id="techSummary" class="card" style="margin-bottom:20px"></div>
  
- <!-- زر مرتب لفتح نافذة تعديل البروفايل بدل إطالة الصفحة -->
+ <!-- صندوق إرشادات الاشتراك وتجديد الحساب عبر زين كاش / الماستر الشخصي -->
+ <div id="techSubscriptionCard" class="card" style="margin-bottom:20px; background:#fff9ef; border:2px solid var(--gold);">
+  <h3 style="color:var(--burgundy); margin-top:0; font-weight:900;">💳 حالة الاشتراك والأعمال المجانية</h3>
+  <div id="techSubDetails" style="font-size:14px; color:var(--text-main); line-height:1.8;"></div>
+ </div>
+
+ <!-- زر مرتب لفتح نافذة تعديل البروفايل -->
  <div style="text-align:center; margin-bottom:25px;">
   <button class="btn primary" style="padding: 12px 25px; font-size: 15px;" onclick="openTechEditModal()">⚙️ تعديل الملف الشخصي والمعلومات</button>
  </div>
@@ -334,7 +340,7 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  </div>
 </div>
 
-<!-- نافذة تعديل البروفايل الخاصة بالفني (منبثقة لمنع إطالة الصفحة) -->
+<!-- نافذة تعديل البروفايل الخاصة بالفني (منبثقة) -->
 <div class="modal hidden" id="techEditModal">
  <div class="modal-box">
   <div class="modal-head"><h3>تعديل الملف الشخصي والمعلومات</h3><div class="close" onclick="closeModal('techEditModal')">✕</div></div>
@@ -375,12 +381,11 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
   <button class="btn primary" style="width:100%;margin-top:15px" onclick="submitRequest()">إرسال الطلب للفني المختار الآن</button>
   <div id="requestMessage"></div>
   
-  <!-- منطقة متابعة حالة الطلب للزبون مع زر الواتساب عند القبول -->
   <div id="customerTrackingArea" style="margin-top:20px;"></div>
  </div>
 </div>
 
-<!-- نافذة تسجيل الدخول الآمنة برقم الهاتف وكلمة المرور -->
+<!-- نافذة تسجيل الدخول الآمنة -->
 <div class="modal hidden" id="loginModal">
  <div class="modal-box">
   <div class="modal-head"><h3>تسجيل الدخول الآمن</h3><div class="close" onclick="closeModal('loginModal')">✕</div></div>
@@ -435,7 +440,7 @@ const DISTRICTS={
 "صلاح الدين":["تكريت","سامراء","بيجي","بلد","الدجيل","الشرقاط","طوز خورماتو"],
 "ديالى":["بعقوبة","المقدادية","الخالص","خانقين"],
 "الأنبار":["الرمادي","الفلوجة","حديثة","هيت","القائم"],
-"bابل":["الحلة","المسيب","المحاويل","الهاشمية"],
+"بابل":["الحلة","المسيب","المحاويل","الهاشمية"],
 "كربلاء":["كربلاء","الهندية","عين التمر"],
 "النجف":["النجف","الكوفة","المناذرة","المشخاب"],
 "القادسية":["الديوانية","عفك","الشامية","الحمزة"],
@@ -454,6 +459,17 @@ let activeRequestId = null;
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const msg=(id,text,type="notice")=>{const el=$(id);if(el)el.innerHTML='<div class="notice '+type+'">'+esc(text)+'</div>'};
+
+// دالة تنسيق أرقام الواتساب دولياً (إزالة الصفر وإضافة رمز العراق 964)
+function formatWhatsApp(phone) {
+  let clean = (phone || "").replace(/\D/g, '');
+  if (clean.startsWith('0')) {
+    clean = '964' + clean.substring(1);
+  } else if (!clean.startsWith('964') && clean.length === 10) {
+    clean = '964' + clean;
+  }
+  return clean;
+}
 
 function togglePassword(inputId, btn) {
   const input = $(inputId);
@@ -1021,7 +1037,7 @@ function listenToCustomerOrderStatus(custId, reqId, techPhone) {
     if(!trackingArea) return;
 
     if(req.status === "مقبول من الفني") {
-      const cleanPhone = (req.assignedTechPhone || techPhone || "").replace(/\D/g,'');
+      const cleanPhone = formatWhatsApp(req.assignedTechPhone || techPhone);
       trackingArea.innerHTML = `
        <div class="notice success" style="text-align:center;">
         <b>🎉 وافق الفني على طلبك!</b><br>تواصل معه فوراً عبر الواتساب لتنسيق الموعد:
@@ -1124,6 +1140,25 @@ async function renderTechAccount(){
    </div>`;
   }
 
+  // عرض تفاصيل الاشتراك والأعمال المجانية وإرشادات الدفع (زين كاش / الماستر) للفني
+  const subStatus = currentTech.subscriptionStatus || "غير فعال";
+  const freeUsed = Number(currentTech.freeJobsUsed || 0);
+  if($("techSubDetails")) {
+   $("techSubDetails").innerHTML = `
+    حالة الاشتراك: <b style="color:${subStatus==='فعال'?'var(--green)':'var(--danger)'};">${subStatus}</b><br>
+    الأعمال المجانية المستهلكة: <b>${freeUsed} من 3 أعمال مجانية</b>
+    ${subStatus !== "فعال" && freeUsed >= 3 ? `
+     <div class="notice error" style="margin-top:10px; font-size:13px;">
+      ⚠️ لقد استنفذت أعمالك المجانية الـ 3. لاستمرار استقبال طلبات الزبائن بلا حدود، يرجى تحويل الاشتراك عبر <b>زين كاش</b> أو <b>الماستر الشخصي</b> إلى رقم الإدارة:
+      <br><b style="font-size:15px; color:var(--burgundy);">07805017009</b> (ثم أرسل لقطة écran الإيصال للإدارة عبر الواتساب للتفعيل الفوري).
+     </div>
+    ` : `
+     <div class="notice" style="margin-top:10px; font-size:13px;">
+      💡 لتجديد اشتراكك بكل سهولة، حول رسم الاشتراك إلى زين كاش الإدارة (<b>07805017009</b>) وأرسل الإيصال للإدارة لتفعيل حسابك فوراً.
+     </div>
+    `;
+  }
+
   if($("editTechName")) $("editTechName").value = currentTech.name || "";
   if($("editTechCity")) {
    $("editTechCity").innerHTML = '<option value="">اختر المحافظة</option>' + Object.keys(DISTRICTS).map(x=>`<option value="${esc(x)}" ${x===currentTech.city?'selected':''}>${esc(x)}</option>`).join("");
@@ -1163,7 +1198,7 @@ async function renderTechAccount(){
      </div>`:""}
      ${x.status==="مقبول من الفني"?`
      <div class="actions">
-      <a href="https://wa.me/${(x.customerPhone||"").replace(/\D/g,'')}?text=مرحباً بك، أنا الفني من منصة صخر بخصوص طلب صيانة ${encodeURIComponent(x.service)}" target="_blank" class="btn whatsapp-btn">
+      <a href="https://wa.me/${formatWhatsApp(x.customerPhone)}?text=مرحباً بك، أنا الفني من منصة صخر بخصوص طلب صيانة ${encodeURIComponent(x.service)}" target="_blank" class="btn whatsapp-btn">
        💬 مراسلة الزبون عبر الواتساب
       </a>
      </div>`:""}
