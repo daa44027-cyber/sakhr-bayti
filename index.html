@@ -73,8 +73,32 @@ nav button:hover, nav button.primary-nav { background: var(--gold); color: var(-
 .cta-btn { background: linear-gradient(135deg, #ffdb57, #e99a12); color: var(--burgundy-dark); padding: 10px 22px; border-radius: 24px; font-weight: 900; font-size: 14px; border: 2px solid #fff; box-shadow: 0 4px 15px rgba(233,154,18,0.4); display: inline-flex; align-items: center; gap: 6px; text-decoration: none; transition: transform .2s; }
 .cta-btn:active { transform: scale(0.95); }
 
-/* شريط الإعلانات تحت الخط الأصفر للواجهة الرئيسية */
-.announcement-bar { background: var(--burgundy); color: var(--gold); padding: 10px 20px; text-align: center; font-weight: 800; font-size: 14px; border-bottom: 2px solid var(--gold); box-shadow: 0 3px 10px rgba(0,0,0,0.2); }
+/* شريط الإعلانات المتحرك من اليسار إلى اليمين */
+.announcement-container {
+  background: var(--burgundy);
+  border-bottom: 2px solid var(--gold);
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+}
+.announcement-bar {
+  display: inline-block;
+  color: var(--gold);
+  font-weight: 800;
+  font-size: 14px;
+  position: absolute;
+  width: 100%;
+  text-align: right;
+  animation: moveLeftToRight 16s linear infinite;
+}
+@keyframes moveLeftToRight {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
 
 .quick-search-box { background: rgba(255,255,255,0.95); padding: 10px; border-radius: 14px; display: flex; gap: 6px; max-width: 550px; margin: 15px auto 0; box-shadow: 0 8px 20px rgba(0,0,0,0.3); border: 2px solid var(--gold); }
 .quick-search-box select, .quick-search-box input { flex: 1; padding: 8px; border: 1px solid #d9b98e; border-radius: 8px; outline: none; background: #fff; color: var(--text-main); font-size: 12px; font-weight: 700; }
@@ -83,13 +107,20 @@ nav button:hover, nav button.primary-nav { background: var(--gold); color: var(-
 .container { width: min(1100px, 92%); margin: 0 auto 40px; }
 .section-title { font-size: 18px; color: var(--gold); margin: 25px 0 15px; font-weight: 900; text-align: center; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
 
-.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; }
-.service-card { background: linear-gradient(145deg, #d9822b, #8c251e); border: 2px solid var(--gold); border-radius: 16px; padding: 18px 12px; text-align: center; cursor: pointer; box-shadow: 0 6px 15px rgba(0,0,0,0.4); transition: transform .2s, box-shadow .2s; position: relative; overflow: hidden; }
-.service-card:hover { transform: translateY(-4px); box-shadow: 0 10px 22px rgba(255,195,41,0.3); }
+/* شبكة الخدمات: كل اثنين بجانب بعضهما (2 في 2) وبأحجام أصغر متناسقة */
+.services-grid { 
+  display: grid; 
+  grid-template-columns: repeat(2, 1fr); 
+  gap: 12px; 
+  max-width: 550px; 
+  margin: 0 auto; 
+}
+.service-card { background: linear-gradient(145deg, #d9822b, #8c251e); border: 2px solid var(--gold); border-radius: 12px; padding: 12px 10px; text-align: center; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.4); transition: transform .2s, box-shadow .2s; position: relative; overflow: hidden; }
+.service-card:hover { transform: translateY(-3px); box-shadow: 0 8px 18px rgba(255,195,41,0.3); }
 .service-card:nth-child(even) { background: linear-gradient(145deg, #a62434, #590a18); }
-.service-icon { font-size: 36px; margin-bottom: 6px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); }
-.service-card h3 { font-size: 16px; margin: 4px 0 8px; color: #fff; font-weight: 900; text-shadow: 0 2px 4px rgba(0,0,0,0.4); }
-.service-card .arrow-badge { background: rgba(0,0,0,0.3); width: 26px; height: 26px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; color: var(--gold); font-size: 12px; border: 1px solid var(--gold); }
+.service-icon { font-size: 28px; margin-bottom: 4px; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.3)); }
+.service-card h3 { font-size: 14px; margin: 2px 0 6px; color: #fff; font-weight: 900; text-shadow: 0 2px 3px rgba(0,0,0,0.4); }
+.service-card .arrow-badge { background: rgba(0,0,0,0.3); width: 22px; height: 22px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; color: var(--gold); font-size: 11px; border: 1px solid var(--gold); }
 
 .trust-bar { background: var(--burgundy-dark); border-top: 2px solid var(--gold); border-bottom: 2px solid var(--gold); padding: 12px 5%; display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap; gap: 12px; margin-top: 25px; text-align: center; }
 .trust-item { display: flex; align-items: center; gap: 6px; font-weight: 800; font-size: 13px; color: var(--gold); }
@@ -194,13 +225,15 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
   </div>
  </div>
 
- <!-- الشريط الإعلاني تحت الخط الأصفر للواجهة الرئيسية -->
- <div id="globalAnnouncementBar" class="announcement-bar">
-  📢 أهلاً بكم في منصة صخر للصيانة المنزلية - تواصل مع أفضل الفنيين المعتمدين في منطقتك بكل سهولة.
+ <!-- الشريط الإعلاني المتحرك تحت الخط الأصفر للواجهة الرئيسية -->
+ <div class="announcement-container">
+  <div id="globalAnnouncementBar" class="announcement-bar">
+   📢 أهلاً بكم في منصة صخر للصيانة المنزلية - تواصل مع أفضل الفنيين المعتمدين في منطقتك بكل سهولة.
+  </div>
  </div>
 
  <div class="container" style="margin-top:20px;">
-  <!-- تم إزالة أقسام الخدمات من الواجهة الرئيسية بناءً على طلب المدير لترتيب الواجهة -->
+  <!-- تم إزالة أقسام الخدمات من الواجهة الرئيسية بناءً على طلب المدير -->
  </div>
 
  <div class="trust-bar">
@@ -210,9 +243,10 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  </div>
 </section>
 
+<!-- صفحة خدماتنا مع الأزرار المرتبة شبكياً (2 في 2) وبحجم مناسب -->
 <section id="services" class="container hidden">
  <h2 class="section-title">جميع خدمات الصيانة</h2>
- <div class="grid" id="allServicesPage"></div>
+ <div class="services-grid" id="allServicesPage"></div>
 </section>
 
 <section id="technicians" class="container hidden">
@@ -309,7 +343,7 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  <h3 class="section-title" style="font-size:16px;color:#fff">إدارة طلبات الزبائن (مع تفاصيل الهواتف والحسابات)</h3>
  <div id="adminRequests"></div>
  <hr style="border-color:#d9b98e">
- <h3 class="section-title" style="font-size:16px;color:#fff">إدارة الفنيين والمشتركين (حذف / عرض الأرقام / الاشتراكات)</h3>
+ <h3 class="section-title" style="font-size:16px;color:#fff">إدارة الفنيين والمشتركين (حذف نهائي / عرض الأرقام / الاشتراكات)</h3>
  <div id="adminTechs"></div>
  <button class="btn danger" style="margin-top:25px" onclick="logout()">تسجيل الخروج كمدير</button>
 </section>
@@ -322,7 +356,7 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  </div>
 </footer>
 
-<!-- نافذة تحديد موقع الزبون (المحافظة والقضاء) عند الدخول -->
+<!-- نافذة تحديد موقع الزبون (المحافظة والقضاء) عند الدخول (لا تظهر للمدير) -->
 <div class="modal hidden" id="customerLocationModal">
  <div class="modal-box">
   <div class="modal-head"><h3>أهلاً بك في منصة صخر</h3><div class="close" onclick="closeCustomerLocationModal()">✕</div></div>
@@ -378,8 +412,8 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
   <div class="field"><label>الخدمة المطلوبة</label><select id="custService"></select></div>
   <div class="field"><label>وصف المشكلة أو العطل بالتفصيل</label><textarea id="custProblem" placeholder="اكتب تفاصيل العطل..."></textarea></div>
   
-  <div class="section-title" style="font-size:15px;margin:12px 0 8px;color:var(--burgundy);text-align:right">اختر الفني المناسب من قضائك:</div>
-  <div id="matchingTechs"><div class="empty">اختر المحافظة والقضاء والخدمة لعرض الفنيين المتاحين في قضائك حصراً.</div></div>
+  <div class="section-title" style="font-size:15px;margin:12px 0 8px;color:var(--burgundy);text-align:right">اختر الفني المناسب:</div>
+  <div id="matchingTechs"><div class="empty">اختر المحافظة والقضاء والخدمة لعرض الفنيين المتاحين.</div></div>
   <input type="hidden" id="custTech">
   
   <button class="btn primary" style="width:100%;margin-top:12px" onclick="submitRequest()">إرسال الطلب للفني المختار الآن</button>
@@ -459,7 +493,7 @@ const DISTRICTS={
 let auth=null,db=null,storage=null,currentUser=null,currentRole="guest",currentTech=null;
 let publicTechs=[],requests=[],technicians=[];
 let chosenCustomerCity="",chosenCustomerArea="",pendingService=null;
-let techJobsListener=null, customerOrderStatusListener=null, announcementListener=null;
+let techJobsListener=null, customerOrderStatusListener=null;
 
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -564,7 +598,6 @@ function setupLocations(){
     });
   }
 
-  // تحقق من وجود موقع محفوظ للزبون مسبقاً
   const savedCity = localStorage.getItem("sakhrCustomerCity") || "";
   const savedArea = localStorage.getItem("sakhrCustomerArea") || "";
   if(savedCity) {
@@ -598,6 +631,7 @@ function onInitialCityChanged() {
 }
 
 function showCustomerLocationModalIfNeeded() {
+  // المدير أو الفني لا تظهر لهم نافذة تحديد موقع الزبون
   if(currentRole === "admin" || currentRole === "technician" || currentRole === "suspended") return;
   const savedCity = localStorage.getItem("sakhrCustomerCity");
   const savedArea = localStorage.getItem("sakhrCustomerArea");
@@ -701,7 +735,6 @@ function initFirebase(){
 
 async function resolveRole(user){
   if(!user || user.isAnonymous) return {role:"guest", tech:null};
-  // الحساب الحصري للمدير
   if(user.email === "07805017009@sakhr.app") return {role:"admin", tech:null};
   const t = await db.ref("technicians/"+user.uid).once("value");
   if(t.exists()){
@@ -822,7 +855,6 @@ async function loginWithPhonePassword(){
 
   try{
     let emailPseudo = inputVal;
-    // التحقق إذا أدخل رقم هاتف المدير أو إيميله الحصري
     if(inputVal === "07805017009" || inputVal === "07805017009@sakhr.app"){
       emailPseudo = "07805017009@sakhr.app";
       try {
@@ -899,13 +931,12 @@ function techPhoto(t, small=false){
 function renderPublicTechs(){
   const el = $("publicTechList");
   if(!el) return;
-  // فلترة حسب قضاء الزبون المحفوظ حصراً
   const userCity = chosenCustomerCity || "";
   const userArea = chosenCustomerArea || "";
 
   const list = publicTechs.filter(t => {
     if(currentUser && currentUser.uid === t.uid) return false;
-    if(currentRole === "admin") return true; // المدير يشاهد الكل
+    if(currentRole === "admin") return true; 
     if(!userCity || userCity === "ALL") return true;
     return t.city === userCity && (!userArea || t.area === userArea);
   });
@@ -944,14 +975,14 @@ function renderMatchingTechs(){
     box.innerHTML = '<div class="empty">اختر المحافظة ونوع الخدمة لعرض الفنيين.</div>';
     return;
   }
-  if(city !== "ALL" && !area){
+  if(city !== "ALL" && !area && currentRole !== "admin"){
     box.innerHTML = '<div class="empty">اختر القضاء لتحديد الفنيين القريبين في قضائك.</div>';
     return;
   }
 
   const matches = publicTechs.filter(t => {
     if(currentUser && currentUser.uid === t.uid) return false;
-    const loc = city === "ALL" || (t.city === city && (!area || t.area === area));
+    const loc = currentRole === "admin" || city === "ALL" || (t.city === city && (!area || t.area === area));
     const hood = !neighborhood || String(t.neighborhood||"").toLowerCase().includes(neighborhood);
     const subActive = t.subscriptionStatus === "فعال";
     const freeUsed = Number(t.freeJobsUsed) || 0;
@@ -959,7 +990,7 @@ function renderMatchingTechs(){
   });
 
   if(!matches.length){
-    box.innerHTML = '<div class="empty">لا يوجد فني متاح بهذا الاختصاص في قضائك حالياً.</div>';
+    box.innerHTML = '<div class="empty">لا يوجد فني متاح بهذا الاختصاص حالياً.</div>';
     return;
   }
 
@@ -984,6 +1015,24 @@ function selectTechnician(uid){
 }
 
 async function openRequest(service="", preselectedUid=""){
+  // إذا كان المستخدم هو المدير، استثناء نافذة موقع الزبون وفتح نافذة الطلب مباشرة بدون قيود
+  if(currentRole === "admin") {
+    if($("requestMessage")) $("requestMessage").innerHTML = "";
+    if($("customerTrackingArea")) $("customerTrackingArea").innerHTML = "";
+    if($("custService")) $("custService").value = service || SERVICES[0];
+    selectedTechUid = preselectedUid || "";
+    if($("custTech")) $("custTech").value = selectedTechUid;
+    if($("custCity")) {
+      $("custCity").innerHTML = '<option value="ALL">كل المحافظات</option>' + Object.keys(DISTRICTS).map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("");
+      $("custCity").value = "ALL";
+      setDistricts("custArea", "ALL");
+    }
+    if($("requestModal")) $("requestModal").classList.remove("hidden");
+    await loadPublicTechs();
+    renderMatchingTechs();
+    return;
+  }
+
   const savedCity = chosenCustomerCity || localStorage.getItem("sakhrCustomerCity") || "";
   const savedArea = chosenCustomerArea || localStorage.getItem("sakhrCustomerArea") || "";
   
@@ -1023,8 +1072,8 @@ async function submitRequest(){
     const problem = $("custProblem")?.value.trim() || "";
     const techUid = $("custTech")?.value || "";
 
-    if(!name || !phone || !city || !area || !service || !problem)
-      return msg("requestMessage", "أكمل كافة الحقول (الاسم، الهاتف، المحافظة، القضاء، الخدمة ووصف المشكلة).", "error");
+    if(!name || !phone || !city || (city !== "ALL" && !area) || !service || !problem)
+      return msg("requestMessage", "أكمل كافة الحقول المطلوبة.", "error");
     if(!techUid)
       return msg("requestMessage", "اختر فنياً من القائمة قبل الإرسال.", "error");
 
@@ -1049,7 +1098,6 @@ async function submitRequest(){
     u["technicianJobs/"+techUid+"/"+id] = job;
     await db.ref().update(u);
 
-    // إذا كان المدير هو من يطلب، لا تظهر قوائم وتفاصيل مزعجة، بل رسالة تأكيد مباشرة مريحة
     if(currentRole === "admin") {
       msg("requestMessage", "تم إرسال الطلب للفني بنجاح كمدير للنظام!", "success");
     } else {
@@ -1271,7 +1319,7 @@ async function saveTechAccountProfile() {
   }
 }
 
-// الوظائف الخاصة بصلاحيات المدير الكاملة (حذف أي شخص، عرض كافة الهواتف والحسابات)
+// الوظائف الخاصة بصلاحيات المدير الكاملة (حذف أي فني نهائياً، تفعيل الاشتراكات، عرض الهواتف والحسابات)
 async function toggleTechSubscription(techUid, currentStatus) {
   if(currentRole !== "admin") return;
   const newStatus = currentStatus === "فعال" ? "غير فعال" : "فعال";
@@ -1342,7 +1390,7 @@ function listenToAnnouncement() {
     if(bar) {
       if(val) {
         bar.innerText = val;
-        bar.style.display = "block";
+        bar.style.display = "inline-block";
       } else {
         bar.style.display = "none";
       }
