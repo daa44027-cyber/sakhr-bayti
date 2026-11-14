@@ -208,7 +208,7 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
   <div class="slogan">بيتك يستاهل الأفضل</div>
   <p>أسرع منصة لربط أصحاب المنازل بأفضل الفنيين المحليين في قضائك</p>
   
-  <button class="cta-btn" onclick="openRequest()">🛠️ اطلب خدمتك الآن</button>
+  <button class="cta-btn" onclick="showSection('technicians')">🛠️ اطلب خدمتك الآن</button>
 
   <div class="quick-search-box">
    <select id="quickCitySelect" onchange="quickCityChanged()">
@@ -284,13 +284,11 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
      <button type="button" class="toggle-password" onclick="togglePassword('regPassword', this)">👁️</button>
     </div>
    </div>
-   <div class="field"><label>المحافظة</label><select id="regCity"><option value="">اختر المحافظة</option></select></div>
+   <div class="field"><label>الاختصاص الرئيسي</label><select id="regService"></select></div>
   </div>
   <div class="row">
-   <div class="field"><label>القضاء</label><select id="regArea" disabled><option value="">اختر المحافظة أولاً</option></select></div>
    <div class="field"><label>المنطقة أو الحي</label><input id="regNeighborhood" placeholder="مثال: البندقية"></div>
   </div>
-  <div class="field"><label>الاختصاص الرئيسي</label><select id="regService"></select></div>
   <div class="field"><label>نبذة عن خبرتك ومهاراتك</label><textarea id="regBio" placeholder="اكتب نبذة مختصرة عن خبرتك..."></textarea></div>
   <div class="field"><label>الصورة الشخصية للفني</label><input id="regPhoto" type="file" accept="image/*"><img id="regPreview" class="avatar hidden" alt="معاينة"></div>
   
@@ -356,6 +354,15 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  </div>
 </footer>
 
+<!-- نافذة رسائل عامة مخصصة بدل الـ Alert -->
+<div class="modal hidden" id="customAlertModal">
+ <div class="modal-box" style="text-align: center;">
+  <div class="modal-head"><h3>تنبيه منصة صخر</h3><div class="close" onclick="closeModal('customAlertModal')">✕</div></div>
+  <div style="font-size: 15px; font-weight: 800; color: var(--burgundy); margin: 20px 0;" id="customAlertText"></div>
+  <button class="btn primary" onclick="closeModal('customAlertModal')" style="width: 100%;">حسناً</button>
+ </div>
+</div>
+
 <!-- نافذة تأكيد الحذف المخصصة والمطابقة للتصميم -->
 <div class="modal hidden" id="customConfirmModal">
  <div class="modal-box" style="text-align: center;">
@@ -378,9 +385,23 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  </div>
 </div>
 
+<!-- نافذة شروط الاستخدام الإجبارية عند أول دخول -->
+<div class="modal hidden" id="termsModal">
+ <div class="modal-box">
+  <div class="modal-head"><h3>شروط الاستخدام وأحكام المنصة</h3></div>
+  <div style="font-size:13px; line-height:1.7; color:var(--text-main); max-height: 200px; overflow-y: auto; background: #fff9ef; padding: 10px; border-radius: 8px; border: 1px solid #d9b98e;">
+   أهلاً بك في منصة <b>صخر</b> للصيانة المنزلية. باستخدامك لهذه المنصة، فإنك توافق على الالتزام بشروط الاستخدام، وأن المنصة هي وسيط تقني يربط الزبون بالفني المستقل ولا تتحمل مسؤولية النزاعات الشخصية. يرجى التعامل باحترام ومهنية.
+  </div>
+  <div style="margin-top: 15px;">
+   <button class="btn primary" style="width:100%;" onclick="acceptTerms()">أوافق وقبلت الشروط</button>
+  </div>
+ </div>
+</div>
+
+<!-- نافذة المحافظة والقضاء الإجبارية عند أول دخول -->
 <div class="modal hidden" id="customerLocationModal">
  <div class="modal-box">
-  <div class="modal-head"><h3>أهلاً بك في منصة صخر</h3><div class="close" onclick="closeCustomerLocationModal()">✕</div></div>
+  <div class="modal-head"><h3>تحديد موقعك الجغرافي</h3></div>
   <div class="notice">اختر محافظتك والقضاء الخاص بك حتى نعرض لك الفنيين المتواجدين في منطقتك حصراً.</div>
   <div class="field">
    <label>المحافظة</label>
@@ -395,8 +416,28 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
     <option value="">اختر المحافظة أولاً</option>
    </select>
   </div>
-  <button class="btn primary" style="width:100%; margin-top:10px;" onclick="confirmCustomerLocation()">تأكيد والانتقال للمنصة</button>
+  <button class="btn primary" style="width:100%; margin-top:10px;" onclick="confirmCustomerLocation()">تأكيد والمتابعة</button>
   <div id="initialLocationMessage"></div>
+ </div>
+</div>
+
+<!-- نافذة طلب الفني المبسطة للزبون (اسم، هاتف، باسورد، وملاحظة) -->
+<div class="modal hidden" id="customerOrderModal">
+ <div class="modal-box">
+  <div class="modal-head"><h3 id="orderModalTitle">طلب الفني المعتمد</h3><div class="close" onclick="closeModal('customerOrderModal')">✕</div></div>
+  <div class="notice">أدخل بياناتك الشخصية وكلمة المرور (لتسجيل حسابك الآمن) مع تفاصيل المشكلة لإرسال الطلب للفني مباشرة.</div>
+  <div class="field"><label>الاسم الكامل</label><input id="custOrderName" placeholder="مثال: أحمد كريم"></div>
+  <div class="field"><label>رقم الهاتف</label><input id="custOrderPhone" inputmode="tel" placeholder="07800000000"></div>
+  <div class="field">
+   <label>كلمة المرور (الباسورد)</label>
+   <div class="password-wrapper">
+    <input id="custOrderPassword" type="password" placeholder="6 أحرف أو أرقام على الأقل">
+    <button type="button" class="toggle-password" onclick="togglePassword('custOrderPassword', this)">👁️</button>
+   </div>
+  </div>
+  <div class="field"><label>الملاحظة أو تفاصيل المشكلة</label><textarea id="custOrderProblem" placeholder="اكتب تفاصيل العطل أو المشكلة هنا..."></textarea></div>
+  <button class="btn primary" style="width:100%; margin-top:10px;" onclick="submitCustomerOrder()">إرسال الطلب إلى الفني</button>
+  <div id="custOrderMessage"></div>
  </div>
 </div>
 
@@ -435,8 +476,8 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  <div class="modal-box">
   <form onsubmit="event.preventDefault(); loginWithPhonePassword();">
    <div class="modal-head"><h3>تسجيل الدخول الآمن</h3><div class="close" onclick="closeModal('loginModal')">✕</div></div>
-   <div class="notice">أدخل بريدك الإلكتروني أو رقم هاتفك وكلمة المرور للمتابعة. (خاص بالمدير أو الفنيين المسجلين).</div>
-   <div class="field"><label>رقم الهاتف أو البريد الإلكتروني</label><input id="loginPhone" placeholder="07800000000 أو الإيميل"></div>
+   <div class="notice">أدخل رقم هاتفك (أو إيميل الإدارة) وكلمة المرور للمتابعة.</div>
+   <div class="field"><label>رقم الهاتف (للفني) أو الإيميل (للإدارة)</label><input id="loginPhone" placeholder="07800000000 أو الإيميل"></div>
    <div class="field">
     <label>كلمة المرور</label>
     <div class="password-wrapper">
@@ -445,7 +486,7 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
     </div>
    </div>
    <button type="submit" class="btn primary" style="width:100%">دخول إلى الحساب</button>
-   <button type="button" class="btn light" style="width:100%;margin-top:8px" onclick="closeModal('loginModal');showSection('join')">ليس لديك حساب؟ تسجيل فني جديد</button>
+   <button type="button" class="btn light" style="width:100%;margin-top:8px" onclick="closeModal('loginModal');showSection('join')">تسجيل فني جديد</button>
    <div id="loginMessage"></div>
   </form>
  </div>
@@ -499,8 +540,8 @@ const DISTRICTS={
 
 let auth=null,db=null,storage=null,currentUser=null,currentRole="guest",currentTech=null;
 let publicTechs=[],requests=[],technicians=[];
-let chosenCustomerCity="",chosenCustomerArea="",pendingService=null;
-let techJobsListener=null, customerOrderStatusListener=null;
+let chosenCustomerCity="",chosenCustomerArea="",selectedTargetTech=null;
+let techJobsListener=null;
 
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -511,7 +552,12 @@ const formatWhatsApp=phone=>{
   return clean;
 };
 
-// دالة مخصصة لتأكيد الحذف بدون نافذة المتصفح المزعجة
+// دالة مخصصة لعرض التنبيهات بدلاً من الـ Alert الافتراضي المزعج
+function showCustomAlert(text) {
+  $("customAlertText").innerText = text;
+  $("customAlertModal").classList.remove("hidden");
+}
+
 function showCustomConfirm(text, onYes) {
   $("customConfirmText").innerText = text;
   const yesBtn = $("confirmYesBtn");
@@ -586,22 +632,8 @@ function updateNavAuthButton() {
 
 function setupLocations(){
   const cityOptions = Object.keys(DISTRICTS).map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("");
-  if($("regCity")) $("regCity").innerHTML = '<option value="">اختر المحافظة</option>' + cityOptions;
-  if($("custCity")) $("custCity").innerHTML = '<option value="">اختر المحافظة</option><option value="ALL">كل المحافظات</option>' + cityOptions;
   if($("initialCustomerCity")) $("initialCustomerCity").innerHTML = '<option value="">اختر محافظتك</option><option value="ALL">البحث في جميع المحافظات</option>' + cityOptions;
   if($("quickCitySelect")) $("quickCitySelect").innerHTML = '<option value="">اختر المحافظة</option><option value="ALL">كل المحافظات</option>' + cityOptions;
-
-  if($("regCity")) {
-    $("regCity").addEventListener("change", ()=>setDistricts("regArea", $("regCity").value));
-  }
-  if($("custCity")) {
-    $("custCity").addEventListener("change", ()=>{
-      const city = $("custCity").value;
-      chosenCustomerCity = city;
-      if(city) localStorage.setItem("sakhrCustomerCity", city);
-      setDistricts("custArea", city);
-    });
-  }
 
   const savedCity = localStorage.getItem("sakhrCustomerCity") || "";
   const savedArea = localStorage.getItem("sakhrCustomerArea") || "";
@@ -609,9 +641,6 @@ function setupLocations(){
     chosenCustomerCity = savedCity;
     chosenCustomerArea = savedArea;
     if($("quickCitySelect")) $("quickCitySelect").value = savedCity;
-    if($("custCity")) $("custCity").value = savedCity;
-    setDistricts("custArea", savedCity);
-    if($("custArea") && savedArea) $("custArea").value = savedArea;
   }
 }
 
@@ -635,11 +664,16 @@ function onInitialCityChanged() {
   setDistricts("initialCustomerArea", city);
 }
 
-function showCustomerLocationModalIfNeeded() {
+// تدقيق وتفعيل نافذة الشروط والموقع عند أول دخول للزبون
+function checkInitialStartupModals() {
   if(currentRole === "admin" || currentRole === "technician" || currentRole === "suspended") return;
+  const termsAccepted = localStorage.getItem("sakhrTermsAccepted");
   const savedCity = localStorage.getItem("sakhrCustomerCity");
   const savedArea = localStorage.getItem("sakhrCustomerArea");
-  if(!savedCity || !savedArea) {
+
+  if(!termsAccepted) {
+    $("termsModal").classList.remove("hidden");
+  } else if(!savedCity || !savedArea) {
     $("initialLocationMessage").innerHTML = "";
     $("customerLocationModal").classList.remove("hidden");
   } else {
@@ -648,20 +682,19 @@ function showCustomerLocationModalIfNeeded() {
   }
 }
 
-function closeCustomerLocationModal() {
-  const savedCity = localStorage.getItem("sakhrCustomerCity");
-  const savedArea = localStorage.getItem("sakhrCustomerArea");
-  if(!savedCity || !savedArea) {
-    alert("يرجى اختيار المحافظة والقضاء للمتابعة.");
-    return;
-  }
-  closeModal("customerLocationModal");
+function acceptTerms() {
+  localStorage.setItem("sakhrTermsAccepted", "true");
+  closeModal("termsModal");
+  checkInitialStartupModals();
 }
 
 function confirmCustomerLocation(){
   const city = $("initialCustomerCity").value;
   const area = $("initialCustomerArea").value;
-  if(!city || !area) return msg("initialLocationMessage", "يرجى اختيار المحافظة والقضاء معاً.", "error");
+  if(!city || !area) {
+    showCustomAlert("يرجى اختيار المحافظة والقضاء معاً.");
+    return;
+  }
 
   chosenCustomerCity = city;
   chosenCustomerArea = area;
@@ -669,9 +702,6 @@ function confirmCustomerLocation(){
   localStorage.setItem("sakhrCustomerArea", area);
 
   if($("quickCitySelect")) $("quickCitySelect").value = city;
-  if($("custCity")) $("custCity").value = city;
-  setDistricts("custArea", city);
-  if($("custArea")) $("custArea").value = area;
 
   closeModal("customerLocationModal");
 }
@@ -691,8 +721,10 @@ function quickCityChanged(){
 
 function executeQuickSearch(){
   const city = $("quickCitySelect").value;
-  const service = $("quickServiceSelect").value;
-  if(!city) return alert("اختر المحافظة أولاً");
+  if(!city) {
+    showCustomAlert("اختر المحافظة أولاً");
+    return;
+  }
   chosenCustomerCity = city;
   localStorage.setItem("sakhrCustomerCity", city);
   showSection("technicians");
@@ -704,7 +736,7 @@ function renderServices(){
     const icons=["❄️","🎨","🚰","💡","🛠️","🧱","🪚","🧹"];
     if(el) {
       el.innerHTML = SERVICES.map((s,i)=>`
-        <div class="service-card" onclick="chooseService('${s}')">
+        <div class="service-card" onclick="showSection('technicians')">
           <div class="service-icon">${icons[i]}</div>
           <h3>${esc(s)}</h3>
           <div class="arrow-badge">➔</div>
@@ -748,7 +780,7 @@ async function onAuthChanged(user){
   if(!user){ 
     updateNavAuthButton();
     try{ await auth.signInAnonymously(); }catch(e){} 
-    showCustomerLocationModalIfNeeded();
+    checkInitialStartupModals();
     return; 
   }
 
@@ -759,21 +791,23 @@ async function onAuthChanged(user){
     updateNavAuthButton();
 
     if(currentRole === "admin"){
+      closeModal("termsModal");
       closeModal("customerLocationModal");
       closeModal("loginModal");
       showSection("admin");
       loadAdminData();
     } else if(["technician", "suspended"].includes(currentRole)){
+      closeModal("termsModal");
       closeModal("customerLocationModal");
       closeModal("loginModal");
       showSection("techAccount");
       renderTechAccount();
     } else {
-      showCustomerLocationModalIfNeeded();
+      checkInitialStartupModals();
     }
   }catch(e){
     updateNavAuthButton();
-    showCustomerLocationModalIfNeeded();
+    checkInitialStartupModals();
   }
 }
 
@@ -804,15 +838,16 @@ async function registerTechWithPassword(){
   const name = $("regName").value.trim();
   const phone = $("regPhone").value.trim();
   const password = $("regPassword").value;
-  const city = $("regCity").value;
-  const area = $("regArea").value;
   const neighborhood = $("regNeighborhood").value.trim();
   const service = $("regService").value;
   const bio = $("regBio").value.trim();
   const file = $("regPhoto").files[0];
 
-  if(!name || !phone || !password || !city || !area || !service)
-    return alert("أكمل الاسم، رقم الهاتف، كلمة المرور، المحافظة، القضاء والاختصاص.");
+  const city = chosenCustomerCity || "بغداد";
+  const area = chosenCustomerArea || "المركز";
+
+  if(!name || !phone || !password || !service)
+    return showCustomAlert("أكمل الاسم، رقم الهاتف، كلمة المرور والاختصاص.");
 
   let createdUser = null, profileSaved = false;
   try{
@@ -838,7 +873,7 @@ async function registerTechWithPassword(){
     showSection("techAccount");
     await renderTechAccount();
   }catch(e){
-    alert(e.message);
+    showCustomAlert(e.message);
     if(createdUser && !profileSaved){ try{await createdUser.delete()}catch(_){} }
   }
 }
@@ -846,7 +881,7 @@ async function registerTechWithPassword(){
 async function loginWithPhonePassword(){
   const inputVal = $("loginPhone").value.trim();
   const password = $("loginPassword").value;
-  if(!inputVal || !password) return alert("أدخل رقم الهاتف أو الإيميل وكلمة المرور.");
+  if(!inputVal || !password) return showCustomAlert("أدخل رقم الهاتف وكلمة المرور.");
 
   try{
     let emailPseudo = inputVal;
@@ -858,7 +893,7 @@ async function loginWithPhonePassword(){
         await auth.createUserWithEmailAndPassword(emailPseudo, password);
       }
       currentRole = "admin";
-      closeModal("loginModal"); closeModal("customerLocationModal");
+      closeModal("loginModal"); closeModal("termsModal"); closeModal("customerLocationModal");
       updateNavAuthButton();
       showSection("admin");
       loadAdminData();
@@ -872,18 +907,19 @@ async function loginWithPhonePassword(){
     const c = await auth.signInWithEmailAndPassword(emailPseudo, password);
     const s = await db.ref("technicians/"+c.user.uid).once("value");
     if(!s.exists()){
-      return alert("الحساب غير مسجل كفني أو غير مصرح به.");
+      return showCustomAlert("الحساب غير مسجل كفني أو غير مصرح به.");
     }
     currentRole = s.val().approved === false ? "suspended" : "technician";
     currentTech = s.val();
     updateNavAuthButton();
 
     closeModal("loginModal");
+    closeModal("termsModal");
     closeModal("customerLocationModal");
     showSection("techAccount");
     renderTechAccount();
   }catch(e){
-    alert("خطأ في بيانات الدخول: "+e.message);
+    showCustomAlert("خطأ في بيانات الدخول: "+e.message);
   }
 }
 
@@ -894,7 +930,7 @@ async function logout(){
     currentRole = "guest"; currentTech = null; currentUser = null;
     updateNavAuthButton();
     showSection("home");
-    showCustomerLocationModalIfNeeded();
+    checkInitialStartupModals();
   }catch(e){}
 }
 
@@ -989,42 +1025,68 @@ async function chooseServiceDirect(service, techUid){
       $("adminDirectRequestText").innerHTML = "تم إرسال الطلب إلى الفني (" + esc(tech.name) + ") بنجاح.<br>الطلب قيد التنفيذ، بانتظار موافقة الفني.";
       $("adminDirectRequestModal").classList.remove("hidden");
     } catch(e) {
-      alert("خطأ: " + e.message);
+      showCustomAlert("خطأ: " + e.message);
     }
   } else {
-    // للزبون العادي
-    try {
-      const tech = publicTechs.find(t => t.uid === techUid);
-      if(!tech) throw new Error("الفني غير موجود.");
-      const custId = currentUser ? currentUser.uid : "guest_" + Date.now();
-      const id = db.ref("requests/"+custId).push().key;
-      const now = Date.now();
-      const record = {
-        id, uid: custId, name: "زبون صخر", phone: "07800000000", city: chosenCustomerCity || "غير محدد",
-        area: chosenCustomerArea || "غير محدد", neighborhood: "", service, problem: "طلب مباشر للفني المختار",
-        preferredTech: techUid, assignedTech: techUid, assignedTechName: tech.name,
-        status: "بانتظار رد الفني", createdAt: now, countedAsCompleted: false, rated: false
-      };
-      const job = { id, customerUid: custId, customerName: "زبون صخر", customerPhone: "07800000000", service, city: chosenCustomerCity || "", area: chosenCustomerArea || "", neighborhood: "", problem: "طلب مباشر للفني المختار", status: "بانتظار رد الفني", createdAt: now };
-
-      const u = {};
-      u["requests/"+custId+"/"+id] = record;
-      u["technicianJobs/"+techUid+"/"+id] = job;
-      await db.ref().update(u);
-
-      $("adminDirectRequestText").innerHTML = "تم إرسال طلبك إلى الفني (" + esc(tech.name) + ") بنجاح.<br>الطلب قيد التنفيذ، بانتظار موافقة الفني.";
-      $("adminDirectRequestModal").classList.remove("hidden");
-    } catch(e) {
-      alert("خطأ: " + e.message);
-    }
+    // للزبون العادي: تفتح نافذة مبسطة تطلب الاسم، الهاتف، الباسورد، والملاحظة
+    selectedTargetTech = publicTechs.find(t => t.uid === techUid);
+    if(!selectedTargetTech) return showCustomAlert("الفني غير موجود.");
+    $("orderModalTitle").innerText = "طلب الفني: " + selectedTargetTech.name;
+    $("custOrderName").value = "";
+    $("custOrderPhone").value = "";
+    $("custOrderPassword").value = "";
+    $("custOrderProblem").value = "";
+    $("custOrderMessage").innerHTML = "";
+    $("customerOrderModal").classList.remove("hidden");
   }
 }
 
-function chooseService(s){
-  if(currentRole === "admin") {
-    showSection("technicians");
-  } else {
-    showSection("technicians");
+async function submitCustomerOrder() {
+  const name = $("custOrderName").value.trim();
+  const phone = $("custOrderPhone").value.trim();
+  const password = $("custOrderPassword").value;
+  const problem = $("custOrderProblem").value.trim();
+
+  if(!name || !phone || !password || !problem) {
+    showCustomAlert("يرجى إكمال الاسم، رقم الهاتف، كلمة المرور وتفاصيل المشكلة.");
+    return;
+  }
+
+  try {
+    let custId = currentUser ? currentUser.uid : "";
+    if(!currentUser || currentUser.isAnonymous) {
+      const emailPseudo = phone + "@sakhr.app";
+      try {
+        const cred = await auth.createUserWithEmailAndPassword(emailPseudo, password);
+        custId = cred.user.uid;
+      } catch(authErr) {
+        const cred = await auth.signInWithEmailAndPassword(emailPseudo, password);
+        custId = cred.user.uid;
+      }
+    }
+
+    const techUid = selectedTargetTech.uid;
+    const id = db.ref("requests/"+custId).push().key;
+    const now = Date.now();
+
+    const record = {
+      id, uid: custId, name, phone, city: chosenCustomerCity || "محافظتي",
+      area: chosenCustomerArea || "القضاء", neighborhood: "", service: selectedTargetTech.service, problem,
+      preferredTech: techUid, assignedTech: techUid, assignedTechName: selectedTargetTech.name,
+      status: "بانتظار رد الفني", createdAt: now, countedAsCompleted: false, rated: false
+    };
+
+    const job = { id, customerUid: custId, customerName: name, customerPhone: phone, service: selectedTargetTech.service, city: chosenCustomerCity || "", area: chosenCustomerArea || "", neighborhood: "", problem, status: "بانتظار رد الفني", createdAt: now };
+
+    const u = {};
+    u["requests/"+custId+"/"+id] = record;
+    u["technicianJobs/"+techUid+"/"+id] = job;
+    await db.ref().update(u);
+
+    closeModal("customerOrderModal");
+    showCustomAlert("تم إرسال طلبك بنجاح إلى الفني (" + selectedTargetTech.name + ")!");
+  } catch(e) {
+    showCustomAlert("خطأ في إرسال الطلب: " + e.message);
   }
 }
 
@@ -1039,7 +1101,7 @@ async function toggleTechAvailability() {
     renderTechAccount();
     loadPublicTechs();
   } catch(e) {
-    alert("خطأ: " + e.message);
+    showCustomAlert("خطأ: " + e.message);
   }
 }
 
@@ -1138,16 +1200,15 @@ async function technicianDecision(jobId, decision) {
   const status = decision === "مقبول" ? "مقبول من الفني" : "مرفوض من الفني";
   try {
     await db.ref("technicianJobs/"+uid+"/"+jobId).update({ status });
-    // تحديث الطلب الرئيسي أيضاً
     const snap = await db.ref("technicianJobs/"+uid+"/"+jobId).once("value");
     if(snap.exists()) {
       const job = snap.val();
       await db.ref("requests/"+job.customerUid+"/"+jobId).update({ status });
     }
-    alert("تم تحديث حال الطلب بنجاح.");
+    showCustomAlert("تم تحديث حالة الطلب بنجاح.");
     renderTechAccount();
   } catch(e) {
-    alert("خطأ: " + e.message);
+    showCustomAlert("خطأ: " + e.message);
   }
 }
 
@@ -1164,7 +1225,8 @@ async function saveTechAccountProfile() {
   const file = $("editTechPhotoFile").files[0];
 
   if(!name || !phone || !city || !area || !service) {
-    return alert("أكمل الحقول الأساسية (الاسم، الهاتف، المحافظة، القضاء، الاختصاص).");
+    showCustomAlert("أكمل الحقول الأساسية (الاسم، الهاتف، المحافظة، القضاء، الاختصاص).");
+    return;
   }
 
   try {
@@ -1181,12 +1243,12 @@ async function saveTechAccountProfile() {
     await db.ref("technicians/"+uid).update(updated);
     await syncPublicTechnician(uid, updated);
     currentTech = updated;
-    alert("تم حفظ وتحديث تعديلات البروفايل بنجاح!");
+    showCustomAlert("تم حفظ وتحديث تعديلات البروفايل بنجاح!");
     closeModal('techEditModal');
     renderTechAccount();
     loadPublicTechs();
   } catch(e) {
-    alert("خطأ في الحفظ: "+e.message);
+    showCustomAlert("خطأ في الحفظ: "+e.message);
   }
 }
 
@@ -1196,10 +1258,10 @@ async function toggleTechSubscription(techUid, currentStatus) {
   try {
     await db.ref("technicians/" + techUid).update({ subscriptionStatus: newStatus });
     await db.ref("publicTechnicians/" + techUid).update({ subscriptionStatus: newStatus });
-    alert("تم تحديث حالة اشتراك الفني إلى: " + newStatus);
+    showCustomAlert("تم تحديث حالة اشتراك الفني إلى: " + newStatus);
     loadAdminData();
   } catch(e) {
-    alert("خطأ: " + e.message);
+    showCustomAlert("خطأ: " + e.message);
   }
 }
 
@@ -1208,10 +1270,10 @@ async function resetTechFreeJobs(techUid) {
   try {
     await db.ref("technicians/" + techUid).update({ freeJobsUsed: 0 });
     await db.ref("publicTechnicians/" + techUid).update({ freeJobsUsed: 0 });
-    alert("تم تصفير الأعمال المجانية للفني بنجاح.");
+    showCustomAlert("تم تصفير الأعمال المجانية للفني بنجاح.");
     loadAdminData();
   } catch(e) {
-    alert("خطأ: " + e.message);
+    showCustomAlert("خطأ: " + e.message);
   }
 }
 
@@ -1222,11 +1284,11 @@ async function adminDeleteTechnician(techUid, techName) {
       await db.ref("technicians/" + techUid).remove();
       await db.ref("publicTechnicians/" + techUid).remove();
       await db.ref("technicianJobs/" + techUid).remove();
-      alert("تم حذف الفني بنجاح.");
+      showCustomAlert("تم حذف الفني بنجاح.");
       loadAdminData();
       loadPublicTechs();
     } catch(e) {
-      alert("خطأ أثناء الحذف: " + e.message);
+      showCustomAlert("خطأ أثناء الحذف: " + e.message);
     }
   });
 }
@@ -1236,10 +1298,10 @@ async function adminDeleteRequest(custUid, reqId) {
   showCustomConfirm("هل أنت متأكد من حذف هذا الطلب نهائياً؟", async () => {
     try {
       await db.ref("requests/" + custUid + "/" + reqId).remove();
-      alert("تم حذف الطلب بنجاح.");
+      showCustomAlert("تم حذف الطلب بنجاح.");
       loadAdminData();
     } catch(e) {
-      alert("خطأ: " + e.message);
+      showCustomAlert("خطأ: " + e.message);
     }
   });
 }
@@ -1249,9 +1311,9 @@ async function saveAdminAnnouncement() {
   const val = $("adminAnnouncementInput").value.trim();
   try {
     await db.ref("settings/announcement").set(val);
-    alert("تم تحديث الشريط الإعلاني بنجاح!");
+    showCustomAlert("تم تحديث الشريط الإعلاني بنجاح!");
   } catch(e) {
-    alert("خطأ: " + e.message);
+    showCustomAlert("خطأ: " + e.message);
   }
 }
 
@@ -1270,7 +1332,7 @@ function listenToAnnouncement() {
   });
 }
 
-// دالة تحميل بيانات المدير لعرض كافة الفنيين المسجلين بوضوح تام
+// دالة تحميل بيانات المدير لضمان جلب كافة الفنيين المسجلين في النظام بلا استثناء
 async function loadAdminData(){
   if(currentRole !== "admin") return;
   try{
@@ -1333,19 +1395,22 @@ async function submitReview() {
   const name = $("reviewName").value.trim();
   const stars = Number($("reviewStars").value);
   const text = $("reviewText").value.trim();
-  if(!name || !text) return alert("يرجى كتابة الاسم والملاحظة.");
+  if(!name || !text) {
+    showCustomAlert("يرجى كتابة الاسم والملاحظة.");
+    return;
+  }
   
   try {
     const id = db.ref("reviews").push().key;
     await db.ref("reviews/"+id).set({
       name, stars, text, createdAt: Date.now()
     });
-    alert("تم إرسال تقييمك وملاحظتك بنجاح!");
+    showCustomAlert("تم إرسال تقييمك وملاحظتك بنجاح!");
     $("reviewName").value = "";
     $("reviewText").value = "";
     loadReviews();
   } catch(e) {
-    alert("خطأ: " + e.message);
+    showCustomAlert("خطأ: " + e.message);
   }
 }
 
