@@ -71,6 +71,7 @@ nav button:hover, nav button.primary-nav { background: var(--gold); color: var(-
 .hero-banner .slogan { font-size: 28px; font-weight: 900; color: var(--gold); margin: 5px 0 10px; text-shadow: 0 3px 10px rgba(0,0,0,0.6); }
 .hero-banner p { font-size: 13px; color: var(--cream); margin: 0 0 15px; opacity: 0.9; }
 
+/* تنسيق خيارات الدخول الرئيسية البارزة */
 .role-selection-box {
   background: rgba(255, 255, 255, 0.95);
   border: 3px solid var(--gold);
@@ -194,7 +195,7 @@ nav button:hover, nav button.primary-nav { background: var(--gold); color: var(-
 .success { background: #d1e7dd; color: #0f5132; }
 .error { background: #f8d7da; color: #842029; border-color: #f5c2c7; }
 
-/* كارت بارز ومميز جداً للأعمال المجانية الخاصة بالفني */
+/* كارت بارز ومميز للأعمال المجانية للفني */
 .free-jobs-highlight-card {
   background: linear-gradient(135deg, #fff9ef, #ffecc4);
   border: 3px solid var(--gold);
@@ -384,17 +385,9 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
   <div id="availabilityMsg" style="margin-top:6px; font-size:12px; font-weight:700;"></div>
  </div>
  
- <!-- واجهة الدفع الإلكتروني للاشتراك (زين كاش / ماستر كارد) -->
  <div id="techSubscriptionCard" class="card" style="margin-bottom:15px; background:#fff9ef; border:2px solid var(--gold);">
-  <h3 style="color:var(--burgundy); margin-top:0; font-weight:900; font-size:15px;">💳 بوابة الدفع الإلكتروني واشتراك المنصة</h3>
-  <div id="techSubDetails" style="font-size:13px; color:var(--text-main); line-height:1.7; margin-bottom:12px;"></div>
-  <div style="background:#fff; padding:12px; border-radius:10px; border:1px solid #d9b98e;">
-   <div style="font-weight:800; color:var(--burgundy); margin-bottom:8px; font-size:13px;">طرق الدفع الرسمية (زين كاش / ماستر كارد):</div>
-   <div style="display:flex; gap:8px; flex-wrap:wrap;">
-    <button class="btn primary" style="flex:1;" onclick="payViaZainCash()">تحويل عبر زين كاش (07805017009)</button>
-    <button class="btn whatsapp-btn" style="flex:1;" onclick="payViaMasterCard()">دفع عبر الماستر كارد / البنك</button>
-   </div>
-  </div>
+  <h3 style="color:var(--burgundy); margin-top:0; font-weight:900; font-size:15px;">💳 حالة الاشتراك والأعمال المجانية</h3>
+  <div id="techSubDetails" style="font-size:13px; color:var(--text-main); line-height:1.7;"></div>
  </div>
 
  <div style="text-align:center; margin-bottom:20px;">
@@ -697,7 +690,7 @@ function showSection(id) {
 function closeModal(id) { const m = $(id); if(m) m.classList.add("hidden"); }
 function openLogin() { $("loginMessage").innerHTML = ""; $("loginModal").classList.remove("hidden"); }
 function openForgotPasswordModal() { closeModal('loginModal'); $("forgotPasswordModal").classList.remove("hidden"); }
-function openDisclaimer() { $("disclaimerModal").classList.remove("hidden"); }
+function openDisclaimer() { $("disclaimerModal").classList.add("hidden"); }
 function openTechEditModal() { $("editProfileMessage").innerHTML = ""; $("techEditModal").classList.remove("hidden"); }
 
 // معالجة اختيار الدخول من الواجهة الرئيسية
@@ -1232,16 +1225,6 @@ async function toggleTechAvailability() {
   }
 }
 
-// دفع رسوم الاشتراك عبر زين كاش
-function payViaZainCash() {
-  window.open("https://i.zaincash.iq/?amount=10000&phone=07805017009&note=اشتراك+منصة+صخر", "_blank");
-}
-
-// دفع رسوم الاشتراك عبر الماستر كارد / البنك
-function payViaMasterCard() {
-  showCustomAlert("للدفع عبر الماستر كارد أو البنك، يرجى التواصل مباشرة مع إدارة المنصة (رقم الإدارة: 07805017009) لتزويدك برابط الدفع الآمن وإيصال التفعيل الفوري.");
-}
-
 async function renderTechAccount(){
   if(!currentUser || !["technician","suspended"].includes(currentRole)) return;
   const uid = currentUser.uid;
@@ -1265,19 +1248,6 @@ async function renderTechAccount(){
       </div>`;
     }
 
-    const subStatus = currentTech.subscriptionStatus || "غير فعال";
-    const freeUsed = Number(currentTech.freeJobsUsed || 0);
-    const freeRemaining = Math.max(0, 3 - freeUsed);
-
-    // تلوين وبروز كارت الأعمال المجانية بشكل ممتاز
-    if($("techFreeJobsHighlight")) {
-      $("techFreeJobsHighlight.innerHTML = `
-        <div style="font-size:13px; font-weight:800; color:var(--burgundy);">🎁 رصيد الأعمال المجانية الخاصة بك</div>
-        <div class="free-jobs-counter">متبقي لديك <span style="color:#d99b07;">${freeRemaining}</span> من أصل 3 أعمال مجانية</div>
-        <div style="font-size:11px; color:#6b5362; font-weight:700;">تم إنجاز واستخدام ${freeUsed} أعمال مجاناً عبر المنصة.</div>
-      `;
-    }
-
     const isAvailBtn = currentTech.available !== false;
     const availBtn = $("toggleAvailableBtn");
     if(availBtn) {
@@ -1286,12 +1256,25 @@ async function renderTechAccount(){
       $("availabilityMsg").innerHTML = isAvailBtn ? "حالتك الحالية: <b>متاح</b> وتظهر للزبائن." : "حالتك الحالية: <b>غير متاح</b> ومخفي تماماً عن قوائم البحث حتى لا ينزعجك أحد.";
     }
 
+    const subStatus = currentTech.subscriptionStatus || "غير فعال";
+    const freeUsed = Number(currentTech.freeJobsUsed || 0);
+    const freeRemaining = Math.max(0, 3 - freeUsed);
+
+    // تلوين وبروز كارت الأعمال المجانية بشكل ممتاز
+    if($("techFreeJobsHighlight")) {
+      $("techFreeJobsHighlight").innerHTML = `
+        <div style="font-size:13px; font-weight:800; color:var(--burgundy);">🎁 رصيد الأعمال المجانية الخاصة بك</div>
+        <div class="free-jobs-counter">متبقي لديك <span style="color:#d99b07;">${freeRemaining}</span> من أصل 3 أعمال مجانية</div>
+        <div style="font-size:11px; color:#6b5362; font-weight:700;">تم إنجاز واستخدام ${freeUsed} أعمال مجاناً عبر المنصة.</div>
+      `;
+    }
+
     if($("techSubDetails")) {
       let subNoticeHtml = "";
       if(subStatus !== "فعال" && freeUsed >= 3) {
-        subNoticeHtml = '<div class="notice error" style="margin-top:8px; font-size:12px;">⚠️ لقد استنفذت أعمالك المجانية الـ 3. لاستمرار استقبال طلبات الزبائن بلا حدود، يرجى إتمام الدفع الإلكتروني أدناه أو التواصل مع الإدارة.</div>';
+        subNoticeHtml = '<div class="notice error" style="margin-top:8px; font-size:12px;">⚠️ لقد استنفذت أعمالك المجانية الـ 3. لاستمرار استقبال طلبات الزبائن بلا حدود، يرجى تحويل الاشتراك عبر <b>زين كاش</b> أو <b>الماستر الشخصي</b> إلى رقم الإدارة:<br><b style="font-size:14px; color:var(--burgundy);">07805017009</b> (ثم أرسل لقطة إيصال للإدارة عبر الواتساب للتفعيل الفوري).</div>';
       } else {
-        subNoticeHtml = '<div class="notice" style="margin-top:8px; font-size:12px;">💡 يمكنك الاستفادة من أعمالك المجانية الحالية، أو تجديد الاشتراك إلكترونياً بأي وقت للاستمرار بلا توقف.</div>';
+        subNoticeHtml = '<div class="notice" style="margin-top:8px; font-size:12px;">💡 لتجديد اشتراكك بكل سهولة، حول رسم الاشتراك إلى زين كاش الإدارة (<b>07805017009</b>) وأرسل الإيصال للإدارة لتفعيل حسابك فوراً.</div>';
       }
       $("techSubDetails").innerHTML = 'حالة الاشتراك: <b style="color:' + (subStatus==='فعال'?'var(--green)':'var(--danger)') + ';">' + esc(subStatus) + '</b><br>الأعمال المجانية المستهلكة: <b>' + freeUsed + ' من 3 أعمال مجانية</b>' + subNoticeHtml;
     }
