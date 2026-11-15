@@ -66,28 +66,12 @@ nav { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
 nav button { color: #fff; background: rgba(255,255,255,0.1); padding: 6px 12px; border-radius: 16px; border: 1px solid rgba(255,195,41,0.3); font-size: 11px; font-weight: 700; transition: all .2s; }
 nav button:hover, nav button.primary-nav { background: var(--gold); color: var(--burgundy-dark); border-color: var(--gold); }
 
-.hero-banner { background: linear-gradient(180deg, var(--burgundy), var(--burgundy-dark)); padding: 30px 4% 20px; text-align: center; position: relative; border-bottom: 3px solid var(--gold); box-shadow: inset 0 -10px 20px rgba(0,0,0,0.3); }
+.hero-banner { background: linear-gradient(180deg, var(--burgundy), var(--burgundy-dark)); padding: 40px 4% 30px; text-align: center; position: relative; border-bottom: 3px solid var(--gold); box-shadow: inset 0 -10px 20px rgba(0,0,0,0.3); }
 .hero-banner h2 { font-size: 22px; margin: 0 0 5px; font-weight: 900; color: #fff; text-shadow: 0 2px 8px rgba(0,0,0,0.5); }
 .hero-banner .slogan { font-size: 28px; font-weight: 900; color: var(--gold); margin: 5px 0 10px; text-shadow: 0 3px 10px rgba(0,0,0,0.6); }
-.hero-banner p { font-size: 13px; color: var(--cream); margin: 0 0 15px; opacity: 0.9; }
+.hero-banner p { font-size: 13px; color: var(--cream); margin: 0 0 20px; opacity: 0.9; }
 
-/* تنسيق خيارات الدخول الرئيسية البارزة */
-.role-selection-box {
-  background: rgba(255, 255, 255, 0.95);
-  border: 3px solid var(--gold);
-  border-radius: 20px;
-  padding: 20px;
-  max-width: 500px;
-  margin: 20px auto 0;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-  text-align: center;
-}
-.role-selection-box h3 {
-  color: var(--burgundy);
-  margin: 0 0 15px;
-  font-size: 17px;
-  font-weight: 900;
-}
+/* أزرار خيارات الدخول المنبثقة */
 .role-btns {
   display: flex;
   gap: 12px;
@@ -243,7 +227,7 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
 .footer-links { margin-top: 8px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
 .footer-links button { background: transparent; color: var(--gold); border: 0; text-decoration: underline; cursor: pointer; font-size: 12px; font-weight: 800; }
 
-@media(max-width:600px){ header { justify-content: center; text-align: center; } nav { justify-content: center; } .hero-banner { padding: 20px 4%; } .hero-banner h2 { font-size: 18px; } .hero-banner .slogan { font-size: 24px; } }
+@media(max-width:600px){ header { justify-content: center; text-align: center; } nav { justify-content: center; } .hero-banner { padding: 25px 4%; } .hero-banner h2 { font-size: 18px; } .hero-banner .slogan { font-size: 24px; } }
 </style>
 </head>
 <body>
@@ -268,16 +252,7 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
   <div class="slogan">بيتك يستاهل الأفضل</div>
   <p>أسرع منصة لربط أصحاب المنازل بأفضل الفنيين المحليين في قضائك</p>
 
-  <!-- خيارات الدخول الرئيسية والبارزة (زبون أو فني) -->
-  <div class="role-selection-box">
-   <h3>اختر طريقة الدخول للاستفادة من المنصة:</h3>
-   <div class="role-btns">
-    <button class="role-btn customer" onclick="handleCustomerRoleEntry()">👤 الدخول كزبون</button>
-    <button class="role-btn technician" onclick="handleTechnicianRoleEntry()">🛠️ الدخول كفني</button>
-   </div>
-  </div>
-  
-  <div style="margin-top:20px;">
+  <div style="margin-top:10px;">
    <button class="cta-btn" onclick="checkAndShowTechnicians()">🛠️ اطلب خدمتك الآن</button>
   </div>
 
@@ -412,7 +387,7 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  <div id="adminPasswordRequests"><div class="empty">لا توجد طلبات استرجاع رمز حالياً.</div></div>
  <hr style="border-color:#d9b98e">
  <h3 class="section-title" style="font-size:16px;color:#fff">إدارة الفنيين والمشتركين (حذف نهائي / عرض الأرقام / الاشتراكات)</h3>
- <div id="adminTechs"></div>
+ <div id="adminTechs" style="display:flex; flex-direction:column; gap:12px;"></div>
 
  <div class="card" style="margin-top:25px; background:#fff9ef; border:2px solid var(--gold);">
   <h3 style="color:var(--burgundy); margin-top:0; font-size:16px; font-weight:900;">📢 تعديل الشريط الإعلاني العام</h3>
@@ -457,6 +432,18 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  <div class="modal-box" style="text-align: center; background: #111; border-color: var(--gold);">
   <div style="text-align: left; margin-bottom: 5px;"><div class="close" onclick="closeModal('photoModal')" style="background:#fff; color:#000;">✕</div></div>
   <img id="modalEnlargedImg" src="" alt="صورة الفني" style="max-width: 100%; max-height: 75vh; object-fit: contain; border-radius: 8px;">
+ </div>
+</div>
+
+<!-- نافذة اختيار طريقة الدخول المنبثقة (تظهر حصراً عند الضغط على الأزرار التفاعلية) -->
+<div class="modal hidden" id="roleSelectionModal">
+ <div class="modal-box" style="text-align: center;">
+  <div class="modal-head"><h3>اختر طريقة الدخول للاستفادة من المنصة</h3><div class="close" onclick="closeModal('roleSelectionModal')">✕</div></div>
+  <div style="font-size: 14px; font-weight: 800; color: var(--burgundy); margin: 15px 0;">يرجى اختيار طريقة الدخول للمتابعة:</div>
+  <div class="role-btns" style="margin-bottom: 10px;">
+   <button class="role-btn customer" onclick="closeModal('roleSelectionModal'); handleCustomerRoleEntry()">👤 الدخول كزبون</button>
+   <button class="role-btn technician" onclick="closeModal('roleSelectionModal'); handleTechnicianRoleEntry()">🛠️ الدخول كفني</button>
+  </div>
  </div>
 </div>
 
@@ -693,7 +680,12 @@ function openForgotPasswordModal() { closeModal('loginModal'); $("forgotPassword
 function openDisclaimer() { $("disclaimerModal").classList.add("hidden"); }
 function openTechEditModal() { $("editProfileMessage").innerHTML = ""; $("techEditModal").classList.remove("hidden"); }
 
-// معالجة اختيار الدخول من الواجهة الرئيسية
+// دالة إظهار نافذة اختيار الدور عند الضغط على الأزرار التفاعلية
+function promptRoleSelection() {
+  $("roleSelectionModal").classList.remove("hidden");
+}
+
+// معالجة اختيار الدخول من النافذة المنبثقة
 function handleCustomerRoleEntry() {
   const savedName = localStorage.getItem("sakhrCustomerName");
   if(!savedName && currentRole !== "admin" && currentRole !== "technician") {
@@ -769,6 +761,7 @@ function checkInitialStartupModals() {
     $("termsCheckbox").checked = false;
     $("termsModal").classList.remove("hidden");
   }
+  // تم إيقاف ظهور نافذة اختيار الدور تلقائياً عند فتح التطبيق بناءً على طلبك
 }
 
 function acceptTermsWithCheck() {
@@ -782,11 +775,11 @@ function acceptTermsWithCheck() {
 }
 
 function checkAndShowTechnicians() {
-  handleCustomerRoleEntry();
+  promptRoleSelection();
 }
 
 function checkAndExecuteSearch() {
-  handleCustomerRoleEntry();
+  promptRoleSelection();
 }
 
 async function submitCustomerRegistration(){
@@ -835,7 +828,7 @@ function renderServices(){
     const icons=["❄️","🎨","🚰","💡","🛠️","🧱","🪚","🧹"];
     if(el) {
       el.innerHTML = SERVICES.map((s,i)=>`
-        <div class="service-card" onclick="checkAndShowTechnicians()">
+        <div class="service-card" onclick="promptRoleSelection()">
           <div class="service-icon">${icons[i]}</div>
           <h3>${esc(s)}</h3>
           <div class="arrow-badge">➔</div>
@@ -893,12 +886,14 @@ async function onAuthChanged(user){
 
     if(currentRole === "admin"){
       closeModal("termsModal");
+      closeModal("roleSelectionModal");
       closeModal("customerAccountModal");
       closeModal("loginModal");
       showSection("admin");
       loadAdminData();
     } else if(["technician", "suspended"].includes(currentRole)){
       closeModal("termsModal");
+      closeModal("roleSelectionModal");
       closeModal("customerAccountModal");
       closeModal("loginModal");
       showSection("techAccount");
@@ -996,7 +991,7 @@ async function loginWithPhonePassword(){
         await auth.signInWithEmailAndPassword(adminEmail, password);
       }
       currentRole = "admin";
-      closeModal("loginModal"); closeModal("termsModal"); closeModal("customerAccountModal");
+      closeModal("loginModal"); closeModal("termsModal"); closeModal("roleSelectionModal"); closeModal("customerAccountModal");
       updateNavAuthButton();
       showSection("admin");
       loadAdminData();
@@ -1014,6 +1009,7 @@ async function loginWithPhonePassword(){
       currentRole = "customer";
       closeModal("loginModal");
       closeModal("termsModal");
+      closeModal("roleSelectionModal");
       closeModal("customerAccountModal");
       showCustomAlert("أهلاً بك مجدداً في منصة صخر!");
       showSection("home");
@@ -1025,6 +1021,7 @@ async function loginWithPhonePassword(){
 
     closeModal("loginModal");
     closeModal("termsModal");
+    closeModal("roleSelectionModal");
     closeModal("customerAccountModal");
     showSection("techAccount");
     renderTechAccount();
@@ -1260,7 +1257,6 @@ async function renderTechAccount(){
     const freeUsed = Number(currentTech.freeJobsUsed || 0);
     const freeRemaining = Math.max(0, 3 - freeUsed);
 
-    // تلوين وبروز كارت الأعمال المجانية بشكل ممتاز
     if($("techFreeJobsHighlight")) {
       $("techFreeJobsHighlight").innerHTML = `
         <div style="font-size:13px; font-weight:800; color:var(--burgundy);">🎁 رصيد الأعمال المجانية الخاصة بك</div>
