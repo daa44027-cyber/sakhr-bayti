@@ -1732,7 +1732,17 @@ function listenToAnnouncements() {
 }
 
 async function loadAdminData(){
-  if(currentRole !== "admin" && currentUser?.email !== "07805017009@sakhr.app") return;
+  // التأكد من أن جلسة المصادقة مكتملة وأن المستخدم هو المدير فعلياً
+  if(!auth || !auth.currentUser) {
+    showCustomAlert("جاري التحقق من جلسة المدير، يرجى إعادة المحاولة بعد ثانية.");
+    return;
+  }
+  
+  if(currentRole !== "admin" && auth.currentUser.email !== "07805017009@sakhr.app") {
+    showCustomAlert("عذراً، ليس لديك صلاحية المدير.");
+    return;
+  }
+
   try{
     const [r, t, p, acc] = await Promise.all([
       db.ref("requests").once("value"),
