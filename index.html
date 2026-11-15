@@ -118,8 +118,9 @@ nav button:hover, nav button.primary-nav { background: var(--gold); color: var(-
   font-size: 14px;
   position: absolute;
   width: 100%;
-  text-align: right;
-  animation: moveLeftToRight 16s linear infinite;
+  text-align: center;
+  transition: opacity 0.4s ease-in-out;
+  opacity: 1;
 }
 @keyframes moveLeftToRight {
   0% { transform: translateX(-100%); }
@@ -299,7 +300,7 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  </div>
 
  <div class="announcement-container">
-  <div id="globalAnnouncementBar" class="announcement-bar">
+  <div id="globalAnnouncementBar" class="">
    📢 أهلاً بكم في منصة صخر للصيانة المنزلية - تواصل مع أفضل الفنيين المعتمدين في منطقتك بكل سهولة.
   </div>
  </div>
@@ -1657,12 +1658,15 @@ function sendWhatsAppPassword(phone, inputId) {
 }
 
 async function adminDeleteAccount(uid, name) {
-  if(currentRole !== "admin" && currentUser?.email !== "07805017009@sakhr.app") return;
+  if(currentRole !== "admin" && currentUser?.email !== "07805017009@sakhr.app") {
+    showCustomAlert("عذراً، ليس لديك صلاحية المدير.");
+    return;
+  }
   showCustomConfirm(`هل أنت متأكد من حذف الحساب (${name}) نهائياً من قاعدة البيانات؟`, async () => {
     try {
       await db.ref("allAccounts/" + uid).remove();
       await db.ref("technicians/" + uid).remove();
-      await db.ref("publicTechnicians/" + uid).remove();
+      await db.ref("publicTechnicians/"+ uid).remove();
       await db.ref("technicianJobs/" + uid).remove();
       await db.ref("requests/" + uid).remove();
       showCustomAlert("تم حذف الحساب نهائياً من المنصة.");
@@ -1705,7 +1709,7 @@ async function loadAdminAnnouncementsInputs() {
 
 function listenToAnnouncements() {
   db.ref("settings/announcements").on("value", snap => {
-    const list = snap.val();
+    const list = (snap.val() || []).filter(x => x && x.trim().length > 0);
     const bar = $("globalAnnouncementBar");
     if(!bar) return;
     
@@ -1714,83 +1718,64 @@ function listenToAnnouncements() {
       announcementTimer = null;
     }
 
-    if(Array.isArray(list) && list.length > 0) {
+    if(list.length > 0) {
       let index = 0;
       bar.innerText = list[index];
+      bar.style.opacity = 1;
       bar.style.display = "inline-block";
+      
       if(list.length > 1) {
         announcementTimer = setInterval(() => {
-          index = (index + 1) % list.length;
-          bar.innerText = list[index];
-        }, 7000);
+          bar.style.opacity = 0; // تأثير اختفاء ناعم
+          setTimeout(() => {
+            index = (index + 1) % list.length;
+            bar.innerText = list[index];
+            bar.style.opacity = 1; // ظهور ناعم للإعلان التالي
+          }, 400);
+        }, 6000); // يتغير الإعلان كل 6 ثوانٍ بشكل ثابت وواضح
       }
     } else {
       bar.innerText = "📢 أهلاً بكم في منصة صخر للصيانة المنزلية - تواصل مع أفضل الفنيين المعتمدين في منطقتك بكل سهولة.";
+      bar.style.opacity = 1;
       bar.style.display = "inline-block";
     }
   });
 }
 
-async function loadAdminData(){
-  if(currentRole !== "admin" && currentUser?.email !== "07805017009@sakhr.app") return;
-  try{
-    const [r, t, p, acc] = await Promise.all([
-      db.ref("requests").once("value"),
-      db.ref("technicians").once("value"),
-      db.ref("passwordRequests").once("value"),
-      db.ref("allAccounts").once("value")
-    ]);
+function listenToAnnouncements() {
+  db.ref("settings/announcements").on("value", snap => {
+    const list = (snap.val() || []).filter(x => x && x.trim().length > 0);
+    const bar = $("globalAnnouncementBar");
+    if(!bar) return;
     
-    requests = []; technicians = []; passwordRequests = []; 
-    let accountsMap = {};
+    if(announcementTimer) {
+      clearInterval(announcementTimer);
+      announcementTimer = null;
+    }
 
-    acc.forEach(a => {
-      accountsMap[a.key] = { uid: a.key, ...a.val() };
-    });
-
-    t.forEach(s => {
-      const tech = s.val();
-      technicians.push({...tech, uid: s.key});
-      if(!accountsMap[s.key]) {
-        accountsMap[s.key] = {
-          uid: s.key,
-          name: tech.name,
-          phone: tech.phone,
-          role: "فني",
-          city: tech.city,
-          area: tech.area,
-          registeredAt: tech.createdAt || Date.now()
-        };
+    if(list.length > 0) {
+      let index = 0;
+      bar.innerText = list[index];
+      bar.style.opacity = 1;
+      bar.style.display = "inline-block";
+      
+      if(list.length > 1) {
+        announcementTimer = setInterval(() => {
+          bar.style.opacity = 0; // تأثير اختفاء ناعم
+          setTimeout(() => {
+            index = (index + 1) % list.length;
+            bar.innerText = list[index];
+            bar.style.opacity = 1; // ظهور ناعم للإعلان التالي
+          }, 400);
+        }, 6000); // يتغير الإعلان كل 6 ثوانٍ بشكل ثابت وواضح
       }
-    });
-
-    r.forEach(u => {
-      u.forEach(q => requests.push({...q.val(), uid: u.key, id: q.key}));
-      const custUid = u.key;
-      if(custUid !== "admin_manager" && !accountsMap[custUid]) {
-        let firstReq = null;
-        u.forEach(q => { if(!firstReq) firstReq = q.val(); });
-        if(firstReq) {
-          accountsMap[custUid] = {
-            uid: custUid,
-            name: firstReq.name || "زبون",
-            phone: firstReq.phone || "غير محدد",
-            role: "زبون",
-            city: firstReq.city || "",
-            area: firstReq.area || "",
-            registeredAt: firstReq.createdAt || Date.now()
-          };
-        }
-      }
-    });
-
-    p.forEach(x => passwordRequests.push({...x.val(), id: x.key}));
-    allAccountsList = Object.values(accountsMap);
-
-    renderAdmin();
-  }catch(e){}
+    } else {
+      bar.innerText = "📢 أهلاً بكم في منصة صخر للصيانة المنزلية - تواصل مع أفضل الفنيين المعتمدين في منطقتك بكل سهولة.";
+      bar.style.opacity = 1;
+      bar.style.display = "inline-block";
+    }
+  });
 }
-
 function renderAdmin(){
   const uniqueCustomersCount = new Set(requests.map(r => r.uid)).size;
 
@@ -1810,7 +1795,7 @@ function renderAdmin(){
       <div class="muted">الموقع: ${esc(a.city || "غير محدد")} / ${esc(a.area || "غير محدد")}</div>
       <div class="muted" style="margin-top:4px;">وقت التسجيل / الدخول: ${a.registeredAt ? new Date(a.registeredAt).toLocaleString('ar-IQ') : 'مسجل بالمنصة'}</div>
       <div class="actions" style="margin-top:8px;">
-       <button class="btn danger" onclick="adminDeleteAccount('${esc(a.uid)}', '${esc(a.name || a.phone || 'المستخدم')}path')">حذف الحساب نهائياً</button>
+       <button class="btn danger" onclick="adminDeleteAccount('${esc(a.uid)}', '${esc(a.name || a.phone || 'المستخدم')}">حذف الحساب نهائياً</button>
       </div>
     </div>`).join("") : '<div class="empty">لا توجد حسابات مسجلة حالياً.</div>';
   }
