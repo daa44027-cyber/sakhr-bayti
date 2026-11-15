@@ -109,7 +109,6 @@ nav button:hover, nav button.primary-nav { background: var(--gold); color: var(-
   height: 40px;
   display: flex;
   align-items: center;
-  justify-content: center;
   box-shadow: 0 3px 10px rgba(0,0,0,0.2);
 }
 .announcement-bar {
@@ -118,10 +117,7 @@ nav button:hover, nav button.primary-nav { background: var(--gold); color: var(-
   font-weight: 800;
   font-size: 14px;
   position: absolute;
-  width: 100%;
-  text-align: center;
-  transition: opacity 0.4s ease-in-out;
-  opacity: 1;
+  will-change: transform;
 }
 
 .quick-search-box { background: rgba(255,255,255,0.95); padding: 10px; border-radius: 14px; display: flex; gap: 6px; max-width: 550px; margin: 15px auto 0; box-shadow: 0 8px 20px rgba(0,0,0,0.3); border: 2px solid var(--gold); }
@@ -319,7 +315,6 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  <div class="techs-grid" id="publicTechList"><div class="empty">جارٍ تحميل الفنيين المتاحين...</div></div>
 </section>
 
-<!-- قسم دردشة وتقييم الخدمات (مع حقول تعديل الأشرطة الإعلانية الخمسة للمدير) -->
 <section id="reviewsChat" class="container hidden">
  <h2 class="section-title">دردشة تقييم الخدمات</h2>
  
@@ -431,7 +426,6 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  </div>
 </section>
 
-<!-- الملف الشخصي للمدير (مع معلومات المدير وإدارة طلبات استرجاع الرموز) -->
 <section id="adminProfile" class="container hidden">
  <h2 class="section-title">الملف الشخصي - مدير المنصة</h2>
  <div class="card" style="margin-bottom:20px; background:#fff9ef; border:2px solid var(--gold);">
@@ -447,7 +441,6 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  <button class="btn danger" style="margin-top:25px" onclick="logout()">تسجيل الخروج من حساب المدير</button>
 </section>
 
-<!-- لوحة إدارة منصة صخر (مع أزرار تبديل الأقسام Tabs وإحصائيات سريعة) -->
 <section id="admin" class="container hidden">
  <h2 class="section-title">لوحة إدارة منصة صخر</h2>
  <div class="admin-stats-grid" id="adminStats" style="margin-bottom:20px"></div>
@@ -1706,36 +1699,35 @@ async function loadAdminAnnouncementsInputs() {
 
 function listenToAnnouncements() {
   db.ref("settings/announcements").on("value", snap => {
-    const list = (snap.val() || []).filter(x => x && x.trim().length > 0);
+    let list = (snap.val() || []).filter(x => x && x.trim().length > 0);
     const bar = $("globalAnnouncementBar");
     if(!bar) return;
     
     if(announcementTimer) {
-      clearInterval(announcementTimer);
+      clearTimeout(announcementTimer);
       announcementTimer = null;
     }
 
-    if(list.length > 0) {
-      let index = 0;
-      bar.innerText = list[index];
-      bar.style.opacity = 1;
-      bar.style.display = "inline-block";
-      
-      if(list.length > 1) {
-        announcementTimer = setInterval(() => {
-          bar.style.opacity = 0;
-          setTimeout(() => {
-            index = (index + 1) % list.length;
-            bar.innerText = list[index];
-            bar.style.opacity = 1;
-          }, 400);
-        }, 6000);
-      }
-    } else {
-      bar.innerText = "📢 أهلاً بكم في منصة صخر للصيانة المنزلية - تواصل مع أفضل الفنيين المعتمدين في منطقتك بكل سهولة.";
-      bar.style.opacity = 1;
-      bar.style.display = "inline-block";
+    if(list.length === 0) {
+      list = ["📢 أهلاً بكم في منصة صخر للصيانة المنزلية - تواصل مع أفضل الفنيين المعتمدين في منطقتك بكل سهولة."];
     }
+
+    let index = 0;
+    function playNextAnnouncement() {
+      bar.style.transition = "none";
+      bar.style.transform = "translateX(-100%)";
+      bar.innerText = list[index];
+      void bar.offsetWidth; // Force reflow
+      
+      bar.style.transition = "transform 12s linear";
+      bar.style.transform = "translateX(100%)";
+      
+      announcementTimer = setTimeout(() => {
+        index = (index + 1) % list.length;
+        announcementTimer = setTimeout(playNextAnnouncement, 2000); // 2 seconds pause before next
+      }, 12000); // 12 seconds scroll duration
+    }
+    playNextAnnouncement();
   });
 }
 
