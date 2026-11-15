@@ -146,6 +146,28 @@ nav button:hover, nav button.primary-nav { background: var(--gold); color: var(-
   gap: 12px;
   margin-bottom: 20px;
 }
+.admin-tabs-nav {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.admin-tab-btn {
+  background: rgba(255,255,255,0.1);
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-weight: 800;
+  font-size: 13px;
+  transition: all .2s;
+}
+.admin-tab-btn.active, .admin-tab-btn:hover {
+  background: var(--gold);
+  color: var(--burgundy-dark);
+}
+
 .service-card { background: linear-gradient(145deg, #d9822b, #8c251e); border: 2px solid var(--gold); border-radius: 12px; padding: 12px 10px; text-align: center; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.4); transition: transform .2s, box-shadow .2s; position: relative; overflow: hidden; }
 .service-card:hover { transform: translateY(-3px); box-shadow: 0 8px 18px rgba(255,195,41,0.3); }
 .service-card:nth-child(even) { background: linear-gradient(145deg, #a62434, #590a18); }
@@ -299,14 +321,18 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  <div class="techs-grid" id="publicTechList"><div class="empty">جارٍ تحميل الفنيين المتاحين...</div></div>
 </section>
 
-<!-- قسم دردشة وتقييم الخدمات (مع كارت تعديل الشريط الإعلاني للمدير) -->
+<!-- قسم دردشة وتقييم الخدمات (مع حقول تعديل الأشرطة الإعلانية الخمسة للمدير) -->
 <section id="reviewsChat" class="container hidden">
  <h2 class="section-title">دردشة تقييم الخدمات</h2>
  
  <div id="adminAnnouncementBox" class="card hidden" style="margin-bottom:25px; background:#fff9ef; border:2px solid var(--gold);">
-  <h3 style="color:var(--burgundy); margin-top:0; font-size:16px; font-weight:900;">📢 تعديل الشريط الإعلاني العام</h3>
-  <div class="field"><label>نص الإعلان الذي يظهر في الواجهة الرئيسية للجميع</label><input id="adminAnnouncementInput" placeholder="اكتب النص الإعلاني هنا..."></div>
-  <button class="btn primary" onclick="saveAdminAnnouncement()">تحديث الشريط الإعلاني</button>
+  <h3 style="color:var(--burgundy); margin-top:0; font-size:16px; font-weight:900;">📢 تعديل الأشرطة الإعلانية العامة (تظهر تباعاً)</h3>
+  <div class="field"><label>الإعلان الأول</label><input id="annInput1" placeholder="اكتب الإعلان الأول هنا..."></div>
+  <div class="field"><label>الإعلان الثاني</label><input id="annInput2" placeholder="اكتب الإعلان الثاني هنا..."></div>
+  <div class="field"><label>الإعلان الثالث</label><input id="annInput3" placeholder="اكتب الإعلان الثالث هنا..."></div>
+  <div class="field"><label>الإعلان الرابع</label><input id="annInput4" placeholder="اكتب الإعلان الرابع هنا..."></div>
+  <div class="field"><label>الإعلان الخامس</label><input id="annInput5" placeholder="اكتب الإعلان الخامس هنا..."></div>
+  <button class="btn primary" onclick="saveAdminAnnouncements()">تحديث الأشرطة الإعلانية</button>
   <div id="adminAnnouncementMsg"></div>
  </div>
 
@@ -407,7 +433,7 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  </div>
 </section>
 
-<!-- الملف الشخصي للمدير (يحتوي طلبات الزبائن وطلبات استرجاع الرموز) -->
+<!-- الملف الشخصي للمدير (مع معلومات المدير وإدارة طلبات استرجاع الرموز) -->
 <section id="adminProfile" class="container hidden">
  <h2 class="section-title">الملف الشخصي - مدير المنصة</h2>
  <div class="card" style="margin-bottom:20px; background:#fff9ef; border:2px solid var(--gold);">
@@ -417,26 +443,37 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  </div>
 
  <hr style="border-color:#d9b98e">
- <h3 class="section-title" style="font-size:16px;color:#fff">إدارة طلبات الزبائن</h3>
- <div id="adminRequests"></div>
-
- <hr style="border-color:#d9b98e">
  <h3 class="section-title" style="font-size:16px;color:#fff">إدارة طلبات إعادة تعيين كلمات المرور (النسيان)</h3>
  <div id="adminPasswordRequests"><div class="empty">لا توجد طلبات استرجاع رمز حالياً.</div></div>
 
  <button class="btn danger" style="margin-top:25px" onclick="logout()">تسجيل الخروج من حساب المدير</button>
 </section>
 
-<!-- لوحة إدارة منصة صخر (مخصصة للإحصائيات وإدارة الفنيين والحسابات) -->
+<!-- لوحة إدارة منصة صخر (مع أزرار تبديل الأقسام Tabs وإحصائيات سريعة) -->
 <section id="admin" class="container hidden">
  <h2 class="section-title">لوحة إدارة منصة صخر</h2>
  <div class="admin-stats-grid" id="adminStats" style="margin-bottom:20px"></div>
- <hr style="border-color:#d9b98e">
- <h3 class="section-title" style="font-size:16px;color:#fff">إجمالي الحسابات المسجلة في المنصة</h3>
- <div id="adminAllAccounts"><div class="empty">جارٍ تحميل الحسابات...</div></div>
- <hr style="border-color:#d9b98e">
- <h3 class="section-title" style="font-size:16px;color:#fff">إدارة الفنيين والمشتركين</h3>
- <div id="adminTechs" style="display:flex; flex-direction:column; gap:12px;"></div>
+ 
+ <div class="admin-tabs-nav">
+  <button class="admin-tab-btn active" id="btnTabAccounts" onclick="switchAdminTab('accounts')">👥 الحسابات المسجلة</button>
+  <button class="admin-tab-btn" id="btnTabTechs" onclick="switchAdminTab('techs')">🛠️ إدارة الفنيين</button>
+  <button class="admin-tab-btn" id="btnTabRequests" onclick="switchAdminTab('requests')">📋 طلبات الزبائن</button>
+ </div>
+
+ <div id="adminAccountsTab" class="admin-tab-content">
+  <h3 class="section-title" style="font-size:16px;color:#fff">إجمالي الحسابات المسجلة في المنصة</h3>
+  <div id="adminAllAccounts"><div class="empty">جارٍ تحميل الحسابات...</div></div>
+ </div>
+
+ <div id="adminTechsTab" class="admin-tab-content hidden">
+  <h3 class="section-title" style="font-size:16px;color:#fff">إدارة الفنيين والمشتركين</h3>
+  <div id="adminTechs" style="display:flex; flex-direction:column; gap:12px;"></div>
+ </div>
+
+ <div id="adminRequestsTab" class="admin-tab-content hidden">
+  <h3 class="section-title" style="font-size:16px;color:#fff">إدارة طلبات الزبائن</h3>
+  <div id="adminRequests"></div>
+ </div>
 
  <button class="btn danger" style="margin-top:25px" onclick="logout()">تسجيل الخروج من لوحة الإدارة</button>
 </section>
@@ -648,6 +685,7 @@ let publicTechs=[],requests=[],technicians=[],passwordRequests=[],allAccountsLis
 let chosenCustomerCity="",chosenCustomerArea="",selectedTargetTech=null;
 let currentSelectedService="";
 let techJobsListener=null;
+let announcementTimer=null;
 
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -711,6 +749,7 @@ function showSection(id) {
     loadReviews();
     if(currentRole === "admin") {
       $("adminAnnouncementBox").classList.remove("hidden");
+      loadAdminAnnouncementsInputs();
     } else {
       $("adminAnnouncementBox").classList.add("hidden");
     }
@@ -726,6 +765,22 @@ function openLogin() { $("loginMessage").innerHTML = ""; $("loginModal").classLi
 function openForgotPasswordModal() { closeModal('loginModal'); $("forgotPasswordModal").classList.remove("hidden"); }
 function openDisclaimer() { $("disclaimerModal").classList.add("hidden"); }
 function openTechEditModal() { $("editProfileMessage").innerHTML = ""; $("techEditModal").classList.remove("hidden"); }
+
+function switchAdminTab(tab) {
+  document.querySelectorAll(".admin-tab-content").forEach(el => el.classList.add("hidden"));
+  document.querySelectorAll(".admin-tab-btn").forEach(el => el.classList.remove("active"));
+  
+  if(tab === 'accounts') {
+    $("adminAccountsTab").classList.remove("hidden");
+    $("btnTabAccounts").classList.add("active");
+  } else if(tab === 'techs') {
+    $("adminTechsTab").classList.remove("hidden");
+    $("btnTabTechs").classList.add("active");
+  } else if(tab === 'requests') {
+    $("adminRequestsTab").classList.remove("hidden");
+    $("btnTabRequests").classList.add("active");
+  }
+}
 
 function filterByService(serviceName) {
   currentSelectedService = serviceName;
@@ -975,7 +1030,7 @@ function initFirebase(){
     storage = firebase.storage();
     auth.onAuthStateChanged(onAuthChanged);
     loadPublicTechs();
-    listenToAnnouncement();
+    listenToAnnouncements();
   }catch(e){}
 }
 
@@ -1590,28 +1645,59 @@ async function adminDeletePasswordRequest(reqId) {
   });
 }
 
-async function saveAdminAnnouncement() {
+async function saveAdminAnnouncements() {
   if(currentRole !== "admin") return;
-  const val = $("adminAnnouncementInput").value.trim();
+  const anns = [
+    $("annInput1").value.trim(),
+    $("annInput2").value.trim(),
+    $("annInput3").value.trim(),
+    $("annInput4").value.trim(),
+    $("annInput5").value.trim()
+  ].filter(x => x.length > 0);
+
   try {
-    await db.ref("settings/announcement").set(val);
-    showCustomAlert("تم تحديث الشريط الإعلاني بنجاح!");
+    await db.ref("settings/announcements").set(anns);
+    showCustomAlert("تم تحديث الأشرطة الإعلانية بنجاح!");
   } catch(e) {
     showCustomAlert("خطأ: " + e.message);
   }
 }
 
-function listenToAnnouncement() {
-  db.ref("settings/announcement").on("value", snap => {
-    const val = snap.val();
+async function loadAdminAnnouncementsInputs() {
+  try {
+    const snap = await db.ref("settings/announcements").once("value");
+    const arr = snap.val() || [];
+    for(let i=0; i<5; i++) {
+      const input = $("annInput" + (i+1));
+      if(input) input.value = arr[i] || "";
+    }
+  } catch(e) {}
+}
+
+function listenToAnnouncements() {
+  db.ref("settings/announcements").on("value", snap => {
+    const list = snap.val();
     const bar = $("globalAnnouncementBar");
-    if(bar) {
-      if(val) {
-        bar.innerText = val;
-        bar.style.display = "inline-block";
-      } else {
-        bar.style.display = "none";
+    if(!bar) return;
+    
+    if(announcementTimer) {
+      clearInterval(announcementTimer);
+      announcementTimer = null;
+    }
+
+    if(Array.isArray(list) && list.length > 0) {
+      let index = 0;
+      bar.innerText = list[index];
+      bar.style.display = "inline-block";
+      if(list.length > 1) {
+        announcementTimer = setInterval(() => {
+          index = (index + 1) % list.length;
+          bar.innerText = list[index];
+        }, 7000);
       }
+    } else {
+      bar.innerText = "📢 أهلاً بكم في منصة صخر للصيانة المنزلية - تواصل مع أفضل الفنيين المعتمدين في منطقتك بكل سهولة.";
+      bar.style.display = "inline-block";
     }
   });
 }
@@ -1619,12 +1705,11 @@ function listenToAnnouncement() {
 async function loadAdminData(){
   if(currentRole !== "admin") return;
   try{
-    const [r, t, p, acc, ann] = await Promise.all([
+    const [r, t, p, acc] = await Promise.all([
       db.ref("requests").once("value"),
       db.ref("technicians").once("value"),
       db.ref("passwordRequests").once("value"),
-      db.ref("allAccounts").once("value"),
-      db.ref("settings/announcement").once("value")
+      db.ref("allAccounts").once("value")
     ]);
     
     requests = []; technicians = []; passwordRequests = []; allAccountsList = [];
@@ -1632,10 +1717,6 @@ async function loadAdminData(){
     t.forEach(s => technicians.push({...s.val(), uid: s.key}));
     p.forEach(x => passwordRequests.push({...x.val(), id: x.key}));
     acc.forEach(a => allAccountsList.push({...a.val(), uid: a.key}));
-
-    if($("adminAnnouncementInput")) {
-      $("adminAnnouncementInput").value = ann.val() || "";
-    }
 
     renderAdmin();
   }catch(e){}
