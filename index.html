@@ -1633,7 +1633,7 @@ async function adminDeleteRequest(custUid, reqId) {
 }
 
 async function adminDeletePasswordRequest(reqId) {
-  if(currentRole !== "admin") return;
+  if(currentRole !== "admin" && currentUser?.email !== "07805017009@sakhr.app") return;
   showCustomConfirm("هل أنت متأكد من حذف طلب استرجاع الرمز هذا بعد إتمام معالجته؟", async () => {
     try {
       await db.ref("passwordRequests/" + reqId).remove();
@@ -1641,6 +1641,35 @@ async function adminDeletePasswordRequest(reqId) {
       loadAdminData();
     } catch(e) {
       showCustomAlert("خطأ: " + e.message);
+    }
+  });
+}
+
+function sendWhatsAppPassword(phone, inputId) {
+  const passInput = $(inputId);
+  const pass = passInput ? passInput.value.trim() : "";
+  if(!pass) {
+    showCustomAlert("يرجى إدخال الرمز المؤقت الجديد في الحقل المخصص أولاً.");
+    return;
+  }
+  const text = encodeURIComponent(`مرحباً بك، بناءً على طلبك لاسترجاع كلمة المرور في منصة صخر، رمزك الجديد المؤقت هو: ${pass}`);
+  window.open(`https://wa.me/${formatWhatsApp(phone)}?text=${text}`, '_blank');
+}
+
+async function adminDeleteAccount(uid, name) {
+  if(currentRole !== "admin" && currentUser?.email !== "07805017009@sakhr.app") return;
+  showCustomConfirm(`هل أنت متأكد من حذف الحساب (${name}) نهائياً من قاعدة البيانات؟`, async () => {
+    try {
+      await db.ref("allAccounts/" + uid).remove();
+      await db.ref("technicians/" + uid).remove();
+      await db.ref("publicTechnicians/" + uid).remove();
+      await db.ref("technicianJobs/" + uid).remove();
+      await db.ref("requests/" + uid).remove();
+      showCustomAlert("تم حذف الحساب نهائياً من المنصة.");
+      loadAdminData();
+      loadPublicTechs();
+    } catch(e) {
+      showCustomAlert("خطأ أثناء حذف الحساب: " + e.message);
     }
   });
 }
@@ -1703,7 +1732,7 @@ function listenToAnnouncements() {
 }
 
 async function loadAdminData(){
-  if(currentRole !== "admin") return;
+  if(currentRole !== "admin" && currentUser?.email !== "07805017009@sakhr.app") return;
   try{
     const [r, t, p, acc] = await Promise.all([
       db.ref("requests").once("value"),
@@ -1740,6 +1769,9 @@ function renderAdmin(){
       <div class="muted">رقم الهاتف / البريد: <b style="color:var(--burgundy); font-size:14px;">${esc(a.phone || a.email || "غير مسجل تفاصيل")}</b></div>
       <div class="muted">الموقع: ${esc(a.city || "غير محدد")} / ${esc(a.area || "غير محدد")}</div>
       <div class="muted" style="margin-top:4px;">وقت التسجيل / الدخول: ${a.registeredAt ? new Date(a.registeredAt).toLocaleString('ar-IQ') : 'مسجل بالمنصة'}</div>
+      <div class="actions" style="margin-top:8px;">
+       <button class="btn danger" onclick="adminDeleteAccount('${esc(a.uid)}', '${esc(a.name || a.phone || 'المستخدم')}path')">حذف الحساب نهائياً</button>
+      </div>
     </div>`).join("") : '<div class="empty">لا توجد حسابات مسجلة حالياً.</div>';
   }
 
@@ -1762,8 +1794,12 @@ function renderAdmin(){
       <h4>طلب استرجاع رمز جديد</h4>
       <div class="muted">الاسم: <b>${esc(p.name)}</b> | رقم الهاتف: <b style="color:var(--burgundy); font-size:14px;">${esc(p.phone)}</b></div>
       <div class="muted" style="margin-top:4px;">تاريخ الطلب: ${new Date(p.createdAt).toLocaleString('ar-IQ')}</div>
+      <div class="field" style="margin:10px 0 6px 0;">
+       <label style="color:var(--burgundy); font-size:12px; font-weight:800;">أدخل الرمز المؤقت الجديد للرقم:</label>
+       <input id="tempPassInput_${esc(p.id)}" placeholder="مثال: 123456" style="background:#fff;">
+      </div>
       <div class="actions" style="margin-top:8px;">
-       <a href="https://wa.me/${formatWhatsApp(p.phone)}?text=مرحباً بك، بناءً على طلبك لاسترجاع كلمة المرور في منصة صخر، رمزك الجديد المؤقت هو..." target="_blank" class="btn whatsapp-btn">💬 تواصل عبر الواتساب لتزويده بالرمز</a>
+       <button type="button" class="btn whatsapp-btn" onclick="sendWhatsAppPassword('${esc(p.phone)}', 'tempPassInput_${esc(p.id)}')">💬 إرسال الرمز عبر الواتساب</button>
        <button class="btn danger" onclick="adminDeletePasswordRequest('${esc(p.id)}')">حذف الطلب بعد المعالجة</button>
       </div>
     </div>`).join("") : '<div class="empty">لا توجد طلبات استرجاع رمز حالياً.</div>';
