@@ -1141,6 +1141,7 @@ async function loginWithPhonePassword(){
     
     await logUserAccount(c.user.uid, {
       email: emailPseudo,
+      role: "مسجل دخول",
       loginTime: Date.now()
     });
 
