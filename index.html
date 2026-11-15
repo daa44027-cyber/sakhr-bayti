@@ -1741,11 +1741,51 @@ async function loadAdminData(){
       db.ref("allAccounts").once("value")
     ]);
     
-    requests = []; technicians = []; passwordRequests = []; allAccountsList = [];
-    r.forEach(u => u.forEach(q => requests.push({...q.val(), uid: u.key, id: q.key})));
-    t.forEach(s => technicians.push({...s.val(), uid: s.key}));
+    requests = []; technicians = []; passwordRequests = []; 
+    let accountsMap = {};
+
+    acc.forEach(a => {
+      accountsMap[a.key] = { uid: a.key, ...a.val() };
+    });
+
+    t.forEach(s => {
+      const tech = s.val();
+      technicians.push({...tech, uid: s.key});
+      if(!accountsMap[s.key]) {
+        accountsMap[s.key] = {
+          uid: s.key,
+          name: tech.name,
+          phone: tech.phone,
+          role: "فني",
+          city: tech.city,
+          area: tech.area,
+          registeredAt: tech.createdAt || Date.now()
+        };
+      }
+    });
+
+    r.forEach(u => {
+      u.forEach(q => requests.push({...q.val(), uid: u.key, id: q.key}));
+      const custUid = u.key;
+      if(custUid !== "admin_manager" && !accountsMap[custUid]) {
+        let firstReq = null;
+        u.forEach(q => { if(!firstReq) firstReq = q.val(); });
+        if(firstReq) {
+          accountsMap[custUid] = {
+            uid: custUid,
+            name: firstReq.name || "زبون",
+            phone: firstReq.phone || "غير محدد",
+            role: "زبون",
+            city: firstReq.city || "",
+            area: firstReq.area || "",
+            registeredAt: firstReq.createdAt || Date.now()
+          };
+        }
+      }
+    });
+
     p.forEach(x => passwordRequests.push({...x.val(), id: x.key}));
-    acc.forEach(a => allAccountsList.push({...a.val(), uid: a.key}));
+    allAccountsList = Object.values(accountsMap);
 
     renderAdmin();
   }catch(e){}
