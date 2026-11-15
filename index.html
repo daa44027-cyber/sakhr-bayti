@@ -299,8 +299,17 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  <div class="techs-grid" id="publicTechList"><div class="empty">جارٍ تحميل الفنيين المتاحين...</div></div>
 </section>
 
+<!-- قسم دردشة وتقييم الخدمات (مع كارت تعديل الشريط الإعلاني للمدير) -->
 <section id="reviewsChat" class="container hidden">
  <h2 class="section-title">دردشة تقييم الخدمات</h2>
+ 
+ <div id="adminAnnouncementBox" class="card hidden" style="margin-bottom:25px; background:#fff9ef; border:2px solid var(--gold);">
+  <h3 style="color:var(--burgundy); margin-top:0; font-size:16px; font-weight:900;">📢 تعديل الشريط الإعلاني العام</h3>
+  <div class="field"><label>نص الإعلان الذي يظهر في الواجهة الرئيسية للجميع</label><input id="adminAnnouncementInput" placeholder="اكتب النص الإعلاني هنا..."></div>
+  <button class="btn primary" onclick="saveAdminAnnouncement()">تحديث الشريط الإعلاني</button>
+  <div id="adminAnnouncementMsg"></div>
+ </div>
+
  <div class="card" style="max-width:700px;margin:0 auto 25px">
   <div class="notice">شاركنا رأيك وملاحظتك حول الخدمات، وتقييمك يهمنا لتطوير أداء المنصة. (التقييم متاح بعد إتمام العمل والتواصل).</div>
   <div class="field"><label>اسمك الكريم</label><input id="reviewName" placeholder="اسمك الكامل"></div>
@@ -398,31 +407,38 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  </div>
 </section>
 
-<!-- لوحة تحكم المدير -->
-<section id="admin" class="container hidden">
- <h2 class="section-title">لوحة إدارة منصة صخر (خاص بالمدير فقط)</h2>
- <div class="admin-stats-grid" id="adminStats" style="margin-bottom:20px"></div>
- <hr style="border-color:#d9b98e">
- <h3 class="section-title" style="font-size:16px;color:#fff">إجمالي الحسابات المسجلة في المنصة (من دخل وسجل دخول)</h3>
- <div id="adminAllAccounts"><div class="empty">جارٍ تحميل الحسابات...</div></div>
+<!-- الملف الشخصي للمدير (يحتوي طلبات الزبائن وطلبات استرجاع الرموز) -->
+<section id="adminProfile" class="container hidden">
+ <h2 class="section-title">الملف الشخصي - مدير المنصة</h2>
+ <div class="card" style="margin-bottom:20px; background:#fff9ef; border:2px solid var(--gold);">
+  <h3 style="color:var(--burgundy); margin-top:0; font-size:16px; font-weight:900;">👤 معلومات المدير</h3>
+  <div class="muted">رقم الهاتف الإداري: <b style="color:var(--burgundy);">07805017009</b></div>
+  <div class="muted" style="margin-top:4px;">الصلاحية: مدير عام المنصة</div>
+ </div>
+
  <hr style="border-color:#d9b98e">
  <h3 class="section-title" style="font-size:16px;color:#fff">إدارة طلبات الزبائن</h3>
  <div id="adminRequests"></div>
+
  <hr style="border-color:#d9b98e">
- <h3 class="section-title" style="font-size:16px;color:#fff">إدارة طلبات إعادة تعيين كلمات المرور</h3>
+ <h3 class="section-title" style="font-size:16px;color:#fff">إدارة طلبات إعادة تعيين كلمات المرور (النسيان)</h3>
  <div id="adminPasswordRequests"><div class="empty">لا توجد طلبات استرجاع رمز حالياً.</div></div>
+
+ <button class="btn danger" style="margin-top:25px" onclick="logout()">تسجيل الخروج من حساب المدير</button>
+</section>
+
+<!-- لوحة إدارة منصة صخر (مخصصة للإحصائيات وإدارة الفنيين والحسابات) -->
+<section id="admin" class="container hidden">
+ <h2 class="section-title">لوحة إدارة منصة صخر</h2>
+ <div class="admin-stats-grid" id="adminStats" style="margin-bottom:20px"></div>
+ <hr style="border-color:#d9b98e">
+ <h3 class="section-title" style="font-size:16px;color:#fff">إجمالي الحسابات المسجلة في المنصة</h3>
+ <div id="adminAllAccounts"><div class="empty">جارٍ تحميل الحسابات...</div></div>
  <hr style="border-color:#d9b98e">
  <h3 class="section-title" style="font-size:16px;color:#fff">إدارة الفنيين والمشتركين</h3>
  <div id="adminTechs" style="display:flex; flex-direction:column; gap:12px;"></div>
 
- <div class="card" style="margin-top:25px; background:#fff9ef; border:2px solid var(--gold);">
-  <h3 style="color:var(--burgundy); margin-top:0; font-size:16px; font-weight:900;">📢 تعديل الشريط الإعلاني العام</h3>
-  <div class="field"><label>نص الإعلان الذي يظهر في الواجهة الرئيسية للجميع</label><input id="adminAnnouncementInput" placeholder="اكتب النص الإعلاني هنا..."></div>
-  <button class="btn primary" onclick="saveAdminAnnouncement()">تحديث الشريط الإعلاني</button>
-  <div id="adminAnnouncementMsg"></div>
- </div>
-
- <button class="btn danger" style="margin-top:25px" onclick="logout()">تسجيل الخروج كمدير</button>
+ <button class="btn danger" style="margin-top:25px" onclick="logout()">تسجيل الخروج من لوحة الإدارة</button>
 </section>
 </main>
 
@@ -691,8 +707,16 @@ function showSection(id) {
   window.scrollTo({ top: 0, behavior: "smooth" });
 
   if (id === "technicians") loadPublicTechs();
-  if (id === "reviewsChat") loadReviews();
+  if (id === "reviewsChat") {
+    loadReviews();
+    if(currentRole === "admin") {
+      $("adminAnnouncementBox").classList.remove("hidden");
+    } else {
+      $("adminAnnouncementBox").classList.add("hidden");
+    }
+  }
   if (id === "admin" && currentRole === "admin") loadAdminData();
+  if (id === "adminProfile" && currentRole === "admin") loadAdminData();
   if (id === "techAccount" && ["technician", "suspended"].includes(currentRole)) renderTechAccount();
   if (id === "customerAccountView") renderCustomerAccount();
 }
@@ -744,7 +768,7 @@ function handleTechnicianRoleEntry() {
 function handleAuthNav() {
   const customerName = localStorage.getItem("sakhrCustomerName");
   if(currentRole === "admin") { 
-    showSection("admin"); 
+    showSection("adminProfile"); 
   } else if(["technician", "suspended"].includes(currentRole)) { 
     showSection("techAccount"); 
   } else if(customerName) {
@@ -1103,7 +1127,7 @@ async function loginWithPhonePassword(){
       currentRole = "admin";
       closeModal("loginModal"); closeModal("termsModal"); closeModal("roleSelectionModal"); closeModal("customerAccountModal");
       updateNavAuthButton();
-      showSection("admin");
+      showSection("adminProfile");
       loadAdminData();
       return;
     }
