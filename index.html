@@ -71,7 +71,6 @@ nav button:hover, nav button.primary-nav { background: var(--gold); color: var(-
 .hero-banner .slogan { font-size: 28px; font-weight: 900; color: var(--gold); margin: 5px 0 10px; text-shadow: 0 3px 10px rgba(0,0,0,0.6); }
 .hero-banner p { font-size: 13px; color: var(--cream); margin: 0 0 20px; opacity: 0.9; }
 
-/* أزرار خيارات الدخول المنبثقة */
 .role-btns {
   display: flex;
   gap: 12px;
@@ -143,7 +142,7 @@ nav button:hover, nav button.primary-nav { background: var(--gold); color: var(-
 }
 .admin-stats-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 12px;
   margin-bottom: 20px;
 }
@@ -185,7 +184,6 @@ nav button:hover, nav button.primary-nav { background: var(--gold); color: var(-
 .success { background: #d1e7dd; color: #0f5132; }
 .error { background: #f8d7da; color: #842029; border-color: #f5c2c7; }
 
-/* كارت بارز ومميز للأعمال المجانية للفني */
 .free-jobs-highlight-card {
   background: linear-gradient(135deg, #fff9ef, #ffecc4);
   border: 3px solid var(--gold);
@@ -222,7 +220,7 @@ nav button:hover, nav button.primary-nav { background: var(--gold); color: var(-
 .actions { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
 .actions button, .actions a { font-size: 11px; padding: 6px 12px; border-radius: 8px; font-weight: 800; }
 
-.stat { font-size: 20px; font-weight: 900; color: var(--burgundy); }
+.stat { font-size: 18px; font-weight: 900; color: var(--burgundy); }
 .avatar { width: 55px; height: 55px; border-radius: 50%; object-fit: cover; border: 2px solid var(--gold); background: #fff5df; display: block; margin: 0 auto 6px; cursor: pointer; transition: transform .2s; }
 .avatar:hover { transform: scale(1.05); }
 .avatar.small { width: 45px; height: 45px; margin: 0; }
@@ -233,7 +231,14 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
 .footer-links { margin-top: 8px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
 .footer-links button { background: transparent; color: var(--gold); border: 0; text-decoration: underline; cursor: pointer; font-size: 12px; font-weight: 800; }
 
-@media(max-width:600px){ header { justify-content: center; text-align: center; } nav { justify-content: center; } .hero-banner { padding: 25px 4%; } .hero-banner h2 { font-size: 18px; } .hero-banner .slogan { font-size: 24px; } .admin-stats-grid { grid-template-columns: 1fr; } }
+@media(max-width:768px){ 
+  header { justify-content: center; text-align: center; } 
+  nav { justify-content: center; } 
+  .hero-banner { padding: 25px 4%; } 
+  .hero-banner h2 { font-size: 18px; } 
+  .hero-banner .slogan { font-size: 24px; } 
+  .admin-stats-grid { grid-template-columns: repeat(2, 1fr); } 
+}
 </style>
 </head>
 <body>
@@ -247,6 +252,7 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
   <button onclick="showSection('services')">خدماتنا</button>
   <button onclick="checkAndShowTechnicians()">الفنيون</button>
   <button onclick="showSection('reviewsChat')">دردشة تقييم الخدمات</button>
+  <button id="adminNavBtn" onclick="showSection('admin')" class="hidden" style="background:var(--gold); color:var(--burgundy-dark); border-color:var(--gold);">⚙️ الإدارة</button>
   <button id="authNavBtn" onclick="handleAuthNav()" class="primary-nav">تسجيل الدخول</button>
  </nav>
 </header>
@@ -354,7 +360,6 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  <div id="techAlertBox"></div>
  <div id="techSummary" class="card" style="margin-bottom:15px"></div>
 
- <!-- كارت الأعمال المجانية البارز جداً -->
  <div id="techFreeJobsHighlight" class="free-jobs-highlight-card"></div>
 
  <div class="card" style="margin-bottom:15px; background:#fff9ef; border:2px solid var(--gold);">
@@ -382,7 +387,6 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  <button class="btn danger" style="margin-top:15px" onclick="logout()">تسجيل الخروج</button>
 </section>
 
-<!-- واجهة الملف الشخصي للزبون -->
 <section id="customerAccountView" class="container hidden">
  <h2 class="section-title">الملف الشخصي للزبون</h2>
  <div class="card" style="max-width:600px; margin:0 auto; text-align:center;">
@@ -394,17 +398,21 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  </div>
 </section>
 
+<!-- لوحة تحكم المدير -->
 <section id="admin" class="container hidden">
- <h2 class="section-title">الملف الشخصي - لوحة إدارة منصة صخر</h2>
+ <h2 class="section-title">لوحة إدارة منصة صخر (خاص بالمدير فقط)</h2>
  <div class="admin-stats-grid" id="adminStats" style="margin-bottom:20px"></div>
  <hr style="border-color:#d9b98e">
- <h3 class="section-title" style="font-size:16px;color:#fff">إدارة طلبات الزبائن (رقم المدير مخفي تماماً)</h3>
+ <h3 class="section-title" style="font-size:16px;color:#fff">إجمالي الحسابات المسجلة في المنصة (من دخل وسجل دخول)</h3>
+ <div id="adminAllAccounts"><div class="empty">جارٍ تحميل الحسابات...</div></div>
+ <hr style="border-color:#d9b98e">
+ <h3 class="section-title" style="font-size:16px;color:#fff">إدارة طلبات الزبائن</h3>
  <div id="adminRequests"></div>
  <hr style="border-color:#d9b98e">
- <h3 class="section-title" style="font-size:16px;color:#fff">إدارة طلبات إعادة تعيين كلمات المرور (النسيان)</h3>
+ <h3 class="section-title" style="font-size:16px;color:#fff">إدارة طلبات إعادة تعيين كلمات المرور</h3>
  <div id="adminPasswordRequests"><div class="empty">لا توجد طلبات استرجاع رمز حالياً.</div></div>
  <hr style="border-color:#d9b98e">
- <h3 class="section-title" style="font-size:16px;color:#fff">إدارة الفنيين والمشتركين (حذف نهائي / عرض الأرقام / الاشتراكات)</h3>
+ <h3 class="section-title" style="font-size:16px;color:#fff">إدارة الفنيين والمشتركين</h3>
  <div id="adminTechs" style="display:flex; flex-direction:column; gap:12px;"></div>
 
  <div class="card" style="margin-top:25px; background:#fff9ef; border:2px solid var(--gold);">
@@ -453,7 +461,6 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  </div>
 </div>
 
-<!-- نافذة اختيار طريقة الدخول المنبثقة -->
 <div class="modal hidden" id="roleSelectionModal">
  <div class="modal-box" style="text-align: center;">
   <div class="modal-head"><h3>اختر طريقة الدخول للاستفادة من المنصة</h3><div class="close" onclick="closeModal('roleSelectionModal')">✕</div></div>
@@ -465,7 +472,6 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  </div>
 </div>
 
-<!-- نافذة شروط الاستخدام الإجبارية مع مربع الاختيار (Checkbox) -->
 <div class="modal hidden" id="termsModal">
  <div class="modal-box">
   <div class="modal-head"><h3>شروط الاستخدام وأحكام المنصة</h3></div>
@@ -482,7 +488,6 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  </div>
 </div>
 
-<!-- نافذة تسجيل حساب الزبون (عند الطلب أو البحث) -->
 <div class="modal hidden" id="customerAccountModal">
  <div class="modal-box">
   <div class="modal-head"><h3>تسجيل حساب الزبون وتحديد الموقع</h3><div class="close" onclick="closeModal('customerAccountModal')">✕</div></div>
@@ -505,7 +510,6 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  </div>
 </div>
 
-<!-- نافذة طلب الفني المبسطة للزبون -->
 <div class="modal hidden" id="customerOrderModal">
  <div class="modal-box">
   <div class="modal-head"><h3 id="orderModalTitle">طلب الفني المعتمد</h3><div class="close" onclick="closeModal('customerOrderModal')">✕</div></div>
@@ -546,7 +550,6 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  </div>
 </div>
 
-<!-- نافذة تسجيل الدخول الآمن -->
 <div class="modal hidden" id="loginModal">
  <div class="modal-box">
   <form onsubmit="event.preventDefault(); loginWithPhonePassword();">
@@ -625,7 +628,7 @@ const DISTRICTS={
 };
 
 let auth=null,db=null,storage=null,currentUser=null,currentRole="guest",currentTech=null;
-let publicTechs=[],requests=[],technicians=[],passwordRequests=[];
+let publicTechs=[],requests=[],technicians=[],passwordRequests=[],allAccountsList=[];
 let chosenCustomerCity="",chosenCustomerArea="",selectedTargetTech=null;
 let currentSelectedService="";
 let techJobsListener=null;
@@ -700,7 +703,6 @@ function openForgotPasswordModal() { closeModal('loginModal'); $("forgotPassword
 function openDisclaimer() { $("disclaimerModal").classList.add("hidden"); }
 function openTechEditModal() { $("editProfileMessage").innerHTML = ""; $("techEditModal").classList.remove("hidden"); }
 
-// تصفية الاختصاص عند الضغط على كارت الخدمة
 function filterByService(serviceName) {
   currentSelectedService = serviceName;
   if($("quickServiceSelect")) {
@@ -709,7 +711,6 @@ function filterByService(serviceName) {
   promptRoleSelection();
 }
 
-// التحقق من حالة الزبون أو الفني وإظهار النافذة المنبثقة حصراً إذا لم يكن مسجلاً
 function promptRoleSelection() {
   const customerName = localStorage.getItem("sakhrCustomerName");
   if(customerName || currentRole === "admin" || ["technician", "suspended"].includes(currentRole)) {
@@ -755,18 +756,26 @@ function handleAuthNav() {
 
 function updateNavAuthButton() {
   const btn = $("authNavBtn");
+  const adminBtn = $("adminNavBtn");
   if(!btn) return;
   const customerName = localStorage.getItem("sakhrCustomerName");
   
-  if(currentRole === "admin" || ["technician", "suspended"].includes(currentRole)) {
+  if(currentRole === "admin") {
+    if(adminBtn) adminBtn.classList.remove("hidden");
     btn.innerText = "الملف الشخصي";
     btn.className = "primary-nav";
-  } else if(customerName) {
-    btn.innerText = "👤 " + customerName;
-    btn.className = "primary-nav";
   } else {
-    btn.innerText = "تسجيل الدخول";
-    btn.className = "primary-nav";
+    if(adminBtn) adminBtn.classList.add("hidden");
+    if(["technician", "suspended"].includes(currentRole)) {
+      btn.innerText = "الملف الشخصي";
+      btn.className = "primary-nav";
+    } else if(customerName) {
+      btn.innerText = "👤 " + customerName;
+      btn.className = "primary-nav";
+    } else {
+      btn.innerText = "تسجيل الدخول";
+      btn.className = "primary-nav";
+    }
   }
 }
 
@@ -830,6 +839,17 @@ function checkAndExecuteSearch() {
   promptRoleSelection();
 }
 
+async function logUserAccount(uid, info) {
+  if(!db) return;
+  try {
+    await db.ref("allAccounts/" + uid).update({
+      uid,
+      lastLogin: Date.now(),
+      ...info
+    });
+  } catch(e) {}
+}
+
 async function submitCustomerRegistration(){
   const name = $("custRegName").value.trim();
   const phone = $("custRegPhone").value.trim();
@@ -844,10 +864,13 @@ async function submitCustomerRegistration(){
 
   try {
     const emailPseudo = phone + "@sakhr.app";
+    let userUid = "";
     try {
-      await auth.createUserWithEmailAndPassword(emailPseudo, password);
+      const res = await auth.createUserWithEmailAndPassword(emailPseudo, password);
+      userUid = res.user.uid;
     } catch(e) {
-      await auth.signInWithEmailAndPassword(emailPseudo, password);
+      const res = await auth.signInWithEmailAndPassword(emailPseudo, password);
+      userUid = res.user.uid;
     }
 
     chosenCustomerCity = city;
@@ -856,6 +879,11 @@ async function submitCustomerRegistration(){
     localStorage.setItem("sakhrCustomerArea", area);
     localStorage.setItem("sakhrCustomerName", name);
     localStorage.setItem("sakhrCustomerPhone", phone);
+    localStorage.setItem("sakhrCustomerUid", userUid);
+
+    await logUserAccount(userUid, {
+      name, phone, role: "زبون", city, area, registeredAt: Date.now()
+    });
 
     closeModal("customerAccountModal");
     updateNavAuthButton();
@@ -883,6 +911,7 @@ function logoutCustomer() {
     localStorage.removeItem("sakhrCustomerPhone");
     localStorage.removeItem("sakhrCustomerCity");
     localStorage.removeItem("sakhrCustomerArea");
+    localStorage.removeItem("sakhrCustomerUid");
     updateNavAuthButton();
     showCustomAlert("تم تسجيل الخروج بنجاح.");
     showSection("home");
@@ -934,7 +963,7 @@ async function resolveRole(user){
     const tech = t.val();
     return {role: tech.approved === false ? "suspended" : "technician", tech};
   }
-  return {role:"unknown", tech:null};
+  return {role:"customer_auth", tech:null};
 }
 
 async function onAuthChanged(user){
@@ -956,13 +985,19 @@ async function onAuthChanged(user){
     currentTech = result.tech;
     updateNavAuthButton();
 
+    if(user.email !== "07805017009@sakhr.app" && !user.isAnonymous) {
+      await logUserAccount(user.uid, {
+        email: user.email || "",
+        role: currentRole === "technician" ? "فني" : "زبون/مسجل"
+      });
+    }
+
     if(currentRole === "admin"){
       closeModal("termsModal");
       closeModal("roleSelectionModal");
       closeModal("customerAccountModal");
       closeModal("loginModal");
-      showSection("admin");
-      loadAdminData();
+      updateNavAuthButton();
     } else if(["technician", "suspended"].includes(currentRole)){
       closeModal("termsModal");
       closeModal("roleSelectionModal");
@@ -1035,6 +1070,10 @@ async function registerTechWithPassword(){
     profileSaved = true;
     await syncPublicTechnician(createdUser.uid, profile);
 
+    await logUserAccount(createdUser.uid, {
+      name, phone, role: "فني", service, city, area, registeredAt: Date.now()
+    });
+
     currentUser = createdUser; currentRole = "technician"; currentTech = profile;
     updateNavAuthButton();
     showSection("techAccount");
@@ -1075,6 +1114,12 @@ async function loginWithPhonePassword(){
     }
 
     const c = await auth.signInWithEmailAndPassword(emailPseudo, password);
+    
+    await logUserAccount(c.user.uid, {
+      email: emailPseudo,
+      loginTime: Date.now()
+    });
+
     const s = await db.ref("technicians/"+c.user.uid).once("value");
     if(!s.exists()){
       currentRole = "customer";
@@ -1170,7 +1215,6 @@ function renderPublicTechs(){
     if(currentUser && currentUser.uid === t.uid) return false;
     if(currentRole === "admin") return true; 
     
-    // الفلترة الدقيقة حسب الاختصاص
     if(selectedService && t.service !== selectedService) return false;
 
     if(userCity && userArea) {
@@ -1550,17 +1594,19 @@ function listenToAnnouncement() {
 async function loadAdminData(){
   if(currentRole !== "admin") return;
   try{
-    const [r, t, p, ann] = await Promise.all([
+    const [r, t, p, acc, ann] = await Promise.all([
       db.ref("requests").once("value"),
       db.ref("technicians").once("value"),
       db.ref("passwordRequests").once("value"),
+      db.ref("allAccounts").once("value"),
       db.ref("settings/announcement").once("value")
     ]);
     
-    requests = []; technicians = []; passwordRequests = [];
+    requests = []; technicians = []; passwordRequests = []; allAccountsList = [];
     r.forEach(u => u.forEach(q => requests.push({...q.val(), uid: u.key, id: q.key})));
     t.forEach(s => technicians.push({...s.val(), uid: s.key}));
     p.forEach(x => passwordRequests.push({...x.val(), id: x.key}));
+    acc.forEach(a => allAccountsList.push({...a.val(), uid: a.key}));
 
     if($("adminAnnouncementInput")) {
       $("adminAnnouncementInput").value = ann.val() || "";
@@ -1575,11 +1621,22 @@ function renderAdmin(){
 
   if($("adminStats")) {
     $("adminStats").innerHTML = `
+    <div class="card" style="text-align:center"><div class="muted">إجمالي الحسابات</div><div class="stat">${allAccountsList.length}</div></div>
     <div class="card" style="text-align:center"><div class="muted">إجمالي الطلبات</div><div class="stat">${requests.length}</div></div>
     <div class="card" style="text-align:center"><div class="muted">إجمالي الزبائن</div><div class="stat">${uniqueCustomersCount}</div></div>
     <div class="card" style="text-align:center"><div class="muted">إجمالي الفنيين</div><div class="stat">${technicians.length}</div></div>`;
   }
   
+  if($("adminAllAccounts")) {
+    $("adminAllAccounts").innerHTML = allAccountsList.length ? allAccountsList.map(a=>`
+    <div class="list-item" style="background:#fff9ef;">
+      <h4>الاسم: ${esc(a.name || "غير محدد (مسجل جديد)")} — <span class="badge">${esc(a.role || "مستخدم نظام")}</span></h4>
+      <div class="muted">رقم الهاتف / البريد: <b style="color:var(--burgundy); font-size:14px;">${esc(a.phone || a.email || "غير مسجل تفاصيل")}</b></div>
+      <div class="muted">الموقع: ${esc(a.city || "غير محدد")} / ${esc(a.area || "غير محدد")}</div>
+      <div class="muted" style="margin-top:4px;">وقت التسجيل / الدخول: ${a.registeredAt ? new Date(a.registeredAt).toLocaleString('ar-IQ') : 'مسجل بالمنصة'}</div>
+    </div>`).join("") : '<div class="empty">لا توجد حسابات مسجلة حالياً.</div>';
+  }
+
   if($("adminRequests")) {
     $("adminRequests").innerHTML = requests.length ? requests.map(r=>`
     <div class="list-item">
