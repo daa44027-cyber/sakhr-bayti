@@ -141,6 +141,12 @@ nav button:hover, nav button.primary-nav { background: var(--gold); color: var(-
   max-width: 550px; 
   margin: 0 auto; 
 }
+.admin-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
 .service-card { background: linear-gradient(145deg, #d9822b, #8c251e); border: 2px solid var(--gold); border-radius: 12px; padding: 12px 10px; text-align: center; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.4); transition: transform .2s, box-shadow .2s; position: relative; overflow: hidden; }
 .service-card:hover { transform: translateY(-3px); box-shadow: 0 8px 18px rgba(255,195,41,0.3); }
 .service-card:nth-child(even) { background: linear-gradient(145deg, #a62434, #590a18); }
@@ -216,7 +222,7 @@ nav button:hover, nav button.primary-nav { background: var(--gold); color: var(-
 .actions { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
 .actions button, .actions a { font-size: 11px; padding: 6px 12px; border-radius: 8px; font-weight: 800; }
 
-.stat { font-size: 22px; font-weight: 900; color: var(--burgundy); }
+.stat { font-size: 20px; font-weight: 900; color: var(--burgundy); }
 .avatar { width: 55px; height: 55px; border-radius: 50%; object-fit: cover; border: 2px solid var(--gold); background: #fff5df; display: block; margin: 0 auto 6px; cursor: pointer; transition: transform .2s; }
 .avatar:hover { transform: scale(1.05); }
 .avatar.small { width: 45px; height: 45px; margin: 0; }
@@ -227,7 +233,7 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
 .footer-links { margin-top: 8px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
 .footer-links button { background: transparent; color: var(--gold); border: 0; text-decoration: underline; cursor: pointer; font-size: 12px; font-weight: 800; }
 
-@media(max-width:600px){ header { justify-content: center; text-align: center; } nav { justify-content: center; } .hero-banner { padding: 25px 4%; } .hero-banner h2 { font-size: 18px; } .hero-banner .slogan { font-size: 24px; } }
+@media(max-width:600px){ header { justify-content: center; text-align: center; } nav { justify-content: center; } .hero-banner { padding: 25px 4%; } .hero-banner h2 { font-size: 18px; } .hero-banner .slogan { font-size: 24px; } .admin-stats-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -376,7 +382,7 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  <button class="btn danger" style="margin-top:15px" onclick="logout()">تسجيل الخروج</button>
 </section>
 
-<!-- واحة الملف الشخصي للزبون (عندما يكون مسجلاً) -->
+<!-- واجهة الملف الشخصي للزبون -->
 <section id="customerAccountView" class="container hidden">
  <h2 class="section-title">الملف الشخصي للزبون</h2>
  <div class="card" style="max-width:600px; margin:0 auto; text-align:center;">
@@ -390,7 +396,7 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
 
 <section id="admin" class="container hidden">
  <h2 class="section-title">الملف الشخصي - لوحة إدارة منصة صخر</h2>
- <div class="services-grid" id="adminStats" style="margin-bottom:20px"></div>
+ <div class="admin-stats-grid" id="adminStats" style="margin-bottom:20px"></div>
  <hr style="border-color:#d9b98e">
  <h3 class="section-title" style="font-size:16px;color:#fff">إدارة طلبات الزبائن (رقم المدير مخفي تماماً)</h3>
  <div id="adminRequests"></div>
@@ -447,7 +453,7 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  </div>
 </div>
 
-<!-- نافذة اختيار طريقة الدخول المنبثقة (لا تظهر أبداً إذا كان المستخدم أو الزبون مسجلاً) -->
+<!-- نافذة اختيار طريقة الدخول المنبثقة -->
 <div class="modal hidden" id="roleSelectionModal">
  <div class="modal-box" style="text-align: center;">
   <div class="modal-head"><h3>اختر طريقة الدخول للاستفادة من المنصة</h3><div class="close" onclick="closeModal('roleSelectionModal')">✕</div></div>
@@ -540,7 +546,7 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  </div>
 </div>
 
-<!-- نافذة تسجيل الدخول الآمن (مع زر الفني البارز) -->
+<!-- نافذة تسجيل الدخول الآمن -->
 <div class="modal hidden" id="loginModal">
  <div class="modal-box">
   <form onsubmit="event.preventDefault(); loginWithPhonePassword();">
@@ -621,6 +627,7 @@ const DISTRICTS={
 let auth=null,db=null,storage=null,currentUser=null,currentRole="guest",currentTech=null;
 let publicTechs=[],requests=[],technicians=[],passwordRequests=[];
 let chosenCustomerCity="",chosenCustomerArea="",selectedTargetTech=null;
+let currentSelectedService="";
 let techJobsListener=null;
 
 const $=id=>document.getElementById(id);
@@ -642,7 +649,7 @@ function showCustomConfirm(text, onYes) {
   const yesBtn = $("confirmYesBtn");
   const newBtn = yesBtn.cloneNode(true);
   yesBtn.parentNode.replaceChild(newBtn, yesBtn);
-  newBtn.addEventListener("click", () => {
+  yesBtn.addEventListener("click", () => {
     closeModal('customConfirmModal');
     onYes();
   });
@@ -693,19 +700,25 @@ function openForgotPasswordModal() { closeModal('loginModal'); $("forgotPassword
 function openDisclaimer() { $("disclaimerModal").classList.add("hidden"); }
 function openTechEditModal() { $("editProfileMessage").innerHTML = ""; $("techEditModal").classList.remove("hidden"); }
 
+// تصفية الاختصاص عند الضغط على كارت الخدمة
+function filterByService(serviceName) {
+  currentSelectedService = serviceName;
+  if($("quickServiceSelect")) {
+    $("quickServiceSelect").value = serviceName;
+  }
+  promptRoleSelection();
+}
+
 // التحقق من حالة الزبون أو الفني وإظهار النافذة المنبثقة حصراً إذا لم يكن مسجلاً
 function promptRoleSelection() {
   const customerName = localStorage.getItem("sakhrCustomerName");
   if(customerName || currentRole === "admin" || ["technician", "suspended"].includes(currentRole)) {
-    // إذا كان مسجلاً، اذهب مباشرة إلى قائمة الفنيين وبدون أي نافذة منبثقة
     showSection('technicians');
   } else {
-    // إذا لم يكن مسجلاً، أظهر نافذة اختيار الدور
     $("roleSelectionModal").classList.remove("hidden");
   }
 }
 
-// معالجة اختيار الدخول من النافذة المنبثقة
 function handleCustomerRoleEntry() {
   const savedName = localStorage.getItem("sakhrCustomerName");
   if(!savedName && currentRole !== "admin" && !["technician", "suspended"].includes(currentRole)) {
@@ -806,10 +819,14 @@ function acceptTermsWithCheck() {
 }
 
 function checkAndShowTechnicians() {
+  currentSelectedService = "";
+  if($("quickServiceSelect")) $("quickServiceSelect").value = "";
   promptRoleSelection();
 }
 
 function checkAndExecuteSearch() {
+  const sel = $("quickServiceSelect");
+  if(sel) currentSelectedService = sel.value;
   promptRoleSelection();
 }
 
@@ -883,7 +900,7 @@ function renderServices(){
     const icons=["❄️","🎨","🚰","💡","🛠️","🧱","🪚","🧹"];
     if(el) {
       el.innerHTML = SERVICES.map((s,i)=>`
-        <div class="service-card" onclick="promptRoleSelection()">
+        <div class="service-card" onclick="filterByService('${esc(s)}')">
           <div class="service-icon">${icons[i]}</div>
           <h3>${esc(s)}</h3>
           <div class="arrow-badge">➔</div>
@@ -1028,7 +1045,6 @@ async function registerTechWithPassword(){
   }
 }
 
-// دالة تسجيل الدخول مع الاستثناء المباشر والتام للمدير
 async function loginWithPhonePassword(){
   const inputVal = $("loginPhone").value.trim();
   const password = $("loginPassword").value;
@@ -1146,12 +1162,15 @@ function renderPublicTechs(){
   if(!el) return;
   const userCity = chosenCustomerCity || localStorage.getItem("sakhrCustomerCity") || "";
   const userArea = chosenCustomerArea || localStorage.getItem("sakhrCustomerArea") || "";
-  const selectedService = $("quickServiceSelect") ? $("quickServiceSelect").value : "";
+  
+  const selectEl = $("quickServiceSelect");
+  const selectedService = selectEl ? selectEl.value : currentSelectedService;
 
   const list = publicTechs.filter(t => {
     if(currentUser && currentUser.uid === t.uid) return false;
     if(currentRole === "admin") return true; 
     
+    // الفلترة الدقيقة حسب الاختصاص
     if(selectedService && t.service !== selectedService) return false;
 
     if(userCity && userArea) {
@@ -1162,7 +1181,7 @@ function renderPublicTechs(){
   });
 
   if(!list.length){
-    el.innerHTML = '<div class="empty">لا يوجد فنيون مسجلون ومتاحون في قضائك وحسب الاختصاص المطلوب حالياً.</div>';
+    el.innerHTML = '<div class="empty">لا يوجد فنيون مسجلون ومتاحون في قضائك وحسب الاختصاص المطلوب (' + (selectedService || "الكل") + ') حالياً.</div>';
     return;
   }
   el.innerHTML = list.map(t=>{
@@ -1552,10 +1571,13 @@ async function loadAdminData(){
 }
 
 function renderAdmin(){
+  const uniqueCustomersCount = new Set(requests.map(r => r.uid)).size;
+
   if($("adminStats")) {
     $("adminStats").innerHTML = `
     <div class="card" style="text-align:center"><div class="muted">إجمالي الطلبات</div><div class="stat">${requests.length}</div></div>
-    <div class="card" style="text-align:center"><div class="muted">إجمالي الفنيين المسجلين</div><div class="stat">${technicians.length}</div></div>`;
+    <div class="card" style="text-align:center"><div class="muted">إجمالي الزبائن</div><div class="stat">${uniqueCustomersCount}</div></div>
+    <div class="card" style="text-align:center"><div class="muted">إجمالي الفنيين</div><div class="stat">${technicians.length}</div></div>`;
   }
   
   if($("adminRequests")) {
