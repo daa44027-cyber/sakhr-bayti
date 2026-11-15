@@ -71,6 +71,48 @@ nav button:hover, nav button.primary-nav { background: var(--gold); color: var(-
 .hero-banner .slogan { font-size: 28px; font-weight: 900; color: var(--gold); margin: 5px 0 10px; text-shadow: 0 3px 10px rgba(0,0,0,0.6); }
 .hero-banner p { font-size: 13px; color: var(--cream); margin: 0 0 15px; opacity: 0.9; }
 
+.role-selection-box {
+  background: rgba(255, 255, 255, 0.95);
+  border: 3px solid var(--gold);
+  border-radius: 20px;
+  padding: 20px;
+  max-width: 500px;
+  margin: 20px auto 0;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+  text-align: center;
+}
+.role-selection-box h3 {
+  color: var(--burgundy);
+  margin: 0 0 15px;
+  font-size: 17px;
+  font-weight: 900;
+}
+.role-btns {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+.role-btn {
+  flex: 1;
+  padding: 12px;
+  border-radius: 14px;
+  font-weight: 900;
+  font-size: 14px;
+  transition: transform .2s;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+.role-btn.customer {
+  background: var(--burgundy);
+  color: var(--gold);
+  border: 2px solid var(--gold);
+}
+.role-btn.technician {
+  background: linear-gradient(135deg, #ffc329, #d99b07);
+  color: var(--burgundy-dark);
+  border: 2px solid #fff;
+}
+.role-btn:active { transform: scale(0.96); }
+
 .cta-btn { background: linear-gradient(135deg, #ffdb57, #e99a12); color: var(--burgundy-dark); padding: 10px 22px; border-radius: 24px; font-weight: 900; font-size: 14px; border: 2px solid #fff; box-shadow: 0 4px 15px rgba(233,154,18,0.4); display: inline-flex; align-items: center; gap: 6px; text-decoration: none; transition: transform .2s; }
 .cta-btn:active { transform: scale(0.95); }
 
@@ -152,6 +194,23 @@ nav button:hover, nav button.primary-nav { background: var(--gold); color: var(-
 .success { background: #d1e7dd; color: #0f5132; }
 .error { background: #f8d7da; color: #842029; border-color: #f5c2c7; }
 
+/* كارت بارز ومميز جداً للأعمال المجانية الخاصة بالفني */
+.free-jobs-highlight-card {
+  background: linear-gradient(135deg, #fff9ef, #ffecc4);
+  border: 3px solid var(--gold);
+  border-radius: 16px;
+  padding: 16px;
+  text-align: center;
+  margin-bottom: 15px;
+  box-shadow: 0 6px 18px rgba(217,155,7,0.3);
+}
+.free-jobs-counter {
+  font-size: 24px;
+  font-weight: 900;
+  color: var(--burgundy);
+  margin: 6px 0;
+}
+
 .badge { display: inline-block; padding: 3px 10px; border-radius: 16px; background: var(--burgundy); color: var(--gold); font-size: 10px; font-weight: 900; border: 1px solid var(--gold); }
 .tech-card { display: flex; flex-direction: column; gap: 8px; background: #fff; color: var(--text-main); position: relative; padding: 14px; border-radius: 14px; border: 2px solid var(--gold); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
 .tech-card .btn { width: 100%; font-size: 11px; padding: 8px; }
@@ -207,8 +266,19 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
   <h2>خدمات صيانة منزلية بمستوى احترافي</h2>
   <div class="slogan">بيتك يستاهل الأفضل</div>
   <p>أسرع منصة لربط أصحاب المنازل بأفضل الفنيين المحليين في قضائك</p>
+
+  <!-- خيارات الدخول الرئيسية والبارزة (زبون أو فني) -->
+  <div class="role-selection-box">
+   <h3>اختر طريقة الدخول للاستفادة من المنصة:</h3>
+   <div class="role-btns">
+    <button class="role-btn customer" onclick="handleCustomerRoleEntry()">👤 الدخول كزبون</button>
+    <button class="role-btn technician" onclick="handleTechnicianRoleEntry()">🛠️ الدخول كفني</button>
+   </div>
+  </div>
   
-  <button class="cta-btn" onclick="checkAndShowTechnicians()">🛠️ اطلب خدمتك الآن</button>
+  <div style="margin-top:20px;">
+   <button class="cta-btn" onclick="checkAndShowTechnicians()">🛠️ اطلب خدمتك الآن</button>
+  </div>
 
   <div class="quick-search-box">
    <select id="quickServiceSelect">
@@ -302,6 +372,9 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  <div id="techAlertBox"></div>
  <div id="techSummary" class="card" style="margin-bottom:15px"></div>
 
+ <!-- كارت الأعمال المجانية البارز جداً -->
+ <div id="techFreeJobsHighlight" class="free-jobs-highlight-card"></div>
+
  <div class="card" style="margin-bottom:15px; background:#fff9ef; border:2px solid var(--gold);">
   <h3 style="color:var(--burgundy); margin-top:0; font-size:15px; font-weight:900;">🟢 حالة التواجد (متاح لاستقبال الطلبات)</h3>
   <div style="font-size:13px; color:var(--text-main); margin-bottom:10px;">يمكنك تفعيل حالتك لتكون ظاهراً للزبائن أو إيقافها عندما تكون مشغولاً أو نائماً:</div>
@@ -311,9 +384,17 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
   <div id="availabilityMsg" style="margin-top:6px; font-size:12px; font-weight:700;"></div>
  </div>
  
+ <!-- واجهة الدفع الإلكتروني للاشتراك (زين كاش / ماستر كارد) -->
  <div id="techSubscriptionCard" class="card" style="margin-bottom:15px; background:#fff9ef; border:2px solid var(--gold);">
-  <h3 style="color:var(--burgundy); margin-top:0; font-weight:900; font-size:15px;">💳 حالة الاشتراك والأعمال المجانية</h3>
-  <div id="techSubDetails" style="font-size:13px; color:var(--text-main); line-height:1.7;"></div>
+  <h3 style="color:var(--burgundy); margin-top:0; font-weight:900; font-size:15px;">💳 بوابة الدفع الإلكتروني واشتراك المنصة</h3>
+  <div id="techSubDetails" style="font-size:13px; color:var(--text-main); line-height:1.7; margin-bottom:12px;"></div>
+  <div style="background:#fff; padding:12px; border-radius:10px; border:1px solid #d9b98e;">
+   <div style="font-weight:800; color:var(--burgundy); margin-bottom:8px; font-size:13px;">طرق الدفع الرسمية (زين كاش / ماستر كارد):</div>
+   <div style="display:flex; gap:8px; flex-wrap:wrap;">
+    <button class="btn primary" style="flex:1;" onclick="payViaZainCash()">تحويل عبر زين كاش (07805017009)</button>
+    <button class="btn whatsapp-btn" style="flex:1;" onclick="payViaMasterCard()">دفع عبر الماستر كارد / البنك</button>
+   </div>
+  </div>
  </div>
 
  <div style="text-align:center; margin-bottom:20px;">
@@ -467,13 +548,13 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  </div>
 </div>
 
-<!-- نافذة تسجيل الدخول الآمن -->
+<!-- نافذة تسجيل الدخول الآمن (مع زر الفني البارز) -->
 <div class="modal hidden" id="loginModal">
  <div class="modal-box">
   <form onsubmit="event.preventDefault(); loginWithPhonePassword();">
    <div class="modal-head"><h3>تسجيل الدخول الآمن</h3><div class="close" onclick="closeModal('loginModal')">✕</div></div>
    <div class="notice">أدخل رقم هاتفك (أو إيميل الإدارة) وكلمة المرور للمتابعة.</div>
-   <div class="field"><label>رقم الهاتف (للفني/الزبون) أو رقم المدير</label><input id="loginPhone" placeholder="07800000000 أو الإيميل"></div>
+   <div class="field"><label>رقم الهاتف (للفني/الزبون) أو رقم المدير</label><input id="loginPhone" placeholder="07805017009 أو الإيميل"></div>
    <div class="field">
     <label>كلمة المرور</label>
     <div class="password-wrapper">
@@ -483,7 +564,7 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
    </div>
    <button type="submit" class="btn primary" style="width:100%">دخول إلى الحساب</button>
    <button type="button" class="btn light" style="width:100%;margin-top:6px" onclick="openForgotPasswordModal()">نسيت كلمة المرور؟ (طلب استرجاع)</button>
-   <button type="button" class="btn light" style="width:100%;margin-top:6px" onclick="closeModal('loginModal');showSection('join')">تسجيل فني جديد</button>
+   <button type="button" class="role-btn technician" style="width:100%; margin-top:10px; padding:10px; font-size:13px;" onclick="closeModal('loginModal');showSection('join')">🛠️ تسجيل فني جديد (انضم إلينا)</button>
    <div id="loginMessage"></div>
   </form>
  </div>
@@ -619,6 +700,28 @@ function openForgotPasswordModal() { closeModal('loginModal'); $("forgotPassword
 function openDisclaimer() { $("disclaimerModal").classList.remove("hidden"); }
 function openTechEditModal() { $("editProfileMessage").innerHTML = ""; $("techEditModal").classList.remove("hidden"); }
 
+// معالجة اختيار الدخول من الواجهة الرئيسية
+function handleCustomerRoleEntry() {
+  const savedName = localStorage.getItem("sakhrCustomerName");
+  if(!savedName && currentRole !== "admin" && currentRole !== "technician") {
+    $("custRegName").value = "";
+    $("custRegPhone").value = "";
+    $("custRegPassword").value = "";
+    $("custRegMessage").innerHTML = "";
+    $("customerAccountModal").classList.remove("hidden");
+  } else {
+    showSection('technicians');
+  }
+}
+
+function handleTechnicianRoleEntry() {
+  if(["technician", "suspended"].includes(currentRole)) {
+    showSection('techAccount');
+  } else {
+    openLogin();
+  }
+}
+
 function handleAuthNav() {
   if(currentRole === "admin") { showSection("admin"); }
   else if(["technician", "suspended"].includes(currentRole)) { showSection("techAccount"); }
@@ -666,7 +769,6 @@ function setDistricts(id, city){
     : '<option value="">لا توجد أقضية</option>';
 }
 
-// دالة التحقق من الشروط عند الفتح (مربع اختيار اجباري)
 function checkInitialStartupModals() {
   if(currentRole === "admin" || currentRole === "technician" || currentRole === "suspended" || currentUser) return;
   const termsAccepted = localStorage.getItem("sakhrTermsAccepted");
@@ -686,31 +788,12 @@ function acceptTermsWithCheck() {
   closeModal("termsModal");
 }
 
-// التحقق من تسجيل حساب الزبون قبل عرض الفنيين أو البحث
 function checkAndShowTechnicians() {
-  const savedName = localStorage.getItem("sakhrCustomerName");
-  if(!savedName && currentRole !== "admin" && currentRole !== "technician") {
-    $("custRegName").value = "";
-    $("custRegPhone").value = "";
-    $("custRegPassword").value = "";
-    $("custRegMessage").innerHTML = "";
-    $("customerAccountModal").classList.remove("hidden");
-    return;
-  }
-  showSection('technicians');
+  handleCustomerRoleEntry();
 }
 
 function checkAndExecuteSearch() {
-  const savedName = localStorage.getItem("sakhrCustomerName");
-  if(!savedName && currentRole !== "admin" && currentRole !== "technician") {
-    $("custRegName").value = "";
-    $("custRegPhone").value = "";
-    $("custRegPassword").value = "";
-    $("custRegMessage").innerHTML = "";
-    $("customerAccountModal").classList.remove("hidden");
-    return;
-  }
-  showSection('technicians');
+  handleCustomerRoleEntry();
 }
 
 async function submitCustomerRegistration(){
@@ -909,7 +992,6 @@ async function loginWithPhonePassword(){
   if(!inputVal || !password) return showCustomAlert("أدخل رقم الهاتف وكلمة المرور.");
 
   try{
-    // الاستثناء المباشر والفوري للمدير (رقم المدير حصراً)
     if(inputVal === "07805017009" || inputVal === "07805017009@sakhr.app"){
       const adminEmail = "07805017009@sakhr.app";
       try {
@@ -1150,6 +1232,16 @@ async function toggleTechAvailability() {
   }
 }
 
+// دفع رسوم الاشتراك عبر زين كاش
+function payViaZainCash() {
+  window.open("https://i.zaincash.iq/?amount=10000&phone=07805017009&note=اشتراك+منصة+صخر", "_blank");
+}
+
+// دفع رسوم الاشتراك عبر الماستر كارد / البنك
+function payViaMasterCard() {
+  showCustomAlert("للدفع عبر الماستر كارد أو البنك، يرجى التواصل مباشرة مع إدارة المنصة (رقم الإدارة: 07805017009) لتزويدك برابط الدفع الآمن وإيصال التفعيل الفوري.");
+}
+
 async function renderTechAccount(){
   if(!currentUser || !["technician","suspended"].includes(currentRole)) return;
   const uid = currentUser.uid;
@@ -1173,6 +1265,19 @@ async function renderTechAccount(){
       </div>`;
     }
 
+    const subStatus = currentTech.subscriptionStatus || "غير فعال";
+    const freeUsed = Number(currentTech.freeJobsUsed || 0);
+    const freeRemaining = Math.max(0, 3 - freeUsed);
+
+    // تلوين وبروز كارت الأعمال المجانية بشكل ممتاز
+    if($("techFreeJobsHighlight")) {
+      $("techFreeJobsHighlight.innerHTML = `
+        <div style="font-size:13px; font-weight:800; color:var(--burgundy);">🎁 رصيد الأعمال المجانية الخاصة بك</div>
+        <div class="free-jobs-counter">متبقي لديك <span style="color:#d99b07;">${freeRemaining}</span> من أصل 3 أعمال مجانية</div>
+        <div style="font-size:11px; color:#6b5362; font-weight:700;">تم إنجاز واستخدام ${freeUsed} أعمال مجاناً عبر المنصة.</div>
+      `;
+    }
+
     const isAvailBtn = currentTech.available !== false;
     const availBtn = $("toggleAvailableBtn");
     if(availBtn) {
@@ -1181,14 +1286,12 @@ async function renderTechAccount(){
       $("availabilityMsg").innerHTML = isAvailBtn ? "حالتك الحالية: <b>متاح</b> وتظهر للزبائن." : "حالتك الحالية: <b>غير متاح</b> ومخفي تماماً عن قوائم البحث حتى لا ينزعجك أحد.";
     }
 
-    const subStatus = currentTech.subscriptionStatus || "غير فعال";
-    const freeUsed = Number(currentTech.freeJobsUsed || 0);
     if($("techSubDetails")) {
       let subNoticeHtml = "";
       if(subStatus !== "فعال" && freeUsed >= 3) {
-        subNoticeHtml = '<div class="notice error" style="margin-top:8px; font-size:12px;">⚠️ لقد استنفذت أعمالك المجانية الـ 3. لاستمرار استقبال طلبات الزبائن بلا حدود، يرجى تحويل الاشتراك عبر <b>زين كاش</b> أو <b>الماستر الشخصي</b> إلى رقم الإدارة:<br><b style="font-size:14px; color:var(--burgundy);">07805017009</b> (ثم أرسل لقطة إيصال للإدارة عبر الواتساب للتفعيل الفوري).</div>';
+        subNoticeHtml = '<div class="notice error" style="margin-top:8px; font-size:12px;">⚠️ لقد استنفذت أعمالك المجانية الـ 3. لاستمرار استقبال طلبات الزبائن بلا حدود، يرجى إتمام الدفع الإلكتروني أدناه أو التواصل مع الإدارة.</div>';
       } else {
-        subNoticeHtml = '<div class="notice" style="margin-top:8px; font-size:12px;">💡 لتجديد اشتراكك بكل سهولة، حول رسم الاشتراك إلى زين كاش الإدارة (<b>07805017009</b>) وأرسل الإيصال للإدارة لتفعيل حسابك فوراً.</div>';
+        subNoticeHtml = '<div class="notice" style="margin-top:8px; font-size:12px;">💡 يمكنك الاستفادة من أعمالك المجانية الحالية، أو تجديد الاشتراك إلكترونياً بأي وقت للاستمرار بلا توقف.</div>';
       }
       $("techSubDetails").innerHTML = 'حالة الاشتراك: <b style="color:' + (subStatus==='فعال'?'var(--green)':'var(--danger)') + ';">' + esc(subStatus) + '</b><br>الأعمال المجانية المستهلكة: <b>' + freeUsed + ' من 3 أعمال مجانية</b>' + subNoticeHtml;
     }
