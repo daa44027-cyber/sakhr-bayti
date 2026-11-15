@@ -376,6 +376,18 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  <button class="btn danger" style="margin-top:15px" onclick="logout()">تسجيل الخروج</button>
 </section>
 
+<!-- واحة الملف الشخصي للزبون (عندما يكون مسجلاً) -->
+<section id="customerAccountView" class="container hidden">
+ <h2 class="section-title">الملف الشخصي للزبون</h2>
+ <div class="card" style="max-width:600px; margin:0 auto; text-align:center;">
+  <div style="font-size:50px; margin-bottom:10px;">👤</div>
+  <h3 id="custProfileName" style="color:var(--burgundy); margin:5px 0; font-size:20px; font-weight:900;"></h3>
+  <div id="custProfilePhone" class="muted" style="font-size:14px; margin-bottom:10px;"></div>
+  <div id="custProfileLocation" class="notice" style="margin-bottom:20px;"></div>
+  <button class="btn danger" onclick="logoutCustomer()">تسجيل الخروج من حساب الزبون</button>
+ </div>
+</section>
+
 <section id="admin" class="container hidden">
  <h2 class="section-title">الملف الشخصي - لوحة إدارة منصة صخر</h2>
  <div class="services-grid" id="adminStats" style="margin-bottom:20px"></div>
@@ -435,7 +447,7 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  </div>
 </div>
 
-<!-- نافذة اختيار طريقة الدخول المنبثقة (تظهر حصراً عند الضغط على الأزرار التفاعلية) -->
+<!-- نافذة اختيار طريقة الدخول المنبثقة (لا تظهر أبداً إذا كان المستخدم أو الزبون مسجلاً) -->
 <div class="modal hidden" id="roleSelectionModal">
  <div class="modal-box" style="text-align: center;">
   <div class="modal-head"><h3>اختر طريقة الدخول للاستفادة من المنصة</h3><div class="close" onclick="closeModal('roleSelectionModal')">✕</div></div>
@@ -672,6 +684,7 @@ function showSection(id) {
   if (id === "reviewsChat") loadReviews();
   if (id === "admin" && currentRole === "admin") loadAdminData();
   if (id === "techAccount" && ["technician", "suspended"].includes(currentRole)) renderTechAccount();
+  if (id === "customerAccountView") renderCustomerAccount();
 }
 
 function closeModal(id) { const m = $(id); if(m) m.classList.add("hidden"); }
@@ -680,15 +693,22 @@ function openForgotPasswordModal() { closeModal('loginModal'); $("forgotPassword
 function openDisclaimer() { $("disclaimerModal").classList.add("hidden"); }
 function openTechEditModal() { $("editProfileMessage").innerHTML = ""; $("techEditModal").classList.remove("hidden"); }
 
-// دالة إظهار نافذة اختيار الدور عند الضغط على الأزرار التفاعلية
+// التحقق من حالة الزبون أو الفني وإظهار النافذة المنبثقة حصراً إذا لم يكن مسجلاً
 function promptRoleSelection() {
-  $("roleSelectionModal").classList.remove("hidden");
+  const customerName = localStorage.getItem("sakhrCustomerName");
+  if(customerName || currentRole === "admin" || ["technician", "suspended"].includes(currentRole)) {
+    // إذا كان مسجلاً، اذهب مباشرة إلى قائمة الفنيين وبدون أي نافذة منبثقة
+    showSection('technicians');
+  } else {
+    // إذا لم يكن مسجلاً، أظهر نافذة اختيار الدور
+    $("roleSelectionModal").classList.remove("hidden");
+  }
 }
 
 // معالجة اختيار الدخول من النافذة المنبثقة
 function handleCustomerRoleEntry() {
   const savedName = localStorage.getItem("sakhrCustomerName");
-  if(!savedName && currentRole !== "admin" && currentRole !== "technician") {
+  if(!savedName && currentRole !== "admin" && !["technician", "suspended"].includes(currentRole)) {
     $("custRegName").value = "";
     $("custRegPhone").value = "";
     $("custRegPassword").value = "";
@@ -708,16 +728,28 @@ function handleTechnicianRoleEntry() {
 }
 
 function handleAuthNav() {
-  if(currentRole === "admin") { showSection("admin"); }
-  else if(["technician", "suspended"].includes(currentRole)) { showSection("techAccount"); }
-  else { openLogin(); }
+  const customerName = localStorage.getItem("sakhrCustomerName");
+  if(currentRole === "admin") { 
+    showSection("admin"); 
+  } else if(["technician", "suspended"].includes(currentRole)) { 
+    showSection("techAccount"); 
+  } else if(customerName) {
+    showSection("customerAccountView");
+  } else { 
+    openLogin(); 
+  }
 }
 
 function updateNavAuthButton() {
   const btn = $("authNavBtn");
   if(!btn) return;
+  const customerName = localStorage.getItem("sakhrCustomerName");
+  
   if(currentRole === "admin" || ["technician", "suspended"].includes(currentRole)) {
     btn.innerText = "الملف الشخصي";
+    btn.className = "primary-nav";
+  } else if(customerName) {
+    btn.innerText = "👤 " + customerName;
     btn.className = "primary-nav";
   } else {
     btn.innerText = "تسجيل الدخول";
@@ -755,13 +787,12 @@ function setDistricts(id, city){
 }
 
 function checkInitialStartupModals() {
-  if(currentRole === "admin" || currentRole === "technician" || currentRole === "suspended" || currentUser) return;
+  if(currentRole === "admin" || ["technician", "suspended"].includes(currentRole) || currentUser) return;
   const termsAccepted = localStorage.getItem("sakhrTermsAccepted");
   if(!termsAccepted) {
     $("termsCheckbox").checked = false;
     $("termsModal").classList.remove("hidden");
   }
-  // تم إيقاف ظهور نافذة اختيار الدور تلقائياً عند فتح التطبيق بناءً على طلبك
 }
 
 function acceptTermsWithCheck() {
@@ -810,11 +841,35 @@ async function submitCustomerRegistration(){
     localStorage.setItem("sakhrCustomerPhone", phone);
 
     closeModal("customerAccountModal");
+    updateNavAuthButton();
     showCustomAlert("أهلاً بك " + name + "! تم تسجيل حسابك وحفظ منطقتك بنجاح.");
     showSection("technicians");
   } catch(e) {
     showCustomAlert("خطأ في التسجيل: " + e.message);
   }
+}
+
+function renderCustomerAccount() {
+  const name = localStorage.getItem("sakhrCustomerName") || "زبون صخر";
+  const phone = localStorage.getItem("sakhrCustomerPhone") || "غير محدد";
+  const city = localStorage.getItem("sakhrCustomerCity") || "المحافظة";
+  const area = localStorage.getItem("sakhrCustomerArea") || "القضاء";
+
+  $("custProfileName").innerText = name;
+  $("custProfilePhone").innerText = "رقم الهاتف: " + phone;
+  $("custProfileLocation").innerHTML = "📍 موقعك المحفوظ: <b>" + esc(city) + " / " + esc(area) + "</b>";
+}
+
+function logoutCustomer() {
+  showCustomConfirm("هل أنت متأكد من تسجيل الخروج من حساب الزبون؟", () => {
+    localStorage.removeItem("sakhrCustomerName");
+    localStorage.removeItem("sakhrCustomerPhone");
+    localStorage.removeItem("sakhrCustomerCity");
+    localStorage.removeItem("sakhrCustomerArea");
+    updateNavAuthButton();
+    showCustomAlert("تم تسجيل الخروج بنجاح.");
+    showSection("home");
+  });
 }
 
 function fillSelect(id){
@@ -1011,6 +1066,7 @@ async function loginWithPhonePassword(){
       closeModal("termsModal");
       closeModal("roleSelectionModal");
       closeModal("customerAccountModal");
+      updateNavAuthButton();
       showCustomAlert("أهلاً بك مجدداً في منصة صخر!");
       showSection("home");
       return;
@@ -1563,7 +1619,7 @@ async function submitReview() {
     $("reviewName").value = "";
     $("reviewText").value = "";
     loadReviews();
-  } catch(e) {
+  }catch(e) {
     showCustomAlert("خطأ: " + e.message);
   }
 }
