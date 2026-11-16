@@ -446,13 +446,13 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  <div class="admin-stats-grid" id="adminStats" style="margin-bottom:20px"></div>
  
  <div class="admin-tabs-nav">
-  <button class="admin-tab-btn active" id="btnTabAccounts" onclick="switchAdminTab('accounts')">👥 الحسابات المسجلة</button>
+  <button class="admin-tab-btn active" id="btnTabAccounts" onclick="switchAdminTab('accounts')">👥 حسابات الزبائن</button>
   <button class="admin-tab-btn" id="btnTabTechs" onclick="switchAdminTab('techs')">🛠️ إدارة الفنيين</button>
   <button class="admin-tab-btn" id="btnTabRequests" onclick="switchAdminTab('requests')">📋 طلبات الزبائن</button>
  </div>
 
  <div id="adminAccountsTab" class="admin-tab-content">
-  <h3 class="section-title" style="font-size:16px;color:#fff">إجمالي الحسابات المسجلة في المنصة</h3>
+  <h3 class="section-title" style="font-size:16px;color:#fff">إجمالي حسابات الزبائن المسجلة في المنصة</h3>
   <div id="adminAllAccounts"><div class="empty">جارٍ تحميل الحسابات...</div></div>
  </div>
 
@@ -1286,9 +1286,11 @@ function renderPublicTechs(){
 
   const list = publicTechs.filter(t => {
     if(currentUser && currentUser.uid === t.uid) return false;
-    if(currentRole === "admin") return true; 
     
+    // فلترة حسب الاختصاص المختار (حتى للمدير)
     if(selectedService && t.service !== selectedService) return false;
+
+    if(currentRole === "admin") return true; 
 
     if(userCity && userArea) {
       if(t.city !== userCity || t.area !== userArea) return false;
@@ -1596,28 +1598,21 @@ async function resetTechFreeJobs(techUid) {
   }
 }
 
-// =========================================================================
-// دالة الحذف الجذري والشامل المتقدمة (تطهر كل الجداول + التقييمات + المصادقة Auth)
-// =========================================================================
 async function executeRootUserDeletion(uid, displayName) {
   if(!auth || !auth.currentUser) {
     showCustomAlert("يرجى تسجيل الدخول بحساب المدير أولاً.");
     return;
   }
 
-  showCustomConfirm(`هل أنت متأكد من حذف (${displayName}) نهائياً من كل السجلات ونظام المصادقة؟ لن يمكن استرجاع بياناته.`, async () => {
+  showCustomConfirm(`هل أنت متأكد من حذف (${displayName}) نهائياً من كل السجلات ونظام المصادقة؟`, async () => {
     try {
-      // استدعاء الدالة السحابية المتقدمة للحذف الجذري وتفكيك حجز الرقم في Authentication
       const deleteUserCompletely = functions.httpsCallable('deleteUserCompletely');
       const response = await deleteUserCompletely({ uid: uid });
-
-      showCustomAlert(response.data.message || "تم حذف المستخدم وكل بياناته المرتبطة ونظام المصادقة من الجذور بنجاح تام.");
+      showCustomAlert(response.data.message || "تم الحذف بنجاح تام.");
       loadAdminData();
       loadPublicTechs();
       loadReviews();
     } catch (e) {
-      // في حال عدم نشر Cloud Function بعد، يتم التنظيف المباشر من قاعدة البيانات مع تنبيه المدير
-      console.error("Cloud Function Error:", e);
       try {
         await db.ref("allAccounts/" + uid).remove().catch(()=>{});
         await db.ref("technicians/" + uid).remove().catch(()=>{});
@@ -1625,7 +1620,6 @@ async function executeRootUserDeletion(uid, displayName) {
         await db.ref("technicianJobs/" + uid).remove().catch(()=>{});
         await db.ref("requests/" + uid).remove().catch(()=>{});
         
-        // مسح التقييمات المرتبطة بالـ UID
         const revSnap = await db.ref("reviews").once("value");
         if(revSnap.exists()) {
           const revs = revSnap.val();
@@ -1635,7 +1629,7 @@ async function executeRootUserDeletion(uid, displayName) {
             }
           }
         }
-        showCustomAlert("تم حذف السجلات من قاعدة البيانات بنجاح. (ملاحظة: لتفكيك حجز الرقم تلقائياً، تأكد من نشر دالة deleteUserCompletely على السيرفر).");
+        showCustomAlert("تم حذف السجلات بنجاح.");
         loadAdminData();
         loadPublicTechs();
         loadReviews();
@@ -1671,7 +1665,7 @@ async function adminDeleteRequest(custUid, reqId) {
 
 async function adminDeletePasswordRequest(reqId) {
   if(currentRole !== "admin" && currentUser?.email !== "07805017009@sakhr.app") return;
-  showCustomConfirm("هل أنت متأكد من حذف طلب استرجاع الرمز هذا بعد إتمام معالجته؟", async () => {
+  showCustomConfirm("هل أنت متأكد من حذف طلب استرجاع الرمز هذا؟", async () => {
     try {
       await db.ref("passwordRequests/" + reqId).remove();
       showCustomAlert("تم الحذف بنجاح.");
@@ -1686,7 +1680,7 @@ function sendWhatsAppPassword(phone, inputId) {
   const passInput = $(inputId);
   const pass = passInput ? passInput.value.trim() : "";
   if(!pass) {
-    showCustomAlert("يرجى إدخال الرمز المؤقت الجديد في الحقل المخصص أولاً.");
+    showCustomAlert("يرجى إدخال الرمز المؤقت الجديد أولاً.");
     return;
   }
   const text = encodeURIComponent(`مرحباً بك، بناءً على طلبك لاسترجاع كلمة المرور في منصة صخر، رمزك الجديد المؤقت هو: ${pass}`);
@@ -1758,7 +1752,7 @@ function listenToAnnouncements() {
 
 async function loadAdminData(){
   if(!auth || !auth.currentUser) {
-    showCustomAlert("جاري التحقق من جلسة المدير، يرجى إعادة المحاولة بعد ثانية.");
+    showCustomAlert("جاري التحقق من جلسة المدير...");
     return;
   }
   
@@ -1801,26 +1795,27 @@ async function loadAdminData(){
 
 function renderAdmin(){
   const uniqueCustomersCount = new Set(requests.map(r => r.uid)).size;
+  const customersOnly = allAccountsList.filter(a => a.role !== "فني" && a.role !== "technician");
 
   if($("adminStats")) {
     $("adminStats").innerHTML = `
-    <div class="card" style="text-align:center"><div class="muted">إجمالي الحسابات</div><div class="stat">${allAccountsList.length}</div></div>
+    <div class="card" style="text-align:center"><div class="muted">حسابات الزبائن</div><div class="stat">${customersOnly.length}</div></div>
     <div class="card" style="text-align:center"><div class="muted">إجمالي الطلبات</div><div class="stat">${requests.length}</div></div>
     <div class="card" style="text-align:center"><div class="muted">إجمالي الزبائن</div><div class="stat">${uniqueCustomersCount}</div></div>
     <div class="card" style="text-align:center"><div class="muted">إجمالي الفنيين</div><div class="stat">${technicians.length}</div></div>`;
   }
   
   if($("adminAllAccounts")) {
-    $("adminAllAccounts").innerHTML = allAccountsList.length ? allAccountsList.map(a=>`
+    $("adminAllAccounts").innerHTML = customersOnly.length ? customersOnly.map(a=>`
     <div class="list-item" style="background:#fff9ef;">
-      <h4>الاسم: ${esc(a.name || "غير محدد (مسجل جديد)")} — <span class="badge">${esc(a.role || "مستخدم نظام")}</span></h4>
-      <div class="muted">رقم الهاتف / البريد: <b style="color:var(--burgundy); font-size:14px;">${esc(a.phone || a.email || "غير مسجل تفاصيل")}</b></div>
+      <h4>الاسم: ${esc(a.name || "غير محدد")} — <span class="badge">زبون</span></h4>
+      <div class="muted">رقم الهاتف / البريد: <b style="color:var(--burgundy); font-size:14px;">${esc(a.phone || a.email || "غير مسجل")}</b></div>
       <div class="muted">الموقع: ${esc(a.city || "غير محدد")} / ${esc(a.area || "غير محدد")}</div>
-      <div class="muted" style="margin-top:4px;">وقت التسجيل / الدخول: ${a.registeredAt ? new Date(a.registeredAt).toLocaleString('ar-IQ') : 'مسجل بالمنصة'}</div>
+      <div class="muted" style="margin-top:4px;">وقت التسجيل: ${a.registeredAt ? new Date(a.registeredAt).toLocaleString('ar-IQ') : '---'}</div>
       <div class="actions" style="margin-top:8px;">
        <button class="btn danger" onclick="adminDeleteAccount('${esc(a.uid)}', '${esc(a.name || a.phone || 'المستخدم')}')">حذف الحساب نهائياً</button>
       </div>
-    </div>`).join("") : '<div class="empty">لا توجد حسابات مسجلة حالياً.</div>';
+    </div>`).join("") : '<div class="empty">لا توجد حسابات زبائن مسجلة حالياً.</div>';
   }
 
   if($("adminRequests")) {
