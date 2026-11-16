@@ -639,6 +639,7 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-functions-compat.js"></script>
 
 <script>
 const firebaseConfig = {
@@ -671,7 +672,7 @@ const DISTRICTS={
 "واسط":["الكوت","النعمانية","الحي","الصويرة","العزيزية"]
 };
 
-let auth=null,db=null,storage=null,currentUser=null,currentRole="guest",currentTech=null;
+let auth=null,db=null,storage=null,functions=null,currentUser=null,currentRole="guest",currentTech=null;
 let publicTechs=[],requests=[],technicians=[],passwordRequests=[],allAccountsList=[];
 let chosenCustomerCity="",chosenCustomerArea="",selectedTargetTech=null;
 let currentSelectedService="";
@@ -697,7 +698,7 @@ function showCustomConfirm(text, onYes) {
   const yesBtn = $("confirmYesBtn");
   const newBtn = yesBtn.cloneNode(true);
   yesBtn.parentNode.replaceChild(newBtn, yesBtn);
-  yesBtn.addEventListener("click", () => {
+  newBtn.addEventListener("click", () => {
     closeModal('customConfirmModal');
     onYes();
   });
@@ -754,7 +755,7 @@ function showSection(id) {
 function closeModal(id) { const m = $(id); if(m) m.classList.add("hidden"); }
 function openLogin() { $("loginMessage").innerHTML = ""; $("loginModal").classList.remove("hidden"); }
 function openForgotPasswordModal() { closeModal('loginModal'); $("forgotPasswordModal").classList.remove("hidden"); }
-function openDisclaimer() { $("disclaimerModal").classList.add("hidden"); }
+function openDisclaimer() { $("disclaimerModal").classList.remove("hidden"); }
 function openTechEditModal() { $("editProfileMessage").innerHTML = ""; $("techEditModal").classList.remove("hidden"); }
 
 function switchAdminTab(tab) {
@@ -1019,6 +1020,7 @@ function initFirebase(){
     auth = firebase.auth();
     db = firebase.database();
     storage = firebase.storage();
+    functions = firebase.functions();
     auth.onAuthStateChanged(onAuthChanged);
     loadPublicTechs();
     listenToAnnouncements();
@@ -1594,20 +1596,64 @@ async function resetTechFreeJobs(techUid) {
   }
 }
 
-async function adminDeleteTechnician(techUid, techName) {
-  if(currentRole !== "admin") return;
-  showCustomConfirm(`هل أنت متأكد من حذف الفني (${techName}) نهائياً من النظام؟`, async () => {
+// =========================================================================
+// دالة الحذف الجذري والشامل المتقدمة (تطهر كل الجداول + التقييمات + المصادقة Auth)
+// =========================================================================
+async function executeRootUserDeletion(uid, displayName) {
+  if(!auth || !auth.currentUser) {
+    showCustomAlert("يرجى تسجيل الدخول بحساب المدير أولاً.");
+    return;
+  }
+
+  showCustomConfirm(`هل أنت متأكد من حذف (${displayName}) نهائياً من كل السجلات ونظام المصادقة؟ لن يمكن استرجاع بياناته.`, async () => {
     try {
-      await db.ref("technicians/" + techUid).remove();
-      await db.ref("publicTechnicians/" + techUid).remove();
-      await db.ref("technicianJobs/" + techUid).remove();
-      showCustomAlert("تم حذف الفني بنجاح.");
+      // استدعاء الدالة السحابية المتقدمة للحذف الجذري وتفكيك حجز الرقم في Authentication
+      const deleteUserCompletely = functions.httpsCallable('deleteUserCompletely');
+      const response = await deleteUserCompletely({ uid: uid });
+
+      showCustomAlert(response.data.message || "تم حذف المستخدم وكل بياناته المرتبطة ونظام المصادقة من الجذور بنجاح تام.");
       loadAdminData();
       loadPublicTechs();
-    } catch(e) {
-      showCustomAlert("خطأ أثناء الحذف: " + e.message);
+      loadReviews();
+    } catch (e) {
+      // في حال عدم نشر Cloud Function بعد، يتم التنظيف المباشر من قاعدة البيانات مع تنبيه المدير
+      console.error("Cloud Function Error:", e);
+      try {
+        await db.ref("allAccounts/" + uid).remove().catch(()=>{});
+        await db.ref("technicians/" + uid).remove().catch(()=>{});
+        await db.ref("publicTechnicians/" + uid).remove().catch(()=>{});
+        await db.ref("technicianJobs/" + uid).remove().catch(()=>{});
+        await db.ref("requests/" + uid).remove().catch(()=>{});
+        
+        // مسح التقييمات المرتبطة بالـ UID
+        const revSnap = await db.ref("reviews").once("value");
+        if(revSnap.exists()) {
+          const revs = revSnap.val();
+          for(const [k, v] of Object.entries(revs)) {
+            if(v.uid === uid || v.userId === uid) {
+              await db.ref("reviews/" + k).remove();
+            }
+          }
+        }
+        showCustomAlert("تم حذف السجلات من قاعدة البيانات بنجاح. (ملاحظة: لتفكيك حجز الرقم تلقائياً، تأكد من نشر دالة deleteUserCompletely على السيرفر).");
+        loadAdminData();
+        loadPublicTechs();
+        loadReviews();
+      } catch(dbErr) {
+        showCustomAlert("خطأ أثناء الحذف: " + dbErr.message);
+      }
     }
   });
+}
+
+async function adminDeleteTechnician(techUid, techName) {
+  if(currentRole !== "admin") return;
+  await executeRootUserDeletion(techUid, techName);
+}
+
+async function adminDeleteAccount(uid, name) {
+  if(currentRole !== "admin") return;
+  await executeRootUserDeletion(uid, name);
 }
 
 async function adminDeleteRequest(custUid, reqId) {
@@ -1645,30 +1691,6 @@ function sendWhatsAppPassword(phone, inputId) {
   }
   const text = encodeURIComponent(`مرحباً بك، بناءً على طلبك لاسترجاع كلمة المرور في منصة صخر، رمزك الجديد المؤقت هو: ${pass}`);
   window.open(`https://wa.me/${formatWhatsApp(phone)}?text=${text}`, '_blank');
-}
-
-async function adminDeleteAccount(uid, name) {
-  if(!auth || !auth.currentUser) {
-    showCustomAlert("يرجى تسجيل الدخول بحساب المدير أولاً.");
-    return;
-  }
-  
-  showCustomConfirm(`هل أنت متأكد من حذف الحساب (${name}) نهائياً؟`, async () => {
-    try {
-      // حذف الحساب من كل الجداول باصيمن مستقل حتى لا يحدث خطأ تقاطع
-      await db.ref("allAccounts/" + uid).remove().catch(()=>{});
-      await db.ref("technicians/" + uid).remove().catch(()=>{});
-      await db.ref("publicTechnicians/" + uid).remove().catch(()=>{});
-      await db.ref("technicianJobs/" + uid).remove().catch(()=>{});
-      await db.ref("requests/" + uid).remove().catch(()=>{});
-      
-      showCustomAlert("تم حذف الحساب نهائياً من المنصة بنجاح.");
-      loadAdminData();
-      loadPublicTechs();
-    } catch(e) {
-      showCustomAlert("خطأ أثناء حذف الحساب: " + e.message);
-    }
-  });
 }
 
 async function saveAdminAnnouncements() {
@@ -1720,22 +1742,21 @@ function listenToAnnouncements() {
       bar.style.transition = "none";
       bar.style.transform = "translateX(-100%)";
       bar.innerText = list[index];
-      void bar.offsetWidth; // Force reflow
+      void bar.offsetWidth;
       
       bar.style.transition = "transform 12s linear";
       bar.style.transform = "translateX(100%)";
       
       announcementTimer = setTimeout(() => {
         index = (index + 1) % list.length;
-        announcementTimer = setTimeout(playNextAnnouncement, 2000); // 2 seconds pause before next
-      }, 12000); // 12 seconds scroll duration
+        announcementTimer = setTimeout(playNextAnnouncement, 2000);
+      }, 12000);
     }
     playNextAnnouncement();
   });
 }
 
 async function loadAdminData(){
-  // التأكد من أن جلسة المصادقة مكتملة وأن المستخدم هو المدير فعلياً
   if(!auth || !auth.currentUser) {
     showCustomAlert("جاري التحقق من جلسة المدير، يرجى إعادة المحاولة بعد ثانية.");
     return;
@@ -1860,8 +1881,9 @@ async function submitReview() {
   
   try {
     const id = db.ref("reviews").push().key;
+    const authorUid = currentUser ? currentUser.uid : (localStorage.getItem("sakhrCustomerUid") || "");
     await db.ref("reviews/"+id).set({
-      name, stars, text, createdAt: Date.now()
+      uid: authorUid, name, stars, text, createdAt: Date.now()
     });
     showCustomAlert("تم إرسال تقييمك وملاحظتك بنجاح!");
     $("reviewName").value = "";
