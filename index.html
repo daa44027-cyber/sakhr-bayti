@@ -520,7 +520,7 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
   <form onsubmit="event.preventDefault(); loginWithPhonePassword();">
    <div class="modal-head"><h3>تسجيل الدخول الآمن</h3><div class="close" onclick="closeModal('loginModal')">✕</div></div>
    <div class="notice">أدخل رقم هاتفك (أو إيميل الإدارة) وكلمة المرور للمتابعة.</div>
-  <div class="field"><label>رقم الهاتف (للفني/الزبون) أو رقم المدير</label><input id="loginPhone" placeholder="أدخل رقم الهاتف أو الإيميل..."></div>
+   <div class="field"><label>رقم الهاتف (للفني/الزبون) أو رقم المدير</label><input id="loginPhone" placeholder="أدخل رقم الهاتف أو الإيميل..."></div>
    <div class="field">
     <label>كلمة المرور</label>
     <div class="password-wrapper">
@@ -949,7 +949,6 @@ function initFirebase(){
 async function resolveRole(user){
   if(!user || user.isAnonymous) return {role:"guest", tech:null};
   
-  // التحقق المباشر من إيميل المدير الأساسي لضمان صلاحية الأدمن 100%
   if(user.email === "07805017009@sakhr.app") return {role:"admin", tech:null};
 
   try {
@@ -1052,26 +1051,38 @@ async function registerTechWithPassword(){
   if(!name || !phone || !password || !city || !area || !service)
     return showCustomAlert("أكمل جميع الحقول الأساسية للفني (الاسم، الهاتف، الباسورد، المحافظة، القضاء والاختصاص).");
 
-  let createdUser = null, profileSaved = false;
+  let createdUser = null;
   try{
     const emailPseudo = phone + "@sakhr.app";
-    const c = await auth.createUserWithEmailAndPassword(emailPseudo, password);
-    createdUser = c.user;
+    let userUid = "";
+    
+    try {
+      const c = await auth.createUserWithEmailAndPassword(emailPseudo, password);
+      createdUser = c.user;
+      userUid = createdUser.uid;
+    } catch(err) {
+      if(err.code === 'auth/email-already-in-use') {
+        const c = await auth.signInWithEmailAndPassword(emailPseudo, password);
+        createdUser = c.user;
+        userUid = createdUser.uid;
+      } else {
+        throw err;
+      }
+    }
     
     let photoURL = "";
-    if(file) photoURL = await uploadTechPhoto(createdUser.uid, file);
+    if(file) photoURL = await uploadTechPhoto(userUid, file);
 
     const profile = {
-      name, phone, city, area, neighborhood, service, bio, photoURL,
+      name, phone, city, area, neighborhood, service, bio, photoURL: photoURL || currentTech?.photoURL || "",
       approved: true, available: true, subscriptionStatus: "غير فعال", freeJobsUsed: 0, completedJobs: 0,
       ratingSum: 0, ratingCount: 0, ratingAverage: 0, createdAt: Date.now()
     };
 
-    await db.ref("technicians/"+createdUser.uid).set(profile);
-    profileSaved = true;
-    await syncPublicTechnician(createdUser.uid, profile);
+    await db.ref("technicians/"+userUid).set(profile);
+    await syncPublicTechnician(userUid, profile);
 
-    await logUserAccount(createdUser.uid, {
+    await logUserAccount(userUid, {
       name, phone, role: "فني", service, city, area, registeredAt: Date.now()
     });
 
@@ -1079,9 +1090,9 @@ async function registerTechWithPassword(){
     updateNavAuthButton();
     showSection("techAccount");
     await renderTechAccount();
+    showCustomAlert("تم تسجيل وتحديث حساب الفني بنجاح!");
   }catch(e){
-    showCustomAlert(e.message);
-    if(createdUser && !profileSaved){ try{await createdUser.delete()}catch(_){} }
+    showCustomAlert("خطأ في التسجيل: " + e.message);
   }
 }
 
@@ -1637,15 +1648,15 @@ function listenToAnnouncements() {
       bar.style.transition = "none";
       bar.style.transform = "translateX(-100%)";
       bar.innerText = list[index];
-      void bar.offsetWidth; // Force reflow
+      void bar.offsetWidth;
       
       bar.style.transition = "transform 12s linear";
       bar.style.transform = "translateX(100%)";
       
       announcementTimer = setTimeout(() => {
         index = (index + 1) % list.length;
-        announcementTimer = setTimeout(playNextAnnouncement, 2000); // 2 seconds pause
-      }, 12000); // 12 seconds scroll duration
+        announcementTimer = setTimeout(playNextAnnouncement, 2000);
+      }, 12000);
     }
     playNextAnnouncement();
   });
