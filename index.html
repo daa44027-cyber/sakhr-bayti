@@ -949,14 +949,15 @@ function initFirebase(){
 async function resolveRole(user){
   if(!user || user.isAnonymous) return {role:"guest", tech:null};
   
+  // التحقق المباشر من إيميل المدير الأساسي لضمان صلاحية الأدمن 100%
+  if(user.email === "07805017009@sakhr.app") return {role:"admin", tech:null};
+
   try {
     const adminSnap = await db.ref("admins/" + user.uid).once("value");
     if(adminSnap.exists() && adminSnap.val() === true) {
       return {role:"admin", tech:null};
     }
   } catch(e) {}
-
-  if(user.email === "07805017009@sakhr.app") return {role:"admin", tech:null};
 
   const t = await db.ref("technicians/"+user.uid).once("value");
   if(t.exists()){
