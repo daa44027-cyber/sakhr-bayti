@@ -71,17 +71,54 @@ nav button:hover, nav button.primary-nav { background: var(--gold); color: var(-
 .hero-banner .slogan { font-size: 28px; font-weight: 900; color: var(--gold); margin: 5px 0 10px; text-shadow: 0 3px 10px rgba(0,0,0,0.6); }
 .hero-banner p { font-size: 13px; color: var(--cream); margin: 0 0 20px; opacity: 0.9; }
 
-.role-btns { display: flex; gap: 12px; justify-content: center; }
-.role-btn { flex: 1; padding: 12px; border-radius: 14px; font-weight: 900; font-size: 14px; transition: transform .2s; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
-.role-btn.customer { background: var(--burgundy); color: var(--gold); border: 2px solid var(--gold); }
-.role-btn.technician { background: linear-gradient(135deg, #ffc329, #d99b07); color: var(--burgundy-dark); border: 2px solid #fff; }
+.role-btns {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+.role-btn {
+  flex: 1;
+  padding: 12px;
+  border-radius: 14px;
+  font-weight: 900;
+  font-size: 14px;
+  transition: transform .2s;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+.role-btn.customer {
+  background: var(--burgundy);
+  color: var(--gold);
+  border: 2px solid var(--gold);
+}
+.role-btn.technician {
+  background: linear-gradient(135deg, #ffc329, #d99b07);
+  color: var(--burgundy-dark);
+  border: 2px solid #fff;
+}
 .role-btn:active { transform: scale(0.96); }
 
 .cta-btn { background: linear-gradient(135deg, #ffdb57, #e99a12); color: var(--burgundy-dark); padding: 10px 22px; border-radius: 24px; font-weight: 900; font-size: 14px; border: 2px solid #fff; box-shadow: 0 4px 15px rgba(233,154,18,0.4); display: inline-flex; align-items: center; gap: 6px; text-decoration: none; transition: transform .2s; }
 .cta-btn:active { transform: scale(0.95); }
 
-.announcement-container { background: var(--burgundy); border-bottom: 2px solid var(--gold); overflow: hidden; white-space: nowrap; position: relative; height: 40px; display: flex; align-items: center; box-shadow: 0 3px 10px rgba(0,0,0,0.2); }
-.announcement-bar { display: inline-block; color: var(--gold); font-weight: 800; font-size: 14px; position: absolute; will-change: transform; }
+.announcement-container {
+  background: var(--burgundy);
+  border-bottom: 2px solid var(--gold);
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+}
+.announcement-bar {
+  display: inline-block;
+  color: var(--gold);
+  font-weight: 800;
+  font-size: 14px;
+  position: absolute;
+  will-change: transform;
+}
 
 .quick-search-box { background: rgba(255,255,255,0.95); padding: 10px; border-radius: 14px; display: flex; gap: 6px; max-width: 550px; margin: 15px auto 0; box-shadow: 0 8px 20px rgba(0,0,0,0.3); border: 2px solid var(--gold); }
 .quick-search-box select, .quick-search-box input { flex: 1; padding: 8px; border: 1px solid #d9b98e; border-radius: 8px; outline: none; background: #fff; color: var(--text-main); font-size: 12px; font-weight: 700; }
@@ -90,11 +127,40 @@ nav button:hover, nav button.primary-nav { background: var(--gold); color: var(-
 .container { width: min(1100px, 92%); margin: 0 auto 40px; }
 .section-title { font-size: 18px; color: var(--gold); margin: 25px 0 15px; font-weight: 900; text-align: center; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
 
-.services-grid, .techs-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; max-width: 550px; margin: 0 auto; }
-.admin-stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; }
-.admin-tabs-nav { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center; }
-.admin-tab-btn { background: rgba(255,255,255,0.1); color: var(--gold); border: 1px solid var(--gold); padding: 8px 16px; border-radius: 10px; font-weight: 800; font-size: 13px; transition: all .2s; }
-.admin-tab-btn.active, .admin-tab-btn:hover { background: var(--gold); color: var(--burgundy-dark); }
+.services-grid, .techs-grid { 
+  display: grid; 
+  grid-template-columns: repeat(2, 1fr); 
+  gap: 12px; 
+  max-width: 550px; 
+  margin: 0 auto; 
+}
+.admin-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.admin-tabs-nav {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.admin-tab-btn {
+  background: rgba(255,255,255,0.1);
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-weight: 800;
+  font-size: 13px;
+  transition: all .2s;
+}
+.admin-tab-btn.active, .admin-tab-btn:hover {
+  background: var(--gold);
+  color: var(--burgundy-dark);
+}
 
 .service-card { background: linear-gradient(145deg, #d9822b, #8c251e); border: 2px solid var(--gold); border-radius: 12px; padding: 12px 10px; text-align: center; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.4); transition: transform .2s, box-shadow .2s; position: relative; overflow: hidden; }
 .service-card:hover { transform: translateY(-3px); box-shadow: 0 8px 18px rgba(255,195,41,0.3); }
@@ -134,8 +200,21 @@ nav button:hover, nav button.primary-nav { background: var(--gold); color: var(-
 .success { background: #d1e7dd; color: #0f5132; }
 .error { background: #f8d7da; color: #842029; border-color: #f5c2c7; }
 
-.free-jobs-highlight-card { background: linear-gradient(135deg, #fff9ef, #ffecc4); border: 3px solid var(--gold); border-radius: 16px; padding: 16px; text-align: center; margin-bottom: 15px; box-shadow: 0 6px 18px rgba(217,155,7,0.3); }
-.free-jobs-counter { font-size: 24px; font-weight: 900; color: var(--burgundy); margin: 6px 0; }
+.free-jobs-highlight-card {
+  background: linear-gradient(135deg, #fff9ef, #ffecc4);
+  border: 3px solid var(--gold);
+  border-radius: 16px;
+  padding: 16px;
+  text-align: center;
+  margin-bottom: 15px;
+  box-shadow: 0 6px 18px rgba(217,155,7,0.3);
+}
+.free-jobs-counter {
+  font-size: 24px;
+  font-weight: 900;
+  color: var(--burgundy);
+  margin: 6px 0;
+}
 
 .badge { display: inline-block; padding: 3px 10px; border-radius: 16px; background: var(--burgundy); color: var(--gold); font-size: 10px; font-weight: 900; border: 1px solid var(--gold); }
 .tech-card { display: flex; flex-direction: column; gap: 8px; background: #fff; color: var(--text-main); position: relative; padding: 14px; border-radius: 14px; border: 2px solid var(--gold); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
@@ -520,7 +599,7 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
   <form onsubmit="event.preventDefault(); loginWithPhonePassword();">
    <div class="modal-head"><h3>تسجيل الدخول الآمن</h3><div class="close" onclick="closeModal('loginModal')">✕</div></div>
    <div class="notice">أدخل رقم هاتفك (أو إيميل الإدارة) وكلمة المرور للمتابعة.</div>
-   <div class="field"><label>رقم الهاتف (للفني/الزبون) أو رقم المدير</label><input id="loginPhone" placeholder="أدخل رقم الهاتف أو الإيميل..."></div>
+   <div class="field"><label>رقم الهاتف (للفني/الزبون) أو رقم المدير</label><input id="loginPhone" placeholder="07805017009 أو الإيميل"></div>
    <div class="field">
     <label>كلمة المرور</label>
     <div class="password-wrapper">
@@ -948,16 +1027,7 @@ function initFirebase(){
 
 async function resolveRole(user){
   if(!user || user.isAnonymous) return {role:"guest", tech:null};
-  
   if(user.email === "07805017009@sakhr.app") return {role:"admin", tech:null};
-
-  try {
-    const adminSnap = await db.ref("admins/" + user.uid).once("value");
-    if(adminSnap.exists() && adminSnap.val() === true) {
-      return {role:"admin", tech:null};
-    }
-  } catch(e) {}
-
   const t = await db.ref("technicians/"+user.uid).once("value");
   if(t.exists()){
     const tech = t.val();
@@ -985,7 +1055,7 @@ async function onAuthChanged(user){
     currentTech = result.tech;
     updateNavAuthButton();
 
-    if(currentRole !== "admin" && !user.isAnonymous) {
+    if(user.email !== "07805017009@sakhr.app" && !user.isAnonymous) {
       await logUserAccount(user.uid, {
         email: user.email || "",
         role: currentRole === "technician" ? "فني" : "زبون/مسجل"
@@ -1051,38 +1121,26 @@ async function registerTechWithPassword(){
   if(!name || !phone || !password || !city || !area || !service)
     return showCustomAlert("أكمل جميع الحقول الأساسية للفني (الاسم، الهاتف، الباسورد، المحافظة، القضاء والاختصاص).");
 
-  let createdUser = null;
+  let createdUser = null, profileSaved = false;
   try{
     const emailPseudo = phone + "@sakhr.app";
-    let userUid = "";
-    
-    try {
-      const c = await auth.createUserWithEmailAndPassword(emailPseudo, password);
-      createdUser = c.user;
-      userUid = createdUser.uid;
-    } catch(err) {
-      if(err.code === 'auth/email-already-in-use') {
-        const c = await auth.signInWithEmailAndPassword(emailPseudo, password);
-        createdUser = c.user;
-        userUid = createdUser.uid;
-      } else {
-        throw err;
-      }
-    }
+    const c = await auth.createUserWithEmailAndPassword(emailPseudo, password);
+    createdUser = c.user;
     
     let photoURL = "";
-    if(file) photoURL = await uploadTechPhoto(userUid, file);
+    if(file) photoURL = await uploadTechPhoto(createdUser.uid, file);
 
     const profile = {
-      name, phone, city, area, neighborhood, service, bio, photoURL: photoURL || currentTech?.photoURL || "",
+      name, phone, city, area, neighborhood, service, bio, photoURL,
       approved: true, available: true, subscriptionStatus: "غير فعال", freeJobsUsed: 0, completedJobs: 0,
       ratingSum: 0, ratingCount: 0, ratingAverage: 0, createdAt: Date.now()
     };
 
-    await db.ref("technicians/"+userUid).set(profile);
-    await syncPublicTechnician(userUid, profile);
+    await db.ref("technicians/"+createdUser.uid).set(profile);
+    profileSaved = true;
+    await syncPublicTechnician(createdUser.uid, profile);
 
-    await logUserAccount(userUid, {
+    await logUserAccount(createdUser.uid, {
       name, phone, role: "فني", service, city, area, registeredAt: Date.now()
     });
 
@@ -1090,9 +1148,9 @@ async function registerTechWithPassword(){
     updateNavAuthButton();
     showSection("techAccount");
     await renderTechAccount();
-    showCustomAlert("تم تسجيل وتحديث حساب الفني بنجاح!");
   }catch(e){
-    showCustomAlert("خطأ في التسجيل: " + e.message);
+    showCustomAlert(e.message);
+    if(createdUser && !profileSaved){ try{await createdUser.delete()}catch(_){} }
   }
 }
 
@@ -1566,7 +1624,7 @@ async function adminDeleteRequest(custUid, reqId) {
 }
 
 async function adminDeletePasswordRequest(reqId) {
-  if(currentRole !== "admin") return;
+  if(currentRole !== "admin" && currentUser?.email !== "07805017009@sakhr.app") return;
   showCustomConfirm("هل أنت متأكد من حذف طلب استرجاع الرمز هذا بعد إتمام معالجته؟", async () => {
     try {
       await db.ref("passwordRequests/" + reqId).remove();
@@ -1578,19 +1636,33 @@ async function adminDeletePasswordRequest(reqId) {
   });
 }
 
-async function adminDeleteAccount(uid, name) {
-  if(currentRole !== "admin") {
-    showCustomAlert("عذراً، ليس لديك صلاحية المدير.");
+function sendWhatsAppPassword(phone, inputId) {
+  const passInput = $(inputId);
+  const pass = passInput ? passInput.value.trim() : "";
+  if(!pass) {
+    showCustomAlert("يرجى إدخال الرمز المؤقت الجديد في الحقل المخصص أولاً.");
     return;
   }
-  showCustomConfirm(`هل أنت متأكد من حذف الحساب (${name}) نهائياً من قاعدة البيانات؟`, async () => {
+  const text = encodeURIComponent(`مرحباً بك، بناءً على طلبك لاسترجاع كلمة المرور في منصة صخر، رمزك الجديد المؤقت هو: ${pass}`);
+  window.open(`https://wa.me/${formatWhatsApp(phone)}?text=${text}`, '_blank');
+}
+
+async function adminDeleteAccount(uid, name) {
+  if(!auth || !auth.currentUser) {
+    showCustomAlert("يرجى تسجيل الدخول بحساب المدير أولاً.");
+    return;
+  }
+  
+  showCustomConfirm(`هل أنت متأكد من حذف الحساب (${name}) نهائياً؟`, async () => {
     try {
-      await db.ref("allAccounts/" + uid).remove();
-      await db.ref("technicians/" + uid).remove();
-      await db.ref("publicTechnicians/" + uid).remove();
-      await db.ref("technicianJobs/" + uid).remove();
-      await db.ref("requests/" + uid).remove();
-      showCustomAlert("تم حذف الحساب نهائياً من المنصة.");
+      // حذف الحساب من كل الجداول باصيمن مستقل حتى لا يحدث خطأ تقاطع
+      await db.ref("allAccounts/" + uid).remove().catch(()=>{});
+      await db.ref("technicians/" + uid).remove().catch(()=>{});
+      await db.ref("publicTechnicians/" + uid).remove().catch(()=>{});
+      await db.ref("technicianJobs/" + uid).remove().catch(()=>{});
+      await db.ref("requests/" + uid).remove().catch(()=>{});
+      
+      showCustomAlert("تم حذف الحساب نهائياً من المنصة بنجاح.");
       loadAdminData();
       loadPublicTechs();
     } catch(e) {
@@ -1648,22 +1720,32 @@ function listenToAnnouncements() {
       bar.style.transition = "none";
       bar.style.transform = "translateX(-100%)";
       bar.innerText = list[index];
-      void bar.offsetWidth;
+      void bar.offsetWidth; // Force reflow
       
       bar.style.transition = "transform 12s linear";
       bar.style.transform = "translateX(100%)";
       
       announcementTimer = setTimeout(() => {
         index = (index + 1) % list.length;
-        announcementTimer = setTimeout(playNextAnnouncement, 2000);
-      }, 12000);
+        announcementTimer = setTimeout(playNextAnnouncement, 2000); // 2 seconds pause before next
+      }, 12000); // 12 seconds scroll duration
     }
     playNextAnnouncement();
   });
 }
 
 async function loadAdminData(){
-  if(currentRole !== "admin") return;
+  // التأكد من أن جلسة المصادقة مكتملة وأن المستخدم هو المدير فعلياً
+  if(!auth || !auth.currentUser) {
+    showCustomAlert("جاري التحقق من جلسة المدير، يرجى إعادة المحاولة بعد ثانية.");
+    return;
+  }
+  
+  if(currentRole !== "admin" && auth.currentUser.email !== "07805017009@sakhr.app") {
+    showCustomAlert("عذراً، ليس لديك صلاحية المدير.");
+    return;
+  }
+
   try{
     const [r, t, p, acc] = await Promise.all([
       db.ref("requests").once("value"),
