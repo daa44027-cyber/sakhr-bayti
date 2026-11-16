@@ -1648,25 +1648,34 @@ function sendWhatsAppPassword(phone, inputId) {
 }
 
 async function adminDeleteAccount(uid, name) {
-  if(!auth || !auth.currentUser) {
-    showCustomAlert("يرجى تسجيل الدخول بحساب المدير أولاً.");
+  const currentEmail = auth?.currentUser?.email;
+  
+  // فحص صارم لضمان أن الجلسة الحالية هي للمدير فقط
+  if (!auth || !auth.currentUser || currentEmail !== "07805017009@sakhr.app") {
+    showCustomAlert("خطأ أمني: أنت لست مسجلاً دخول بحساب المدير الرئيسي (07805017009@sakhr.app). يرجى إعادة تسجيل الدخول.");
     return;
   }
   
+  if (!uid || uid === "undefined") {
+    showCustomAlert("خطأ: معرف المستخدم (UID) غير صالح للحذف.");
+    return;
+  }
+
   showCustomConfirm(`هل أنت متأكد من حذف الحساب (${name}) نهائياً؟`, async () => {
     try {
-      // حذف الحساب من كل الجداول باصيمن مستقل حتى لا يحدث خطأ تقاطع
-      await db.ref("allAccounts/" + uid).remove().catch(()=>{});
-      await db.ref("technicians/" + uid).remove().catch(()=>{});
-      await db.ref("publicTechnicians/" + uid).remove().catch(()=>{});
-      await db.ref("technicianJobs/" + uid).remove().catch(()=>{});
-      await db.ref("requests/" + uid).remove().catch(()=>{});
+      // تنفيذ الحذف بدون catch صامت حتى يظهر أي خطأ فورا
+      await db.ref("allAccounts/" + uid).remove();
+      await db.ref("technicians/" + uid).remove();
+      await db.ref("publicTechnicians/" + uid).remove();
+      await db.ref("technicianJobs/" + uid).remove();
+      await db.ref("requests/" + uid).remove();
       
       showCustomAlert("تم حذف الحساب نهائياً من المنصة بنجاح.");
       loadAdminData();
       loadPublicTechs();
     } catch(e) {
-      showCustomAlert("خطأ أثناء حذف الحساب: " + e.message);
+      // سيظهر لك هذا التنبيه إذا اعترض فايربيز على الصلاحيات أو الحذف
+      showCustomAlert("فشل الحذف من فايربيز: " + e.message);
     }
   });
 }
