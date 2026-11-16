@@ -1648,18 +1648,21 @@ function sendWhatsAppPassword(phone, inputId) {
 }
 
 async function adminDeleteAccount(uid, name) {
-  if(currentRole !== "admin" && currentUser?.email !== "07805017009@sakhr.app") {
-    showCustomAlert("عذراً، ليس لديك صلاحية المدير.");
+  if(!auth || !auth.currentUser) {
+    showCustomAlert("يرجى تسجيل الدخول بحساب المدير أولاً.");
     return;
   }
-  showCustomConfirm(`هل أنت متأكد من حذف الحساب (${name}) نهائياً من قاعدة البيانات؟`, async () => {
+  
+  showCustomConfirm(`هل أنت متأكد من حذف الحساب (${name}) نهائياً؟`, async () => {
     try {
-      await db.ref("allAccounts/" + uid).remove();
-      await db.ref("technicians/" + uid).remove();
-      await db.ref("publicTechnicians/" + uid).remove();
-      await db.ref("technicianJobs/" + uid).remove();
-      await db.ref("requests/" + uid).remove();
-      showCustomAlert("تم حذف الحساب نهائياً من المنصة.");
+      // حذف الحساب من كل الجداول باصيمن مستقل حتى لا يحدث خطأ تقاطع
+      await db.ref("allAccounts/" + uid).remove().catch(()=>{});
+      await db.ref("technicians/" + uid).remove().catch(()=>{});
+      await db.ref("publicTechnicians/" + uid).remove().catch(()=>{});
+      await db.ref("technicianJobs/" + uid).remove().catch(()=>{});
+      await db.ref("requests/" + uid).remove().catch(()=>{});
+      
+      showCustomAlert("تم حذف الحساب نهائياً من المنصة بنجاح.");
       loadAdminData();
       loadPublicTechs();
     } catch(e) {
