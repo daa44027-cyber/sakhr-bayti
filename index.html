@@ -566,20 +566,62 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
 
 <div class="modal hidden" id="techEditModal">
  <div class="modal-box">
-  <div class="modal-head"><h3>تعديل الملف الشخصي والمعلومات</h3><div class="close" onclick="closeModal('techEditModal')">✕</div></div>
-  <div class="field"><label>الاسم الكامل</label><input id="editTechName" placeholder="الاسم"></div>
-  <div class="row">
-   <div class="field"><label>المحافظة</label><select id="editTechCity" onchange="setDistricts('editTechArea', this.value)"></select></div>
-   <div class="field"><label>القضاء</label><select id="editTechArea"><option value="">اختر القضاء</option></select></div>
+<div class="modal hidden" id="techEditModal">
+ <div class="modal-box">
+  <div class="modal-head">
+   <h3>تعديل الملف الشخصي والمعلومات</h3>
+   <div class="close" onclick="closeModal('techEditModal')">✕</div>
   </div>
-  <div class="row">
-   <div class="field"><label>المنطقة أو الحي</label><input id="editTechNeighborhood" placeholder="مثال: البندقية"></div>
-   <div class="field"><label>رقم الهاتف</label><input id="editTechPhone" inputmode="tel" placeholder="07800000000"></div>
+
+  <div class="field">
+   <label>الاسم الكامل</label>
+   <input id="editTechName" placeholder="الاسم">
   </div>
-  <div class="field"><label>الاختصاص</label><select id="editTechService"></select></div>
-  <div class="field"><label>نبذة عن خبرتك</label><textarea id="editTechBio" placeholder="نبذة مختصرة..."></textarea></div>
-  <div class="field"><label>تحديث الصورة الشخصية (اختياري)</label><input id="editTechPhotoFile" type="file" accept="image/*"></div>
-  <button class="btn primary" style="width:100%; margin-top:10px;" onclick="saveTechAccountProfile()">حفظ تعديلات البروفايل</button>
+
+  <div class="row">
+   <div class="field">
+    <label>المحافظة</label>
+    <select id="editTechCity" onchange="setDistricts('editTechArea', this.value)"></select>
+   </div>
+   <div class="field">
+    <label>القضاء</label>
+    <select id="editTechArea">
+     <option value="">اختر القضاء</option>
+    </select>
+   </div>
+  </div>
+
+  <div class="row">
+   <div class="field">
+    <label>المنطقة أو الحي</label>
+    <input id="editTechNeighborhood" placeholder="مثال: البندقية">
+   </div>
+   <div class="field">
+    <label>رقم الهاتف</label>
+    <input id="editTechPhone" inputmode="tel" placeholder="07800000000">
+   </div>
+  </div>
+
+  <div class="field">
+   <label>الاختصاص</label>
+   <select id="editTechService"></select>
+  </div>
+
+  <div class="field">
+   <label>نبذة عن خبرتك</label>
+   <textarea id="editTechBio" placeholder="نبذة مختصرة..."></textarea>
+  </div>
+
+  <div class="field">
+   <label>تحديث الصورة الشخصية (اختياري)</label>
+   <input id="editTechPhotoFile" type="file" accept="image/*">
+  </div>
+
+  <button class="btn primary" style="width:100%; margin-top:10px;"
+    onclick="saveTechAccountProfile()">
+    حفظ تعديلات البروفايل
+  </button>
+
   <div id="editProfileMessage"></div>
  </div>
 </div>
@@ -1603,8 +1645,138 @@ async function resetTechFreeJobs(techUid) {
     showCustomAlert("خطأ: " + e.message);
   }
 }
+function adminCheckAccess(){
+  return !!(auth && auth.currentUser && currentRole === "admin");
+}
 
-async function adminDeleteTechnician(techUid, techName) {
+function adminOpenEditAccount(uid){
+  if(!adminCheckAccess()){
+    showCustomAlert("ليس لديك صلاحية تنفيذ هذا الأمر.");
+    return;
+  }
+
+  const account = allAccountsList.find(a => a.uid === uid);
+  const tech = technicians.find(t => t.uid === uid);
+  if(!account && !tech){
+    showCustomAlert("لم يتم العثور على الحساب.");
+    return;
+  }
+
+  const a = {...(account || {}), ...(tech || {})};
+
+  $("adminEditUid").value = uid;
+  $("adminEditIsTech").value = tech ? "yes" : "no";
+  $("adminEditName").value = a.name || "";
+  $("adminEditPhone").value = a.phone || "";
+  $("adminEditCity").value = a.city || "";
+  $("adminEditArea").value = a.area || "";
+  $("adminEditNeighborhood").value = a.neighborhood || "";
+  $("adminEditBio").value = a.bio || "";
+
+  $("adminEditService").innerHTML =
+    SERVICES.map(s => `<option value="${esc(s)}">${esc(s)}</option>`).join("");
+
+  $("adminEditService").value = a.service || SERVICES[0];
+
+  $("adminTechExtraFields").classList.toggle("hidden", !tech);
+  $("adminEditAccountModal").classList.remove("hidden");
+}
+
+async function saveAdminAccountEdit(){
+  if(!adminCheckAccess()){
+    showCustomAlert("ليس لديك صلاحية المدير.");
+    return;
+  }
+
+  const uid = $("adminEditUid").value;
+  const isTech = $("adminEditIsTech").value === "yes";
+
+  const name = $("adminEditName").value.trim();
+  const phone = $("adminEditPhone").value.trim();
+  const city = $("adminEditCity").value.trim();
+  const area = $("adminEditArea").value.trim();
+
+  if(!uid || !name || !phone || !city || !area){
+    showCustomAlert("يرجى إكمال الاسم والهاتف والمحافظة والقضاء.");
+    return;
+  }
+
+  try{
+    const account = allAccountsList.find(a => a.uid === uid) || {};
+    const updates = {};
+
+    updates["allAccounts/" + uid] = {
+      ...account,
+      uid,
+      name,
+      phone,
+      city,
+      area,
+      role: isTech ? "فني" : "زبون",
+      updatedAt: Date.now()
+    };
+
+    if(isTech){
+      const oldTech = technicians.find(t => t.uid === uid) || {};
+
+      const updatedTech = {
+        ...oldTech,
+        uid,
+        name,
+        phone,
+        city,
+        area,
+        neighborhood: $("adminEditNeighborhood").value.trim(),
+        service: $("adminEditService").value,
+        bio: $("adminEditBio").value.trim()
+      };
+
+      const publicTech = {
+        ...updatedTech,
+        approved: updatedTech.approved !== false,
+        available: updatedTech.available !== false,
+        subscriptionStatus: updatedTech.subscriptionStatus || "غير فعال",
+        freeJobsUsed: Number(updatedTech.freeJobsUsed || 0)
+      };
+
+      updates["technicians/" + uid] = updatedTech;
+      updates["publicTechnicians/" + uid] = publicTech;
+    }
+
+    // تحديث بيانات الطلبات القديمة للزبون
+    if(!isTech){
+      const snap = await db.ref("requests/" + uid).once("value");
+
+      snap.forEach(item => {
+        updates["requests/" + uid + "/" + item.key + "/name"] = name;
+        updates["requests/" + uid + "/" + item.key + "/phone"] = phone;
+        updates["requests/" + uid + "/" + item.key + "/city"] = city;
+        updates["requests/" + uid + "/" + item.key + "/area"] = area;
+      });
+    }
+
+    await db.ref().update(updates);
+
+    closeModal("adminEditAccountModal");
+    showCustomAlert("تم تعديل بيانات الحساب وحفظها بنجاح.");
+    await loadAdminData();
+    await loadPublicTechs();
+
+    if(!isTech && localStorage.getItem("sakhrCustomerUid") === uid){
+      localStorage.setItem("sakhrCustomerName", name);
+      localStorage.setItem("sakhrCustomerPhone", phone);
+      localStorage.setItem("sakhrCustomerCity", city);
+      localStorage.setItem("sakhrCustomerArea", area);
+      renderCustomerAccount();
+    }
+
+  }catch(e){
+    showCustomAlert("فشل حفظ التعديلات: " + e.message);
+  }
+}
+async function adminDeleteTechnician(techUid, techName){
+  return adminDeleteAccount(techUid, techName);
+}
   if(currentRole !== "admin") return;
   showCustomConfirm(`هل أنت متأكد من حذف الفني (${techName}) نهائياً من النظام؟`, async () => {
     try {
@@ -1815,9 +1987,17 @@ function renderAdmin(){
       <div class="muted">رقم الهاتف / البريد: <b style="color:var(--burgundy); font-size:14px;">${esc(a.phone || a.email || "غير مسجل تفاصيل")}</b></div>
       <div class="muted">الموقع: ${esc(a.city || "غير محدد")} / ${esc(a.area || "غير محدد")}</div>
       <div class="muted" style="margin-top:4px;">وقت التسجيل / الدخول: ${a.registeredAt ? new Date(a.registeredAt).toLocaleString('ar-IQ') : 'مسجل بالمنصة'}</div>
-      <div class="actions" style="margin-top:8px;">
-       <button class="btn danger" onclick="adminDeleteAccount('${esc(a.uid)}', '${esc(a.name || a.phone || 'المستخدم')}')">حذف الحساب نهائياً</button>
-      </div>
+    <div class="actions" style="margin-top:8px;">
+ <button class="btn primary"
+  onclick="adminOpenEditAccount('${esc(a.uid)}')">
+  تعديل البيانات
+ </button>
+
+ <button class="btn danger"
+  onclick="adminDeleteAccount('${esc(a.uid)}','${esc(a.name || a.phone || 'المستخدم')}')">
+  حذف الحساب
+ </button>
+</div>
     </div>`).join("") : '<div class="empty">لا توجد حسابات مسجلة حالياً.</div>';
   }
 
