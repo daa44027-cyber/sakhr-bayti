@@ -1,767 +1,1316 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>صخر سيرفر - خدمات الصيانة والحرفيين</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --primary: #63132b;
-      --primary-dark: #450b1d;
-      --accent: #f4b41a;
-      --bg: #f6f5f2;
-      --card: #ffffff;
-      --text: #1f2421;
-      --muted: #6c757d;
-      --border: #e2dfd9;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#650d2c">
+<title>صخر | بيتي للصيانة</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap');
 
-    * { box-sizing: border-box; font-family: 'Cairo', sans-serif; }
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      padding-bottom: 40px;
-    }
+:root {
+  --burgundy: #650d2c;
+  --burgundy-dark: #45081c;
+  --gold: #ffc329;
+  --gold-dark: #d99b07;
+  --bg-dark: #351323;
+  --cream: #fff5df;
+  --text-main: #351323;
+  --text-muted: #8b7180;
+  --card-bg: #ffffff;
+  --border-gold: #f3d08a;
+  --green: #16845b;
+  --online-green: #22c55e;
+}
+html { scroll-behavior: smooth; }
+* { box-sizing: border-box; }
+body { 
+  margin: 0; 
+  font-family: 'Cairo', sans-serif; 
+  background: var(--burgundy-dark); 
+  color: #fff; 
+  position: relative;
+  min-height: 100vh;
+}
 
-    /* الهيدر */
-    header {
-      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-      color: #fff;
-      padding: 18px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-    }
-    header h1 { margin: 0; font-size: 20px; font-weight: 800; }
-    .user-badge {
-      background: rgba(255,255,255,0.15);
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-size: 13px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .logout-btn {
-      background: var(--accent);
-      color: #000;
-      border: none;
-      padding: 4px 10px;
-      border-radius: 12px;
-      font-weight: 700;
-      cursor: pointer;
-      font-size: 12px;
-    }
+body::before {
+  content: "";
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(480px, 85vw);
+  height: min(480px, 85vw);
+  background-image: url('logo.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.035;
+  pointer-events: none;
+  z-index: 0;
+}
 
-    .container { max-width: 720px; margin: 20px auto; padding: 0 15px; }
+header, main, footer, .modal {
+  position: relative;
+  z-index: 1;
+}
 
-    /* الأزرار العلوية الرئيسية */
-    .top-actions {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 10px;
-      margin-bottom: 22px;
-    }
-    .action-btn {
-      background: var(--primary);
-      color: #fff;
-      border: none;
-      padding: 13px 15px;
-      border-radius: 14px;
-      font-size: 15px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: 0.2s;
-      box-shadow: 0 3px 8px rgba(99,19,43,0.2);
-    }
-    .action-btn.support {
-      background: #1b6b50;
-    }
-    .action-btn.admin-only {
-      background: #222;
-      color: var(--accent);
-      border: 1px solid var(--accent);
-    }
-    .action-btn:active { transform: scale(0.98); }
+button, input, select, textarea { font: inherit; }
+button { cursor: pointer; border: 0; }
 
-    .section-title {
-      font-size: 18px;
-      font-weight: 800;
-      margin: 10px 0 14px;
-      color: var(--primary);
-    }
+header { background: var(--burgundy); padding: 12px 4%; display: flex; align-items: center; justify-content: space-between; gap: 15px; flex-wrap: wrap; border-bottom: 2px solid var(--gold); position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+.brand { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+.brand img { height: 85px; width: auto; object-fit: contain; border: none; border-radius: 0; filter: drop-shadow(0 3px 6px rgba(0,0,0,0.5)); }
+nav { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+nav button { color: #fff; background: rgba(255,255,255,0.1); padding: 8px 14px; border-radius: 20px; border: 1px solid rgba(255,195,41,0.3); font-size: 12px; font-weight: 700; transition: all .2s; }
+nav button:hover, nav button.primary-nav { background: var(--gold); color: var(--burgundy-dark); border-color: var(--gold); }
 
-    /* شبكة الخدمات */
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-    }
-    .service-card {
-      background: var(--card);
-      border: 1.5px solid var(--border);
-      border-radius: 16px;
-      padding: 18px 12px;
-      text-align: center;
-      cursor: pointer;
-      transition: 0.2s;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
-    }
-    .service-card:hover {
-      border-color: var(--primary);
-      transform: translateY(-2px);
-    }
-    .service-icon { font-size: 30px; margin-bottom: 6px; display: block; }
-    .service-name { font-size: 15px; font-weight: 800; color: var(--text); }
+.hero-banner { background: linear-gradient(180deg, var(--burgundy), var(--burgundy-dark)); padding: 35px 4% 25px; text-align: center; position: relative; border-bottom: 3px solid var(--gold); box-shadow: inset 0 -10px 20px rgba(0,0,0,0.3); }
+.hero-banner h2 { font-size: 26px; margin: 0 0 5px; font-weight: 900; color: #fff; text-shadow: 0 2px 8px rgba(0,0,0,0.5); }
+.hero-banner .slogan { font-size: 32px; font-weight: 900; color: var(--gold); margin: 5px 0 10px; text-shadow: 0 3px 10px rgba(0,0,0,0.6); }
+.hero-banner p { font-size: 14px; color: var(--cream); margin: 0 0 20px; opacity: 0.9; }
 
-    /* النوافذ المنبثقة (Modals) */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.65);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      padding: 15px;
-      z-index: 1000;
-    }
-    .modal-overlay.active { display: flex; }
-    .modal-box {
-      background: #fff;
-      width: 100%;
-      max-width: 420px;
-      border-radius: 22px;
-      padding: 22px;
-      position: relative;
-      max-height: 90vh;
-      overflow-y: auto;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.25);
-    }
-    .close-modal {
-      position: absolute;
-      top: 15px;
-      left: 15px;
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      border: 1px solid #ddd;
-      background: #f9f9f9;
-      font-size: 18px;
-      cursor: pointer;
-    }
-    .modal-title {
-      margin: 0 0 14px;
-      font-size: 20px;
-      font-weight: 800;
-      color: var(--primary);
-    }
-    .info-banner {
-      background: #e9f5ee;
-      color: #165b3d;
-      padding: 10px 12px;
-      border-radius: 12px;
-      font-size: 13px;
-      font-weight: 600;
-      margin-bottom: 16px;
-      border: 1px solid #c9e6d5;
-    }
+.cta-btn { background: linear-gradient(135deg, #ffdb57, #e99a12); color: var(--burgundy-dark); padding: 14px 28px; border-radius: 30px; font-weight: 900; font-size: 16px; border: 2px solid #fff; box-shadow: 0 6px 20px rgba(233,154,18,0.4); display: inline-flex; align-items: center; gap: 8px; text-decoration: none; transition: transform .2s; }
+.cta-btn:active { transform: scale(0.95); }
 
-    label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 5px; }
-    input, select, textarea {
-      width: 100%;
-      padding: 12px;
-      border: 1.5px solid #e0dcd3;
-      border-radius: 12px;
-      background: #fbfaf7;
-      font-size: 14px;
-      margin-bottom: 13px;
-      outline: none;
-    }
-    input:focus, select:focus, textarea:focus { border-color: var(--primary); }
+.quick-search-box { background: rgba(255,255,255,0.95); padding: 12px; border-radius: 16px; display: flex; gap: 8px; max-width: 600px; margin: 20px auto 0; box-shadow: 0 10px 25px rgba(0,0,0,0.3); border: 2px solid var(--gold); }
+.quick-search-box select, .quick-search-box input { flex: 1; padding: 10px; border: 1px solid #d9b98e; border-radius: 10px; outline: none; background: #fff; color: var(--text-main); font-size: 13px; font-weight: 700; }
+.quick-search-box button { background: var(--burgundy); color: var(--gold); padding: 0 20px; border-radius: 10px; font-weight: 800; font-size: 13px; border: 1px solid var(--gold); }
 
-    .btn-full {
-      width: 100%;
-      padding: 13px;
-      border: none;
-      border-radius: 12px;
-      font-size: 15px;
-      font-weight: 800;
-      cursor: pointer;
-      margin-bottom: 10px;
-    }
-    .btn-primary { background: var(--primary); color: #fff; }
-    .btn-gold { background: linear-gradient(90deg, #f5b921, #e59d0c); color: #111; }
-    .btn-outline { background: #fff; border: 1.5px solid #ddd; color: #333; }
+.container { width: min(1100px, 92%); margin: 0 auto 40px; }
+.section-title { font-size: 20px; color: var(--gold); margin: 25px 0 15px; font-weight: 900; text-align: center; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
 
-    /* بطاقات الفنيين */
-    .tech-card {
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 14px;
-      margin-bottom: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .tech-info h4 { margin: 0 0 4px; font-size: 16px; color: var(--primary); }
-    .tech-info p { margin: 0; font-size: 13px; color: var(--muted); }
-    .call-btn {
-      background: #198754;
-      color: #fff;
-      text-decoration: none;
-      padding: 8px 14px;
-      border-radius: 10px;
-      font-size: 13px;
-      font-weight: 700;
-    }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 18px; }
+.service-card { background: linear-gradient(145deg, #d9822b, #8c251e); border: 2px solid var(--gold); border-radius: 20px; padding: 22px 15px; text-align: center; cursor: pointer; box-shadow: 0 8px 20px rgba(0,0,0,0.4); transition: transform .2s, box-shadow .2s; position: relative; overflow: hidden; }
+.service-card:hover { transform: translateY(-4px); box-shadow: 0 12px 25px rgba(255,195,41,0.3); }
+.service-card:nth-child(even) { background: linear-gradient(145deg, #a62434, #590a18); }
+.service-icon { font-size: 42px; margin-bottom: 8px; filter: drop-shadow(0 3px 5px rgba(0,0,0,0.3)); }
+.service-card h3 { font-size: 18px; margin: 5px 0 10px; color: #fff; font-weight: 900; text-shadow: 0 2px 4px rgba(0,0,0,0.4); }
+.service-card .arrow-badge { background: rgba(0,0,0,0.3); width: 30px; height: 30px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; color: var(--gold); font-size: 14px; border: 1px solid var(--gold); }
 
-    /* شاشة الدردشة مع فريق الدعم */
-    .chat-messages {
-      height: 290px;
-      overflow-y: auto;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 12px;
-      background: #f9f8f6;
-      margin-bottom: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .msg {
-      max-width: 80%;
-      padding: 9px 13px;
-      border-radius: 14px;
-      font-size: 13.5px;
-      line-height: 1.5;
-    }
-    .msg.user {
-      background: var(--primary);
-      color: #fff;
-      align-self: flex-start;
-      border-bottom-right-radius: 4px;
-    }
-    .msg.admin {
-      background: #e6e4df;
-      color: #111;
-      align-self: flex-end;
-      border-bottom-left-radius: 4px;
-    }
-    .msg small { display: block; font-size: 10px; opacity: 0.75; margin-top: 3px; }
-    .chat-input-row { display: flex; gap: 8px; }
-    .chat-input-row input { margin-bottom: 0; flex: 1; }
-    .chat-input-row button {
-      background: var(--primary);
-      color: #fff;
-      border: none;
-      border-radius: 12px;
-      padding: 0 18px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-    .hidden { display: none !important; }
-  </style>
+.trust-bar { background: var(--burgundy-dark); border-top: 2px solid var(--gold); border-bottom: 2px solid var(--gold); padding: 15px 5%; display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap; gap: 15px; margin-top: 30px; text-align: center; }
+.trust-item { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 14px; color: var(--gold); }
+.trust-item span { font-size: 20px; }
+
+.card { background: #fff; color: var(--text-main); border: 2px solid var(--gold); border-radius: 20px; padding: 22px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+.btn { padding: 12px 18px; border-radius: 12px; font-weight: 900; display: inline-block; text-decoration: none; text-align: center; transition: all .2s; font-size: 14px; cursor: pointer; }
+.primary { background: var(--burgundy); color: var(--gold); border: 1px solid var(--gold); }
+.primary:hover { background: var(--burgundy-dark); }
+.whatsapp-btn { background: #25d366; color: #fff; border: 1px solid #1ebe5d; display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
+.whatsapp-btn:hover { background: #1eb954; }
+.secondary { background: #e6f4ea; color: var(--green); }
+.danger { background: #fee2e2; color: #dc2626; }
+.light { background: #f3f4f6; color: var(--text-main); }
+
+.field { margin: 15px 0; }
+.field label { display: block; font-weight: 800; font-size: 13px; margin-bottom: 6px; color: var(--burgundy); }
+.field input, .field select, .field textarea { width: 100%; padding: 12px; border: 1px solid #d9b98e; border-radius: 12px; background: #fff9ef; outline: none; color: var(--text-main); font-size: 14px; font-weight: 700; }
+.field textarea { min-height: 90px; resize: vertical; }
+
+.password-wrapper { position: relative; }
+.password-wrapper input { padding-left: 45px; }
+.toggle-password { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); background: transparent; border: none; cursor: pointer; font-size: 16px; color: var(--text-muted); }
+
+.row { display: flex; gap: 12px; flex-wrap: wrap; }
+.row > * { flex: 1; min-width: 140px; }
+.hidden { display: none !important; }
+
+.notice { padding: 14px; border-radius: 12px; background: #e6f4ea; color: #054e38; margin: 12px 0; font-size: 13px; line-height: 1.6; border: 1px solid #c3e6cb; font-weight: 700; }
+.success { background: #d1e7dd; color: #0f5132; }
+.error { background: #f8d7da; color: #842029; border-color: #f5c2c7; }
+
+.badge { display: inline-block; padding: 4px 12px; border-radius: 20px; background: var(--burgundy); color: var(--gold); font-size: 11px; font-weight: 900; border: 1px solid var(--gold); }
+.tech-card { display: flex; flex-direction: column; gap: 12px; background: #fff; color: var(--text-main); position: relative; }
+.tech-card .btn { width: 100%; }
+.muted { color: var(--text-muted); font-size: 13px; font-weight: 600; }
+.empty { text-align: center; padding: 40px; color: var(--text-muted); background: #fff; border-radius: 16px; border: 2px dashed #d9b98e; font-weight: 700; }
+
+.online-dot { display: inline-block; width: 12px; height: 12px; background-color: var(--online-green); border-radius: 50%; border: 2px solid #fff; box-shadow: 0 0 4px var(--online-green); vertical-align: middle; margin-right: 5px; }
+
+.modal { position: fixed; inset: 0; background: rgba(53,19,35,0.85); backdrop-filter: blur(5px); display: flex; align-items: center; justify-content: center; padding: 15px; z-index: 1000; }
+.modal-box { background: #fff; color: var(--text-main); border-radius: 24px; padding: 24px; width: min(520px, 100%); max-height: 90vh; overflow: auto; box-shadow: 0 25px 50px rgba(0,0,0,0.5); border: 3px solid var(--gold); }
+.modal-head { display: flex; justify-content: space-between; align-items: center; color: var(--burgundy); margin-bottom: 15px; border-bottom: 2px solid #f3d08a; padding-bottom: 10px; }
+.modal-head h3 { margin: 0; font-size: 18px; font-weight: 900; }
+.close { background: #f3f4f6; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-weight: bold; color: var(--burgundy); }
+
+.list-item { border: 2px solid #d9b98e; padding: 18px; border-radius: 16px; margin: 12px 0; background: #fff9ef; color: var(--text-main); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+.list-item h4 { margin: 0 0 6px; color: var(--burgundy); font-size: 16px; font-weight: 900; }
+.actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+.actions button, .actions a { font-size: 12px; padding: 8px 14px; border-radius: 10px; font-weight: 800; }
+
+.stat { font-size: 26px; font-weight: 900; color: var(--burgundy); }
+.tech-choice { border: 2px solid #d9b98e; border-radius: 14px; padding: 14px; margin: 10px 0; background: #fff; cursor: pointer; transition: all .2s; }
+.tech-choice:hover { border-color: var(--burgundy); }
+.tech-choice.selected { border: 2px solid var(--burgundy); background: #fff5df; }
+
+.avatar { width: 75px; height: 75px; border-radius: 50%; object-fit: cover; border: 3px solid var(--gold); background: #fff5df; display: block; margin: 0 auto 10px; }
+.avatar.small { width: 50px; height: 50px; margin: 0; }
+
+.stars { color: #f59e0b; font-size: 18px; letter-spacing: 1px; }
+
+footer { background: var(--burgundy-dark); color: var(--cream); text-align: center; padding: 30px; margin-top: 40px; font-size: 13px; line-height: 2; border-top: 3px solid var(--gold); }
+.footer-links { margin-top: 10px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+.footer-links button { background: transparent; color: var(--gold); border: 0; text-decoration: underline; cursor: pointer; font-size: 13px; font-weight: 800; }
+
+@media(max-width:600px){ header { justify-content: center; text-align: center; } nav { justify-content: center; } .hero-banner { padding: 25px 4%; } .hero-banner h2 { font-size: 20px; } .hero-banner .slogan { font-size: 26px; } }
+</style>
 </head>
 <body>
 
-  <header>
-    <h1>🛠️ صخر سيرفر</h1>
-    <div id="userStatusArea">
-      <button class="logout-btn" onclick="openChoiceModal()">تسجيل الدخول</button>
-    </div>
-  </header>
+<header>
+ <div class="brand" onclick="showSection('home')">
+  <img src="logo.png" alt="لوغو صخر الرسمي">
+ </div>
+ <nav id="navMenu">
+  <button onclick="showSection('home')">الرئيسية</button>
+  <button onclick="showSection('services')">خدماتنا</button>
+  <button onclick="showSection('technicians')">الفنيون</button>
+  <button onclick="showSection('reviewsChat')">دردشة تقييم الخدمات</button>
+  <button id="authNavBtn" onclick="handleAuthNav()" class="primary-nav">تسجيل الدخول</button>
+ </nav>
+</header>
 
-  <div class="container">
-    <!-- الأزرار العلوية -->
-    <div class="top-actions">
-      <!-- زر خدماتنا -->
-      <button class="action-btn" onclick="requireAuth(() => scrollToServices())">📋 خدماتنا</button>
+<main>
+<section id="home">
+ <div class="hero-banner">
+  <h2>خدمات صيانة منزلية بمستوى احترافي</h2>
+  <div class="slogan">بيتك يستاهل الأفضل</div>
+  <p>أسرع منصة لربط أصحاب المنازل بأفضل الفنيين المحليين في قضائك</p>
+  
+  <button class="cta-btn" onclick="openRequest()">🛠️ اطلب خدمتك الآن</button>
 
-      <!-- زر فريق الدعم (بدل طلب خدمة) -->
-      <button class="action-btn support" onclick="requireAuth(() => openSupportChat())">💬 فريق الدعم</button>
-
-      <!-- زر الفنيين (يظهر للمدير فقط) -->
-      <button id="adminTechsBtn" class="action-btn admin-only hidden" onclick="openAllTechsForAdmin()">👷‍♂️ إدارة الفنيين (المدير)</button>
-    </div>
-
-    <!-- قسم الخدمات -->
-    <h2 class="section-title" id="servicesSection">اختر الخدمة المطلوبة</h2>
-    <div class="services-grid">
-      <div class="service-card" onclick="requireAuth(() => selectService('تبريد وتكييف'))">
-        <span class="service-icon">❄️</span>
-        <div class="service-name">تبريد وتكييف</div>
-      </div>
-
-      <div class="service-card" onclick="requireAuth(() => selectService('كهرباء'))">
-        <span class="service-icon">⚡</span>
-        <div class="service-name">كهرباء</div>
-      </div>
-
-      <div class="service-card" onclick="requireAuth(() => selectService('سباكة وتأسيسات صحية'))">
-        <span class="service-icon">🚰</span>
-        <div class="service-name">سباكة وتأسيسات صحية</div>
-      </div>
-
-      <!-- زر ألمنيوم بدل تنظيف -->
-      <div class="service-card" onclick="requireAuth(() => selectService('ألمنيوم'))">
-        <span class="service-icon">🪟</span>
-        <div class="service-name">ألمنيوم</div>
-      </div>
-
-      <!-- زر مطابخ وديكور مستقل -->
-      <div class="service-card" onclick="requireAuth(() => selectService('مطابخ وديكور'))">
-        <span class="service-icon">🪚</span>
-        <div class="service-name">مطابخ وديكور</div>
-      </div>
-
-      <!-- زر صبغ منازل مستقل -->
-      <div class="service-card" onclick="requireAuth(() => selectService('صبغ منازل'))">
-        <span class="service-icon">🎨</span>
-        <div class="service-name">صبغ منازل</div>
-      </div>
-    </div>
-
-    <!-- منطقة عرض نتائج الفنيين أو لوحة المدير -->
-    <div id="resultsContainer" style="margin-top: 25px;"></div>
+  <div class="quick-search-box">
+   <select id="quickCitySelect" onchange="quickCityChanged()">
+    <option value="">اختر محافظتك</option>
+    <option value="ALL">كل المحافظات</option>
+   </select>
+   <select id="quickServiceSelect">
+    <option value="">اختر الاختصاص المطللوب</option>
+   </select>
+   <button onclick="executeQuickSearch()">ابحث</button>
   </div>
+ </div>
 
-  <!-- 1. نافذة اختر طريقة الدخول (تظهر أول ما يضغط على أي زر) -->
-  <div class="modal-overlay" id="choiceModal">
-    <div class="modal-box">
-      <button class="close-modal" onclick="closeModals()">✕</button>
-      <h3 class="modal-title">اختر طريقة الدخول</h3>
-      <div class="info-banner">يرجى تحديد صفتك أو تسجيل الدخول للمتابعة والاستفادة من خدمات التطبيق.</div>
+ <div class="container">
+  <h2 class="section-title">أقسام الصيانة الرئيسية</h2>
+  <div class="grid" id="allServices"></div>
+ </div>
 
-      <button class="btn-full btn-primary" onclick="openRegisterModal('client')">👤 دخول / تسجيل كـ زبون</button>
-      <button class="btn-full btn-gold" onclick="openRegisterModal('technician')">🛠️ دخول / تسجيل كـ فني جديد</button>
-      <button class="btn-full btn-outline" onclick="openLoginModal()">🔐 لدي حساب مسبقاً (تسجيل الدخول)</button>
-    </div>
+ <div class="trust-bar">
+  <div class="trust-item"><span>👥</span> فنيون محترفون</div>
+  <div class="trust-item"><span>⏱️</span> استجابة سريعة</div>
+  <div class="trust-item"><span>🛡️</span> ضمان على العمل</div>
+ </div>
+</section>
+
+<section id="services" class="container hidden">
+ <h2 class="section-title">جميع خدمات الصيانة</h2>
+ <div class="grid" id="allServicesPage"></div>
+</section>
+
+<section id="technicians" class="container hidden">
+ <h2 class="section-title">الفنيون المعتمدون والمتاحون</h2>
+ <div class="grid" id="publicTechList"><div class="empty">جارٍ تحميل الفنيين المتاحين...</div></div>
+</section>
+
+<section id="reviewsChat" class="container hidden">
+ <h2 class="section-title">دردشة تقييم الخدمات</h2>
+ <div class="card" style="max-width:700px;margin:0 auto 25px">
+  <div class="notice">شاركنا رأيك وملاحظتك حول الخدمات، وتقييمك يهمنا لتطوير أداء المنصة.</div>
+  <div class="field"><label>اسمك الكريم</label><input id="reviewName" placeholder="اسمك الكامل"></div>
+  <div class="field">
+   <label>التقييم بالنجوم</label>
+   <select id="reviewStars">
+    <option value="5">⭐⭐⭐⭐⭐ (ممتاز جداً)</option>
+    <option value="4">⭐⭐⭐⭐ (جيد جداً)</option>
+    <option value="3">⭐⭐⭐ (جيد)</option>
+    <option value="2">⭐⭐ (مقبول)</option>
+    <option value="1">⭐ (ضعيف)</option>
+   </select>
   </div>
+  <div class="field"><label>رأيك أو ملاحظتك (مثل الدردشة)</label><textarea id="reviewText" placeholder="اكتب ملاحظتك أو تعليقك هنا..."></textarea></div>
+  <button class="btn primary" style="width:100%" onclick="submitReview()">إرسال التقييم والملاحظة</button>
+  <div id="reviewMessage"></div>
+ </div>
+ <h3 class="section-title" style="font-size:18px;color:#fff">آراء وتقييمات الزبائن</h3>
+ <div id="reviewsList"><div class="empty">جارٍ تحميل التقييمات...</div></div>
+</section>
 
-  <!-- 2. نافذة تسجيل الدخول الآمن (بدون أي رقم مقترح) -->
-  <div class="modal-overlay" id="loginModal">
-    <div class="modal-box">
-      <button class="close-modal" onclick="closeModals()">✕</button>
-      <h3 class="modal-title">تسجيل الدخول الآمن</h3>
-      <div class="info-banner">أدخل رقم هاتفك (أو إيميل الإدارة) وكلمة المرور للمتابعة.</div>
-
-      <label>رقم الهاتف أو البريد الإلكتروني</label>
-      <input type="text" id="loginIdentifier" placeholder="07XXXXXXXXX أو الإيميل" autocomplete="off" />
-
-      <label>كلمة المرور</label>
-      <input type="password" id="loginPassword" placeholder="••••••••" />
-
-      <button class="btn-full btn-primary" onclick="handleLogin()">دخول إلى الحساب</button>
-      <button class="btn-full btn-outline" onclick="openChoiceModal()">رجوع</button>
-    </div>
+<section id="join" class="container hidden">
+ <h2 class="section-title">انضم إلى شبكة فنيي صخر</h2>
+ <form class="card" style="max-width:700px;margin:0 auto"
+      onsubmit="event.preventDefault(); registerTechWithPassword();">
+  <div class="notice">للفني 3 أعمال مكتملة مجاناً بالكامل، وبعدها يحتاج لاشتراك رمزي لمواصلة استقبال الطلبات بلا حدود. التسجيل آمن برقم الهاتف وكلمة السر.</div>
+  <div class="row">
+   <div class="field"><label>الاسم الكامل</label><input id="regName" placeholder="مثال: أحمد عودة"></div>
+   <div class="field"><label>رقم الهاتف</label><input id="regPhone" inputmode="tel" placeholder="07800000000"></div>
   </div>
-
-  <!-- 3. نافذة تسجيل حساب جديد (زبون أو فني مع تحديد القضاء والاختصاص) -->
-  <div class="modal-overlay" id="registerModal">
-    <div class="modal-box">
-      <button class="close-modal" onclick="closeModals()">✕</button>
-      <h3 class="modal-title" id="regTitle">تسجيل حساب جديد</h3>
-
-      <label>الاسم الكامل</label>
-      <input type="text" id="regName" placeholder="اكتب اسمك الثلاثي أو اللقب" />
-
-      <label>رقم الهاتف</label>
-      <input type="tel" id="regPhone" placeholder="07XXXXXXXXX" autocomplete="off" />
-
-      <label>القضاء / المنطقة في بغداد</label>
-      <select id="regDistrict">
-        <option value="">-- اختر القضاء --</option>
-        <option value="الكرخ">قضاء الكرخ</option>
-        <option value="الرصافة">قضاء الرصافة</option>
-        <option value="الأعظمية">قضاء الأعظمية</option>
-        <option value="الكاظمية">قضاء الكاظمية</option>
-        <option value="الصدر">قضاء الصدر</option>
-        <option value="الدورة">قضاء الدورة</option>
-        <option value="المنصور">قضاء المنصور</option>
-        <option value="أبو غريب">قضاء أبو غريب</option>
-        <option value="المحمودية">قضاء المحمودية</option>
-        <option value="الطارمية">قضاء الطارمية</option>
-        <option value="المدائن">قضاء المدائن</option>
-      </select>
-
-      <!-- يظهر فقط إذا اختار تسجيل كفني -->
-      <div id="techSpecialtyField" class="hidden">
-        <label>الاختصاص المهني</label>
-        <select id="regSpecialty">
-          <option value="تبريد وتكييف">تبريد وتكييف</option>
-          <option value="كهرباء">كهرباء</option>
-          <option value="سباكة وتأسيسات صحية">سباكة وتأسيسات صحية</option>
-          <option value="ألمنيوم">ألمنيوم</option>
-          <option value="مطابخ وديكور">مطابخ وديكور</option>
-          <option value="صبغ منازل">صبغ منازل</option>
-        </select>
-      </div>
-
-      <label>كلمة المرور</label>
-      <input type="password" id="regPassword" placeholder="اختر كلمة مرور" />
-
-      <button class="btn-full btn-primary" onclick="handleRegister()">إتمام التسجيل والمتابعة</button>
+  <div class="row">
+   <div class="field">
+    <label>كلمة المرور الخاصة بالحساب</label>
+    <div class="password-wrapper">
+     <input id="regPassword" type="password" placeholder="6 أحرف أو أرقام على الأقل">
+     <button type="button" class="toggle-password" onclick="togglePassword('regPassword', this)">👁️</button>
     </div>
+   </div>
+   <div class="field"><label>المحافظة</label><select id="regCity"><option value="">اختر المحافظة</option></select></div>
   </div>
-
-  <!-- 4. نافذة دردشة فريق الدعم -->
-  <div class="modal-overlay" id="supportModal">
-    <div class="modal-box" style="max-width: 460px;">
-      <button class="close-modal" onclick="closeModals()">✕</button>
-      <h3 class="modal-title">💬 محادثة فريق الدعم</h3>
-
-      <!-- قائمة المحادثات للمدير فقط -->
-      <div id="adminThreadsSelectArea" class="hidden">
-        <label>اختر محادثة المستخدم للرد عليها:</label>
-        <select id="adminChatUserSelect" onchange="loadAdminSelectedChat()"></select>
-      </div>
-
-      <div class="chat-messages" id="chatMessagesBox"></div>
-
-      <div class="chat-input-row">
-        <input type="text" id="chatMessageInput" placeholder="اكتب رسالتك هنا..." onkeypress="if(event.key==='Enter') sendChatMessage()" />
-        <button onclick="sendChatMessage()">إرسال</button>
-      </div>
-    </div>
+  <div class="row">
+   <div class="field"><label>القضاء</label><select id="regArea" disabled><option value="">اختر المحافظة أولاً</option></select></div>
+   <div class="field"><label>المنطقة أو الحي</label><input id="regNeighborhood" placeholder="مثال: البندقية"></div>
   </div>
+  <div class="field"><label>الاختصاص الرئيسي</label><select id="regService"></select></div>
+  <div class="field"><label>نبذة عن خبرتك ومهاراتك</label><textarea id="regBio" placeholder="اكتب نبذة مختصرة عن خبرتك..."></textarea></div>
+  <div class="field"><label>الصورة الشخصية للفني</label><input id="regPhoto" type="file" accept="image/*"><img id="regPreview" class="avatar hidden" alt="معاينة"></div>
+  
+  <button type="submit" class="btn primary" style="width:100%;margin-top:10px;font-size:15px;">تسجيل حساب فني جديد</button>
+  <div id="regMessage"></div>
+</form>
+</section>
 
-  <!-- ربط Firebase -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-    import { getFirestore, doc, setDoc, getDoc, collection, query, where, getDocs, addDoc, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+<section id="techAccount" class="container hidden">
+ <h2 class="section-title"><span class="online-dot" title="متصل الآن"></span> الملف الشخصي - لوحة تحكم الفني</h2>
+ <div id="techAlertBox"></div>
+ <div id="techSummary" class="card" style="margin-bottom:20px"></div>
+ 
+ <div id="techSubscriptionCard" class="card" style="margin-bottom:20px; background:#fff9ef; border:2px solid var(--gold);">
+  <h3 style="color:var(--burgundy); margin-top:0; font-weight:900;">💳 حالة الاشتراك والأعمال المجانية</h3>
+  <div id="techSubDetails" style="font-size:14px; color:var(--text-main); line-height:1.8;"></div>
+ </div>
 
-    // ⚠️ ضع إعدادات مشروعك في Firebase هنا
-    const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_PROJECT.firebaseapp.com",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_PROJECT.appspot.com",
-      messagingSenderId: "YOUR_SENDER_ID",
-      appId: "YOUR_APP_ID"
+ <div style="text-align:center; margin-bottom:25px;">
+  <button class="btn primary" style="padding: 12px 25px; font-size: 15px;" onclick="openTechEditModal()">⚙️ تعديل الملف الشخصي والمعلومات</button>
+ </div>
+
+ <div id="techJobsArea">
+  <h3 class="section-title" style="font-size:18px;color:#fff">طلبات الزبائن الواردة إليك</h3>
+  <div id="techJobs"></div>
+ </div>
+ <button class="btn danger" style="margin-top:20px" onclick="logout()">تسجيل الخروج</button>
+</section>
+
+<section id="admin" class="container hidden">
+ <h2 class="section-title">الملف الشخصي - لوحة إدارة منصة صخر</h2>
+ <div class="grid" id="adminStats" style="margin-bottom:20px"></div>
+ <hr style="border-color:#d9b98e">
+ <h3 class="section-title" style="font-size:18px;color:#fff">إدارة كافة طلبات الزبائن</h3>
+ <div id="adminRequests"></div>
+ <hr style="border-color:#d9b98e">
+ <h3 class="section-title" style="font-size:18px;color:#fff">إدارة الفنيين والاشتراكات</h3>
+ <div id="adminTechs"></div>
+ <button class="btn danger" style="margin-top:30px" onclick="logout()">تسجيل الخروج كمدير</button>
+</section>
+</main>
+
+<footer>
+ <strong>صخر | منصة الصيانة المنزلية المعتمدة</strong><br>بيتك يستاهل الأفضل دائماً
+ <div class="footer-links">
+  <button onclick="openDisclaimer()">إخلاء المسؤولية وشروط الاستخدام</button>
+ </div>
+</footer>
+
+<div class="modal hidden" id="customerLocationModal">
+ <div class="modal-box">
+  <form id="loginForm" onsubmit="event.preventDefault(); loginWithPhonePassword();">
+  <div class="modal-head"><h3>أهلاً بك في منصة صخر</h3><div class="close" onclick="closeModal('customerLocationModal')">✕</div></div>
+  <div class="notice">اختر محافظتك حتى نعرض لك الفنيين المتواجدين في منطقتك حصراً.</div>
+  <div class="field">
+   <label>موقعك (المحافظة)</label>
+   <select id="initialCustomerCity">
+    <option value="">اختر محافظتك</option>
+    <option value="ALL">البحث في جميع المحافظات</option>
+   </select>
+  </div>
+  <button class="btn primary" style="width:100%" onclick="confirmCustomerLocation()">تأكيد والانتقال للمنصة</button>
+  <div id="initialLocationMessage"></div>
+ </div>
+</div>
+
+<div class="modal hidden" id="techEditModal">
+ <div class="modal-box">
+  <div class="modal-head"><h3>تعديل الملف الشخصي والمعلومات</h3><div class="close" onclick="closeModal('techEditModal')">✕</div></div>
+  <div class="field"><label>الاسم الكامل</label><input id="editTechName" placeholder="الاسم"></div>
+  <div class="row">
+   <div class="field"><label>المحافظة</label><select id="editTechCity" onchange="setDistricts('editTechArea', this.value)"></select></div>
+   <div class="field"><label>القضاء</label><select id="editTechArea"><option value="">اختر القضاء</option></select></div>
+  </div>
+  <div class="row">
+   <div class="field"><label>المنطقة أو الحي</label><input id="editTechNeighborhood" placeholder="مثال: البندقية"></div>
+   <div class="field"><label>رقم الهاتف</label><input id="editTechPhone" inputmode="tel" placeholder="07800000000"></div>
+  </div>
+  <div class="field"><label>الاختصاص</label><select id="editTechService"></select></div>
+  <div class="field"><label>نبذة عن خبرتك</label><textarea id="editTechBio" placeholder="نبذة مختصرة..."></textarea></div>
+  <div class="field"><label>تحديث الصورة الشخصية (اختياري)</label><input id="editTechPhotoFile" type="file" accept="image/*"></div>
+  <button class="btn primary" style="width:100%; margin-top:10px;" onclick="saveTechAccountProfile()">حفظ تعديلات البروفايل</button>
+  <div id="editProfileMessage"></div>
+ </div>
+</div>
+
+<div class="modal hidden" id="requestModal">
+ <div class="modal-box">
+  <div class="modal-head"><h3>إرسال طلب صيانة سريع</h3><div class="close" onclick="closeModal('requestModal')">✕</div></div>
+  <div class="field"><label>اسمك الكريم</label><input id="custName" placeholder="اسمك الكامل"></div>
+  <div class="field"><label>رقم هاتفك للتواصل</label><input id="custPhone" inputmode="tel" placeholder="07800000000"></div>
+  <div class="row">
+   <div class="field"><label>المحافظة</label><select id="custCity"><option value="">اختر المحافظة</option><option value="ALL">كل المحافظات</option></select></div>
+   <div class="field"><label>القضاء</label><select id="custArea" disabled><option value="">اختر المحافظة أولاً</option></select></div>
+  </div>
+  <div class="field"><label>المنطقة أو الحي السكني (اختياري)</label><input id="custNeighborhood" placeholder="مثال: البندقية"></div>
+  <div class="field"><label>الخدمة المطلوبة</label><select id="custService"></select></div>
+  <div class="field"><label>وصف المشكلة أو العطل بالتفصيل</label><textarea id="custProblem" placeholder="اكتب تفاصيل العطل..."></textarea></div>
+  
+  <div class="section-title" style="font-size:16px;margin:15px 0 10px;color:var(--burgundy);text-align:right">اختر الفني المناسب من منطقتك:</div>
+  <div id="matchingTechs"><div class="empty">اختر المحافظة والخدمة لعرض الفنيين المتاحين.</div></div>
+  <input type="hidden" id="custTech">
+  
+  <button class="btn primary" style="width:100%;margin-top:15px" onclick="submitRequest()">إرسال الطلب للفني المختار الآن</button>
+  <div id="requestMessage"></div>
+  
+  <div id="customerTrackingArea" style="margin-top:20px;"></div>
+ </div>
+</div>
+
+<div class="modal hidden" id="loginModal">
+ <div class="modal-box">
+  <div class="modal-head"><h3>تسجيل الدخول الآمن</h3><div class="close" onclick="closeModal('loginModal')">✕</div></div>
+  <div class="notice">أدخل رقم هاتفك وكلمة المرور الخاصة بك للمتابعة.</div>
+  <div class="field"><label>رقم الهاتف</label><input id="loginPhone" inputmode="tel" placeholder="07800000000"></div>
+  <div class="field">
+   <label>كلمة المرور</label>
+   <div class="password-wrapper">
+    <input id="loginPassword" type="password" placeholder="••••••••">
+    <button type="button" class="toggle-password" onclick="togglePassword('loginPassword', this)">👁️</button>
+   </div>
+  </div>
+  <button type="submit" class="btn primary" style="width:100%">دخول إلى الحساب</button>
+  <button class="btn light" style="width:100%;margin-top:10px" onclick="closeModal('loginModal');showSection('join')">ليس لديك حساب؟ تسجيل فني جديد</button>
+  <div id="loginMessage"></div>
+  </form>
+ </div>
+</div>
+
+<div class="modal hidden" id="disclaimerModal">
+ <div class="modal-box">
+  <div class="modal-head"><h3>إخلاء المسؤولية القانونية</h3><div class="close" onclick="closeModal('disclaimerModal')">✕</div></div>
+  <p style="line-height:1.8;font-size:14px;color:var(--text-main)">
+   منصة <b>"صخر"</b> هي أداة تقنية ووسيط إعلاني رقمي فقط تربط بين الزبون والفني المستقل. لا تتحمل إدارة المنصة أي مسؤولية قانونية أو مالية أو أخلاقية عن جودة الأداء أو الخلافات بين الطرفين.
+  </p>
+  <button class="btn primary" style="width:100%;margin-top:15px" onclick="closeModal('disclaimerModal')">فهمت وقبلت الشروط</button>
+ </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
+
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyBXApuXQQrF9rYcH_VkB_mzqIx8pFbUxLI",
+  authDomain: "sakhr-bayti-ec9e4.firebaseapp.com",
+  databaseURL: "https://sakhr-bayti-ec9e4-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "sakhr-bayti-ec9e4",
+  storageBucket: "sakhr-bayti-ec9e4.firebasestorage.app",
+  messagingSenderId: "289076783578",
+  appId: "1:289076783578:web:a93dbcae0c72c7126578e3"
+};
+
+const SERVICES=["تكييف","دهان وديكور","سباكة","كهربائيات","صيانة عامة","بناء وترميم","نجارة","تنظيف"];
+
+const DISTRICTS={
+"بغداد":["الرصافة","الكرخ","الأعظمية","الصدر","الكاظمية","المنصور","الدورة","أبو غريب","المحمودية"],
+"البصرة":["البصرة","الزبير","أبو الخصيب","الفاو","شط العرب","القرنة","الهارثة"],
+"نينوى":["الموصل","تلعفر","سنجار","الحمدانية","تلكيف","مخمور"],
+"كركوك":["كركوك","داقوق","الحويجة","دبس"],
+"صلاح الدين":["تكريت","سامراء","بيجي","بلد","الدجيل","الشرقاط","طوز خورماتو"],
+"ديالى":["بعقوبة","المقدادية","الخالص","خانقين"],
+"الأنبار":["الرمادي","الفلوجة","حديثة","هيت","القائم"],
+"بابل":["الحلة","المسيب","المحاويل","الهاشمية"],
+"كربلاء":["كربلاء","الهندية","عين التمر"],
+"النجف":["النجف","الكوفة","المناذرة","المشخاب"],
+"القادسية":["الديوانية","عفك","الشامية","الحمزة"],
+"المثنى":["السماوة","الرميثة","الخضر","السلمان"],
+"ذي قار":["الناصرية","الشطرة","الرفاعي","سوق الشيوخ","الجبايش"],
+"ميسان":["العمارة","المجر الكبير","الكحلاء","الميمونة"],
+"واسط":["الكوت","النعمانية","الحي","الصويرة","العزيزية"]
+};
+
+let auth=null,db=null,storage=null,currentUser=null,currentRole="guest",currentTech=null;
+let publicTechs=[],requests=[],technicians=[];
+let chosenCustomerCity="",pendingService=null;
+let techJobsListener=null, customerOrderStatusListener=null;
+
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const msg=(id,text,type="notice")=>{const el=$(id);if(el)el.innerHTML='<div class="notice '+type+'">'+esc(text)+'</div>'};
+
+function formatWhatsApp(phone) {
+  let clean = (phone || "").replace(/\D/g, '');
+  if (clean.startsWith('0')) {
+    clean = '964' + clean.substring(1);
+  } else if (!clean.startsWith('964') && clean.length === 10) {
+    clean = '964' + clean;
+  }
+  return clean;
+}
+
+function togglePassword(inputId, btn) {
+  const input = $(inputId);
+  if (!input) return;
+  if (input.type === "password") {
+    input.type = "text";
+    btn.textContent = "🙈";
+  } else {
+    input.type = "password";
+    btn.textContent = "👁️";
+  }
+}
+
+function playAlertBeep() {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(587.33, ctx.currentTime);
+    gain.gain.setValueAtTime(0.2, ctx.currentTime);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start();
+    osc.stop(ctx.currentTime + 0.3);
+  } catch(e) {}
+}
+
+function showSection(id) {
+  document.querySelectorAll("main section").forEach(s => {
+    s.classList.add("hidden");
+  });
+
+  const section = $(id);
+  if (section) section.classList.remove("hidden");
+
+  window.scrollTo({ top: 0, behavior: "smooth" });
+
+  if (id === "technicians") loadPublicTechs();
+  if (id === "reviewsChat") loadReviews();
+  if (id === "admin" && currentRole === "admin") loadAdminData();
+
+  if (
+    id === "techAccount" &&
+    ["technician", "suspended"].includes(currentRole)
+  ) {
+    renderTechAccount();
+  }
+}
+
+function closeModal(id) {
+  const modal = $(id);
+  if (modal) modal.classList.add("hidden");
+}
+
+function openLogin() {
+  $("loginMessage").innerHTML = "";
+  $("loginModal").classList.remove("hidden");
+}
+
+function openDisclaimer() {
+  $("disclaimerModal").classList.remove("hidden");
+}
+
+function openTechEditModal() {
+  $("editProfileMessage").innerHTML = "";
+  $("techEditModal").classList.remove("hidden");
+}
+function handleAuthNav() {
+  if(currentRole === "admin") {
+    showSection("admin");
+  } else if(["technician", "suspended"].includes(currentRole)) {
+    showSection("techAccount");
+  } else {
+    openLogin();
+  }
+}
+
+function updateNavAuthButton() {
+  const btn = $("authNavBtn");
+  if(!btn) return;
+  if(currentRole === "admin" || ["technician", "suspended"].includes(currentRole)) {
+    btn.innerText = "الملف الشخصي";
+    btn.className = "primary-nav";
+  } else {
+    btn.innerText = "تسجيل الدخول";
+    btn.className = "primary-nav";
+  }
+}
+
+function setupLocations(){
+  const cityOptions=Object.keys(DISTRICTS).map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("");
+  if($("regCity")) $("regCity").innerHTML='<option value="">اختر المحافظة</option>'+cityOptions;
+  if($("custCity")) $("custCity").innerHTML='<option value="">اختر المحافظة</option><option value="ALL">كل المحافظات</option>'+cityOptions;
+  if($("initialCustomerCity")) $("initialCustomerCity").innerHTML='<option value="">اختر محافظتك</option><option value="ALL">البحث في جميع المحافظات</option>'+cityOptions;
+  if($("quickCitySelect")) $("quickCitySelect").innerHTML='<option value="">اختر المحافظة</option><option value="ALL">كل المحافظات</option>'+cityOptions;
+
+  if($("regCity")) {
+    $("regCity").addEventListener("change",()=>setDistricts("regArea",$("regCity").value));
+  }
+
+  if($("custCity")) {
+    $("custCity").addEventListener("change",()=>{
+      const city=$("custCity").value;
+      chosenCustomerCity=city;
+      if(city)localStorage.setItem("sakhrCustomerCity",city);
+      setDistricts("custArea",city);
+      selectedTechUid="";
+      if($("custTech")) $("custTech").value="";
+      renderMatchingTechs();
+    });
+  }
+
+  ["custArea","custService"].forEach(id=>{
+    if($(id)) {
+      $(id).addEventListener("change",()=>{
+        selectedTechUid="";
+        if($("custTech")) $("custTech").value="";
+        renderMatchingTechs();
+      });
+    }
+  });
+
+  if($("custNeighborhood")) {
+    $("custNeighborhood").addEventListener("input",()=>{
+      selectedTechUid="";
+      if($("custTech")) $("custTech").value="";
+      renderMatchingTechs();
+    });
+  }
+
+  const saved=localStorage.getItem("sakhrCustomerCity")||"";
+  if(saved){
+    chosenCustomerCity=saved;
+    if($("quickCitySelect")) $("quickCitySelect").value=saved;
+    if($("custCity")) $("custCity").value=saved;
+    setDistricts("custArea",saved);
+  }
+}
+
+function setDistricts(id,city){
+  const el=$(id);
+  if(!el) return;
+  if(city==="ALL"||!city){
+    el.disabled=true;
+    el.innerHTML='<option value="">كل الأقضية</option>';
+    return;
+  }
+  const list=DISTRICTS[city]||[];
+  el.disabled=!list.length;
+  el.innerHTML=list.length
+    ?'<option value="">اختر القضاء</option>'+list.map(x=>`<option>${esc(x)}</option>`).join("")
+    :'<option value="">كل الأقضية</option>';
+}
+
+function showCustomerLocation(){
+  const saved=localStorage.getItem("sakhrCustomerCity")||"";
+  if(saved){
+    chosenCustomerCity=saved;
+    if($("quickCitySelect")) $("quickCitySelect").value=saved;
+    if($("custCity")) $("custCity").value=saved;
+    setDistricts("custArea",saved);
+    return;
+  }
+  if($("customerLocationModal")) $("customerLocationModal").classList.remove("hidden");
+}
+
+function confirmCustomerLocation(){
+  const city=$("initialCustomerCity").value;
+  if(!city)return msg("initialLocationMessage","اختَر محافظتك أولاً.","error");
+
+  chosenCustomerCity=city;
+  localStorage.setItem("sakhrCustomerCity",city);
+  if($("quickCitySelect")) $("quickCitySelect").value=city;
+  if($("custCity")) $("custCity").value=city;
+  setDistricts("custArea",city);
+  if($("initialLocationMessage")) $("initialLocationMessage").innerHTML="";
+  closeModal("customerLocationModal");
+
+  if(pendingService!==null){
+    const service=pendingService;
+    pendingService=null;
+    openRequest(service);
+  }
+}
+
+function fillSelect(id){
+  const el=$(id);
+  if(el) el.innerHTML=SERVICES.map(s=>`<option>${esc(s)}</option>`).join("");
+}
+
+function quickCityChanged(){
+  const val=$("quickCitySelect").value;
+  if(val){
+    chosenCustomerCity=val;
+    localStorage.setItem("sakhrCustomerCity",val);
+  }
+}
+
+function executeQuickSearch(){
+  const city=$("quickCitySelect").value;
+  const service=$("quickServiceSelect").value;
+  if(!city) return alert("اختر المحافظة أولاً");
+  chosenCustomerCity=city;
+  localStorage.setItem("sakhrCustomerCity",city);
+  openRequest(service);
+}
+
+function renderServices(){
+  const icons=["❄️","🎨","🚰","💡","🛠️","🧱","🪚","🧹"];
+  const renderTo = (id) => {
+    const el=$(id);
+    if(el) {
+      el.innerHTML=SERVICES.map((s,i)=>`
+        <div class="service-card" onclick="chooseService('${s}')">
+          <div class="service-icon">${icons[i]}</div>
+          <h3>${esc(s)}</h3>
+          <div class="arrow-badge">➔</div>
+        </div>`).join("");
+    }
+  };
+  renderTo("allServices");
+  renderTo("allServicesPage");
+
+  fillSelect("regService");
+  fillSelect("custService");
+  fillSelect("quickServiceSelect");
+}
+
+function initFirebase(){
+  try{
+    if(!firebase.apps.length)firebase.initializeApp(firebaseConfig);
+    auth=firebase.auth();
+    db=firebase.database();
+    storage=firebase.storage();
+    auth.onAuthStateChanged(onAuthChanged);
+    loadPublicTechs();
+  }catch(e){
+    console.log("Firebase Init Notice:", e);
+  }
+}
+
+async function resolveRole(user){
+  if(!user||user.isAnonymous)return {role:"guest",tech:null};
+  if(user.email==="07805017009@sakhr.app")return {role:"admin",tech:null};
+  const t=await db.ref("technicians/"+user.uid).once("value");
+  if(t.exists()){
+    const tech=t.val();
+    return {role:tech.approved===false?"suspended":"technician",tech};
+  }
+  return {role:"unknown",tech:null};
+}
+
+async function onAuthChanged(user){
+  currentUser=user;
+  currentRole="guest";
+  currentTech=null;
+
+  if(techJobsListener) { techJobsListener.off(); techJobsListener=null; }
+  if(!user){ 
+    updateNavAuthButton();
+    try{ await auth.signInAnonymously(); }catch(e){} 
+    return; 
+  }
+
+  try{
+    const result=await resolveRole(user);
+    currentRole=result.role;
+    currentTech=result.tech;
+    updateNavAuthButton();
+
+    if(currentRole==="admin"){
+      closeModal("customerLocationModal");
+      showSection("admin");
+      loadAdminData();
+    }else if(["technician","suspended"].includes(currentRole)){
+      closeModal("customerLocationModal");
+      showSection("techAccount");
+      renderTechAccount();
+    }else{
+      showCustomerLocation();
+    }
+  }catch(e){
+    updateNavAuthButton();
+  }
+}
+
+async function uploadTechPhoto(uid,file){
+  if(!file)return "";
+  if(!file.type.startsWith("image/"))throw new Error("اختر ملف صورة فقط.");
+  const ref=storage.ref("technicianPhotos/"+uid+"/profile_"+Date.now());
+  const snap=await ref.put(file);
+  return await snap.ref.getDownloadURL();
+}
+
+async function syncPublicTechnician(uid,p){
+  const data={
+    uid,
+    name:p.name||"",
+    phone:p.phone||"",
+    city:p.city||"",
+    area:p.area||"",
+    neighborhood:p.neighborhood||"",
+    service:p.service||"",
+    bio:p.bio||"",
+    photoURL:p.photoURL||"",
+    approved:p.approved!==false,
+    subscriptionStatus:p.subscriptionStatus||"غير فعال",
+    freeJobsUsed:Number(p.freeJobsUsed)||0,
+    ratingSum:Number(p.ratingSum)||0,
+    ratingCount:Number(p.ratingCount)||0,
+    ratingAverage:Number(p.ratingAverage)||0,
+    createdAt:p.createdAt||Date.now()
+  };
+  await db.ref("publicTechnicians/"+uid).update(data);
+}
+
+async function registerTechWithPassword(){
+  const name=$("regName").value.trim();
+  const phone=$("regPhone").value.trim();
+  const password=$("regPassword").value;
+  const city=$("regCity").value;
+  const area=$("regArea").value;
+  const neighborhood=$("regNeighborhood").value.trim();
+  const service=$("regService").value;
+  const bio=$("regBio").value.trim();
+  const file=$("regPhoto").files[0];
+
+  if(!name||!phone||!password||!city||!area||!service)
+    return msg("regMessage","أكمل الاسم، رقم الهاتف، كلمة المرور، المحافظة، القضاء والاختصاص.","error");
+
+  let createdUser=null,profileSaved=false;
+  try{
+    msg("regMessage","جاري إنشاء حساب الفني الآمن...","notice");
+    const emailPseudo = phone + "@sakhr.app";
+    const c=await auth.createUserWithEmailAndPassword(emailPseudo, password);
+    createdUser=c.user;
+    
+    let photoURL="";
+    if(file) photoURL=await uploadTechPhoto(createdUser.uid, file);
+
+    const profile={
+      name,phone,city,area,neighborhood,service,bio,photoURL,
+      approved:true, subscriptionStatus:"غير فعال", freeJobsUsed:0, completedJobs:0,
+      ratingSum:0, ratingCount:0, ratingAverage:0, createdAt:Date.now()
     };
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
+    await db.ref("technicians/"+createdUser.uid).set(profile);
+    profileSaved=true;
+    await syncPublicTechnician(createdUser.uid, profile);
 
-    // إيميل المدير الرسمي (غيره إلى إيميلك المعتمد كمدير)
-    const ADMIN_EMAIL = "admin@sakhr.com";
+    currentUser=createdUser; currentRole="technician"; currentTech=profile;
+    updateNavAuthButton();
+    showSection("techAccount");
+    await renderTechAccount();
+  }catch(e){
+    msg("regMessage",e.message,"error");
+    if(createdUser&&!profileSaved){ try{await createdUser.delete()}catch(_){} }
+  }
+}
 
-    let currentUserData = null;
-    let pendingAction = null;
-    let selectedRegRole = "client";
-    let unsubscribeChat = null;
+async function loginWithPhonePassword(){
+  const phone=$("loginPhone").value.trim();
+  const password=$("loginPassword").value;
+  if(!phone||!password) return msg("loginMessage","أدخل رقم الهاتف وكلمة المرور.","error");
 
-    // تحويل رقم الهاتف لصيغة إيميل داخلية لـ Firebase Auth
-    function formatToAuthEmail(identifier) {
-      const clean = identifier.trim();
-      if (clean.includes("@")) return clean;
-      return `${clean}@sakhr-app.local`;
+  try{
+    if(phone === "07805017009"){
+      const adminEmail = "07805017009@sakhr.app";
+      try {
+        await auth.signInWithEmailAndPassword(adminEmail, password);
+      } catch(err) {
+        await auth.createUserWithEmailAndPassword(adminEmail, password);
+      }
+      currentRole="admin";
+      closeModal("loginModal"); closeModal("customerLocationModal");
+      updateNavAuthButton();
+      showSection("admin");
+      loadAdminData();
+      return;
     }
 
-    // مراقبة حالة تسجيل الدخول
-    onAuthStateChanged(auth, async (user) => {
-      const statusArea = document.getElementById("userStatusArea");
-      const adminBtn = document.getElementById("adminTechsBtn");
+    const emailPseudo = phone + "@sakhr.app";
+    const c = await auth.signInWithEmailAndPassword(emailPseudo, password);
+    const s = await db.ref("technicians/"+c.user.uid).once("value");
+    if(!s.exists()){
+      return msg("loginMessage","الحساب غير مسجل كفني.","error");
+    }
+    currentRole = s.val().approved===false?"suspended":"technician";
+    currentTech = s.val();
+    updateNavAuthButton();
 
-      if (user) {
-        const snap = await getDoc(doc(db, "users", user.uid));
-        if (snap.exists()) {
-          currentUserData = { uid: user.uid, ...snap.data() };
-        } else if (user.email === ADMIN_EMAIL) {
-          currentUserData = { uid: user.uid, name: "الإدارة", role: "admin", district: "بغداد" };
-        }
+    closeModal("loginModal");
+    closeModal("customerLocationModal");
+    showSection("techAccount");
+    renderTechAccount();
+  }catch(e){
+    msg("loginMessage","خطأ في رقم الهاتف أو كلمة المرور: "+e.message,"error");
+  }
+}
 
-        const roleLabel = currentUserData.role === "admin" ? "مدير النظام" : (currentUserData.role === "technician" ? "فني" : "زبون");
-        statusArea.innerHTML = `
-          <div class="user-badge">
-            <span>${currentUserData.name} (${roleLabel})</span>
-            <button class="logout-btn" onclick="logoutUser()">خروج</button>
-          </div>
-        `;
+async function logout(){
+  try{
+    if(techJobsListener) { techJobsListener.off(); techJobsListener=null; }
+    if(customerOrderStatusListener) { customerOrderStatusListener.off(); customerOrderStatusListener=null; }
+    await auth.signOut();
+    currentRole="guest"; currentTech=null; currentUser=null;
+    updateNavAuthButton();
+    showSection("home");
+  }catch(e){}
+}
 
-        // إظهار زر الفنيين للمدير فقط
-        if (currentUserData.role === "admin") {
-          adminBtn.classList.remove("hidden");
-        } else {
-          adminBtn.classList.add("hidden");
-        }
+if($("regPhoto")) {
+  $("regPhoto").addEventListener("change",()=>{
+    const f=$("regPhoto").files[0];
+    if(!f)return;
+    $("regPreview").src=URL.createObjectURL(f);
+    $("regPreview").classList.remove("hidden");
+  });
+}
 
-        // تنفيذ الإجراء اللي كان ضاغط عليه قبل تسجيل الدخول
-        if (pendingAction) {
-          const act = pendingAction;
-          pendingAction = null;
-          act();
-        }
+async function loadPublicTechs(){
+  if(!db)return;
+  try{
+    const s=await db.ref("publicTechnicians").once("value");
+    const data=s.val()||{};
+    publicTechs=Object.entries(data).map(([uid,t])=>({...t,uid})).filter(t=>t.approved!==false);
+    renderPublicTechs(); renderMatchingTechs();
+  }catch(e){}
+}
+
+function techPhoto(t,small=false){
+  const cls=small?"avatar small":"avatar";
+  return `<img class="${cls}" src="${esc(t.photoURL||"")}" alt="صورة الفني" onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2250%22 fill=%22%23fff5df%22/%3E%3Ctext x=%2250%22 y=%2264%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22%23650d2c%22%3E👤%3C/text%3E%3C/svg%3E'">`;
+}
+
+function renderPublicTechs(){
+  const el=$("publicTechList");
+  if(!el)return;
+  const list = publicTechs.filter(t => !currentUser || t.uid !== currentUser.uid);
+  if(!list.length){
+    el.innerHTML='<div class="empty">لا يوجد فنيون مسجلون متاحون حالياً.</div>';
+    return;
+  }
+  el.innerHTML=list.map(t=>`
+  <div class="card tech-card">
+    <div style="position:absolute;top:15px;left:15px;" title="فني متاح"><span class="online-dot"></span></div>
+    ${techPhoto(t)}
+    <div style="text-align:center">
+      <h4>${esc(t.name)}</h4>
+      <span class="badge">${esc(t.service)}</span>
+    </div>
+    <div style="text-align:center">
+      <div class="stars">${"★".repeat(Math.round(t.ratingAverage||0))}${"☆".repeat(5-Math.round(t.ratingAverage||0))}</div>
+      <div class="muted">${Number(t.ratingAverage||0).toFixed(1)} من 5 (${Number(t.ratingCount||0)} تقييم)</div>
+    </div>
+    <div class="muted" style="text-align:center">📍 ${esc(t.city)} — ${esc(t.area)} ${esc(t.neighborhood)}</div>
+    <p style="font-size:13px;color:var(--text-main);margin:0;line-height:1.5">${esc(t.bio||"فني معتمد في منصة صخر")}</p>
+    <button class="btn primary" onclick="chooseServiceDirect('${esc(t.service)}','${esc(t.uid)}')">اطلب هذا الفني مباشرة</button>
+  </div>`).join("");
+}
+
+function renderMatchingTechs(){
+  const box=$("matchingTechs");
+  if(!box)return;
+  const city=$("custCity")?.value||"";
+  const area=$("custArea")?.value||"";
+  const neighborhood=$("custNeighborhood")?.value.trim().toLowerCase()||"";
+  const service=$("custService")?.value||"";
+
+  if(!city||!service){
+    box.innerHTML='<div class="empty">اختر المحافظة ونوع الخدمة لعرض الفنيين.</div>';
+    return;
+  }
+  if(city!=="ALL"&&!area){
+    box.innerHTML='<div class="empty">اختر القضاء لتحديد الفنيين القريبين.</div>';
+    return;
+  }
+
+  const matches=publicTechs.filter(t=>{
+    if(currentUser && currentUser.uid === t.uid) return false;
+    const loc=city==="ALL"||(t.city===city&&(!area||t.area===area));
+    const hood=!neighborhood||String(t.neighborhood||"").toLowerCase().includes(neighborhood);
+    const subActive=t.subscriptionStatus==="فعال";
+    const freeUsed=Number(t.freeJobsUsed)||0;
+    return loc&&hood&&t.service===service&&t.approved!==false&&(subActive||freeUsed<3);
+  });
+
+  if(!matches.length){
+    box.innerHTML='<div class="empty">لا يوجد فني متاح بهذا الاختصاص في منطقته حالياً.</div>';
+    return;
+  }
+
+  box.innerHTML=matches.map(t=>`
+  <div class="tech-choice ${selectedTechUid===t.uid?"selected":""}" onclick="selectTechnician('${esc(t.uid)}')">
+    <div style="display:flex;gap:12px;align-items:center">
+      ${techPhoto(t,true)}
+      <div style="flex:1">
+        <h4 style="margin:0"><span class="online-dot"></span> ${esc(t.name)}</h4>
+        <div style="font-size:12px" class="muted">📍 ${esc(t.city)} / ${esc(t.area)}</div>
+        <div class="stars" style="font-size:14px">${"★".repeat(Math.round(t.ratingAverage||0))}${"☆".repeat(5-Math.round(t.ratingAverage||0))}</div>
+      </div>
+    </div>
+  </div>`).join("");
+}
+
+let selectedTechUid="";
+function selectTechnician(uid){
+  selectedTechUid=uid;
+  if($("custTech")) $("custTech").value=uid;
+  renderMatchingTechs();
+}
+
+async function openRequest(service="", preselectedUid=""){
+  const saved=localStorage.getItem("sakhrCustomerCity")||"";
+  if(!saved){
+    pendingService=service;
+    if($("customerLocationModal")) $("customerLocationModal").classList.remove("hidden");
+    return;
+  }
+  chosenCustomerCity=saved;
+  if($("custCity")) $("custCity").value=saved;
+  setDistricts("custArea",saved);
+
+  if($("requestMessage")) $("requestMessage").innerHTML="";
+  if($("customerTrackingArea")) $("customerTrackingArea").innerHTML="";
+  if($("custService")) $("custService").value=service||SERVICES[0];
+  selectedTechUid=preselectedUid||"";
+  if($("custTech")) $("custTech").value=selectedTechUid;
+  if($("requestModal")) $("requestModal").classList.remove("hidden");
+  await loadPublicTechs();
+  renderMatchingTechs();
+}
+
+async function chooseServiceDirect(service, techUid){ await openRequest(service, techUid); }
+function chooseService(s){ openRequest(s); }
+
+async function submitRequest(){
+  try{
+    const name=$("custName")?.value.trim()||"";
+    const phone=$("custPhone")?.value.trim()||"";
+    const city=$("custCity")?.value||"";
+    const area=$("custArea")?.value||"";
+    const neighborhood=$("custNeighborhood")?.value.trim()||"";
+    const service=$("custService")?.value||"";
+    const problem=$("custProblem")?.value.trim()||"";
+    const techUid=$("custTech")?.value||"";
+
+    if(!name||!phone||!city||!service||!problem)
+      return msg("requestMessage","أكمل الاسم، الهاتف، والمحافظة والخدمة ووصف المشكلة.","error");
+    if(!techUid)
+      return msg("requestMessage","اختر فنياً من القائمة قبل الإرسال.","error");
+
+    const tech=publicTechs.find(t=>t.uid===techUid);
+    if(!tech)throw new Error("الفني غير متاح.");
+
+    const custId = "cust_" + Date.now();
+    const id=db.ref("requests/"+custId).push().key;
+    const now=Date.now();
+    
+    const record={
+      id, uid:custId, name, phone, city:city==="ALL"?"كل المحافظات":city,
+      area:area||"كل الأقضية", neighborhood, service, problem,
+      preferredTech:techUid, assignedTech:techUid, assignedTechName:tech.name,
+      status:"بانتظار رد الفني", createdAt:now, countedAsCompleted:false, rated:false
+    };
+
+    const job={ id, customerUid:custId, customerName:name, customerPhone:phone, service, city:record.city, area:record.area, neighborhood, problem, status:"بانتظار رد الفني", createdAt:now };
+
+    const u={};
+    u["requests/"+custId+"/"+id]=record;
+    u["technicianJobs/"+techUid+"/"+id]=job;
+    await db.ref().update(u);
+
+    msg("requestMessage","تم إرسال طلبك بنجاح! رقم الطلب: "+id,"success");
+    listenToCustomerOrderStatus(custId, id, tech.phone);
+  }catch(e){
+    msg("requestMessage",e.message,"error");
+  }
+}
+
+function listenToCustomerOrderStatus(custId, reqId, techPhone) {
+  if(customerOrderStatusListener) customerOrderStatusListener.off();
+  customerOrderStatusListener = db.ref("requests/"+custId+"/"+reqId);
+  customerOrderStatusListener.on("value", snap => {
+    const req = snap.val();
+    if(!req) return;
+    const trackingArea = $("customerTrackingArea");
+    if(!trackingArea) return;
+
+    if(req.status === "مقبول من الفني") {
+      const cleanPhone = formatWhatsApp(req.assignedTechPhone || techPhone);
+      trackingArea.innerHTML = `
+       <div class="notice success" style="text-align:center;">
+        <b>🎉 وافق الفني على طلبك!</b><br>تواصل معه فوراً عبر الواتساب لتنسيق الموعد:
+        <div style="margin-top:12px;">
+         <a href="https://wa.me/${cleanPhone}?text=مرحباً، لقد قبلت طلبي لصيانة ${encodeURIComponent(req.service)} عبر منصة صخر" target="_blank" class="btn whatsapp-btn" style="width:100%;justify-content:center;">
+          💬 فتح محادثة الواتساب مع الفني
+         </a>
+        </div>
+       </div>`;
+    } else if(req.status === "مرفوض من الفني") {
+      trackingArea.innerHTML = `<div class="notice error" style="text-align:center;">عذراً، اعتذر الفني عن قبول الطلب حالياً. يجدر بك اختيار فني آخر.</div>`;
+    } else {
+      trackingArea.innerHTML = `<div class="notice" style="text-align:center;">⏳ حالة الطلب: بانتظار رد الفني المختار...</div>`;
+    }
+  });
+}
+
+async function submitReview(){
+  const name=$("reviewName").value.trim();
+  const stars=$("reviewStars").value;
+  const text=$("reviewText").value.trim();
+
+  if(!name||!text) return msg("reviewMessage","املأ الاسم ورأيك بالملاحظة.","error");
+
+  try{
+    const id=db.ref("reviews").push().key;
+    const rev={ id, name, stars:Number(stars), text, createdAt:Date.now() };
+    await db.ref("reviews/"+id).set(rev);
+    $("reviewName").value="";
+    $("reviewText").value="";
+    msg("reviewMessage","تم إرسال تقييمك بنجاح في دردشة التقييمات!","success");
+    loadReviews();
+  }catch(e){
+    msg("reviewMessage",e.message,"error");
+  }
+}
+
+async function loadReviews(){
+  const el=$("reviewsList");
+  if(!el)return;
+  try{
+    const s=await db.ref("reviews").once("value");
+    const data=s.val()||{};
+    const list=Object.values(data).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+    if(!list.length){
+      el.innerHTML='<div class="empty">لا توجد تقييمات أو ملاحظات مضافة بعد. كن أول المشاركين!</div>';
+      return;
+    }
+    el.innerHTML=list.map(r=>`
+    <div class="list-item" style="background:#fff9ef;">
+     <div style="display:flex;justify-content:space-between;align-items:center">
+      <h4 style="margin:0;color:var(--burgundy)">${esc(r.name)}</h4>
+      <div class="stars">${"★".repeat(r.stars)}${"☆".repeat(5-r.stars)}</div>
+     </div>
+     <p style="margin:10px 0 0;font-size:14px;line-height:1.6;color:var(--text-main)">${esc(r.text)}</p>
+    </div>`).join("");
+  }catch(e){
+    el.innerHTML='<div class="empty">تعذر تحميل التقييمات حالياً.</div>';
+  }
+}
+
+async function technicianDecision(id,decision){
+  if(!currentUser||currentRole!=="technician")return;
+  try{
+    const ref=db.ref("technicianJobs/"+currentUser.uid+"/"+id);
+    const snap=await ref.once("value");
+    const job=snap.val();
+    if(!job)return;
+
+    const newStatus=decision==="مقبول"?"مقبول من الفني":"مرفوض من الفني";
+    const u={};
+    u["technicianJobs/"+currentUser.uid+"/"+id+"/status"]=newStatus;
+    u["requests/"+job.customerUid+"/"+id+"/status"]=newStatus;
+    if(decision==="مقبول"){
+      u["requests/"+job.customerUid+"/"+id+"/assignedTechPhone"]=currentTech.phone||"";
+    }
+    await db.ref().update(u);
+    await renderTechAccount();
+    alert(decision==="مقبول"?"تم قبول الطلب.":"تم رفض الطلب.");
+  }catch(e){}
+}
+
+async function renderTechAccount(){
+  if(!currentUser||!["technician","suspended"].includes(currentRole))return;
+  const uid=currentUser.uid;
+  try{
+    const s=await db.ref("technicians/"+uid).once("value");
+    currentTech=s.val();
+    if(!currentTech)return;
+
+    if($("techSummary")) {
+      $("techSummary").innerHTML=`
+      ${techPhoto(currentTech)}
+      <div style="text-align:center">
+        <h3 style="margin:5px 0"><span class="online-dot"></span> ${esc(currentTech.name)}</h3>
+        <span class="badge">${esc(currentTech.service)}</span>
+        <div class="muted" style="margin-top:5px">📍 ${esc(currentTech.city)} / ${esc(currentTech.area)}</div>
+        <div class="stars" style="margin-top:8px">${"★".repeat(Math.round(currentTech.ratingAverage||0))}${"☆".repeat(5-Math.round(currentTech.ratingAverage||0))}</div>
+      </div>`;
+    }
+
+    const subStatus = currentTech.subscriptionStatus || "غير فعال";
+    const freeUsed = Number(currentTech.freeJobsUsed || 0);
+    if($("techSubDetails")) {
+      let subNoticeHtml = "";
+      if(subStatus !== "فعال" && freeUsed >= 3) {
+        subNoticeHtml = '<div class="notice error" style="margin-top:10px; font-size:13px;">⚠️ لقد استنفذت أعمالك المجانية الـ 3. لاستمرار استقبال طلبات الزبائن بلا حدود، يرجى تحويل الاشتراك عبر <b>زين كاش</b> أو <b>الماستر الشخصي</b> إلى رقم الإدارة:<br><b style="font-size:15px; color:var(--burgundy);">07805017009</b> (ثم أرسل لقطة إيصال للإدارة عبر الواتساب للتفعيل الفوري).</div>';
       } else {
-        currentUserData = null;
-        adminBtn.classList.add("hidden");
-        statusArea.innerHTML = `<button class="logout-btn" onclick="openChoiceModal()">تسجيل الدخول</button>`;
+        subNoticeHtml = '<div class="notice" style="margin-top:10px; font-size:13px;">💡 لتجديد اشتراكك بكل سهولة، حول رسم الاشتراك إلى زين كاش الإدارة (<b>07805017009</b>) وأرسل الإيصال للإدارة لتفعيل حسابك فوراً.</div>';
+      }
+      $("techSubDetails").innerHTML = 'حالة الاشتراك: <b style="color:' + (subStatus==='فعال'?'var(--green)':'var(--danger)') + ';">' + esc(subStatus) + '</b><br>الأعمال المجانية المستهلكة: <b>' + freeUsed + ' من 3 أعمال مجانية</b>' + subNoticeHtml;
+    }
+
+    if($("editTechName")) $("editTechName").value = currentTech.name || "";
+    if($("editTechCity")) {
+      $("editTechCity").innerHTML = '<option value="">اختر المحافظة</option>' + Object.keys(DISTRICTS).map(x=>`<option value="${esc(x)}" ${x===currentTech.city?'selected':''}>${esc(x)}</option>`).join("");
+      setDistricts("editTechArea", currentTech.city);
+      if($("editTechArea")) $("editTechArea").value = currentTech.area || "";
+    }
+    if($("editTechService")) {
+      $("editTechService").innerHTML = SERVICES.map(s=>`<option value="${esc(s)}" ${s===currentTech.service?'selected':''}>${esc(s)}</option>`).join("");
+    }
+    if($("editTechNeighborhood")) $("editTechNeighborhood").value = currentTech.neighborhood || "";
+    if($("editTechPhone")) $("editTechPhone").value = currentTech.phone || "";
+    if($("editTechBio")) $("editTechBio").value = currentTech.bio || "";
+
+    if(techJobsListener) techJobsListener.off();
+    let isInitialLoad = true;
+    techJobsListener = db.ref("technicianJobs/"+uid);
+    techJobsListener.on("value", snapshot => {
+      const jobs = [];
+      snapshot.forEach(x => jobs.push({...x.val(), id: x.key}));
+      if(!isInitialLoad && jobs.some(x => x.status === "بانتظار رد الفني")) {
+        playAlertBeep();
+        if($("techAlertBox")) $("techAlertBox").innerHTML = '<div class="notice success" style="font-weight:900">🔔 وصلك طلب صيانة جديد!</div>';
+      }
+      isInitialLoad = false;
+
+      if($("techJobs")) {
+        if (!jobs.length) {
+          $("techJobs").innerHTML = '<div class="empty">لا توجد طلبات جديدة.</div>';
+        } else {
+          let jobsHtml = "";
+          jobs.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0)).forEach(x => {
+            let actionsHtml = "";
+            if(x.status === "بانتظار رد الفني") {
+              actionsHtml = '<div class="actions"><button class="btn primary" onclick="technicianDecision(\'' + esc(x.id) + '\',\'مقبول\')">قبول الطلب</button><button class="btn danger" onclick="technicianDecision(\'' + esc(x.id) + '\',\'مرفوض\')">رفض</button></div>';
+            } else if(x.status === "مقبول من الفني") {
+              actionsHtml = '<div class="actions"><a href="https://wa.me/' + formatWhatsApp(x.customerPhone) + '?text=مرحباً بك، أنا الفني من منصة صخر بخصوص طلب صيانة ' + encodeURIComponent(x.service) + '" target="_blank" class="btn whatsapp-btn">💬 مراسلة الزبون عبر الواتساب</a></div>';
+            }
+            jobsHtml += '<div class="list-item"><h4>' + esc(x.service) + ' — ' + esc(x.status) + '</h4><div class="muted">الزبون: <b>' + esc(x.customerName||"") + '</b> | الهاتف: <b>' + esc(x.customerPhone||"") + '</b></div><p style="margin:8px 0">' + esc(x.problem) + '</p>' + actionsHtml + '</div>';
+          });
+          $("techJobs").innerHTML = jobsHtml;
+        }
       }
     });
+  }catch(e){}
+}
 
-    // بوابة التحقق على كل زر
-    window.requireAuth = (callback) => {
-      if (!currentUserData) {
-        pendingAction = callback;
-        openChoiceModal();
-      } else {
-        callback();
-      }
-    };
+async function saveTechAccountProfile() {
+  if(!currentUser || !["technician","suspended"].includes(currentRole)) return;
+  const uid = currentUser.uid;
+  const name = $("editTechName").value.trim();
+  const service = $("editTechService").value;
+  const city = $("editTechCity").value;
+  const area = $("editTechArea").value;
+  const neighborhood = $("editTechNeighborhood").value.trim();
+  const phone = $("editTechPhone").value.trim();
+  const bio = $("editTechBio").value.trim();
+  const file = $("editTechPhotoFile").files[0];
 
-    window.openChoiceModal = () => {
-      closeModals();
-      document.getElementById("choiceModal").classList.add("active");
-    };
+  if(!name || !phone || !city || !area || !service) {
+    return msg("editProfileMessage", "أكمل الحقول الأساسية (الاسم، الهاتف، المحافظة، القضاء، الاختصاص).", "error");
+  }
 
-    window.openLoginModal = () => {
-      closeModals();
-      document.getElementById("loginIdentifier").value = "";
-      document.getElementById("loginModal").classList.add("active");
-    };
-
-    window.openRegisterModal = (role) => {
-      selectedRegRole = role;
-      closeModals();
-      document.getElementById("regTitle").innerText = role === "technician" ? "تسجيل فني جديد" : "تسجيل حساب زبون";
-      const specField = document.getElementById("techSpecialtyField");
-      if (role === "technician") {
-        specField.classList.remove("hidden");
-      } else {
-        specField.classList.add("hidden");
-      }
-      document.getElementById("registerModal").classList.add("active");
-    };
-
-    window.closeModals = () => {
-      document.querySelectorAll(".modal-overlay").forEach(m => m.classList.remove("active"));
-    };
-
-    // تسجيل حساب جديد
-    window.handleRegister = async () => {
-      const name = document.getElementById("regName").value.trim();
-      const phone = document.getElementById("regPhone").value.trim();
-      const district = document.getElementById("regDistrict").value;
-      const specialty = document.getElementById("regSpecialty").value;
-      const password = document.getElementById("regPassword").value;
-
-      if (!name || !phone || !district || password.length < 6) {
-        alert("يرجى ملء جميع الحقول واختيار القضاء، وكلمة المرور 6 أحرف على الأقل.");
-        return;
-      }
-
-      try {
-        const email = formatToAuthEmail(phone);
-        const cred = await createUserWithEmailAndPassword(auth, email, password);
-
-        const userDoc = {
-          name,
-          phone,
-          district,
-          role: selectedRegRole,
-          specialty: selectedRegRole === "technician" ? specialty : "",
-          createdAt: serverTimestamp()
-        };
-
-        await setDoc(doc(db, "users", cred.user.uid), userDoc);
-        closeModals();
-      } catch (err) {
-        alert("حدث خطأ بالتسجيل: " + err.message);
-      }
-    };
-
-    // تسجيل الدخول
-    window.handleLogin = async () => {
-      const identifier = document.getElementById("loginIdentifier").value.trim();
-      const password = document.getElementById("loginPassword").value;
-
-      if (!identifier || !password) {
-        alert("يرجى إدخال رقم الهاتف أو الإيميل وكلمة المرور.");
-        return;
-      }
-
-      try {
-        const email = formatToAuthEmail(identifier);
-        await signInWithEmailAndPassword(auth, email, password);
-        closeModals();
-      } catch (err) {
-        alert("بيانات الدخول غير صحيحة، تأكد من الرقم وكلمة المرور.");
-      }
-    };
-
-    window.logoutUser = async () => {
-      await signOut(auth);
-      document.getElementById("resultsContainer").innerHTML = "";
-    };
-
-    window.scrollToServices = () => {
-      document.getElementById("servicesSection").scrollIntoView({ behavior: "smooth" });
-    };
-
-    // عرض الفنيين للزبون حسب (الاختصاص + القضاء فقط)
-    window.selectService = async (serviceName) => {
-      const container = document.getElementById("resultsContainer");
-      container.innerHTML = `<p>جاري البحث عن فنيي <b>${serviceName}</b> في <b>قضاء ${currentUserData.district}</b>...</p>`;
-
-      const q = query(
-        collection(db, "users"),
-        where("role", "==", "technician"),
-        where("specialty", "==", serviceName),
-        where("district", "==", currentUserData.district)
-      );
-
-      const snapshot = await getDocs(q);
-      if (snapshot.empty) {
-        container.innerHTML = `
-          <div class="info-banner">
-            لا يوجد فنيون مسجلون حالياً في اختصاص <b>${serviceName}</b> ضمن <b>قضاء ${currentUserData.district}</b>.
-          </div>
-        `;
-        return;
-      }
-
-      let html = `<h3 class="section-title">فنيو ${serviceName} - قضاء ${currentUserData.district}</h3>`;
-      snapshot.forEach(docSnap => {
-        const t = docSnap.data();
-        html += `
-          <div class="tech-card">
-            <div class="tech-info">
-              <h4>${t.name}</h4>
-              <p>الاختصاص: ${t.specialty} | القضاء: ${t.district}</p>
-            </div>
-            <a class="call-btn" href="tel:${t.phone}">📞 اتصال</a>
-          </div>
-        `;
-      });
-      container.innerHTML = html;
-      container.scrollIntoView({ behavior: "smooth" });
-    };
-
-    // عرض جميع الفنيين للمدير فقط
-    window.openAllTechsForAdmin = async () => {
-      if (currentUserData?.role !== "admin") return;
-
-      const container = document.getElementById("resultsContainer");
-      container.innerHTML = `<p>جاري تحميل قائمة جميع الفنيين (خاص بالمدير)...</p>`;
-
-      const q = query(collection(db, "users"), where("role", "==", "technician"));
-      const snapshot = await getDocs(q);
-
-      if (snapshot.empty) {
-        container.innerHTML = `<div class="info-banner">لا يوجد فنيون مسجلون بعد.</div>`;
-        return;
-      }
-
-      let html = `<h3 class="section-title">قائمة جميع الفنيين المسجلين (لوحة المدير)</h3>`;
-      snapshot.forEach(docSnap => {
-        const t = docSnap.data();
-        html += `
-          <div class="tech-card">
-            <div class="tech-info">
-              <h4>${t.name} (${t.specialty})</h4>
-              <p>القضاء: ${t.district} | الهاتف: ${t.phone}</p>
-            </div>
-            <a class="call-btn" href="tel:${t.phone}">📞 اتصال</a>
-          </div>
-        `;
-      });
-      container.innerHTML = html;
-      container.scrollIntoView({ behavior: "smooth" });
-    };
-
-    // فتح دردشة فريق الدعم
-    window.openSupportChat = async () => {
-      closeModals();
-      document.getElementById("supportModal").classList.add("active");
-
-      const adminSelectArea = document.getElementById("adminThreadsSelectArea");
-
-      if (currentUserData.role === "admin") {
-        adminSelectArea.classList.remove("hidden");
-        const select = document.getElementById("adminChatUserSelect");
-        select.innerHTML = "";
-
-        const usersSnap = await getDocs(collection(db, "users"));
-        usersSnap.forEach(u => {
-          const data = u.data();
-          if (data.role !== "admin") {
-            const opt = document.createElement("option");
-            opt.value = u.id;
-            opt.textContent = `${data.name} (${data.role === 'technician' ? 'فني' : 'زبون'} - ${data.phone})`;
-            select.appendChild(opt);
-          }
-        });
-
-        if (select.value) {
-          listenToMessages(select.value);
-        }
-      } else {
-        adminSelectArea.classList.add("hidden");
-        listenToMessages(currentUserData.uid);
-      }
-    };
-
-    window.loadAdminSelectedChat = () => {
-      const targetUid = document.getElementById("adminChatUserSelect").value;
-      if (targetUid) listenToMessages(targetUid);
-    };
-
-    function listenToMessages(threadUserId) {
-      if (unsubscribeChat) unsubscribeChat();
-
-      const msgsRef = collection(db, "support_chats", threadUserId, "messages");
-      const q = query(msgsRef, orderBy("createdAt", "asc"));
-
-      unsubscribeChat = onSnapshot(q, (snapshot) => {
-        const box = document.getElementById("chatMessagesBox");
-        box.innerHTML = "";
-
-        if (snapshot.empty) {
-          box.innerHTML = `<p style="text-align:center;color:#888;font-size:13px;">ابدأ المحادثة مع فريق الدعم الآن...</p>`;
-          return;
-        }
-
-        snapshot.forEach(docSnap => {
-          const m = docSnap.data();
-          const isAdminSender = m.senderRole === "admin";
-          const div = document.createElement("div");
-          div.className = `msg ${isAdminSender ? "admin" : "user"}`;
-          div.innerHTML = `
-            ${m.text}
-            <small>${isAdminSender ? "فريق الدعم" : m.senderName}</small>
-          `;
-          box.appendChild(div);
-        });
-        box.scrollTop = box.scrollHeight;
-      });
+  try {
+    msg("editProfileMessage", "جاري حفظ التعديلات...", "notice");
+    let photoURL = currentTech.photoURL || "";
+    if(file) {
+      photoURL = await uploadTechPhoto(uid, file);
     }
 
-    window.sendChatMessage = async () => {
-      const input = document.getElementById("chatMessageInput");
-      const text = input.value.trim();
-      if (!text) return;
-
-      const targetUid = currentUserData.role === "admin"
-        ? document.getElementById("adminChatUserSelect").value
-        : currentUserData.uid;
-
-      if (!targetUid) return;
-
-      input.value = "";
-      await addDoc(collection(db, "support_chats", targetUid, "messages"), {
-        text,
-        senderId: currentUserData.uid,
-        senderName: currentUserData.name,
-        senderRole: currentUserData.role,
-        createdAt: serverTimestamp()
-      });
+    const updated = {
+      ...currentTech,
+      name, service, city, area, neighborhood, phone, bio, photoURL
     };
-  </script>
+
+    await db.ref("technicians/"+uid).update(updated);
+    await syncPublicTechnician(uid, updated);
+    currentTech = updated;
+    msg("editProfileMessage", "تم حفظ وتحديث تعديلات البروفايل بنجاح!", "success");
+    closeModal('techEditModal');
+    renderTechAccount();
+    loadPublicTechs();
+  } catch(e) {
+    msg("editProfileMessage", "خطأ في الحفظ: "+e.message, "error");
+  }
+}
+
+async function toggleTechSubscription(techUid, currentStatus) {
+    const newStatus = currentStatus === "فعال" ? "غير فعال" : "فعال";
+    try {
+        await db.ref("technicians/" + techUid).update({ subscriptionStatus: newStatus });
+        await db.ref("publicTechnicians/" + techUid).update({ subscriptionStatus: newStatus });
+        alert("تم تحديث حالة اشتراك الفني إلى: " + newStatus);
+        loadAdminData();
+    } catch(e) {
+        alert("خطأ: " + e.message);
+    }
+}
+
+async function resetTechFreeJobs(techUid) {
+    try {
+        await db.ref("technicians/" + techUid).update({ freeJobsUsed: 0 });
+        await db.ref("publicTechnicians/" + techUid).update({ freeJobsUsed: 0 });
+        alert("تم تصفير عدد الأعمال المجانية للفني بنجاح.");
+        loadAdminData();
+    } catch(e) {
+        alert("خطأ: " + e.message);
+    }
+}
+
+async function loadAdminData(){
+  if(currentRole!=="admin")return;
+  try{
+    const [r,t]=await Promise.all([db.ref("requests").once("value"),db.ref("technicians").once("value")]);
+    requests=[]; technicians=[];
+    r.forEach(u=>u.forEach(q=>requests.push({...q.val(),uid:u.key,id:q.key})));
+    t.forEach(s=>technicians.push({...s.val(),uid:s.key}));
+    renderAdmin();
+  }catch(e){}
+}
+
+function renderAdmin(){
+  if($("adminStats")) {
+    $("adminStats").innerHTML=`
+    <div class="card"><div class="muted">إجمالي الطلبات</div><div class="stat">${requests.length}</div></div>
+    <div class="card"><div class="muted">إجمالي الفنيين</div><div class="stat">${technicians.length}</div></div>`;
+  }
+  if($("adminRequests")) {
+    $("adminRequests").innerHTML=requests.length?requests.map(r=>`
+    <div class="list-item">
+      <h4>${esc(r.service)} — ${esc(r.status)}</h4>
+      <div class="muted">الزبون: ${esc(r.name)} | الهاتف: ${esc(r.phone)}</div>
+    </div>`).join(""):'<div class="empty">لا توجد طلبات.</div>';
+  }
+  if($("adminTechs")) {
+    $("adminTechs").innerHTML = technicians.length ? technicians.map(t=>`
+    <div class="list-item" style="background:#fff9ef;">
+      <h4>${esc(t.name)} — <span class="badge">${esc(t.service)}</span></h4>
+      <div class="muted">الهاتف: ${esc(t.phone)} | المحافظة: ${esc(t.city)} / ${esc(t.area)}</div>
+      <div class="muted" style="margin-top:5px;">حالة الاشتراك: <b>${esc(t.subscriptionStatus || "غير فعال")}</b> | الأعمال المجانية المستهلكة: <b>${Number(t.freeJobsUsed || 0)} من 3</b></div>
+      <div class="actions" style="margin-top:10px;">
+       <button class="btn ${t.subscriptionStatus === 'فعال' ? 'danger' : 'primary'}" onclick="toggleTechSubscription('${esc(t.uid)}','${esc(t.subscriptionStatus || "غير فعال")}')">
+        ${t.subscriptionStatus === 'فعال' ? 'إلغاء تفعيل الاشتراك' : 'تفعيل الاشتراك'}
+       </button>
+       <button class="btn light" onclick="resetTechFreeJobs('${esc(t.uid)}')">تصفير الأعمال المجانية</button>
+      </div>
+    </div>`).join("") : '<div class="empty">لا يوجد فنيون مسجلون.</div>';
+  }
+}
+
+setupLocations();
+renderServices();
+initFirebase();
+updateNavAuthButton();
+</script>
 </body>
 </html>
