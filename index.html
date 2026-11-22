@@ -243,6 +243,60 @@ nav button:hover, nav button.primary-nav { background: var(--gold); color: var(-
 
 .stars { color: #f59e0b; font-size: 14px; letter-spacing: 1px; }
 
+/* دردشة فريق الدعم */
+.support-chat-box {
+  height: 270px;
+  overflow-y: auto;
+  border: 2px solid #d9b98e;
+  border-radius: 12px;
+  padding: 10px;
+  background: #fff9ef;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.chat-bubble {
+  max-width: 82%;
+  padding: 8px 12px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+.chat-bubble.mine {
+  background: var(--burgundy);
+  color: var(--gold);
+  align-self: flex-start;
+  border: 1px solid var(--gold);
+}
+.chat-bubble.other {
+  background: #f3f4f6;
+  color: var(--text-main);
+  align-self: flex-end;
+  border: 1px solid #d9b98e;
+}
+.chat-bubble small {
+  display: block;
+  font-size: 10px;
+  opacity: 0.75;
+  margin-top: 3px;
+}
+.chat-send-row {
+  display: flex;
+  gap: 8px;
+}
+.chat-send-row input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #d9b98e;
+  border-radius: 10px;
+  background: #fff9ef;
+  color: var(--text-main);
+  font-weight: 700;
+  outline: none;
+}
+
 footer { background: var(--burgundy-dark); color: var(--cream); text-align: center; padding: 25px; margin-top: 35px; font-size: 12px; line-height: 1.8; border-top: 3px solid var(--gold); }
 .footer-links { margin-top: 8px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
 .footer-links button { background: transparent; color: var(--gold); border: 0; text-decoration: underline; cursor: pointer; font-size: 12px; font-weight: 800; }
@@ -265,8 +319,11 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  </div>
  <nav id="navMenu">
   <button onclick="showSection('home')">الرئيسية</button>
-  <button onclick="showSection('services')">خدماتنا</button>
-  <button onclick="checkAndShowTechnicians()">الفنيون</button>
+  <button onclick="requireGate(() => showSection('services'))">خدماتنا</button>
+  <!-- زر الفنيون يظهر للمدير فقط -->
+  <button id="techsNavBtn" onclick="openAdminTechsView()" class="hidden">الفنيون</button>
+  <!-- زر فريق الدعم بدل طلب خدمة -->
+  <button onclick="requireGate(() => openSupportChatModal())">فريق الدعم</button>
   <button onclick="showSection('reviewsChat')">دردشة تقييم الخدمات</button>
   <button id="adminNavBtn" onclick="showSection('admin')" class="hidden" style="background:var(--gold); color:var(--burgundy-dark); border-color:var(--gold);">⚙️ الإدارة</button>
   <button id="authNavBtn" onclick="handleAuthNav()" class="primary-nav">تسجيل الدخول</button>
@@ -281,7 +338,7 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
   <p>أسرع منصة لربط أصحاب المنازل بأفضل الفنيين المحليين في قضائك</p>
 
   <div style="margin-top:10px;">
-   <button class="cta-btn" onclick="checkAndShowTechnicians()">🛠️ اطلب خدمتك الآن</button>
+   <button class="cta-btn" onclick="requireGate(() => openSupportChatModal())">💬 فريق الدعم</button>
   </div>
 
   <div class="quick-search-box">
@@ -311,7 +368,7 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
 </section>
 
 <section id="technicians" class="container hidden">
- <h2 class="section-title">الفنيون المعتمدون والمتاحون في منطقتك</h2>
+ <h2 class="section-title">الفنيون المعتمدون والمتاحون في قضائك</h2>
  <div class="techs-grid" id="publicTechList"><div class="empty">جارٍ تحميل الفنيين المتاحين...</div></div>
 </section>
 
@@ -505,10 +562,11 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  </div>
 </div>
 
+<!-- بوابة اختيار طريقة الدخول -->
 <div class="modal hidden" id="roleSelectionModal">
  <div class="modal-box" style="text-align: center;">
-  <div class="modal-head"><h3>اختر طريقة الدخول للاستفادة من المنصة</h3><div class="close" onclick="closeModal('roleSelectionModal')">✕</div></div>
-  <div style="font-size: 14px; font-weight: 800; color: var(--burgundy); margin: 15px 0;">يرجى اختيار طريقة الدخول للمتابعة:</div>
+  <div class="modal-head"><h3>اختر طريقة الدخول</h3><div class="close" onclick="closeModal('roleSelectionModal')">✕</div></div>
+  <div style="font-size: 14px; font-weight: 800; color: var(--burgundy); margin: 15px 0;">يرجى اختيار طريقة الدخول للاستفادة من المنصة:</div>
   <div class="role-btns" style="margin-bottom: 10px;">
    <button class="role-btn customer" onclick="closeModal('roleSelectionModal'); handleCustomerRoleEntry()">👤 الدخول كزبون</button>
    <button class="role-btn technician" onclick="closeModal('roleSelectionModal'); handleTechnicianRoleEntry()">🛠️ الدخول كفني</button>
@@ -564,6 +622,26 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  </div>
 </div>
 
+<!-- نافذة دردشة فريق الدعم المباشرة -->
+<div class="modal hidden" id="supportChatModal">
+ <div class="modal-box">
+  <div class="modal-head"><h3>💬 فريق الدعم</h3><div class="close" onclick="closeSupportChatModal()">✕</div></div>
+  <div class="notice">تواصل مباشرة مع إدارة منصة صخر لأي استفسار أو مساعدة.</div>
+
+  <div id="adminSupportThreadPicker" class="field hidden">
+   <label>اختر محادثة المستخدم:</label>
+   <select id="adminSupportThreadSelect" onchange="switchAdminSupportThread()"></select>
+  </div>
+
+  <div id="supportChatMessages" class="support-chat-box"></div>
+
+  <div class="chat-send-row">
+   <input id="supportChatInput" placeholder="اكتب رسالتك هنا..." onkeydown="if(event.key==='Enter'){event.preventDefault();sendSupportMessage();}">
+   <button type="button" class="btn primary" onclick="sendSupportMessage()">إرسال</button>
+  </div>
+ </div>
+</div>
+
 <div class="modal hidden" id="techEditModal">
  <div class="modal-box">
   <div class="modal-head"><h3>تعديل الملف الشخصي والمعلومات</h3><div class="close" onclick="closeModal('techEditModal')">✕</div></div>
@@ -599,7 +677,7 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
   <form onsubmit="event.preventDefault(); loginWithPhonePassword();">
    <div class="modal-head"><h3>تسجيل الدخول الآمن</h3><div class="close" onclick="closeModal('loginModal')">✕</div></div>
    <div class="notice">أدخل رقم هاتفك (أو إيميل الإدارة) وكلمة المرور للمتابعة.</div>
-   <div class="field"><label>رقم الهاتف (للفني/الزبون) أو رقم المدير</label><input id="loginPhone" placeholder="07805017009 أو الإيميل"></div>
+   <div class="field"><label>رقم الهاتف أو البريد الإلكتروني</label><input id="loginPhone" placeholder="07XXXXXXXXX أو الإيميل"></div>
    <div class="field">
     <label>كلمة المرور</label>
     <div class="password-wrapper">
@@ -652,7 +730,7 @@ const firebaseConfig = {
   appId: "1:289076783578:web:a93dbcae0c72c7126578e3"
 };
 
-const SERVICES=["تكييف","دهان وديكور","سباكة","كهربائيات","صيانة عامة","بناء وترميم","نجارة","تنظيف"];
+const SERVICES=["تكييف","مطابخ وديكور","صبغ منازل","سباكة","كهربائيات","صيانة عامة","بناء وترميم","نجارة","ألمنيوم"];
 
 const DISTRICTS={
 "بغداد":["الرصافة","الكرخ","الأعظمية","الصدر","الكاظمية","المنصور","الدورة","أبو غريب","المحمودية"],
@@ -677,7 +755,10 @@ let publicTechs=[],requests=[],technicians=[],passwordRequests=[],allAccountsLis
 let chosenCustomerCity="",chosenCustomerArea="",selectedTargetTech=null;
 let currentSelectedService="";
 let techJobsListener=null;
+let supportChatListener=null;
+let activeSupportThreadId=null;
 let announcementTimer=null;
+let pendingAfterGate=null;
 
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -687,6 +768,29 @@ const formatWhatsApp=phone=>{
   else if(!clean.startsWith('964')&&clean.length===10) clean='964'+clean;
   return clean;
 };
+
+function isUserEntered() {
+  if(currentRole === "admin" || ["technician", "suspended"].includes(currentRole)) return true;
+  if(localStorage.getItem("sakhrCustomerName")) return true;
+  return false;
+}
+
+function requireGate(actionCallback) {
+  if(isUserEntered()) {
+    actionCallback();
+  } else {
+    pendingAfterGate = actionCallback;
+    $("roleSelectionModal").classList.remove("hidden");
+  }
+}
+
+function runPendingGateAction() {
+  if(typeof pendingAfterGate === "function") {
+    const fn = pendingAfterGate;
+    pendingAfterGate = null;
+    fn();
+  }
+}
 
 function showCustomAlert(text) {
   $("customAlertText").innerText = text;
@@ -755,8 +859,14 @@ function showSection(id) {
 function closeModal(id) { const m = $(id); if(m) m.classList.add("hidden"); }
 function openLogin() { $("loginMessage").innerHTML = ""; $("loginModal").classList.remove("hidden"); }
 function openForgotPasswordModal() { closeModal('loginModal'); $("forgotPasswordModal").classList.remove("hidden"); }
-function openDisclaimer() { $("disclaimerModal").classList.remove("hidden"); }
 function openTechEditModal() { $("editProfileMessage").innerHTML = ""; $("techEditModal").classList.remove("hidden"); }
+
+function openAdminTechsView() {
+  if(currentRole !== "admin") return;
+  showSection("admin");
+  switchAdminTab("techs");
+  loadAdminData();
+}
 
 function switchAdminTab(tab) {
   document.querySelectorAll(".admin-tab-content").forEach(el => el.classList.add("hidden"));
@@ -779,34 +889,25 @@ function filterByService(serviceName) {
   if($("quickServiceSelect")) {
     $("quickServiceSelect").value = serviceName;
   }
-  promptRoleSelection();
-}
-
-function promptRoleSelection() {
-  const customerName = localStorage.getItem("sakhrCustomerName");
-  if(customerName || currentRole === "admin" || ["technician", "suspended"].includes(currentRole)) {
-    showSection('technicians');
-  } else {
-    $("roleSelectionModal").classList.remove("hidden");
-  }
+  showSection("technicians");
 }
 
 function handleCustomerRoleEntry() {
   const savedName = localStorage.getItem("sakhrCustomerName");
-  if(!savedName && currentRole !== "admin" && !["technician", "suspended"].includes(currentRole)) {
+  if(!savedName) {
     $("custRegName").value = "";
     $("custRegPhone").value = "";
     $("custRegPassword").value = "";
     $("custRegMessage").innerHTML = "";
     $("customerAccountModal").classList.remove("hidden");
   } else {
-    showSection('technicians');
+    runPendingGateAction();
   }
 }
 
 function handleTechnicianRoleEntry() {
   if(["technician", "suspended"].includes(currentRole)) {
-    showSection('techAccount');
+    runPendingGateAction();
   } else {
     openLogin();
   }
@@ -828,15 +929,18 @@ function handleAuthNav() {
 function updateNavAuthButton() {
   const btn = $("authNavBtn");
   const adminBtn = $("adminNavBtn");
+  const techsBtn = $("techsNavBtn");
   if(!btn) return;
   const customerName = localStorage.getItem("sakhrCustomerName");
   
   if(currentRole === "admin") {
     if(adminBtn) adminBtn.classList.remove("hidden");
+    if(techsBtn) techsBtn.classList.remove("hidden");
     btn.innerText = "الملف الشخصي";
     btn.className = "primary-nav";
   } else {
     if(adminBtn) adminBtn.classList.add("hidden");
+    if(techsBtn) techsBtn.classList.add("hidden");
     if(["technician", "suspended"].includes(currentRole)) {
       btn.innerText = "الملف الشخصي";
       btn.className = "primary-nav";
@@ -898,16 +1002,12 @@ function acceptTermsWithCheck() {
   closeModal("termsModal");
 }
 
-function checkAndShowTechnicians() {
-  currentSelectedService = "";
-  if($("quickServiceSelect")) $("quickServiceSelect").value = "";
-  promptRoleSelection();
-}
-
 function checkAndExecuteSearch() {
-  const sel = $("quickServiceSelect");
-  if(sel) currentSelectedService = sel.value;
-  promptRoleSelection();
+  requireGate(() => {
+    const sel = $("quickServiceSelect");
+    if(sel) currentSelectedService = sel.value;
+    showSection("technicians");
+  });
 }
 
 async function logUserAccount(uid, info) {
@@ -958,8 +1058,7 @@ async function submitCustomerRegistration(){
 
     closeModal("customerAccountModal");
     updateNavAuthButton();
-    showCustomAlert("أهلاً بك " + name + "! تم تسجيل حسابك وحفظ منطقتك بنجاح.");
-    showSection("technicians");
+    runPendingGateAction();
   } catch(e) {
     showCustomAlert("خطأ في التسجيل: " + e.message);
   }
@@ -997,11 +1096,11 @@ function fillSelect(id){
 function renderServices(){
   const renderTo = (id) => {
     const el = $(id);
-    const icons=["❄️","🎨","🚰","💡","🛠️","🧱","🪚","🧹"];
+    const icons=["❄️","🪚","🎨","🚰","💡","🛠️","🧱","🪚","🪟"];
     if(el) {
       el.innerHTML = SERVICES.map((s,i)=>`
         <div class="service-card" onclick="filterByService('${esc(s)}')">
-          <div class="service-icon">${icons[i]}</div>
+          <div class="service-icon">${icons[i] || "🛠️"}</div>
           <h3>${esc(s)}</h3>
           <div class="arrow-badge">➔</div>
         </div>`).join("");
@@ -1070,6 +1169,7 @@ async function onAuthChanged(user){
       closeModal("customerAccountModal");
       closeModal("loginModal");
       updateNavAuthButton();
+      runPendingGateAction();
     } else if(["technician", "suspended"].includes(currentRole)){
       closeModal("termsModal");
       closeModal("roleSelectionModal");
@@ -1077,6 +1177,7 @@ async function onAuthChanged(user){
       closeModal("loginModal");
       showSection("techAccount");
       renderTechAccount();
+      runPendingGateAction();
     } else {
       checkInitialStartupModals();
     }
@@ -1177,6 +1278,7 @@ async function loginWithPhonePassword(){
       updateNavAuthButton();
       showSection("adminProfile");
       loadAdminData();
+      runPendingGateAction();
       return;
     }
 
@@ -1203,6 +1305,7 @@ async function loginWithPhonePassword(){
       updateNavAuthButton();
       showCustomAlert("أهلاً بك مجدداً في منصة صخر!");
       showSection("home");
+      runPendingGateAction();
       return;
     }
     currentRole = s.val().approved === false ? "suspended" : "technician";
@@ -1215,6 +1318,7 @@ async function loginWithPhonePassword(){
     closeModal("customerAccountModal");
     showSection("techAccount");
     renderTechAccount();
+    runPendingGateAction();
   }catch(e){
     showCustomAlert("خطأ في بيانات الدخول: "+e.message);
   }
@@ -1242,6 +1346,7 @@ async function submitForgotPasswordRequest() {
 async function logout(){
   try{
     if(techJobsListener) { techJobsListener.off(); techJobsListener = null; }
+    if(supportChatListener) { supportChatListener.off(); supportChatListener = null; }
     await auth.signOut();
     currentRole = "guest"; currentTech = null; currentUser = null;
     updateNavAuthButton();
@@ -1282,25 +1387,25 @@ function renderPublicTechs(){
   const userArea = chosenCustomerArea || localStorage.getItem("sakhrCustomerArea") || "";
   
   const selectEl = $("quickServiceSelect");
-  const selectedService = selectEl ? selectEl.value : currentSelectedService;
+  const selectedService = (selectEl && selectEl.value) ? selectEl.value : currentSelectedService;
 
   const list = publicTechs.filter(t => {
     if(currentUser && currentUser.uid === t.uid) return false;
     
-    // فلترة حسب الاختصاص المختار (حتى للمدير)
+    // فلترة صارمة حسب الاختصاص المختار
     if(selectedService && t.service !== selectedService) return false;
 
-    if(currentRole === "admin") return true; 
+    if(currentRole === "admin") return true;
 
-    if(userCity && userArea) {
-      if(t.city !== userCity || t.area !== userArea) return false;
-    }
+    // فلترة صارمة حسب القضاء (والمحافظة) للزبون
+    if(userCity && t.city !== userCity) return false;
+    if(userArea && t.area !== userArea) return false;
 
     return true;
   });
 
   if(!list.length){
-    el.innerHTML = '<div class="empty">لا يوجد فنيون مسجلون ومتاحون في قضائك وحسب الاختصاص المطلوب (' + (selectedService || "الكل") + ') حالياً.</div>';
+    el.innerHTML = '<div class="empty">لا يوجد فنيون مسجلون في اختصاص (' + esc(selectedService || "الكل") + ') ضمن قضاء (' + esc(userArea || "قضائك") + ') حالياً.</div>';
     return;
   }
   el.innerHTML = list.map(t=>{
@@ -1323,6 +1428,131 @@ function renderPublicTechs(){
       <button class="btn primary" onclick="chooseServiceDirect('${esc(t.service)}','${esc(t.uid)}')">اطلب هذا الفني مباشرة</button>
     </div>`;
   }).join("");
+}
+
+/* دردشة فريق الدعم */
+function getCurrentSupportActor() {
+  if(currentRole === "admin") {
+    return { threadId: null, senderId: currentUser?.uid || "admin", senderName: "فريق الدعم (المدير)", senderRole: "admin" };
+  }
+  if(["technician", "suspended"].includes(currentRole) && currentUser) {
+    return {
+      threadId: currentUser.uid,
+      senderId: currentUser.uid,
+      senderName: (currentTech?.name || "فني") + " (فني)",
+      senderRole: "technician"
+    };
+  }
+  const custUid = (currentUser && !currentUser.isAnonymous) ? currentUser.uid : (localStorage.getItem("sakhrCustomerUid") || "guest_thread");
+  const custName = localStorage.getItem("sakhrCustomerName") || "زبون";
+  return {
+    threadId: custUid,
+    senderId: custUid,
+    senderName: custName + " (زبون)",
+    senderRole: "client"
+  };
+}
+
+async function openSupportChatModal() {
+  if(!db) return showCustomAlert("تعذر الاتصال بقاعدة البيانات حالياً.");
+  const actor = getCurrentSupportActor();
+  $("supportChatInput").value = "";
+  $("supportChatModal").classList.remove("hidden");
+
+  if(currentRole === "admin") {
+    $("adminSupportThreadPicker").classList.remove("hidden");
+    const sel = $("adminSupportThreadSelect");
+    sel.innerHTML = '<option value="">اختر محادثة...</option>';
+    try {
+      const [chatsSnap, accSnap] = await Promise.all([
+        db.ref("supportChats").once("value"),
+        db.ref("allAccounts").once("value")
+      ]);
+      const accMap = accSnap.val() || {};
+      const chatsObj = chatsSnap.val() || {};
+      const threadIds = Object.keys(chatsObj);
+      threadIds.forEach(tid => {
+        const labelName = accMap[tid]?.name || tid;
+        const labelRole = accMap[tid]?.role ? ` (${accMap[tid].role})` : "";
+        const opt = document.createElement("option");
+        opt.value = tid;
+        opt.textContent = labelName + labelRole;
+        sel.appendChild(opt);
+      });
+      if(threadIds.length > 0) {
+        sel.value = threadIds[0];
+        subscribeSupportThread(threadIds[0]);
+      } else {
+        $("supportChatMessages").innerHTML = '<div class="muted" style="text-align:center;margin-top:90px;">لا توجد محادثات دعم واردة حتى الآن.</div>';
+      }
+    } catch(e) {}
+  } else {
+    $("adminSupportThreadPicker").classList.add("hidden");
+    subscribeSupportThread(actor.threadId);
+  }
+}
+
+function switchAdminSupportThread() {
+  const tid = $("adminSupportThreadSelect").value;
+  if(tid) subscribeSupportThread(tid);
+}
+
+function subscribeSupportThread(threadId) {
+  if(supportChatListener) { supportChatListener.off(); supportChatListener = null; }
+  activeSupportThreadId = threadId;
+  const box = $("supportChatMessages");
+  box.innerHTML = '<div class="muted" style="text-align:center;margin-top:90px;">جارٍ تحميل المحادثة...</div>';
+
+  supportChatListener = db.ref("supportChats/" + threadId + "/messages").limitToLast(60);
+  supportChatListener.on("value", snap => {
+    const msgs = [];
+    snap.forEach(child => msgs.push(child.val()));
+    if(!msgs.length) {
+      box.innerHTML = '<div class="muted" style="text-align:center;margin-top:90px;">ابدأ المحادثة مع فريق الدعم الآن...</div>';
+      return;
+    }
+    const actor = getCurrentSupportActor();
+    box.innerHTML = msgs.map(m => {
+      const isMine = (currentRole === "admin" && m.senderRole === "admin") || (currentRole !== "admin" && m.senderId === actor.senderId);
+      const timeStr = m.createdAt ? new Date(m.createdAt).toLocaleTimeString('ar-IQ', { hour: '2-digit', minute: '2-digit' }) : '';
+      return `
+        <div class="chat-bubble ${isMine ? 'mine' : 'other'}">
+          <div>${esc(m.text)}</div>
+          <small>${esc(m.senderName || '')} ${timeStr ? '• ' + timeStr : ''}</small>
+        </div>
+      `;
+    }).join("");
+    box.scrollTop = box.scrollHeight;
+  });
+}
+
+async function sendSupportMessage() {
+  const input = $("supportChatInput");
+  const text = input.value.trim();
+  if(!text || !db) return;
+
+  const actor = getCurrentSupportActor();
+  const targetThread = currentRole === "admin" ? $("adminSupportThreadSelect").value : actor.threadId;
+  if(!targetThread) return showCustomAlert("اختر محادثة أولاً.");
+
+  input.value = "";
+  try {
+    const msgId = db.ref("supportChats/" + targetThread + "/messages").push().key;
+    await db.ref("supportChats/" + targetThread + "/messages/" + msgId).set({
+      text,
+      senderId: actor.senderId,
+      senderName: actor.senderName,
+      senderRole: actor.senderRole,
+      createdAt: Date.now()
+    });
+  } catch(e) {
+    showCustomAlert("تعذر إرسال الرسالة: " + e.message);
+  }
+}
+
+function closeSupportChatModal() {
+  if(supportChatListener) { supportChatListener.off(); supportChatListener = null; }
+  closeModal("supportChatModal");
 }
 
 async function chooseServiceDirect(service, techUid){
