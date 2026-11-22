@@ -59,12 +59,51 @@ header, main, footer, .modal {
 button, input, select, textarea { font: inherit; }
 button { cursor: pointer; border: 0; }
 
-header { background: var(--burgundy); padding: 10px 4%; display: flex; align-items: center; justify-content: space-between; gap: 15px; flex-wrap: wrap; border-bottom: 2px solid var(--gold); position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+/* الهيدر الثابت مع الشريط الإعلاني أسفل الكلمات */
+header {
+  background: var(--burgundy);
+  padding: 10px 0 0 0;
+  display: flex;
+  flex-direction: column;
+  border-bottom: 2px solid var(--gold);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+.header-top-row {
+  padding: 0 4% 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  flex-wrap: wrap;
+}
 .brand { display: flex; align-items: center; gap: 10px; cursor: pointer; }
 .brand img { height: 70px; width: auto; object-fit: contain; border: none; border-radius: 0; filter: drop-shadow(0 3px 6px rgba(0,0,0,0.5)); }
 nav { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
 nav button { color: #fff; background: rgba(255,255,255,0.1); padding: 6px 12px; border-radius: 16px; border: 1px solid rgba(255,195,41,0.3); font-size: 11px; font-weight: 700; transition: all .2s; }
 nav button:hover, nav button.primary-nav { background: var(--gold); color: var(--burgundy-dark); border-color: var(--gold); }
+
+.announcement-container {
+  background: var(--burgundy-dark);
+  border-top: 1px solid rgba(255,195,41,0.45);
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+  height: 36px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+.announcement-bar {
+  display: inline-block;
+  color: var(--gold);
+  font-weight: 800;
+  font-size: 13px;
+  position: absolute;
+  will-change: transform;
+}
 
 .hero-banner { background: linear-gradient(180deg, var(--burgundy), var(--burgundy-dark)); padding: 40px 4% 30px; text-align: center; position: relative; border-bottom: 3px solid var(--gold); box-shadow: inset 0 -10px 20px rgba(0,0,0,0.3); }
 .hero-banner h2 { font-size: 22px; margin: 0 0 5px; font-weight: 900; color: #fff; text-shadow: 0 2px 8px rgba(0,0,0,0.5); }
@@ -99,26 +138,6 @@ nav button:hover, nav button.primary-nav { background: var(--gold); color: var(-
 
 .cta-btn { background: linear-gradient(135deg, #ffdb57, #e99a12); color: var(--burgundy-dark); padding: 10px 22px; border-radius: 24px; font-weight: 900; font-size: 14px; border: 2px solid #fff; box-shadow: 0 4px 15px rgba(233,154,18,0.4); display: inline-flex; align-items: center; gap: 6px; text-decoration: none; transition: transform .2s; }
 .cta-btn:active { transform: scale(0.95); }
-
-.announcement-container {
-  background: var(--burgundy);
-  border-bottom: 2px solid var(--gold);
-  overflow: hidden;
-  white-space: nowrap;
-  position: relative;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-}
-.announcement-bar {
-  display: inline-block;
-  color: var(--gold);
-  font-weight: 800;
-  font-size: 14px;
-  position: absolute;
-  will-change: transform;
-}
 
 .quick-search-box { background: rgba(255,255,255,0.95); padding: 10px; border-radius: 14px; display: flex; gap: 6px; max-width: 550px; margin: 15px auto 0; box-shadow: 0 8px 20px rgba(0,0,0,0.3); border: 2px solid var(--gold); }
 .quick-search-box select, .quick-search-box input { flex: 1; padding: 8px; border: 1px solid #d9b98e; border-radius: 8px; outline: none; background: #fff; color: var(--text-main); font-size: 12px; font-weight: 700; }
@@ -245,6 +264,57 @@ nav button:hover, nav button.primary-nav { background: var(--gold); color: var(-
 .city-toggle-btn.inactive-city {
   background: #f3f4f6;
   color: var(--text-muted);
+}
+
+/* لستة الملف الشخصي المرتبة للزبون والفني */
+.profile-list-card {
+  background: #fff9ef;
+  border: 2px solid var(--gold);
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 16px;
+  text-align: right;
+}
+.profile-list-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 6px;
+  border-bottom: 1px solid #edd4a6;
+  font-size: 13px;
+}
+.profile-list-row:last-child {
+  border-bottom: none;
+}
+.profile-list-label {
+  color: var(--text-muted);
+  font-weight: 800;
+  white-space: nowrap;
+}
+.profile-list-value {
+  color: var(--burgundy);
+  font-weight: 900;
+  text-align: left;
+  word-break: break-word;
+}
+
+/* بطاقة الفني الكاملة في صفحة المدير */
+.admin-tech-full-card {
+  background: #fff9ef;
+  border: 2px solid var(--gold);
+  border-radius: 16px;
+  padding: 16px;
+  color: var(--text-main);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+.admin-tech-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid #edd4a6;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .trust-bar { background: var(--burgundy-dark); border-top: 2px solid var(--gold); border-bottom: 2px solid var(--gold); padding: 12px 5%; display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap; gap: 12px; margin-top: 25px; text-align: center; }
@@ -380,7 +450,7 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
 .footer-links button { background: transparent; color: var(--gold); border: 0; text-decoration: underline; cursor: pointer; font-size: 12px; font-weight: 800; }
 
 @media(max-width:768px){ 
-  header { justify-content: center; text-align: center; } 
+  .header-top-row { justify-content: center; text-align: center; } 
   nav { justify-content: center; } 
   .hero-banner { padding: 25px 4%; } 
   .hero-banner h2 { font-size: 18px; } 
@@ -392,18 +462,27 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
 <body>
 
 <header>
- <div class="brand" onclick="showSection('home')">
-  <img src="logo.png" alt="لوغو صخر الرسمي">
+ <div class="header-top-row">
+  <div class="brand" onclick="showSection('home')">
+   <img src="logo.png" alt="لوغو صخر الرسمي">
+  </div>
+  <nav id="navMenu">
+   <button onclick="showSection('home')">الرئيسية</button>
+   <button onclick="requireGate(() => showSection('services'))">خدماتنا</button>
+   <button id="techsNavBtn" onclick="openAdminTechsView()" class="hidden">الفنيون</button>
+   <button onclick="requireGate(() => openSupportChatModal())">فريق الدعم</button>
+   <button onclick="showSection('reviewsChat')">دردشة تقييم الخدمات</button>
+   <button id="adminNavBtn" onclick="showSection('admin')" class="hidden" style="background:var(--gold); color:var(--burgundy-dark); border-color:var(--gold);">⚙️ الإدارة</button>
+   <button id="authNavBtn" onclick="handleAuthNav()" class="primary-nav">تسجيل الدخول</button>
+  </nav>
  </div>
- <nav id="navMenu">
-  <button onclick="showSection('home')">الرئيسية</button>
-  <button onclick="requireGate(() => showSection('services'))">خدماتنا</button>
-  <button id="techsNavBtn" onclick="openAdminTechsView()" class="hidden">الفنيون</button>
-  <button onclick="requireGate(() => openSupportChatModal())">فريق الدعم</button>
-  <button onclick="showSection('reviewsChat')">دردشة تقييم الخدمات</button>
-  <button id="adminNavBtn" onclick="showSection('admin')" class="hidden" style="background:var(--gold); color:var(--burgundy-dark); border-color:var(--gold);">⚙️ الإدارة</button>
-  <button id="authNavBtn" onclick="handleAuthNav()" class="primary-nav">تسجيل الدخول</button>
- </nav>
+
+ <!-- الشريط الإعلاني الثابت أسفل أزرار الهيدر في جميع الصفحات -->
+ <div class="announcement-container">
+  <div id="globalAnnouncementBar" class="announcement-bar">
+   📢 أهلاً بكم في منصة صخر للصيانة المنزلية - تواصل مع أفضل الفنيين المعتمدين في منطقتك بكل سهولة.
+  </div>
+ </div>
 </header>
 
 <main>
@@ -425,12 +504,6 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
   </div>
  </div>
 
- <div class="announcement-container">
-  <div id="globalAnnouncementBar" class="announcement-bar">
-   📢 أهلاً بكم في منصة صخر للصيانة المنزلية - تواصل مع أفضل الفنيين المعتمدين في منطقتك بكل سهولة.
-  </div>
- </div>
-
  <div class="trust-bar">
   <div class="trust-item"><span>👥</span> فنيون محترفون</div>
   <div class="trust-item"><span>⏱️</span> استجابة سريعة</div>
@@ -446,6 +519,22 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
 <section id="technicians" class="container hidden">
  <h2 class="section-title" id="techsSectionTitle">الفنيون المعتمدون والمتاحون في قضائك</h2>
  <div class="techs-grid" id="publicTechList"><div class="empty">جارٍ تحميل الفنيين المتاحين...</div></div>
+</section>
+
+<!-- قسم إدارة الفنيين الكامل في تبويب "الفنيون" للمدير -->
+<section id="adminTechsSection" class="container hidden">
+ <h2 class="section-title">🛠️ إدارة الفنيين وملفاتهم الشخصية الكاملة</h2>
+ <div class="card" style="margin-bottom:15px; background:#fff9ef;">
+  <div class="row">
+   <div class="field" style="margin:0;">
+    <label>بحث بالاسم أو الهاتف أو المحافظة أو الاختصاص</label>
+    <input id="adminTechSearchInput" placeholder="اكتب للبحث السريع بين الفنيين..." oninput="renderAdminTechsFullList()">
+   </div>
+  </div>
+ </div>
+ <div id="adminTechsFullList" style="display:flex; flex-direction:column; gap:14px;">
+  <div class="empty">جارٍ تحميل بيانات الفنيين...</div>
+ </div>
 </section>
 
 <section id="reviewsChat" class="container hidden">
@@ -542,7 +631,7 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  </div>
 
  <div style="text-align:center; margin-bottom:20px;">
-  <button class="btn primary" style="padding: 10px 20px; font-size: 14px;" onclick="openTechEditModal()">⚙️ تعديل الملف الشخصي والمعلومات</button>
+  <button class="btn primary" style="padding: 10px 20px; font-size: 14px;" onclick="openTechEditModal()">⚙️ تعديل الملف الشخصي وإضافة معلومات</button>
  </div>
 
  <div id="techJobsArea">
@@ -554,12 +643,19 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
 
 <section id="customerAccountView" class="container hidden">
  <h2 class="section-title">الملف الشخصي للزبون</h2>
- <div class="card" style="max-width:600px; margin:0 auto; text-align:center;">
-  <div style="font-size:50px; margin-bottom:10px;">👤</div>
-  <h3 id="custProfileName" style="color:var(--burgundy); margin:5px 0; font-size:20px; font-weight:900;"></h3>
-  <div id="custProfilePhone" class="muted" style="font-size:14px; margin-bottom:10px;"></div>
-  <div id="custProfileLocation" class="notice" style="margin-bottom:20px;"></div>
-  <button class="btn danger" onclick="logoutCustomer()">تسجيل الخروج من حساب الزبون</button>
+ <div class="card" style="max-width:620px; margin:0 auto;">
+  <div style="text-align:center; margin-bottom:12px;">
+   <div style="font-size:48px;">👤</div>
+   <h3 id="custProfileName" style="color:var(--burgundy); margin:5px 0; font-size:20px; font-weight:900;"></h3>
+  </div>
+
+  <!-- لستة بيانات الزبون المرتبة -->
+  <div id="custProfileListBox" class="profile-list-card"></div>
+
+  <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:center;">
+   <button class="btn primary" style="flex:1; min-width:180px;" onclick="openCustomerEditModal()">⚙️ تعديل الملف الشخصي والمحافظة</button>
+   <button class="btn danger" style="flex:1; min-width:150px;" onclick="logoutCustomer()">تسجيل الخروج</button>
+  </div>
  </div>
 </section>
 
@@ -590,18 +686,12 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  
  <div class="admin-tabs-nav">
   <button class="admin-tab-btn active" id="btnTabAccounts" onclick="switchAdminTab('accounts')">👥 حسابات الزبائن</button>
-  <button class="admin-tab-btn" id="btnTabTechs" onclick="switchAdminTab('techs')">🛠️ إدارة الفنيين</button>
   <button class="admin-tab-btn" id="btnTabRequests" onclick="switchAdminTab('requests')">📋 طلبات الزبائن</button>
  </div>
 
  <div id="adminAccountsTab" class="admin-tab-content">
   <h3 class="section-title" style="font-size:16px;color:#fff">إجمالي حسابات الزبائن المسجلة في المنصة</h3>
   <div id="adminAllAccounts"><div class="empty">جارٍ تحميل الحسابات...</div></div>
- </div>
-
- <div id="adminTechsTab" class="admin-tab-content hidden">
-  <h3 class="section-title" style="font-size:16px;color:#fff">إدارة الفنيين والمشتركين</h3>
-  <div id="adminTechs" style="display:flex; flex-direction:column; gap:12px;"></div>
  </div>
 
  <div id="adminRequestsTab" class="admin-tab-content hidden">
@@ -648,7 +738,6 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  </div>
 </div>
 
-<!-- بوابة اختيار طريقة الدخول -->
 <div class="modal hidden" id="roleSelectionModal">
  <div class="modal-box" style="text-align: center;">
   <div class="modal-head"><h3>اختر طريقة الدخول</h3><div class="close" onclick="closeModal('roleSelectionModal')">✕</div></div>
@@ -660,7 +749,6 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  </div>
 </div>
 
-<!-- نافذة اختيار التخصص الفرعي بنفس ستايل أزرار المنصة -->
 <div class="modal hidden" id="subserviceModal">
  <div class="modal-box" style="text-align: center;">
   <div class="modal-head"><h3 id="subserviceModalTitle">اختر نوع الخدمة</h3><div class="close" onclick="closeModal('subserviceModal')">✕</div></div>
@@ -704,6 +792,22 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
   </div>
   <button class="btn primary" style="width:100%; margin-top:10px;" onclick="submitCustomerRegistration()">حفظ الدخول والمتابعة</button>
   <div id="custRegMessage"></div>
+ </div>
+</div>
+
+<!-- نافذة تعديل الملف الشخصي للزبون -->
+<div class="modal hidden" id="customerEditModal">
+ <div class="modal-box">
+  <div class="modal-head"><h3>تعديل الملف الشخصي للزبون</h3><div class="close" onclick="closeModal('customerEditModal')">✕</div></div>
+  <div class="field"><label>الاسم الكامل</label><input id="editCustName" placeholder="الاسم الكامل"></div>
+  <div class="field"><label>رقم الهاتف</label><input id="editCustPhone" inputmode="tel" placeholder="07800000000"></div>
+  <div class="row">
+   <div class="field"><label>المحافظة</label><select id="editCustCity" onchange="setDistricts('editCustArea', this.value)"></select></div>
+   <div class="field"><label>القضاء</label><select id="editCustArea"><option value="">اختر القضاء</option></select></div>
+  </div>
+  <div class="field"><label>المنطقة أو الحي (اختياري)</label><input id="editCustNeighborhood" placeholder="مثال: البندقية / قرب السوق"></div>
+  <div class="field"><label>إضافات أو ملاحظات في ملفك الشخصي (اختياري)</label><textarea id="editCustNotes" placeholder="أضف أي تفاصيل أو ملاحظات عن منزلك أو عنوانك..."></textarea></div>
+  <button class="btn primary" style="width:100%; margin-top:10px;" onclick="saveCustomerAccountProfile()">حفظ التعديلات</button>
  </div>
 </div>
 
@@ -754,6 +858,7 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
    <div id="editTechSubservicesBox" class="sub-checks-box"></div>
   </div>
   <div class="field"><label>نبذة عن خبرتك</label><textarea id="editTechBio" placeholder="نبذة مختصرة..."></textarea></div>
+  <div class="field"><label>إضافات أو ملاحظات أخرى في ملفك (اختياري)</label><textarea id="editTechExtra" placeholder="مثال: ساعات العمل، أدوات متوفرة، أو أي تفاصيل إضافية..."></textarea></div>
   <div class="field"><label>تحديث الصورة الشخصية (اختياري)</label><input id="editTechPhotoFile" type="file" accept="image/*"></div>
   <button class="btn primary" style="width:100%; margin-top:10px;" onclick="saveTechAccountProfile()">حفظ تعديلات البروفايل</button>
   <div id="editProfileMessage"></div>
@@ -828,7 +933,6 @@ const firebaseConfig = {
   appId: "1:289076783578:web:a93dbcae0c72c7126578e3"
 };
 
-// ترتيب الخدمات حسب الأهمية والطلب اليومي
 const SERVICES = [
   "كهربائيات",
   "سباكة",
@@ -871,7 +975,6 @@ const DISTRICTS={
 "واسط":["الكوت","النعمانية","الحي","الصويرة","العزيزية"]
 };
 
-// المحافظات الفعّالة افتراضياً للتوسع التدريجي (قابلة للتعديل من الإدارة)
 let activeCities = ["المثنى", "بغداد"];
 
 let auth=null,db=null,storage=null,functions=null,currentUser=null,currentRole="guest",currentTech=null;
@@ -977,6 +1080,7 @@ function showSection(id) {
   window.scrollTo({ top: 0, behavior: "smooth" });
 
   if (id === "technicians") loadPublicTechs();
+  if (id === "adminTechsSection" && currentRole === "admin") loadAdminData();
   if (id === "reviewsChat") {
     loadReviews();
     if(currentRole === "admin") {
@@ -1006,9 +1110,7 @@ function openTechEditModal() {
 
 function openAdminTechsView() {
   if(currentRole !== "admin") return;
-  showSection("admin");
-  switchAdminTab("techs");
-  loadAdminData();
+  showSection("adminTechsSection");
 }
 
 function switchAdminTab(tab) {
@@ -1018,9 +1120,6 @@ function switchAdminTab(tab) {
   if(tab === 'accounts') {
     $("adminAccountsTab").classList.remove("hidden");
     $("btnTabAccounts").classList.add("active");
-  } else if(tab === 'techs') {
-    $("adminTechsTab").classList.remove("hidden");
-    $("btnTabTechs").classList.add("active");
   } else if(tab === 'requests') {
     $("adminRequestsTab").classList.remove("hidden");
     $("btnTabRequests").classList.add("active");
@@ -1035,7 +1134,7 @@ function renderSubserviceCheckboxes(containerId, serviceName, selectedList = [])
     box.innerHTML = '<span class="muted">لا توجد تخصصات فرعية لهذا القسم.</span>';
     return;
   }
-  box.innerHTML = subs.map((sub, idx) => {
+  box.innerHTML = subs.map(sub => {
     const checked = selectedList.includes(sub) ? "checked" : "";
     return `
       <label class="sub-check-item">
@@ -1160,6 +1259,7 @@ function updateNavAuthButton() {
 function setupLocations(){
   const cityOptions = Object.keys(DISTRICTS).map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("");
   if($("custRegCity")) $("custRegCity").innerHTML = '<option value="">اختر المحافظة</option>' + cityOptions;
+  if($("editCustCity")) $("editCustCity").innerHTML = '<option value="">اختر المحافظة</option>' + cityOptions;
   if($("regCity")) $("regCity").innerHTML = '<option value="">اختر المحافظة</option>' + cityOptions;
   if($("editTechCity")) $("editTechCity").innerHTML = '<option value="">اختر المحافظة</option>' + cityOptions;
 
@@ -1283,12 +1383,81 @@ async function submitCustomerRegistration(){
 function renderCustomerAccount() {
   const name = localStorage.getItem("sakhrCustomerName") || "زبون صخر";
   const phone = localStorage.getItem("sakhrCustomerPhone") || "غير محدد";
-  const city = localStorage.getItem("sakhrCustomerCity") || "المحافظة";
-  const area = localStorage.getItem("sakhrCustomerArea") || "القضاء";
+  const city = localStorage.getItem("sakhrCustomerCity") || "غير محدد";
+  const area = localStorage.getItem("sakhrCustomerArea") || "غير محدد";
+  const neighborhood = localStorage.getItem("sakhrCustomerNeighborhood") || "غير مضاف";
+  const notes = localStorage.getItem("sakhrCustomerNotes") || "لا توجد إضافات بعد";
 
   $("custProfileName").innerText = name;
-  $("custProfilePhone").innerText = "رقم الهاتف: " + phone;
-  $("custProfileLocation").innerHTML = "📍 موقعك المحفوظ: <b>" + esc(city) + " / " + esc(area) + "</b>";
+  if($("custProfileListBox")) {
+    $("custProfileListBox").innerHTML = `
+      <div class="profile-list-row"><span class="profile-list-label">الاسم الكامل</span><span class="profile-list-value">${esc(name)}</span></div>
+      <div class="profile-list-row"><span class="profile-list-label">رقم الهاتف</span><span class="profile-list-value">${esc(phone)}</span></div>
+      <div class="profile-list-row"><span class="profile-list-label">المحافظة</span><span class="profile-list-value">${esc(city)}</span></div>
+      <div class="profile-list-row"><span class="profile-list-label">القضاء</span><span class="profile-list-value">${esc(area)}</span></div>
+      <div class="profile-list-row"><span class="profile-list-label">الحي / المنطقة</span><span class="profile-list-value">${esc(neighborhood)}</span></div>
+      <div class="profile-list-row"><span class="profile-list-label">إضافات وملاحظات</span><span class="profile-list-value">${esc(notes)}</span></div>
+    `;
+  }
+}
+
+function openCustomerEditModal() {
+  const name = localStorage.getItem("sakhrCustomerName") || "";
+  const phone = localStorage.getItem("sakhrCustomerPhone") || "";
+  const city = localStorage.getItem("sakhrCustomerCity") || "";
+  const area = localStorage.getItem("sakhrCustomerArea") || "";
+  const neighborhood = localStorage.getItem("sakhrCustomerNeighborhood") || "";
+  const notes = localStorage.getItem("sakhrCustomerNotes") || "";
+
+  $("editCustName").value = name;
+  $("editCustPhone").value = phone;
+  $("editCustCity").value = city;
+  setDistricts("editCustArea", city);
+  if(area) $("editCustArea").value = area;
+  $("editCustNeighborhood").value = neighborhood;
+  $("editCustNotes").value = notes;
+
+  $("customerEditModal").classList.remove("hidden");
+}
+
+async function saveCustomerAccountProfile() {
+  const name = $("editCustName").value.trim();
+  const phone = $("editCustPhone").value.trim();
+  const city = $("editCustCity").value;
+  const area = $("editCustArea").value;
+  const neighborhood = $("editCustNeighborhood").value.trim();
+  const notes = $("editCustNotes").value.trim();
+
+  if(!name || !phone || !city || !area) {
+    return showCustomAlert("يرجى إكمال الحقول الأساسية (الاسم، رقم الهاتف، المحافظة والقضاء).");
+  }
+
+  localStorage.setItem("sakhrCustomerName", name);
+  localStorage.setItem("sakhrCustomerPhone", phone);
+  localStorage.setItem("sakhrCustomerCity", city);
+  localStorage.setItem("sakhrCustomerArea", area);
+  localStorage.setItem("sakhrCustomerNeighborhood", neighborhood);
+  localStorage.setItem("sakhrCustomerNotes", notes);
+
+  chosenCustomerCity = city;
+  chosenCustomerArea = area;
+
+  const uid = (currentUser && !currentUser.isAnonymous) ? currentUser.uid : localStorage.getItem("sakhrCustomerUid");
+  if(uid && db) {
+    await logUserAccount(uid, {
+      name, phone, role: "زبون", city, area, neighborhood, notes
+    });
+  }
+
+  closeModal("customerEditModal");
+  updateNavAuthButton();
+  renderCustomerAccount();
+
+  if(!isCityActive(city)) {
+    showCustomAlert("تم حفظ التعديلات. تنبيه: " + getCityExpansionMessage(city));
+  } else {
+    showCustomAlert("تم تحديث ملفك الشخصي بنجاح!");
+  }
 }
 
 function logoutCustomer() {
@@ -1297,7 +1466,11 @@ function logoutCustomer() {
     localStorage.removeItem("sakhrCustomerPhone");
     localStorage.removeItem("sakhrCustomerCity");
     localStorage.removeItem("sakhrCustomerArea");
+    localStorage.removeItem("sakhrCustomerNeighborhood");
+    localStorage.removeItem("sakhrCustomerNotes");
     localStorage.removeItem("sakhrCustomerUid");
+    chosenCustomerCity = "";
+    chosenCustomerArea = "";
     updateNavAuthButton();
     showCustomAlert("تم تسجيل الخروج بنجاح.");
     showSection("home");
@@ -1465,7 +1638,7 @@ async function syncPublicTechnician(uid, p){
     name: p.name||"", phone: p.phone||"", city: p.city||"", area: p.area||"",
     neighborhood: p.neighborhood||"", service: p.service||"",
     subservices: Array.isArray(p.subservices) ? p.subservices : [],
-    bio: p.bio||"", photoURL: p.photoURL||"", approved: p.approved!==false,
+    bio: p.bio||"", extraInfo: p.extraInfo||"", photoURL: p.photoURL||"", approved: p.approved!==false,
     available: p.available !== false,
     subscriptionStatus: p.subscriptionStatus||"غير فعال",
     freeJobsUsed: Number(p.freeJobsUsed)||0,
@@ -1500,7 +1673,7 @@ async function registerTechWithPassword(){
     if(file) photoURL = await uploadTechPhoto(createdUser.uid, file);
 
     const profile = {
-      name, phone, city, area, neighborhood, service, subservices, bio, photoURL,
+      name, phone, city, area, neighborhood, service, subservices, bio, extraInfo: "", photoURL,
       approved: true, available: true, subscriptionStatus: "غير فعال", freeJobsUsed: 0, completedJobs: 0,
       ratingSum: 0, ratingCount: 0, ratingAverage: 0, createdAt: Date.now()
     };
@@ -1841,7 +2014,7 @@ function closeSupportChatModal() {
 async function chooseServiceDirect(service, techUid){
   if(currentRole === "admin") {
     try {
-      const tech = publicTechs.find(t => t.uid === techUid);
+      const tech = publicTechs.find(t => t.uid === techUid) || technicians.find(t => t.uid === techUid);
       if(!tech) throw new Error("الفني غير موجود.");
       
       const custId = "admin_manager";
@@ -1945,16 +2118,23 @@ async function renderTechAccount(){
       const dotCls = isAvail ? "online-dot" : "offline-dot";
       const statusLbl = isAvail ? "متاح لاستقبال الطلبات" : "غير متاح (مشغول / نائم)";
       const subsArr = Array.isArray(currentTech.subservices) ? currentTech.subservices : [];
-      const subsHtml = subsArr.length ? `<div class="sub-badge">${esc(subsArr.join(" • "))}</div>` : "";
+      const subsText = subsArr.length ? subsArr.join(" • ") : "جميع الفروع";
       $("techSummary").innerHTML = `
       ${techPhoto(currentTech)}
-      <div style="text-align:center">
+      <div style="text-align:center; margin-bottom:10px;">
         <h3 style="margin:4px 0"><span class="${dotCls}"></span> ${esc(currentTech.name)}</h3>
         <span style="font-size:12px; font-weight:800; color:${isAvail?'var(--online-green)':'var(--offline-gray)'}; display:block; margin:2px 0;">${statusLbl}</span>
-        <span class="badge">${esc(currentTech.service)}</span>
-        ${subsHtml}
-        <div class="muted" style="margin-top:4px">📍 ${esc(currentTech.city)} / ${esc(currentTech.area)}</div>
-        <div class="stars" style="margin-top:6px">${"★".repeat(Math.round(currentTech.ratingAverage||0))}${"☆".repeat(5-Math.round(currentTech.ratingAverage||0))}</div>
+        <div class="stars" style="margin-top:4px">${"★".repeat(Math.round(currentTech.ratingAverage||0))}${"☆".repeat(5-Math.round(currentTech.ratingAverage||0))}</div>
+      </div>
+      <!-- لستة بيانات الفني المرتبة -->
+      <div class="profile-list-card" style="margin-bottom:0;">
+        <div class="profile-list-row"><span class="profile-list-label">الاختصاص الرئيسي</span><span class="profile-list-value">${esc(currentTech.service)}</span></div>
+        <div class="profile-list-row"><span class="profile-list-label">التخصصات الفرعية</span><span class="profile-list-value">${esc(subsText)}</span></div>
+        <div class="profile-list-row"><span class="profile-list-label">رقم الهاتف</span><span class="profile-list-value">${esc(currentTech.phone || "---")}</span></div>
+        <div class="profile-list-row"><span class="profile-list-label">المحافظة والقضاء</span><span class="profile-list-value">${esc(currentTech.city)} / ${esc(currentTech.area)}</span></div>
+        <div class="profile-list-row"><span class="profile-list-label">المنطقة / الحي</span><span class="profile-list-value">${esc(currentTech.neighborhood || "غير محدد")}</span></div>
+        <div class="profile-list-row"><span class="profile-list-label">نبذة الخبرة</span><span class="profile-list-value">${esc(currentTech.bio || "لا توجد نبذة")}</span></div>
+        <div class="profile-list-row"><span class="profile-list-label">إضافات وملاحظات</span><span class="profile-list-value">${esc(currentTech.extraInfo || "لا توجد إضافات بعد")}</span></div>
       </div>`;
     }
 
@@ -2001,6 +2181,7 @@ async function renderTechAccount(){
     if($("editTechNeighborhood")) $("editTechNeighborhood").value = currentTech.neighborhood || "";
     if($("editTechPhone")) $("editTechPhone").value = currentTech.phone || "";
     if($("editTechBio")) $("editTechBio").value = currentTech.bio || "";
+    if($("editTechExtra")) $("editTechExtra").value = currentTech.extraInfo || "";
 
     if(techJobsListener) techJobsListener.off();
     let isInitialLoad = true;
@@ -2064,6 +2245,7 @@ async function saveTechAccountProfile() {
   const neighborhood = $("editTechNeighborhood").value.trim();
   const phone = $("editTechPhone").value.trim();
   const bio = $("editTechBio").value.trim();
+  const extraInfo = $("editTechExtra").value.trim();
   const file = $("editTechPhotoFile").files[0];
 
   if(!name || !phone || !city || !area || !service) {
@@ -2079,7 +2261,7 @@ async function saveTechAccountProfile() {
 
     const updated = {
       ...currentTech,
-      name, service, subservices, city, area, neighborhood, phone, bio, photoURL
+      name, service, subservices, city, area, neighborhood, phone, bio, extraInfo, photoURL
     };
 
     await db.ref("technicians/"+uid).update(updated);
@@ -2114,6 +2296,20 @@ async function resetTechFreeJobs(techUid) {
     await db.ref("publicTechnicians/" + techUid).update({ freeJobsUsed: 0 });
     showCustomAlert("تم تصفير الأعمال المجانية للفني بنجاح.");
     loadAdminData();
+  } catch(e) {
+    showCustomAlert("خطأ: " + e.message);
+  }
+}
+
+async function toggleTechApprovalByAdmin(techUid, currentApproved) {
+  if(currentRole !== "admin") return;
+  const nextApproved = !(currentApproved !== false);
+  try {
+    await db.ref("technicians/" + techUid).update({ approved: nextApproved });
+    await db.ref("publicTechnicians/" + techUid).update({ approved: nextApproved });
+    showCustomAlert(nextApproved ? "تم تفعيل حساب الفني في المنصة." : "تم إيقاف حساب الفني مؤقتاً.");
+    loadAdminData();
+    loadPublicTechs();
   } catch(e) {
     showCustomAlert("خطأ: " + e.message);
   }
@@ -2310,9 +2506,78 @@ async function loadAdminData(){
 
     renderAdmin();
     renderAdminActiveCities();
+    renderAdminTechsFullList();
   }catch(e){
     showCustomAlert("خطأ في تحميل بيانات الإدارة: " + e.message);
   }
+}
+
+/* عرض كل الفنيين وملفاتهم الشخصية الكاملة للمدير في قسم "الفنيون" */
+function renderAdminTechsFullList() {
+  const container = $("adminTechsFullList");
+  if(!container) return;
+  const q = ($("adminTechSearchInput")?.value || "").trim().toLowerCase();
+
+  const filtered = technicians.filter(t => {
+    if(!q) return true;
+    const hay = `${t.name||""} ${t.phone||""} ${t.city||""} ${t.area||""} ${t.neighborhood||""} ${t.service||""}`.toLowerCase();
+    return hay.includes(q);
+  });
+
+  if(!filtered.length) {
+    container.innerHTML = '<div class="empty">لا يوجد فنيون مطابقون للبحث حالياً.</div>';
+    return;
+  }
+
+  container.innerHTML = filtered.map(t => {
+    const isAvail = t.available !== false;
+    const isApproved = t.approved !== false;
+    const subsArr = Array.isArray(t.subservices) ? t.subservices : [];
+    const subsText = subsArr.length ? subsArr.join(" • ") : "جميع الفروع";
+    const regDate = t.createdAt ? new Date(t.createdAt).toLocaleDateString('ar-IQ') : '---';
+
+    return `
+    <div class="admin-tech-full-card">
+      <div class="admin-tech-header">
+        ${techPhoto(t, true)}
+        <div style="flex:1;">
+          <h4 style="margin:0; font-size:15px; font-weight:900; color:var(--burgundy);">
+            ${esc(t.name)} — <span class="badge">${esc(t.service)}</span>
+          </h4>
+          <div class="muted" style="margin-top:3px;">
+            <span class="${isAvail ? 'online-dot' : 'offline-dot'}"></span>
+            <b>${isAvail ? 'متاح حالياً' : 'غير متاح'}</b> |
+            حالة الحساب: <b style="color:${isApproved ? 'var(--green)' : '#dc2626'};">${isApproved ? 'معتمد ونشط' : 'موقوف مؤقتاً'}</b>
+          </div>
+        </div>
+      </div>
+
+      <div class="profile-list-card" style="margin-bottom:10px; padding:10px 12px;">
+        <div class="profile-list-row"><span class="profile-list-label">رقم الهاتف</span><span class="profile-list-value">${esc(t.phone || '---')}</span></div>
+        <div class="profile-list-row"><span class="profile-list-label">المحافظة والقضاء</span><span class="profile-list-value">${esc(t.city || '---')} / ${esc(t.area || '---')}</span></div>
+        <div class="profile-list-row"><span class="profile-list-label">المنطقة / الحي</span><span class="profile-list-value">${esc(t.neighborhood || 'غير محدد')}</span></div>
+        <div class="profile-list-row"><span class="profile-list-label">التخصصات الفرعية</span><span class="profile-list-value">${esc(subsText)}</span></div>
+        <div class="profile-list-row"><span class="profile-list-label">التقييم العام</span><span class="profile-list-value">${Number(t.ratingAverage||0).toFixed(1)} / 5 (${Number(t.ratingCount||0)} تقييم)</span></div>
+        <div class="profile-list-row"><span class="profile-list-label">الاشتراك والمجاني</span><span class="profile-list-value">${esc(t.subscriptionStatus || 'غير فعال')} • (${Number(t.freeJobsUsed||0)} من 3 مجانية)</span></div>
+        <div class="profile-list-row"><span class="profile-list-label">نبذة الخبرة</span><span class="profile-list-value">${esc(t.bio || 'لا توجد نبذة')}</span></div>
+        ${t.extraInfo ? `<div class="profile-list-row"><span class="profile-list-label">إضافات الفني</span><span class="profile-list-value">${esc(t.extraInfo)}</span></div>` : ''}
+        <div class="profile-list-row"><span class="profile-list-label">تاريخ الانضمام</span><span class="profile-list-value">${regDate}</span></div>
+      </div>
+
+      <div class="actions">
+        <button class="btn ${t.subscriptionStatus === 'فعال' ? 'danger' : 'primary'}" onclick="toggleTechSubscription('${esc(t.uid)}','${esc(t.subscriptionStatus || "غير فعال")}')">
+          ${t.subscriptionStatus === 'فعال' ? 'إلغاء الاشتراك' : 'تفعيل الاشتراك'}
+        </button>
+        <button class="btn ${isApproved ? 'light' : 'secondary'}" onclick="toggleTechApprovalByAdmin('${esc(t.uid)}', ${isApproved})">
+          ${isApproved ? 'إيقاف الحساب مؤقتاً' : 'إعادة تفعيل الحساب'}
+        </button>
+        <button class="btn light" onclick="resetTechFreeJobs('${esc(t.uid)}')">تصفير المجانية</button>
+        <button class="btn primary" onclick="chooseServiceDirect('${esc(t.service)}','${esc(t.uid)}')">إرسال طلب مباشر</button>
+        <a class="btn whatsapp-btn" href="https://wa.me/${formatWhatsApp(t.phone)}" target="_blank">واتساب الفني</a>
+        <button class="btn danger" onclick="adminDeleteTechnician('${esc(t.uid)}','${esc(t.name)}')">حذف نهائي</button>
+      </div>
+    </div>`;
+  }).join("");
 }
 
 function renderAdmin(){
@@ -2332,7 +2597,8 @@ function renderAdmin(){
     <div class="list-item" style="background:#fff9ef;">
       <h4>الاسم: ${esc(a.name || "غير محدد")} — <span class="badge">زبون</span></h4>
       <div class="muted">رقم الهاتف / البريد: <b style="color:var(--burgundy); font-size:14px;">${esc(a.phone || a.email || "غير مسجل")}</b></div>
-      <div class="muted">الموقع: ${esc(a.city || "غير محدد")} / ${esc(a.area || "غير محدد")}</div>
+      <div class="muted">الموقع: ${esc(a.city || "غير محدد")} / ${esc(a.area || "غير محدد")} ${a.neighborhood ? '('+esc(a.neighborhood)+')' : ''}</div>
+      ${a.notes ? `<div class="muted" style="margin-top:3px;">إضافات الزبون: <b>${esc(a.notes)}</b></div>` : ''}
       <div class="muted" style="margin-top:4px;">وقت التسجيل: ${a.registeredAt ? new Date(a.registeredAt).toLocaleString('ar-IQ') : '---'}</div>
       <div class="actions" style="margin-top:8px;">
        <button class="btn danger" onclick="adminDeleteAccount('${esc(a.uid)}', '${esc(a.name || a.phone || 'المستخدم')}')">حذف الحساب نهائياً</button>
@@ -2368,22 +2634,6 @@ function renderAdmin(){
        <button class="btn danger" onclick="adminDeletePasswordRequest('${esc(p.id)}')">حذف الطلب بعد المعالجة</button>
       </div>
     </div>`).join("") : '<div class="empty">لا توجد طلبات استرجاع رمز حالياً.</div>';
-  }
-
-  if($("adminTechs")) {
-    $("adminTechs").innerHTML = technicians.length ? technicians.map(t=>`
-    <div class="list-item" style="background:#fff9ef;">
-      <h4>${esc(t.name)} — <span class="badge">${esc(t.service)}</span></h4>
-      <div class="muted">رقم الهاتف: <b style="color:var(--burgundy); font-size:14px;">${esc(t.phone)}</b> | المحافظة: ${esc(t.city)} / ${esc(t.area)} (${esc(t.neighborhood||"")})</div>
-      <div class="muted" style="margin-top:4px;">حالة الاشتراك: <b>${esc(t.subscriptionStatus || "غير فعال")}</b> | الأعمال المجانية المستهلكة: <b>${Number(t.freeJobsUsed || 0)} من 3</b></div>
-      <div class="actions" style="margin-top:8px;">
-       <button class="btn ${t.subscriptionStatus === 'فعال' ? 'danger' : 'primary'}" onclick="toggleTechSubscription('${esc(t.uid)}','${esc(t.subscriptionStatus || "غير فعال")}')">
-        ${t.subscriptionStatus === 'فعال' ? 'إلغاء تفعيل الاشتراك' : 'تفعيل الاشتراك'}
-       </button>
-       <button class="btn light" onclick="resetTechFreeJobs('${esc(t.uid)}')">تصفير الأعمال المجانية</button>
-       <button class="btn danger" onclick="adminDeleteTechnician('${esc(t.uid)}','${esc(t.name)}')">حذف الفني نهائياً</button>
-      </div>
-    </div>`).join("") : '<div class="empty">لا يوجد فنيون مسجلون.</div>';
   }
 }
 
