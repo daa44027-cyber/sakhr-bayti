@@ -521,19 +521,30 @@ footer { background: var(--burgundy-dark); color: var(--cream); text-align: cent
  <div class="techs-grid" id="publicTechList"><div class="empty">جارٍ تحميل الفنيين المتاحين...</div></div>
 </section>
 
-<!-- قسم إدارة الفنيين الكامل في تبويب "الفنيون" للمدير -->
+<!-- قسم إدارة الفنيين ومشاكل التسجيل في تبويب "الفنيون" للمدير -->
 <section id="adminTechsSection" class="container hidden">
- <h2 class="section-title">🛠️ إدارة الفنيين وملفاتهم الشخصية الكاملة</h2>
+ <h2 class="section-title">🛠️ إدارة الفنيين ومشاكل التسجيل</h2>
+
+ <div class="admin-tabs-nav">
+  <button type="button" class="admin-tab-btn active" id="btnTechsRegisteredTab" onclick="switchAdminTechsSubTab('registered')">✅ الفنيون المسجلون</button>
+  <button type="button" class="admin-tab-btn" id="btnTechsIssuesTab" onclick="switchAdminTechsSubTab('issues')">⚠️ مشاكل / تسجيل غير مكتمل</button>
+ </div>
+
  <div class="card" style="margin-bottom:15px; background:#fff9ef;">
   <div class="row">
    <div class="field" style="margin:0;">
     <label>بحث بالاسم أو الهاتف أو المحافظة أو الاختصاص</label>
-    <input id="adminTechSearchInput" placeholder="اكتب للبحث السريع بين الفنيين..." oninput="renderAdminTechsFullList()">
+    <input id="adminTechSearchInput" placeholder="اكتب للبحث السريع..." oninput="renderAdminTechsFullList()">
    </div>
   </div>
  </div>
- <div id="adminTechsFullList" style="display:flex; flex-direction:column; gap:14px;">
+
+ <div id="adminTechsRegisteredBox" style="display:flex; flex-direction:column; gap:14px;">
   <div class="empty">جارٍ تحميل بيانات الفنيين...</div>
+ </div>
+
+ <div id="adminTechsIssuesBox" class="hidden" style="display:flex; flex-direction:column; gap:14px;">
+  <div class="empty">جارٍ فحص المشاكل والحسابات غير المكتملة...</div>
  </div>
 </section>
 
@@ -978,10 +989,11 @@ const DISTRICTS={
 let activeCities = ["المثنى", "بغداد"];
 
 let auth=null,db=null,storage=null,functions=null,currentUser=null,currentRole="guest",currentTech=null;
-let publicTechs=[],requests=[],technicians=[],passwordRequests=[],allAccountsList=[];
+let publicTechs=[],requests=[],technicians=[],passwordRequests=[],allAccountsList=[],incompleteAccountsList=[];
 let chosenCustomerCity="",chosenCustomerArea="",selectedTargetTech=null;
 let currentSelectedService="";
 let currentSelectedSubservice="";
+let currentAdminTechsSubTab="registered";
 let techJobsListener=null;
 let supportChatListener=null;
 let activeSupportThreadId=null;
@@ -1111,6 +1123,27 @@ function openTechEditModal() {
 function openAdminTechsView() {
   if(currentRole !== "admin") return;
   showSection("adminTechsSection");
+}
+
+function switchAdminTechsSubTab(subTab) {
+  currentAdminTechsSubTab = subTab;
+  const regBtn = $("btnTechsRegisteredTab");
+  const issBtn = $("btnTechsIssuesTab");
+  const regBox = $("adminTechsRegisteredBox");
+  const issBox = $("adminTechsIssuesBox");
+
+  if(subTab === "registered") {
+    regBtn?.classList.add("active");
+    issBtn?.classList.remove("active");
+    regBox?.classList.remove("hidden");
+    issBox?.classList.add("hidden");
+  } else {
+    issBtn?.classList.add("active");
+    regBtn?.classList.remove("active");
+    issBox?.classList.remove("hidden");
+    regBox?.classList.add("hidden");
+  }
+  renderAdminTechsFullList();
 }
 
 function switchAdminTab(tab) {
@@ -2367,6 +2400,27 @@ async function adminDeleteAccount(uid, name) {
   await executeRootUserDeletion(uid, name);
 }
 
+async function adminDeleteIncompleteItem(uid, isTechRecord, displayName) {
+  if(currentRole !== "admin") return;
+  showCustomConfirm(`هل أنت متأكد من حذف هذا السجل غير المكتمل (${displayName}) نهائياً؟`, async () => {
+    try {
+      await db.ref("allAccounts/" + uid).remove().catch(()=>{});
+      if(isTechRecord) {
+        await db.ref("technicians/" + uid).remove().catch(()=>{});
+        await db.ref("publicTechnicians/" + uid).remove().catch(()=>{});
+        await db.ref("technicianJobs/" + uid).remove().catch(()=>{});
+      } else {
+        await db.ref("requests/" + uid).remove().catch(()=>{});
+      }
+      showCustomAlert("تم حذف السجل بنجاح.");
+      loadAdminData();
+      loadPublicTechs();
+    } catch(e) {
+      showCustomAlert("خطأ أثناء الحذف: " + e.message);
+    }
+  });
+}
+
 async function adminDeleteRequest(custUid, reqId) {
   if(currentRole !== "admin") return;
   showCustomConfirm("هل أنت متأكد من حذف هذا الطلب نهائياً؟", async () => {
@@ -2467,6 +2521,16 @@ function listenToAnnouncements() {
   });
 }
 
+function getAccountIssueReasons(acc, isTechContext = false) {
+  const missing = [];
+  if(!acc.name || !String(acc.name).trim()) missing.push("الاسم");
+  if(!acc.phone || !String(acc.phone).trim()) missing.push("رقم الهاتف");
+  if(!acc.city || !String(acc.city).trim()) missing.push("المحافظة");
+  if(!acc.area || !String(acc.area).trim()) missing.push("القضاء");
+  if(isTechContext && (!acc.service || !String(acc.service).trim())) missing.push("الاختصاص الرئيسي");
+  return missing;
+}
+
 async function loadAdminData(){
   if(!auth || !auth.currentUser) {
     showCustomAlert("جاري التحقق من جلسة المدير...");
@@ -2479,29 +2543,106 @@ async function loadAdminData(){
   }
 
   try{
-    const [r, t, p, acc] = await Promise.all([
-      db.ref("requests").once("value"),
-      db.ref("technicians").once("value"),
-      db.ref("passwordRequests").once("value"),
-      db.ref("allAccounts").once("value")
+    const safeOnce = async (path) => {
+      try {
+        return await db.ref(path).once("value");
+      } catch (err) {
+        console.warn("تعذر قراءة المسار:", path, err);
+        return null;
+      }
+    };
+
+    const [r, t, pubT, p, acc] = await Promise.all([
+      safeOnce("requests"),
+      safeOnce("technicians"),
+      safeOnce("publicTechnicians"),
+      safeOnce("passwordRequests"),
+      safeOnce("allAccounts")
     ]);
     
-    requests = []; technicians = []; passwordRequests = []; allAccountsList = [];
-    r.forEach(u => u.forEach(q => requests.push({...q.val(), uid: u.key, id: q.key})));
-    t.forEach(s => technicians.push({...s.val(), uid: s.key}));
-    p.forEach(x => passwordRequests.push({...x.val(), id: x.key}));
-    
+    requests = [];
+    passwordRequests = [];
+    allAccountsList = [];
+    incompleteAccountsList = [];
+
+    if(r && r.exists()) {
+      r.forEach(u => u.forEach(q => requests.push({...q.val(), uid: u.key, id: q.key})));
+    }
+    if(p && p.exists()) {
+      p.forEach(x => passwordRequests.push({...x.val(), id: x.key}));
+    }
+
     const accMap = {};
-    acc.forEach(a => {
-      accMap[a.key] = {...a.val(), uid: a.key};
-    });
-    
-    technicians.forEach(t => {
-      if(!accMap[t.uid]) {
-        accMap[t.uid] = { uid: t.uid, name: t.name, phone: t.phone, city: t.city, area: t.area, role: "فني", registeredAt: t.createdAt || Date.now() };
+    if(acc && acc.exists()) {
+      acc.forEach(a => {
+        accMap[a.key] = {...a.val(), uid: a.key};
+      });
+    }
+
+    const techsMap = {};
+    if(pubT && pubT.exists()) {
+      pubT.forEach(s => {
+        techsMap[s.key] = { uid: s.key, ...s.val(), _isTech: true };
+      });
+    }
+    if(t && t.exists()) {
+      t.forEach(s => {
+        techsMap[s.key] = { ...(techsMap[s.key] || {}), uid: s.key, ...s.val(), _isTech: true };
+      });
+    }
+    Object.entries(accMap).forEach(([uid, a]) => {
+      if(a.role === "فني" || a.role === "technician" || a.service) {
+        techsMap[uid] = { ...(techsMap[uid] || {}), uid, ...a, _isTech: true };
       }
     });
-    
+
+    const completeTechs = [];
+    Object.values(techsMap).forEach(tech => {
+      const issues = getAccountIssueReasons(tech, true);
+      if(issues.length === 0) {
+        completeTechs.push(tech);
+      } else {
+        incompleteAccountsList.push({
+          ...tech,
+          accountTypeLabel: "فني (تسجيل غير مكتمل)",
+          isTechRecord: true,
+          issueText: "نقص في: " + issues.join("، ")
+        });
+      }
+    });
+
+    technicians = completeTechs.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+
+    Object.entries(accMap).forEach(([uid, a]) => {
+      if(techsMap[uid]) return;
+      const issues = getAccountIssueReasons(a, false);
+      if(issues.length > 0) {
+        incompleteAccountsList.push({
+          uid,
+          ...a,
+          accountTypeLabel: a.role || "زبون (تسجيل غير مكتمل)",
+          isTechRecord: false,
+          issueText: "نقص في: " + issues.join("، ")
+        });
+      }
+    });
+
+    incompleteAccountsList.sort((a, b) => (b.registeredAt || b.lastLogin || 0) - (a.registeredAt || a.lastLogin || 0));
+
+    technicians.forEach(tech => {
+      if(!accMap[tech.uid]) {
+        accMap[tech.uid] = {
+          uid: tech.uid,
+          name: tech.name,
+          phone: tech.phone,
+          city: tech.city,
+          area: tech.area,
+          role: "فني",
+          registeredAt: tech.createdAt || Date.now()
+        };
+      }
+    });
+
     allAccountsList = Object.values(accMap);
 
     renderAdmin();
@@ -2512,72 +2653,114 @@ async function loadAdminData(){
   }
 }
 
-/* عرض كل الفنيين وملفاتهم الشخصية الكاملة للمدير في قسم "الفنيون" */
+/* عرض الفنيين المسجلين والمشاكل / تسجيل غير مكتمل للمدير */
 function renderAdminTechsFullList() {
-  const container = $("adminTechsFullList");
-  if(!container) return;
+  const regBox = $("adminTechsRegisteredBox");
+  const issBox = $("adminTechsIssuesBox");
   const q = ($("adminTechSearchInput")?.value || "").trim().toLowerCase();
 
-  const filtered = technicians.filter(t => {
-    if(!q) return true;
-    const hay = `${t.name||""} ${t.phone||""} ${t.city||""} ${t.area||""} ${t.neighborhood||""} ${t.service||""}`.toLowerCase();
-    return hay.includes(q);
-  });
+  if(regBox) {
+    const filteredTechs = technicians.filter(t => {
+      if(!q) return true;
+      const hay = `${t.name||""} ${t.phone||""} ${t.city||""} ${t.area||""} ${t.neighborhood||""} ${t.service||""}`.toLowerCase();
+      return hay.includes(q);
+    });
 
-  if(!filtered.length) {
-    container.innerHTML = '<div class="empty">لا يوجد فنيون مطابقون للبحث حالياً.</div>';
-    return;
+    if(!filteredTechs.length) {
+      regBox.innerHTML = '<div class="empty">لا يوجد فنيون مسجلون مكتملون حالياً.</div>';
+    } else {
+      regBox.innerHTML = filteredTechs.map(t => {
+        const isAvail = t.available !== false;
+        const isApproved = t.approved !== false;
+        const subsArr = Array.isArray(t.subservices) ? t.subservices : [];
+        const subsText = subsArr.length ? subsArr.join(" • ") : "جميع الفروع";
+        const regDate = t.createdAt ? new Date(t.createdAt).toLocaleDateString('ar-IQ') : '---';
+
+        return `
+        <div class="admin-tech-full-card">
+          <div class="admin-tech-header">
+            ${techPhoto(t, true)}
+            <div style="flex:1;">
+              <h4 style="margin:0; font-size:15px; font-weight:900; color:var(--burgundy);">
+                ${esc(t.name)} — <span class="badge">${esc(t.service)}</span>
+              </h4>
+              <div class="muted" style="margin-top:3px;">
+                <span class="${isAvail ? 'online-dot' : 'offline-dot'}"></span>
+                <b>${isAvail ? 'متاح حالياً' : 'غير متاح'}</b> |
+                حالة الحساب: <b style="color:${isApproved ? 'var(--green)' : '#dc2626'};">${isApproved ? 'معتمد ونشط' : 'موقوف مؤقتاً'}</b>
+              </div>
+            </div>
+          </div>
+
+          <div class="profile-list-card" style="margin-bottom:10px; padding:10px 12px;">
+            <div class="profile-list-row"><span class="profile-list-label">رقم الهاتف</span><span class="profile-list-value">${esc(t.phone || '---')}</span></div>
+            <div class="profile-list-row"><span class="profile-list-label">المحافظة والقضاء</span><span class="profile-list-value">${esc(t.city || '---')} / ${esc(t.area || '---')}</span></div>
+            <div class="profile-list-row"><span class="profile-list-label">المنطقة / الحي</span><span class="profile-list-value">${esc(t.neighborhood || 'غير محدد')}</span></div>
+            <div class="profile-list-row"><span class="profile-list-label">التخصصات الفرعية</span><span class="profile-list-value">${esc(subsText)}</span></div>
+            <div class="profile-list-row"><span class="profile-list-label">التقييم العام</span><span class="profile-list-value">${Number(t.ratingAverage||0).toFixed(1)} / 5 (${Number(t.ratingCount||0)} تقييم)</span></div>
+            <div class="profile-list-row"><span class="profile-list-label">الاشتراك والمجاني</span><span class="profile-list-value">${esc(t.subscriptionStatus || 'غير فعال')} • (${Number(t.freeJobsUsed||0)} من 3 مجانية)</span></div>
+            <div class="profile-list-row"><span class="profile-list-label">نبذة الخبرة</span><span class="profile-list-value">${esc(t.bio || 'لا توجد نبذة')}</span></div>
+            ${t.extraInfo ? `<div class="profile-list-row"><span class="profile-list-label">إضافات الفني</span><span class="profile-list-value">${esc(t.extraInfo)}</span></div>` : ''}
+            <div class="profile-list-row"><span class="profile-list-label">تاريخ الانضمام</span><span class="profile-list-value">${regDate}</span></div>
+          </div>
+
+          <div class="actions">
+            <button class="btn ${t.subscriptionStatus === 'فعال' ? 'danger' : 'primary'}" onclick="toggleTechSubscription('${esc(t.uid)}','${esc(t.subscriptionStatus || "غير فعال")}')">
+              ${t.subscriptionStatus === 'فعال' ? 'إلغاء الاشتراك' : 'تفعيل الاشتراك'}
+            </button>
+            <button class="btn ${isApproved ? 'light' : 'secondary'}" onclick="toggleTechApprovalByAdmin('${esc(t.uid)}', ${isApproved})">
+              ${isApproved ? 'إيقاف الحساب مؤقتاً' : 'إعادة تفعيل الحساب'}
+            </button>
+            <button class="btn light" onclick="resetTechFreeJobs('${esc(t.uid)}')">تصفير المجانية</button>
+            <button class="btn primary" onclick="chooseServiceDirect('${esc(t.service)}','${esc(t.uid)}')">إرسال طلب مباشر</button>
+            <a class="btn whatsapp-btn" href="https://wa.me/${formatWhatsApp(t.phone)}" target="_blank">واتساب الفني</a>
+            <button class="btn danger" onclick="adminDeleteTechnician('${esc(t.uid)}','${esc(t.name)}')">حذف نهائي</button>
+          </div>
+        </div>`;
+      }).join("");
+    }
   }
 
-  container.innerHTML = filtered.map(t => {
-    const isAvail = t.available !== false;
-    const isApproved = t.approved !== false;
-    const subsArr = Array.isArray(t.subservices) ? t.subservices : [];
-    const subsText = subsArr.length ? subsArr.join(" • ") : "جميع الفروع";
-    const regDate = t.createdAt ? new Date(t.createdAt).toLocaleDateString('ar-IQ') : '---';
+  if(issBox) {
+    const filteredIssues = incompleteAccountsList.filter(item => {
+      if(!q) return true;
+      const hay = `${item.name||""} ${item.phone||""} ${item.city||""} ${item.area||""} ${item.service||""} ${item.issueText||""} ${item.uid||""}`.toLowerCase();
+      return hay.includes(q);
+    });
 
-    return `
-    <div class="admin-tech-full-card">
-      <div class="admin-tech-header">
-        ${techPhoto(t, true)}
-        <div style="flex:1;">
-          <h4 style="margin:0; font-size:15px; font-weight:900; color:var(--burgundy);">
-            ${esc(t.name)} — <span class="badge">${esc(t.service)}</span>
-          </h4>
-          <div class="muted" style="margin-top:3px;">
-            <span class="${isAvail ? 'online-dot' : 'offline-dot'}"></span>
-            <b>${isAvail ? 'متاح حالياً' : 'غير متاح'}</b> |
-            حالة الحساب: <b style="color:${isApproved ? 'var(--green)' : '#dc2626'};">${isApproved ? 'معتمد ونشط' : 'موقوف مؤقتاً'}</b>
+    if(!filteredIssues.length) {
+      issBox.innerHTML = '<div class="empty">لا توجد مشاكل أو حسابات تسجيل غير مكتملة حالياً.</div>';
+    } else {
+      issBox.innerHTML = filteredIssues.map(item => {
+        const displayName = item.name || ("سجل بدون اسم (" + (item.uid || "").slice(0, 6) + ")");
+        return `
+        <div class="admin-tech-full-card" style="border-color:#dc2626; background:#fff5f5;">
+          <div class="admin-tech-header" style="border-bottom-color:#fecaca;">
+            <div style="flex:1;">
+              <h4 style="margin:0; font-size:15px; font-weight:900; color:#991b1b;">
+                ${esc(displayName)} — <span class="badge">${esc(item.accountTypeLabel)}</span>
+              </h4>
+              <div style="margin-top:4px; font-size:12px; font-weight:800; color:#dc2626;">
+                ⚠️ المشكلة: ${esc(item.issueText)}
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
 
-      <div class="profile-list-card" style="margin-bottom:10px; padding:10px 12px;">
-        <div class="profile-list-row"><span class="profile-list-label">رقم الهاتف</span><span class="profile-list-value">${esc(t.phone || '---')}</span></div>
-        <div class="profile-list-row"><span class="profile-list-label">المحافظة والقضاء</span><span class="profile-list-value">${esc(t.city || '---')} / ${esc(t.area || '---')}</span></div>
-        <div class="profile-list-row"><span class="profile-list-label">المنطقة / الحي</span><span class="profile-list-value">${esc(t.neighborhood || 'غير محدد')}</span></div>
-        <div class="profile-list-row"><span class="profile-list-label">التخصصات الفرعية</span><span class="profile-list-value">${esc(subsText)}</span></div>
-        <div class="profile-list-row"><span class="profile-list-label">التقييم العام</span><span class="profile-list-value">${Number(t.ratingAverage||0).toFixed(1)} / 5 (${Number(t.ratingCount||0)} تقييم)</span></div>
-        <div class="profile-list-row"><span class="profile-list-label">الاشتراك والمجاني</span><span class="profile-list-value">${esc(t.subscriptionStatus || 'غير فعال')} • (${Number(t.freeJobsUsed||0)} من 3 مجانية)</span></div>
-        <div class="profile-list-row"><span class="profile-list-label">نبذة الخبرة</span><span class="profile-list-value">${esc(t.bio || 'لا توجد نبذة')}</span></div>
-        ${t.extraInfo ? `<div class="profile-list-row"><span class="profile-list-label">إضافات الفني</span><span class="profile-list-value">${esc(t.extraInfo)}</span></div>` : ''}
-        <div class="profile-list-row"><span class="profile-list-label">تاريخ الانضمام</span><span class="profile-list-value">${regDate}</span></div>
-      </div>
+          <div class="profile-list-card" style="margin-bottom:10px; padding:10px 12px; background:#fff; border-color:#fecaca;">
+            <div class="profile-list-row"><span class="profile-list-label">المعرف (UID)</span><span class="profile-list-value">${esc(item.uid || '---')}</span></div>
+            <div class="profile-list-row"><span class="profile-list-label">الاسم</span><span class="profile-list-value">${esc(item.name || 'غير مكتمل')}</span></div>
+            <div class="profile-list-row"><span class="profile-list-label">رقم الهاتف</span><span class="profile-list-value">${esc(item.phone || 'غير مكتمل')}</span></div>
+            <div class="profile-list-row"><span class="profile-list-label">المحافظة / القضاء</span><span class="profile-list-value">${esc(item.city || '---')} / ${esc(item.area || '---')}</span></div>
+            ${item.isTechRecord ? `<div class="profile-list-row"><span class="profile-list-label">الاختصاص</span><span class="profile-list-value">${esc(item.service || 'غير مكتمل')}</span></div>` : ''}
+          </div>
 
-      <div class="actions">
-        <button class="btn ${t.subscriptionStatus === 'فعال' ? 'danger' : 'primary'}" onclick="toggleTechSubscription('${esc(t.uid)}','${esc(t.subscriptionStatus || "غير فعال")}')">
-          ${t.subscriptionStatus === 'فعال' ? 'إلغاء الاشتراك' : 'تفعيل الاشتراك'}
-        </button>
-        <button class="btn ${isApproved ? 'light' : 'secondary'}" onclick="toggleTechApprovalByAdmin('${esc(t.uid)}', ${isApproved})">
-          ${isApproved ? 'إيقاف الحساب مؤقتاً' : 'إعادة تفعيل الحساب'}
-        </button>
-        <button class="btn light" onclick="resetTechFreeJobs('${esc(t.uid)}')">تصفير المجانية</button>
-        <button class="btn primary" onclick="chooseServiceDirect('${esc(t.service)}','${esc(t.uid)}')">إرسال طلب مباشر</button>
-        <a class="btn whatsapp-btn" href="https://wa.me/${formatWhatsApp(t.phone)}" target="_blank">واتساب الفني</a>
-        <button class="btn danger" onclick="adminDeleteTechnician('${esc(t.uid)}','${esc(t.name)}')">حذف نهائي</button>
-      </div>
-    </div>`;
-  }).join("");
+          <div class="actions">
+            <button class="btn danger" onclick="adminDeleteIncompleteItem('${esc(item.uid)}', ${Boolean(item.isTechRecord)}, '${esc(displayName)}')">حذف السجل نهائياً</button>
+          </div>
+        </div>`;
+      }).join("");
+    }
+  }
 }
 
 function renderAdmin(){
