@@ -73,7 +73,7 @@ button, input, select, textarea { font: inherit; }
 button { cursor: pointer; border: 0; }
 
 header {
-  background: var(--card-bg);
+  background: var(--gold-tint);
   padding: 10px 0 0 0;
   display: flex;
   flex-direction: column;
@@ -130,15 +130,15 @@ header {
   box-shadow: 0 1px 0 #d6b26a;
 }
 
+/* اللوغو بدون إطار */
 .brand {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 5px 14px;
-  border-radius: 16px;
-  background: linear-gradient(145deg, var(--gold-tint), #f6e7c6);
-  border: 1.5px solid var(--gold-calm);
-  box-shadow: 0 4px 0 #c89d4c, 0 6px 14px rgba(200, 157, 76, 0.22);
+  padding: 0;
+  border: none;
+  background: transparent;
+  box-shadow: none;
   cursor: pointer;
 }
 .brand img {
@@ -1023,15 +1023,16 @@ footer {
   <div class="slogan">بيتك يستاهل الأفضل</div>
   <p>أسرع منصة لربط أصحاب المنازل بأفضل الفنيين المحليين في قضائك</p>
 
-  <div style="margin-top:8px;">
-   <button class="cta-btn" onclick="requireGate(() => openSupportChatModal())">💬 فريق الدعم</button>
-  </div>
-
   <button type="button" class="vertical-appliances-btn" onclick="openElectricAppliancesDirect()">
    <span class="icon-3d-badge">⚡</span>
-   <span class="vertical-appliances-title">صيانة أجهزة كهربائية</span>
-   <span class="vertical-appliances-sub">فنيون معتمدون للأجهزة والكهربائيات في قضائك</span>
+   <span class="vertical-appliances-title">صيانة الأجهزة الكهربائية</span>
+   <span class="vertical-appliances-sub">غسالات • شاشات • طباخات • أجهزة أخرى</span>
   </button>
+ </div>
+
+ <div class="container" id="homeServicesSection">
+  <h2 class="section-title">خدماتنا</h2>
+  <div class="services-grid" id="homeServicesGrid"></div>
  </div>
 
  <div class="trust-bar">
@@ -1042,7 +1043,7 @@ footer {
 </section>
 
 <section id="services" class="container hidden">
- <h2 class="section-title">جميع خدمات الصيانة (مرتبة حسب الأهمية)</h2>
+ <h2 class="section-title">خدماتنا</h2>
  <div class="services-grid" id="allServicesPage"></div>
 </section>
 
@@ -1131,11 +1132,15 @@ footer {
      <button type="button" class="toggle-password" onclick="togglePassword('regPassword', this)">👁️</button>
     </div>
    </div>
-   <div class="field"><label>الاختصاص الرئيسي</label><select id="regService" onchange="renderSubserviceCheckboxes('regSubservicesBox', this.value)"></select></div>
+   <div class="field"><label>الاختصاص الرئيسي</label><select id="regService" onchange="onTechServiceChange('regService', 'regSubservicesBox', 'regOtherAppliancesField')"></select></div>
   </div>
   <div class="field">
    <label>التخصصات الفرعية التي تشتغلها ضمن اختصاصك</label>
    <div id="regSubservicesBox" class="sub-checks-box"></div>
+  </div>
+  <div class="field hidden" id="regOtherAppliancesField">
+   <label>أجهزة أخرى (ضمن صيانة الأجهزة الكهربائية)</label>
+   <input id="regOtherAppliances" placeholder="مثلاً: مايكروويف، سخانات، مكانس...">
   </div>
   <div class="row">
    <div class="field"><label>المحافظة</label><select id="regCity" onchange="setDistricts('regArea', this.value)"></select></div>
@@ -1422,10 +1427,14 @@ footer {
    <div class="field"><label>المنطقة أو الحي</label><input id="editTechNeighborhood" placeholder="اسم الحي أو المنطقة"></div>
    <div class="field"><label>رقم الهاتف</label><input id="editTechPhone" inputmode="tel" placeholder="07XXXXXXXXX"></div>
   </div>
-  <div class="field"><label>الاختصاص</label><select id="editTechService" onchange="renderSubserviceCheckboxes('editTechSubservicesBox', this.value)"></select></div>
+  <div class="field"><label>الاختصاص</label><select id="editTechService" onchange="onTechServiceChange('editTechService', 'editTechSubservicesBox', 'editTechOtherAppliancesField')"></select></div>
   <div class="field">
    <label>التخصصات الفرعية التي تشتغلها ضمن اختصاصك</label>
    <div id="editTechSubservicesBox" class="sub-checks-box"></div>
+  </div>
+  <div class="field hidden" id="editTechOtherAppliancesField">
+   <label>أجهزة أخرى (ضمن صيانة الأجهزة الكهربائية)</label>
+   <input id="editTechOtherAppliances" placeholder="مثلاً: مايكروويف، سخانات، مكانس...">
   </div>
   <div class="field"><label>نبذة عن خبرتك</label><textarea id="editTechBio" placeholder="نبذة مختصرة..."></textarea></div>
   <div class="field"><label>إضافات أو ملاحظات أخرى في ملفك (اختياري)</label><textarea id="editTechExtra" placeholder="مثال: ساعات العمل، أدوات متوفرة، أو أي تفاصيل إضافية..."></textarea></div>
@@ -1511,6 +1520,8 @@ const MONTHLY_DURATION_MS = 30 * 24 * 60 * 60 * 1000;
 const YEARLY_DURATION_MS = 365 * 24 * 60 * 60 * 1000;
 
 const SERVICES = [
+  "صيانة الأجهزة الكهربائية",
+  "صيانة الأجهزة الإلكترونية",
   "كهربائيات",
   "سباكة",
   "تكييف",
@@ -1523,9 +1534,11 @@ const SERVICES = [
 ];
 
 const SUBSERVICES = {
+  "صيانة الأجهزة الكهربائية": ["غسالات", "شاشات", "طباخات", "أجهزة أخرى"],
+  "صيانة الأجهزة الإلكترونية": ["موبايلات", "حاسبات"],
   "كهربائيات": ["تأسيس منازل", "صيانة أعطال ولوحات", "نصب إنارة وسخانات"],
   "سباكة": ["تأسيسات صحية", "تصليح ليكات وخلاطات", "نصب ماطورات وسخانات"],
-  "تكييف": ["صيانة عامة", "غسل وتنظيف", "تنصيب"],
+  "تكييف": ["صيانة عامة", "غسل وتنظيف", "تنصيب", "ثلاجة", "مجمدة", "براد"],
   "صيانة عامة": ["صيانة أجهزة منزلية", "تصليح ماطورات ومضخات", "أعمال متفرقة"],
   "بناء وترميم": ["بناء وطابوق", "لبخ وسيراميك", "ترميم وتشطيبات"],
   "مطابخ وديكور": ["تفصيل مطابخ", "ديكورات جبسن بورد", "صيانة وتبديل مفاصل"],
@@ -1672,7 +1685,7 @@ function navigateToSection(id) {
 
 function openElectricAppliancesDirect() {
   requireGate(() => {
-    filterByService("كهربائيات");
+    filterByService("صيانة الأجهزة الكهربائية");
   });
 }
 
@@ -1881,6 +1894,7 @@ function openTechEditModal() {
   $("editProfileMessage").innerHTML = "";
   if(currentTech) {
     renderSubserviceCheckboxes("editTechSubservicesBox", currentTech.service || SERVICES[0], currentTech.subservices || []);
+    toggleOtherAppliancesField(currentTech.service || SERVICES[0], "editTechOtherAppliancesField");
   }
   $("techEditModal").classList.remove("hidden");
 }
@@ -1922,6 +1936,22 @@ function switchAdminTab(tab) {
     $("adminRequestsTab").classList.remove("hidden");
     $("btnTabRequests").classList.add("active");
   }
+}
+
+function toggleOtherAppliancesField(serviceName, fieldId) {
+  const el = $(fieldId);
+  if(!el) return;
+  if(serviceName === "صيانة الأجهزة الكهربائية") {
+    el.classList.remove("hidden");
+  } else {
+    el.classList.add("hidden");
+  }
+}
+
+function onTechServiceChange(selectId, boxId, otherFieldId) {
+  const val = $(selectId)?.value || SERVICES[0];
+  renderSubserviceCheckboxes(boxId, val);
+  toggleOtherAppliancesField(val, otherFieldId);
 }
 
 function renderSubserviceCheckboxes(containerId, serviceName, selectedList = []) {
@@ -2135,6 +2165,7 @@ async function finalizeGoogleUserSession(gUser, roleHint = "auto") {
       neighborhood: "",
       service: SERVICES[0],
       subservices: [],
+      otherAppliances: "",
       bio: "",
       extraInfo: "",
       photoURL: gUser.photoURL || "",
@@ -2390,21 +2421,28 @@ function fillSelect(id){
 }
 
 function renderServices(){
+  const icons = ["🔌","💻","⚡","💧","❄️","🛠️","🧱","🪚","🪟","🪚","🎨"];
   const renderTo = (id) => {
     const el = $(id);
-    const icons = ["⚡","🚰","❄️","🛠️","🧱","🪚","🪟","🪚","🎨"];
     if(el) {
-      el.innerHTML = SERVICES.map((s,i)=>`
-        <div class="service-card" onclick="filterByService('${esc(s)}')">
-          <div class="service-icon">${icons[i] || "🛠️"}</div>
+      el.innerHTML = SERVICES.map((s,i)=>{
+        const iconContent = s === "سباكة"
+          ? `<svg width="24" height="24" viewBox="0 0 28 28" fill="none" aria-hidden="true"><path d="M14 3C14 3 6.5 11.8 6.5 17.5C6.5 21.6421 9.85786 25 14 25C18.1421 25 21.5 21.6421 21.5 17.5C21.5 11.8 14 3 14 3Z" fill="#0e7490" stroke="#155e75" stroke-width="1.8"/><path d="M10.5 17.5C10.5 19.4 12 21 14 21" stroke="#cffafe" stroke-width="2" stroke-linecap="round"/></svg>`
+          : (icons[i] || "🛠️");
+        return `
+        <div class="service-card" onclick="requireGate(() => filterByService('${esc(s)}'))">
+          <div class="service-icon">${iconContent}</div>
           <h3>${esc(s)}</h3>
           <div class="arrow-badge">➔</div>
-        </div>`).join("");
+        </div>`;
+      }).join("");
     }
   };
+  renderTo("homeServicesGrid");
   renderTo("allServicesPage");
   fillSelect("regService");
   renderSubserviceCheckboxes("regSubservicesBox", SERVICES[0]);
+  toggleOtherAppliancesField(SERVICES[0], "regOtherAppliancesField");
 }
 
 function listenToActiveCities() {
@@ -2559,6 +2597,7 @@ async function syncPublicTechnician(uid, p){
     name: p.name||"", phone: p.phone||"", city: p.city||"", area: p.area||"",
     neighborhood: p.neighborhood||"", service: p.service||"",
     subservices: Array.isArray(p.subservices) ? p.subservices : [],
+    otherAppliances: p.otherAppliances||"",
     bio: p.bio||"", extraInfo: p.extraInfo||"", photoURL: p.photoURL||"", approved: p.approved!==false,
     available: p.available !== false,
     subscriptionStatus: subInfo.isActive ? "فعال" : "غير فعال",
@@ -2580,6 +2619,7 @@ async function registerTechWithPassword(){
   const neighborhood = $("regNeighborhood").value.trim();
   const service = $("regService").value;
   const subservices = getCheckedSubservices("regSubservicesBox");
+  const otherAppliances = service === "صيانة الأجهزة الكهربائية" ? ($("regOtherAppliances")?.value.trim() || "") : "";
   const bio = $("regBio").value.trim();
   const file = $("regPhoto").files[0];
 
@@ -2596,7 +2636,7 @@ async function registerTechWithPassword(){
     if(file) photoURL = await uploadTechPhoto(createdUser.uid, file);
 
     const profile = {
-      name, phone, city, area, neighborhood, service, subservices, bio, extraInfo: "", photoURL,
+      name, phone, city, area, neighborhood, service, subservices, otherAppliances, bio, extraInfo: "", photoURL,
       approved: true, available: true, subscriptionStatus: "غير فعال", subscriptionType: "none",
       subscriptionExpiresAt: 0, freeJobsUsed: 0, completedJobs: 0,
       ratingSum: 0, ratingCount: 0, ratingAverage: 0, createdAt: Date.now()
@@ -2769,7 +2809,8 @@ function renderPublicTechs(){
 
     if(currentSelectedSubservice) {
       const techSubs = Array.isArray(t.subservices) ? t.subservices : [];
-      if(techSubs.length > 0 && !techSubs.includes(currentSelectedSubservice)) return false;
+      const hasOther = currentSelectedSubservice === "أجهزة أخرى" && Boolean(String(t.otherAppliances || "").trim());
+      if(techSubs.length > 0 && !techSubs.includes(currentSelectedSubservice) && !hasOther) return false;
     }
 
     if(currentRole === "admin") return true;
@@ -2789,7 +2830,10 @@ function renderPublicTechs(){
     const isAvail = t.available !== false;
     const dotClass = isAvail ? "online-dot" : "offline-dot";
     const statusText = isAvail ? "متاح" : "غير متاح";
-    const subsArr = Array.isArray(t.subservices) ? t.subservices : [];
+    const subsArr = Array.isArray(t.subservices) ? [...t.subservices] : [];
+    if(t.otherAppliances && t.service === "صيانة الأجهزة الكهربائية") {
+      subsArr.push(`أجهزة أخرى: ${t.otherAppliances}`);
+    }
     const subsHtml = subsArr.length ? `<div class="sub-badge">${esc(subsArr.join(" • "))}</div>` : "";
     return `
     <div class="tech-card">
@@ -3129,7 +3173,10 @@ async function renderTechAccount(){
       const isAvail = currentTech.available !== false;
       const dotCls = isAvail ? "online-dot" : "offline-dot";
       const statusLbl = isAvail ? "متاح لاستقبال الطلبات" : "غير متاح (مشغول / نائم)";
-      const subsArr = Array.isArray(currentTech.subservices) ? currentTech.subservices : [];
+      const subsArr = Array.isArray(currentTech.subservices) ? [...currentTech.subservices] : [];
+      if(currentTech.otherAppliances && currentTech.service === "صيانة الأجهزة الكهربائية") {
+        subsArr.push(`أجهزة أخرى: ${currentTech.otherAppliances}`);
+      }
       const subsText = subsArr.length ? subsArr.join(" • ") : "جميع الفروع";
       $("techSummary").innerHTML = `
       ${techPhoto(currentTech)}
@@ -3193,6 +3240,8 @@ async function renderTechAccount(){
       $("editTechService").innerHTML = SERVICES.map(s=>`<option value="${esc(s)}" ${s===currentTech.service?'selected':''}>${esc(s)}</option>`).join("");
     }
     renderSubserviceCheckboxes("editTechSubservicesBox", currentTech.service || SERVICES[0], currentTech.subservices || []);
+    toggleOtherAppliancesField(currentTech.service || SERVICES[0], "editTechOtherAppliancesField");
+    if($("editTechOtherAppliances")) $("editTechOtherAppliances").value = currentTech.otherAppliances || "";
     if($("editTechNeighborhood")) $("editTechNeighborhood").value = currentTech.neighborhood || "";
     if($("editTechPhone")) $("editTechPhone").value = currentTech.phone || "";
     if($("editTechBio")) $("editTechBio").value = currentTech.bio || "";
@@ -3254,6 +3303,7 @@ async function saveTechAccountProfile() {
   const name = $("editTechName").value.trim();
   const service = $("editTechService").value;
   const subservices = getCheckedSubservices("editTechSubservicesBox");
+  const otherAppliances = service === "صيانة الأجهزة الكهربائية" ? ($("editTechOtherAppliances")?.value.trim() || "") : "";
   const city = $("editTechCity").value;
   const area = $("editTechArea").value;
   const neighborhood = $("editTechNeighborhood").value.trim();
@@ -3275,7 +3325,7 @@ async function saveTechAccountProfile() {
 
     const updated = {
       ...currentTech,
-      name, service, subservices, city, area, neighborhood, phone, bio, extraInfo, photoURL
+      name, service, subservices, otherAppliances, city, area, neighborhood, phone, bio, extraInfo, photoURL
     };
 
     await db.ref("technicians/"+uid).update(updated);
@@ -3682,7 +3732,10 @@ function renderAdminTechsFullList() {
         const isAvail = t.available !== false;
         const isApproved = t.approved !== false;
         const subInfo = getEffectiveSubscriptionInfo(t);
-        const subsArr = Array.isArray(t.subservices) ? t.subservices : [];
+        const subsArr = Array.isArray(t.subservices) ? [...t.subservices] : [];
+        if(t.otherAppliances && t.service === "صيانة الأجهزة الكهربائية") {
+          subsArr.push(`أجهزة أخرى: ${t.otherAppliances}`);
+        }
         const subsText = subsArr.length ? subsArr.join(" • ") : "جميع الفروع";
         const regDate = t.createdAt ? new Date(t.createdAt).toLocaleDateString('ar-IQ') : '---';
         const expText = subInfo.isActive && subInfo.expiresAt
