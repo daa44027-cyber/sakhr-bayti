@@ -9,8 +9,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap');
 
 :root {
-  --bg-page: #f1f5f9;
-  --bg-soft: #e2e8f0;
+  --bg-page: #fdf8ec;
+  --bg-soft: #f5ebd6;
   --navy: #1e293b;
   --navy-deep: #0f172a;
   --navy-mid: #334155;
@@ -18,11 +18,14 @@
   --gold-soft: #e6c785;
   --gold-tint: #fdf8ec;
   --teal-calm: #0e7490;
+  --teal-deep: #155e75;
+  --teal-shadow: #083344;
+  --teal-border: #67e8f9;
   --teal-tint: #ecfeff;
   --text-main: #1e293b;
   --text-muted: #64748b;
-  --card-bg: #ffffff;
-  --border-soft: #cbd5e1;
+  --card-bg: #fdf8ec;
+  --border-soft: #e6c785;
   --border-gold: #e6c785;
   --green-calm: #15803d;
   --online-dot: #16a34a;
@@ -30,9 +33,8 @@
   --danger-calm: #b91c1c;
   --danger-tint: #fef2f2;
   --shadow-soft: 0 6px 20px rgba(15, 23, 42, 0.06);
-  --btn-3d-navy: 0 5px 0 #0f172a, 0 8px 16px rgba(15, 23, 42, 0.16);
-  --btn-3d-gold: 0 5px 0 #9a732b, 0 8px 16px rgba(154, 115, 43, 0.22);
-  --btn-3d-card: 0 5px 0 #cbd5e1, 0 8px 18px rgba(15, 23, 42, 0.08);
+  --btn-3d-teal: 0 5px 0 #083344, 0 8px 16px rgba(14, 116, 144, 0.24);
+  --btn-3d-card: 0 5px 0 #083344, 0 8px 18px rgba(14, 116, 144, 0.22);
 }
 
 html { scroll-behavior: smooth; }
@@ -41,7 +43,7 @@ html { scroll-behavior: smooth; }
 body {
   margin: 0;
   font-family: 'Cairo', sans-serif;
-  background: var(--bg-page);
+  background: var(--gold-tint);
   color: var(--text-main);
   position: relative;
   min-height: 100vh;
@@ -114,20 +116,20 @@ header {
   width: 40px;
   height: 40px;
   border-radius: 12px;
-  background: var(--gold-tint);
-  color: var(--gold-calm);
-  border: 1.5px solid var(--border-gold);
+  background: linear-gradient(145deg, var(--teal-calm), var(--teal-deep));
+  color: #ffffff;
+  border: 1.5px solid var(--teal-border);
   font-size: 16px;
   font-weight: 900;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 3px 0 #d6b26a, 0 5px 10px rgba(15, 23, 42, 0.08);
+  box-shadow: 0 3px 0 var(--teal-shadow), 0 5px 10px rgba(14, 116, 144, 0.22);
   transition: transform 0.12s, background-color 0.2s;
 }
 .back-icon-btn:active {
   transform: translateY(2px);
-  box-shadow: 0 1px 0 #d6b26a;
+  box-shadow: 0 1px 0 var(--teal-shadow);
 }
 
 /* اللوغو بدون إطار */
@@ -152,20 +154,20 @@ header {
   width: 42px;
   height: 42px;
   border-radius: 12px;
-  background: linear-gradient(145deg, var(--navy-mid), var(--navy));
-  color: var(--gold-soft);
-  border: 1.5px solid var(--border-gold);
+  background: linear-gradient(145deg, var(--teal-calm), var(--teal-deep));
+  color: #ffffff;
+  border: 1.5px solid var(--teal-border);
   font-size: 19px;
   font-weight: 900;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  box-shadow: var(--btn-3d-navy);
+  box-shadow: var(--btn-3d-teal);
   transition: transform 0.12s;
 }
 .hamburger-btn:active {
   transform: translateY(3px);
-  box-shadow: 0 2px 0 var(--navy-deep);
+  box-shadow: 0 2px 0 var(--teal-shadow);
 }
 
 .drawer-backdrop {
@@ -182,7 +184,7 @@ header {
   left: 0;
   width: min(300px, 84vw);
   height: 100vh;
-  background: var(--card-bg);
+  background: var(--gold-tint);
   border-right: 2px solid var(--border-gold);
   box-shadow: 8px 0 28px rgba(15, 23, 42, 0.16);
   z-index: 950;
@@ -212,26 +214,25 @@ header {
   text-align: right;
   padding: 11px 14px;
   border-radius: 12px;
-  background: var(--bg-page);
-  color: var(--navy);
-  border: 1px solid var(--border-soft);
+  background: linear-gradient(145deg, var(--teal-calm), var(--teal-deep));
+  color: #ffffff;
+  border: 1.5px solid var(--teal-border);
   font-size: 13px;
   font-weight: 800;
-  box-shadow: 0 3px 0 #cbd5e1;
+  box-shadow: 0 3px 0 var(--teal-shadow);
   transition: transform 0.12s, background-color 0.2s;
 }
 .drawer-nav-btn:hover {
-  background: var(--gold-tint);
-  border-color: var(--border-gold);
+  filter: brightness(1.06);
 }
 .drawer-nav-btn:active {
   transform: translateY(2px);
 }
 .drawer-nav-btn.primary-drawer {
-  background: linear-gradient(145deg, var(--navy-mid), var(--navy));
-  color: var(--gold-soft);
-  border-color: var(--border-gold);
-  box-shadow: var(--btn-3d-navy);
+  background: linear-gradient(145deg, var(--teal-calm), var(--teal-deep));
+  color: #ffffff;
+  border-color: var(--teal-border);
+  box-shadow: var(--btn-3d-teal);
   margin-top: 4px;
 }
 
@@ -277,7 +278,7 @@ header {
 .hero-banner p {
   font-size: 13px;
   color: #cbd5e1;
-  margin: 0 0 14px;
+  margin: 0;
 }
 
 .role-btns {
@@ -292,30 +293,29 @@ header {
   font-weight: 800;
   font-size: 13.5px;
   transition: transform 0.12s;
-}
-.role-btn.customer {
-  background: linear-gradient(145deg, #ffffff, #f1f5f9);
-  color: var(--navy);
-  border: 1.5px solid var(--border-gold);
-  box-shadow: var(--btn-3d-card);
-}
-.role-btn.technician {
-  background: linear-gradient(145deg, #d7af61, var(--gold-calm));
+  background: linear-gradient(145deg, var(--teal-calm), var(--teal-deep));
   color: #ffffff;
-  border: 1.5px solid var(--gold-soft);
-  box-shadow: var(--btn-3d-gold);
+  border: 1.5px solid var(--teal-border);
+  box-shadow: var(--btn-3d-teal);
+}
+.role-btn.customer,
+.role-btn.technician {
+  background: linear-gradient(145deg, var(--teal-calm), var(--teal-deep));
+  color: #ffffff;
+  border: 1.5px solid var(--teal-border);
+  box-shadow: var(--btn-3d-teal);
 }
 .role-btn:active { transform: translateY(3px); }
 
 .cta-btn {
-  background: linear-gradient(145deg, #d7af61, var(--gold-calm));
+  background: linear-gradient(145deg, var(--teal-calm), var(--teal-deep));
   color: #ffffff;
   padding: 9px 20px;
   border-radius: 18px;
   font-weight: 800;
   font-size: 13px;
-  border: 1.5px solid var(--gold-soft);
-  box-shadow: var(--btn-3d-gold);
+  border: 1.5px solid var(--teal-border);
+  box-shadow: var(--btn-3d-teal);
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -323,59 +323,7 @@ header {
 }
 .cta-btn:active {
   transform: translateY(3px);
-  box-shadow: 0 2px 0 #9a732b;
-}
-
-.vertical-appliances-btn {
-  width: min(340px, 92%);
-  min-height: 112px;
-  margin: 16px auto 0;
-  padding: 16px 20px;
-  border-radius: 20px;
-  background: linear-gradient(145deg, #ffffff, var(--gold-tint));
-  color: var(--navy);
-  border: 2px solid var(--gold-calm);
-  box-shadow: 0 6px 0 #c89d4c, 0 12px 24px rgba(15, 23, 42, 0.25);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  transition: transform 0.14s, box-shadow 0.14s;
-}
-.vertical-appliances-btn:hover {
-  transform: translateY(-2px);
-}
-.vertical-appliances-btn:active {
-  transform: translateY(3px);
-  box-shadow: 0 3px 0 #c89d4c, 0 6px 12px rgba(15, 23, 42, 0.2);
-}
-
-.icon-3d-badge {
-  width: 52px;
-  height: 52px;
-  border-radius: 16px;
-  background: linear-gradient(145deg, var(--teal-calm), #155e75);
-  color: #ffffff;
-  border: 1.5px solid #67e8f9;
-  box-shadow: inset 0 2px 3px rgba(255, 255, 255, 0.45), 0 4px 0 #083344, 0 7px 14px rgba(14, 116, 144, 0.28);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 25px;
-  transform: perspective(240px) rotateX(8deg);
-}
-
-.vertical-appliances-title {
-  font-size: 15.5px;
-  font-weight: 900;
-  color: var(--navy);
-  line-height: 1.3;
-}
-.vertical-appliances-sub {
-  font-size: 11.5px;
-  font-weight: 700;
-  color: var(--teal-calm);
+  box-shadow: 0 2px 0 var(--teal-shadow);
 }
 
 .container { width: min(1060px, 92%); margin: 0 auto 36px; }
@@ -411,93 +359,97 @@ header {
 }
 
 .admin-tab-btn {
-  background: linear-gradient(145deg, #ffffff, var(--bg-page));
-  color: var(--navy);
-  border: 1px solid var(--border-soft);
+  background: linear-gradient(145deg, var(--teal-calm), var(--teal-deep));
+  color: #ffffff;
+  border: 1.5px solid var(--teal-border);
   padding: 8px 15px;
   border-radius: 11px;
   font-weight: 800;
   font-size: 12.5px;
-  box-shadow: 0 3px 0 #cbd5e1;
+  box-shadow: 0 3px 0 var(--teal-shadow);
+  opacity: 0.85;
 }
 .admin-tab-btn.active, .admin-tab-btn:hover {
-  background: linear-gradient(145deg, var(--navy-mid), var(--navy));
-  color: var(--gold-soft);
-  border-color: var(--border-gold);
-  box-shadow: 0 3px 0 var(--navy-deep);
+  background: linear-gradient(145deg, var(--teal-calm), var(--teal-deep));
+  color: #ffffff;
+  border-color: var(--teal-border);
+  box-shadow: 0 3px 0 var(--teal-shadow);
+  opacity: 1;
 }
 
 .service-card {
-  background: linear-gradient(155deg, #ffffff 0%, #f8fafc 100%);
-  border: 1px solid var(--border-soft);
-  border-bottom: 3px solid var(--gold-calm);
+  background: linear-gradient(145deg, var(--teal-calm), var(--teal-deep));
+  border: 1.5px solid var(--teal-border);
+  border-bottom: 4px solid var(--teal-shadow);
   border-radius: 16px;
   padding: 15px 10px;
   text-align: center;
   cursor: pointer;
+  color: #ffffff;
   box-shadow: var(--btn-3d-card);
-  transition: transform 0.14s, border-color 0.18s;
+  transition: transform 0.14s, filter 0.18s;
 }
 .service-card:hover {
   transform: translateY(-2px);
-  border-color: var(--gold-calm);
+  filter: brightness(1.06);
 }
 .service-card:active {
   transform: translateY(3px);
-  box-shadow: 0 2px 0 #cbd5e1;
+  box-shadow: 0 2px 0 var(--teal-shadow);
 }
 .service-icon {
   width: 48px;
   height: 48px;
   margin: 0 auto 8px;
   border-radius: 15px;
-  background: linear-gradient(145deg, var(--gold-tint), #f5e2b8);
-  border: 1.5px solid var(--border-gold);
-  box-shadow: inset 0 2px 3px rgba(255, 255, 255, 0.8), 0 4px 0 #c89d4c, 0 6px 12px rgba(200, 157, 76, 0.2);
+  background: linear-gradient(145deg, #0e7490, #083344);
+  border: 1.5px solid var(--teal-border);
+  box-shadow: inset 0 2px 3px rgba(255, 255, 255, 0.35), 0 4px 0 #083344, 0 6px 12px rgba(8, 51, 68, 0.35);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 23px;
+  color: #ffffff;
   transform: perspective(220px) rotateX(10deg);
 }
 .service-card h3 {
   font-size: 13.5px;
   margin: 4px 0 6px;
-  color: var(--navy);
+  color: #ffffff;
   font-weight: 800;
 }
 .service-card .arrow-badge {
-  background: linear-gradient(145deg, var(--teal-tint), #cffafe);
+  background: rgba(255, 255, 255, 0.16);
   width: 26px;
   height: 26px;
   border-radius: 50%;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: var(--teal-calm);
+  color: #ffffff;
   font-size: 11px;
-  border: 1px solid #a5f3fc;
-  box-shadow: 0 2px 0 #67e8f9;
+  border: 1px solid var(--teal-border);
+  box-shadow: 0 2px 0 var(--teal-shadow);
 }
 
 .subservice-btn {
-  background: linear-gradient(145deg, var(--navy-mid), var(--navy));
-  color: #f8fafc;
-  border: 1px solid var(--border-gold);
+  background: linear-gradient(145deg, var(--teal-calm), var(--teal-deep));
+  color: #ffffff;
+  border: 1.5px solid var(--teal-border);
   border-radius: 12px;
   padding: 10px 14px;
   font-weight: 800;
   font-size: 13px;
   text-align: center;
   width: 100%;
-  box-shadow: 0 4px 0 var(--navy-deep);
+  box-shadow: 0 4px 0 var(--teal-shadow);
 }
 .subservice-btn:active { transform: translateY(2px); }
 .subservice-btn.all-btn {
-  background: linear-gradient(145deg, #d7af61, var(--gold-calm));
+  background: linear-gradient(145deg, var(--teal-calm), var(--teal-deep));
   color: #ffffff;
-  border-color: var(--gold-soft);
-  box-shadow: 0 4px 0 #9a732b;
+  border-color: var(--teal-border);
+  box-shadow: 0 4px 0 var(--teal-shadow);
 }
 .subservice-list {
   display: flex;
@@ -510,7 +462,7 @@ header {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 8px;
-  background: var(--bg-page);
+  background: var(--gold-tint);
   border: 1px solid var(--border-soft);
   border-radius: 10px;
   padding: 10px;
@@ -527,7 +479,7 @@ header {
 .sub-check-item input {
   width: auto;
   margin: 0;
-  accent-color: var(--navy);
+  accent-color: var(--teal-calm);
 }
 
 .cities-toggle-grid {
@@ -541,22 +493,25 @@ header {
   border-radius: 10px;
   font-size: 12px;
   font-weight: 800;
-  border: 1px solid var(--border-soft);
-  box-shadow: 0 3px 0 #cbd5e1;
+  border: 1.5px solid var(--teal-border);
+  box-shadow: 0 3px 0 var(--teal-shadow);
+  background: linear-gradient(145deg, var(--teal-calm), var(--teal-deep));
+  color: #ffffff;
 }
 .city-toggle-btn.active-city {
-  background: linear-gradient(145deg, var(--navy-mid), var(--navy));
-  color: var(--gold-soft);
-  border-color: var(--border-gold);
-  box-shadow: 0 3px 0 var(--navy-deep);
+  background: linear-gradient(145deg, var(--teal-calm), var(--teal-deep));
+  color: #ffffff;
+  border-color: var(--teal-border);
+  box-shadow: 0 3px 0 var(--teal-shadow);
 }
 .city-toggle-btn.inactive-city {
-  background: var(--bg-page);
-  color: var(--text-muted);
+  background: linear-gradient(145deg, var(--teal-calm), var(--teal-deep));
+  color: #ffffff;
+  opacity: 0.6;
 }
 
 .profile-list-card {
-  background: var(--bg-page);
+  background: var(--gold-tint);
   border: 1px solid var(--border-gold);
   border-radius: 14px;
   padding: 14px;
@@ -586,7 +541,7 @@ header {
 }
 
 .admin-tech-full-card {
-  background: var(--card-bg);
+  background: var(--gold-tint);
   border: 1px solid var(--border-gold);
   border-radius: 14px;
   padding: 15px;
@@ -603,9 +558,9 @@ header {
 }
 
 .trust-bar {
-  background: var(--card-bg);
-  border-top: 1px solid var(--border-soft);
-  border-bottom: 1px solid var(--border-soft);
+  background: var(--gold-tint);
+  border-top: 1px solid var(--border-gold);
+  border-bottom: 1px solid var(--border-gold);
   padding: 12px 5%;
   display: flex;
   justify-content: space-around;
@@ -626,9 +581,9 @@ header {
 .trust-item span { font-size: 17px; }
 
 .card {
-  background: var(--card-bg);
+  background: var(--gold-tint);
   color: var(--text-main);
-  border: 1px solid var(--border-soft);
+  border: 1px solid var(--border-gold);
   border-radius: 16px;
   padding: 18px;
   box-shadow: var(--shadow-soft);
@@ -643,53 +598,43 @@ header {
   text-align: center;
   font-size: 12.5px;
   transition: transform 0.12s;
+  background: linear-gradient(145deg, var(--teal-calm), var(--teal-deep));
+  color: #ffffff;
+  border: 1.5px solid var(--teal-border);
+  box-shadow: 0 4px 0 var(--teal-shadow);
 }
 .btn:active { transform: translateY(2px); }
 
-.primary {
-  background: linear-gradient(145deg, var(--navy-mid), var(--navy));
-  color: var(--gold-soft);
-  border: 1px solid var(--border-gold);
-  box-shadow: 0 4px 0 var(--navy-deep);
-}
-.primary:hover { background: var(--navy-deep); }
-
-.gold-3d {
-  background: linear-gradient(145deg, #d7af61, var(--gold-calm));
+.primary,
+.gold-3d,
+.google-btn,
+.whatsapp-btn,
+.secondary,
+.danger,
+.light {
+  background: linear-gradient(145deg, var(--teal-calm), var(--teal-deep));
   color: #ffffff;
-  border: 1px solid var(--gold-soft);
-  box-shadow: 0 4px 0 #9a732b;
+  border: 1.5px solid var(--teal-border);
+  box-shadow: 0 4px 0 var(--teal-shadow);
+}
+.primary:hover,
+.gold-3d:hover,
+.google-btn:hover,
+.whatsapp-btn:hover,
+.secondary:hover,
+.danger:hover,
+.light:hover {
+  filter: brightness(1.06);
 }
 
-.google-btn {
-  background: linear-gradient(145deg, #ffffff, #f8fafc);
-  color: var(--navy);
-  border: 1.5px solid #cbd5e1;
-  box-shadow: 0 4px 0 #cbd5e1;
+.google-btn,
+.whatsapp-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-}
-.google-btn:hover {
-  background: var(--gold-tint);
-  border-color: var(--border-gold);
-}
-
-.whatsapp-btn {
-  background: linear-gradient(145deg, #22c55e, #15803d);
-  color: #ffffff;
-  border: 1px solid #86efac;
-  box-shadow: 0 4px 0 #14532d;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
   text-decoration: none;
 }
-
-.secondary { background: #ecfdf5; color: var(--green-calm); border: 1px solid #bbf7d0; box-shadow: 0 3px 0 #bbf7d0; }
-.danger { background: var(--danger-tint); color: var(--danger-calm); border: 1px solid #fecaca; box-shadow: 0 3px 0 #fecaca; }
-.light { background: var(--bg-page); color: var(--navy); border: 1px solid var(--border-soft); box-shadow: 0 3px 0 #cbd5e1; }
 
 .field { margin: 11px 0; }
 .field label {
@@ -702,9 +647,9 @@ header {
 .field input, .field select, .field textarea {
   width: 100%;
   padding: 9px 11px;
-  border: 1px solid var(--border-soft);
+  border: 1px solid var(--border-gold);
   border-radius: 10px;
-  background: var(--bg-page);
+  background: var(--bg-soft);
   outline: none;
   color: var(--text-main);
   font-size: 13px;
@@ -730,12 +675,12 @@ header {
 .notice {
   padding: 11px 12px;
   border-radius: 10px;
-  background: var(--teal-tint);
-  color: var(--teal-calm);
+  background: var(--bg-soft);
+  color: var(--teal-deep);
   margin: 10px 0;
   font-size: 12px;
   line-height: 1.5;
-  border: 1px solid #bae6fd;
+  border: 1px solid var(--border-gold);
   font-weight: 700;
 }
 .success { background: #f0fdf4; color: var(--green-calm); border-color: #bbf7d0; }
@@ -782,13 +727,13 @@ header {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  background: linear-gradient(160deg, #ffffff 0%, #f8fafc 100%);
+  background: var(--gold-tint);
   color: var(--text-main);
   position: relative;
   padding: 14px;
   border-radius: 16px;
-  border: 1px solid var(--border-soft);
-  box-shadow: var(--btn-3d-card);
+  border: 1px solid var(--border-gold);
+  box-shadow: var(--shadow-soft);
 }
 .tech-card .btn { width: 100%; font-size: 11.5px; padding: 8px; }
 
@@ -797,9 +742,9 @@ header {
   text-align: center;
   padding: 28px;
   color: var(--text-muted);
-  background: var(--card-bg);
+  background: var(--gold-tint);
   border-radius: 14px;
-  border: 1.5px dashed var(--border-soft);
+  border: 1.5px dashed var(--border-gold);
   font-weight: 700;
   grid-column: span 2;
 }
@@ -835,7 +780,7 @@ header {
   z-index: 1000;
 }
 .modal-box {
-  background: var(--card-bg);
+  background: var(--gold-tint);
   color: var(--text-main);
   border-radius: 18px;
   padding: 20px;
@@ -856,7 +801,7 @@ header {
 }
 .modal-head h3 { margin: 0; font-size: 15.5px; font-weight: 900; }
 .close {
-  background: var(--bg-page);
+  background: linear-gradient(145deg, var(--teal-calm), var(--teal-deep));
   border-radius: 50%;
   width: 28px;
   height: 28px;
@@ -865,15 +810,16 @@ header {
   justify-content: center;
   cursor: pointer;
   font-weight: bold;
-  color: var(--navy);
+  color: #ffffff;
+  border: 1px solid var(--teal-border);
 }
 
 .list-item {
-  border: 1px solid var(--border-soft);
+  border: 1px solid var(--border-gold);
   padding: 14px;
   border-radius: 14px;
   margin: 10px 0;
-  background: var(--card-bg);
+  background: var(--gold-tint);
   color: var(--text-main);
   box-shadow: var(--shadow-soft);
 }
@@ -887,7 +833,7 @@ header {
   height: 58px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid var(--gold-calm);
+  border: 2px solid var(--teal-calm);
   background: var(--gold-tint);
   box-shadow: 0 4px 10px rgba(15, 23, 42, 0.14);
   display: block;
@@ -901,10 +847,10 @@ header {
 .chat-box {
   height: 250px;
   overflow-y: auto;
-  border: 1px solid var(--border-soft);
+  border: 1px solid var(--border-gold);
   border-radius: 12px;
   padding: 10px;
-  background: var(--bg-page);
+  background: var(--bg-soft);
   margin-bottom: 10px;
   display: flex;
   flex-direction: column;
@@ -919,15 +865,15 @@ header {
   line-height: 1.5;
 }
 .chat-bubble.mine {
-  background: var(--navy);
-  color: var(--gold-soft);
+  background: linear-gradient(145deg, var(--teal-calm), var(--teal-deep));
+  color: #ffffff;
   align-self: flex-start;
 }
 .chat-bubble.other {
-  background: var(--card-bg);
+  background: var(--gold-tint);
   color: var(--text-main);
   align-self: flex-end;
-  border: 1px solid var(--border-soft);
+  border: 1px solid var(--border-gold);
 }
 .chat-bubble small {
   display: block;
@@ -939,9 +885,9 @@ header {
 .chat-send-row input {
   flex: 1;
   padding: 9px 11px;
-  border: 1px solid var(--border-soft);
+  border: 1px solid var(--border-gold);
   border-radius: 10px;
-  background: var(--bg-page);
+  background: var(--bg-soft);
   color: var(--text-main);
   font-weight: 700;
   outline: none;
@@ -959,9 +905,11 @@ footer {
 }
 .footer-links { margin-top: 8px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
 .footer-links button {
-  background: transparent;
-  color: var(--gold-soft);
-  text-decoration: underline;
+  background: linear-gradient(145deg, var(--teal-calm), var(--teal-deep));
+  color: #ffffff;
+  padding: 6px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--teal-border);
   font-size: 12px;
   font-weight: 700;
 }
@@ -1022,17 +970,14 @@ footer {
   <h2>خدمات صيانة منزلية بمستوى احترافي</h2>
   <div class="slogan">بيتك يستاهل الأفضل</div>
   <p>أسرع منصة لربط أصحاب المنازل بأفضل الفنيين المحليين في قضائك</p>
-
-  <button type="button" class="vertical-appliances-btn" onclick="openElectricAppliancesDirect()">
-   <span class="icon-3d-badge">⚡</span>
-   <span class="vertical-appliances-title">صيانة الأجهزة الكهربائية</span>
-   <span class="vertical-appliances-sub">غسالات • شاشات • طباخات • أجهزة أخرى</span>
-  </button>
  </div>
 
  <div class="container" id="homeServicesSection">
   <h2 class="section-title">خدماتنا</h2>
   <div class="services-grid" id="homeServicesGrid"></div>
+
+  <h2 class="section-title" style="margin-top:28px;">خدمات أخرى</h2>
+  <div class="services-grid" id="homeOtherServicesGrid"></div>
  </div>
 
  <div class="trust-bar">
@@ -1045,6 +990,9 @@ footer {
 <section id="services" class="container hidden">
  <h2 class="section-title">خدماتنا</h2>
  <div class="services-grid" id="allServicesPage"></div>
+
+ <h2 class="section-title" style="margin-top:28px;">خدمات أخرى</h2>
+ <div class="services-grid" id="allOtherServicesPage"></div>
 </section>
 
 <section id="technicians" class="container hidden">
@@ -1307,11 +1255,11 @@ footer {
 <div class="modal hidden" id="termsModal">
  <div class="modal-box">
   <div class="modal-head"><h3>شروط الاستخدام وأحكام المنصة</h3></div>
-  <div style="font-size:13px; line-height:1.7; color:var(--text-main); max-height: 200px; overflow-y: auto; background: var(--bg-page); padding: 10px; border-radius: 8px; border: 1px solid var(--border-soft);">
+  <div style="font-size:13px; line-height:1.7; color:var(--text-main); max-height: 200px; overflow-y: auto; background: var(--bg-soft); padding: 10px; border-radius: 8px; border: 1px solid var(--border-gold);">
    أهلاً بك في منصة <b>صخر</b> للصيانة المنزلية. باستخدامك لهذه المنصة، فإنك توافق على الالتزام بشروط الاستخدام، وأن المنصة هي وسيط تقني يربط الزبون بالفني المستقل ولا تتحمل مسؤولية النزاعات الشخصية. يرجى التعامل باحترام ومهنية.
   </div>
-  <div style="margin-top: 14px; display: flex; align-items: center; gap: 10px; background: var(--gold-tint); padding: 10px; border-radius: 8px; border: 1px solid var(--border-gold);">
-   <input type="checkbox" id="termsCheckbox" style="width: 20px; height: 20px; accent-color: var(--navy); cursor: pointer;">
+  <div style="margin-top: 14px; display: flex; align-items: center; gap: 10px; background: var(--bg-soft); padding: 10px; border-radius: 8px; border: 1px solid var(--border-gold);">
+   <input type="checkbox" id="termsCheckbox" style="width: 20px; height: 20px; accent-color: var(--teal-calm); cursor: pointer;">
    <label for="termsCheckbox" style="font-size: 13px; font-weight: 800; color: var(--navy); cursor: pointer;">أوافق على شروط الاستخدام وأحكام المنصة</label>
   </div>
   <div style="margin-top: 14px;">
@@ -1519,9 +1467,7 @@ const ADMIN_EMAIL = "daa44027@gmail.com";
 const MONTHLY_DURATION_MS = 30 * 24 * 60 * 60 * 1000;
 const YEARLY_DURATION_MS = 365 * 24 * 60 * 60 * 1000;
 
-const SERVICES = [
-  "صيانة الأجهزة الكهربائية",
-  "صيانة الأجهزة الإلكترونية",
+const MAIN_SERVICES = [
   "كهربائيات",
   "سباكة",
   "تكييف",
@@ -1532,6 +1478,13 @@ const SERVICES = [
   "نجارة",
   "صبغ منازل"
 ];
+
+const OTHER_SERVICES = [
+  "صيانة الأجهزة الكهربائية",
+  "صيانة الأجهزة الإلكترونية"
+];
+
+const SERVICES = [...MAIN_SERVICES, ...OTHER_SERVICES];
 
 const SUBSERVICES = {
   "صيانة الأجهزة الكهربائية": ["غسالات", "شاشات", "طباخات", "أجهزة أخرى"],
@@ -1681,12 +1634,6 @@ function goBackSmart() {
 
 function navigateToSection(id) {
   showSection(id, true);
-}
-
-function openElectricAppliancesDirect() {
-  requireGate(() => {
-    filterByService("صيانة الأجهزة الكهربائية");
-  });
 }
 
 function isCityActive(city) {
@@ -2420,26 +2367,43 @@ function fillSelect(id){
   if(el) el.innerHTML = SERVICES.map(s=>`<option>${esc(s)}</option>`).join("");
 }
 
+function buildServiceCardsHtml(list, iconMap) {
+  return list.map(s => {
+    const iconContent = s === "سباكة"
+      ? `<svg width="24" height="24" viewBox="0 0 28 28" fill="none" aria-hidden="true"><path d="M14 3C14 3 6.5 11.8 6.5 17.5C6.5 21.6421 9.85786 25 14 25C18.1421 25 21.5 21.6421 21.5 17.5C21.5 11.8 14 3 14 3Z" fill="#67e8f9" stroke="#ffffff" stroke-width="1.8"/><path d="M10.5 17.5C10.5 19.4 12 21 14 21" stroke="#083344" stroke-width="2" stroke-linecap="round"/></svg>`
+      : (iconMap[s] || "🛠️");
+    return `
+    <div class="service-card" onclick="requireGate(() => filterByService('${esc(s)}'))">
+      <div class="service-icon">${iconContent}</div>
+      <h3>${esc(s)}</h3>
+      <div class="arrow-badge">➔</div>
+    </div>`;
+  }).join("");
+}
+
 function renderServices(){
-  const icons = ["🔌","💻","⚡","💧","❄️","🛠️","🧱","🪚","🪟","🪚","🎨"];
-  const renderTo = (id) => {
-    const el = $(id);
-    if(el) {
-      el.innerHTML = SERVICES.map((s,i)=>{
-        const iconContent = s === "سباكة"
-          ? `<svg width="24" height="24" viewBox="0 0 28 28" fill="none" aria-hidden="true"><path d="M14 3C14 3 6.5 11.8 6.5 17.5C6.5 21.6421 9.85786 25 14 25C18.1421 25 21.5 21.6421 21.5 17.5C21.5 11.8 14 3 14 3Z" fill="#0e7490" stroke="#155e75" stroke-width="1.8"/><path d="M10.5 17.5C10.5 19.4 12 21 14 21" stroke="#cffafe" stroke-width="2" stroke-linecap="round"/></svg>`
-          : (icons[i] || "🛠️");
-        return `
-        <div class="service-card" onclick="requireGate(() => filterByService('${esc(s)}'))">
-          <div class="service-icon">${iconContent}</div>
-          <h3>${esc(s)}</h3>
-          <div class="arrow-badge">➔</div>
-        </div>`;
-      }).join("");
-    }
+  const iconMap = {
+    "كهربائيات": "⚡",
+    "سباكة": "💧",
+    "تكييف": "❄️",
+    "صيانة عامة": "🛠️",
+    "بناء وترميم": "🧱",
+    "مطابخ وديكور": "🪚",
+    "ألمنيوم": "🪟",
+    "نجارة": "🪚",
+    "صبغ منازل": "🎨",
+    "صيانة الأجهزة الكهربائية": "🔌",
+    "صيانة الأجهزة الإلكترونية": "💻"
   };
-  renderTo("homeServicesGrid");
-  renderTo("allServicesPage");
+
+  const mainHtml = buildServiceCardsHtml(MAIN_SERVICES, iconMap);
+  const otherHtml = buildServiceCardsHtml(OTHER_SERVICES, iconMap);
+
+  if($("homeServicesGrid")) $("homeServicesGrid").innerHTML = mainHtml;
+  if($("homeOtherServicesGrid")) $("homeOtherServicesGrid").innerHTML = otherHtml;
+  if($("allServicesPage")) $("allServicesPage").innerHTML = mainHtml;
+  if($("allOtherServicesPage")) $("allOtherServicesPage").innerHTML = otherHtml;
+
   fillSelect("regService");
   renderSubserviceCheckboxes("regSubservicesBox", SERVICES[0]);
   toggleOtherAppliancesField(SERVICES[0], "regOtherAppliancesField");
@@ -3210,7 +3174,7 @@ async function renderTechAccount(){
     if($("techFreeJobsHighlight")) {
       $("techFreeJobsHighlight").innerHTML = `
         <div style="font-size:13px; font-weight:800; color:var(--navy);">🎁 رصيد الأعمال المجانية الخاصة بك</div>
-        <div class="free-jobs-counter">متبقي لديك <span style="color:var(--gold-calm);">${freeRemaining}</span> من أصل 3 أعمال مجانية</div>
+        <div class="free-jobs-counter">متبقي لديك <span style="color:var(--teal-calm);">${freeRemaining}</span> من أصل 3 أعمال مجانية</div>
         <div style="font-size:11px; color:var(--text-muted); font-weight:700;">تم إنجاز واستخدام ${freeUsed} أعمال مجاناً عبر المنصة.</div>
       `;
     }
@@ -3812,7 +3776,7 @@ function renderAdminTechsFullList() {
             </div>
           </div>
 
-          <div class="profile-list-card" style="margin-bottom:10px; padding:10px 12px; background:var(--card-bg);">
+          <div class="profile-list-card" style="margin-bottom:10px; padding:10px 12px; background:var(--gold-tint);">
             <div class="profile-list-row"><span class="profile-list-label">المعرف (UID)</span><span class="profile-list-value">${esc(item.uid || '---')}</span></div>
             <div class="profile-list-row"><span class="profile-list-label">الاسم</span><span class="profile-list-value">${esc(item.name || 'غير مكتمل')}</span></div>
             <div class="profile-list-row"><span class="profile-list-label">رقم الهاتف</span><span class="profile-list-value">${esc(item.phone || 'غير مكتمل')}</span></div>
@@ -3877,7 +3841,7 @@ function renderAdmin(){
       <div class="muted" style="margin-top:4px;">تاريخ الطلب: ${new Date(p.createdAt).toLocaleString('ar-IQ')}</div>
       <div class="field" style="margin:10px 0 6px 0;">
        <label style="color:var(--navy); font-size:12px; font-weight:800;">أدخل الرمز المؤقت الجديد للرقم:</label>
-       <input id="tempPassInput_${esc(p.id)}" placeholder="مثال: 123456" style="background:var(--card-bg);">
+       <input id="tempPassInput_${esc(p.id)}" placeholder="مثال: 123456" style="background:var(--bg-soft);">
       </div>
       <div class="actions" style="margin-top:8px;">
        <button type="button" class="btn whatsapp-btn" onclick="sendWhatsAppPassword('${esc(p.phone)}', 'tempPassInput_${esc(p.id)}')">💬 إرسال الرمز عبر الواتساب</button>
