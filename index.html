@@ -1580,10 +1580,6 @@ const formatWhatsApp=phone=>{
   return clean;
 };
 
-function isMobileBrowser() {
-  return /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent || "");
-}
-
 function getEffectiveSubscriptionInfo(tech) {
   const planType = tech?.subscriptionType || "none";
   const expiresAt = Number(tech?.subscriptionExpiresAt || 0);
@@ -2233,28 +2229,11 @@ async function signInWithGoogleRole(roleHint = "auto") {
   const provider = new firebase.auth.GoogleAuthProvider();
   provider.setCustomParameters({ prompt: "select_account" });
 
-  if (isMobileBrowser()) {
-    await auth.signInWithRedirect(provider);
-    return;
-  }
-
   try {
-    const result = await auth.signInWithPopup(provider);
-    try { localStorage.removeItem("sakhrPendingGoogleRole"); } catch(_) {}
-    if(result && result.user) {
-      await finalizeGoogleUserSession(result.user, roleHint);
-    }
+    await auth.signInWithRedirect(provider);
   } catch(e) {
-    if(
-      e.code === "auth/popup-blocked" ||
-      e.code === "auth/popup-closed-by-user" ||
-      e.code === "auth/cancelled-popup-request"
-    ) {
-      await auth.signInWithRedirect(provider);
-    } else {
-      try { localStorage.removeItem("sakhrPendingGoogleRole"); } catch(_) {}
-      showCustomAlert("تعذر الدخول بحساب جوجل: " + e.message);
-    }
+    try { localStorage.removeItem("sakhrPendingGoogleRole"); } catch(_) {}
+    showCustomAlert("تعذر الدخول بحساب جوجل: " + (e.message || e.code || "خطأ غير معروف"));
   }
 }
 
@@ -2487,6 +2466,8 @@ function initFirebase(){
       if(res && res.user) {
         localStorage.removeItem("sakhrPendingGoogleRole");
         await finalizeGoogleUserSession(res.user, storedRole);
+      } else {
+        localStorage.removeItem("sakhrPendingGoogleRole");
       }
     }).catch((err) => {
       localStorage.removeItem("sakhrPendingGoogleRole");
