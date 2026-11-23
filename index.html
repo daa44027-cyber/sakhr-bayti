@@ -72,7 +72,6 @@ header, main, footer, .modal, .drawer-backdrop, .side-drawer {
 button, input, select, textarea { font: inherit; }
 button { cursor: pointer; border: 0; }
 
-/* الهيدر العلوي: رجوع على اليمين، لوغو ذهبي بالوسط، وثلاث خطوط على اليسار */
 header {
   background: var(--card-bg);
   padding: 10px 0 0 0;
@@ -169,7 +168,6 @@ header {
   box-shadow: 0 2px 0 var(--navy-deep);
 }
 
-/* القائمة الجانبية المنبثقة من الثلاث خطوط */
 .drawer-backdrop {
   position: fixed;
   inset: 0;
@@ -237,7 +235,6 @@ header {
   margin-top: 4px;
 }
 
-/* الشريط الإعلاني أسفل الهيدر */
 .announcement-container {
   background: var(--navy);
   border-top: 1px solid var(--border-gold);
@@ -258,7 +255,6 @@ header {
   will-change: transform;
 }
 
-/* الواجهة الترحيبية الهادئة */
 .hero-banner {
   background: linear-gradient(160deg, var(--navy) 0%, var(--navy-deep) 100%);
   padding: 28px 4% 24px;
@@ -330,7 +326,6 @@ header {
   box-shadow: 0 2px 0 #9a732b;
 }
 
-/* زر طولاني لصيانة الأجهزة الكهربائية مكان خانة البحث */
 .vertical-appliances-btn {
   width: min(340px, 92%);
   min-height: 112px;
@@ -432,7 +427,6 @@ header {
   box-shadow: 0 3px 0 var(--navy-deep);
 }
 
-/* كروت الأقسام ثلاثية الأبعاد والهادئة */
 .service-card {
   background: linear-gradient(155deg, #ffffff 0%, #f8fafc 100%);
   border: 1px solid var(--border-soft);
@@ -985,25 +979,21 @@ footer {
 
 <header>
  <div class="header-top-row">
-  <!-- الجهة اليمنى: زر الرجوع -->
   <div class="header-right-slot">
    <button type="button" class="back-icon-btn" onclick="goBackSmart()" title="رجوع">➔</button>
   </div>
 
-  <!-- الوسط: اللوغو بخلفية ذهبية هادئة -->
   <div class="header-center-slot">
    <div class="brand" onclick="navigateToSection('home')">
     <img src="logo.png" alt="لوغو صخر الرسمي">
    </div>
   </div>
 
-  <!-- الجهة اليسرى: الثلاث خطوط -->
   <div class="header-left-slot">
    <button type="button" class="hamburger-btn" onclick="toggleNavDrawer()" aria-label="القائمة">☰</button>
   </div>
  </div>
 
- <!-- الشريط الإعلاني أسفل الهيدر -->
  <div class="announcement-container">
   <div id="globalAnnouncementBar" class="announcement-bar">
    📢 أهلاً بكم في منصة صخر للصيانة المنزلية - تواصل مع أفضل الفنيين المعتمدين في منطقتك بكل سهولة.
@@ -1011,7 +1001,6 @@ footer {
  </div>
 </header>
 
-<!-- القائمة الجانبية الخاصة بالثلاث خطوط -->
 <div class="drawer-backdrop hidden" id="navDrawerBackdrop" onclick="closeNavDrawer()"></div>
 <aside class="side-drawer hidden" id="navDrawer">
  <div class="drawer-head">
@@ -1038,7 +1027,6 @@ footer {
    <button class="cta-btn" onclick="requireGate(() => openSupportChatModal())">💬 فريق الدعم</button>
   </div>
 
-  <!-- زر طولاني لصيانة الأجهزة الكهربائية مكان خانة البحث -->
   <button type="button" class="vertical-appliances-btn" onclick="openElectricAppliancesDirect()">
    <span class="icon-3d-badge">⚡</span>
    <span class="vertical-appliances-title">صيانة أجهزة كهربائية</span>
@@ -1352,7 +1340,6 @@ footer {
  </div>
 </div>
 
-<!-- نافذة إلزامية لإضافة أو تحديث رقم الهاتف بعد التسجيل بجوجل -->
 <div class="modal hidden" id="phoneRequiredModal">
  <div class="modal-box">
   <div class="modal-head"><h3>تحديث رقم الهاتف مطلوب</h3><div class="close" onclick="closeModal('phoneRequiredModal')">✕</div></div>
@@ -1392,7 +1379,6 @@ footer {
  </div>
 </div>
 
-<!-- محادثة الطلب داخل التطبيق بين الزبون والفني حصراً -->
 <div class="modal hidden" id="orderChatModal">
  <div class="modal-box">
   <div class="modal-head"><h3 id="orderChatTitle">💬 محادثة الطلب داخل التطبيق</h3><div class="close" onclick="closeOrderChatModal()">✕</div></div>
@@ -1594,7 +1580,10 @@ const formatWhatsApp=phone=>{
   return clean;
 };
 
-/* منطق الاشتراكات الشهري والسنوي والانتهاء التلقائي */
+function isMobileBrowser() {
+  return /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent || "");
+}
+
 function getEffectiveSubscriptionInfo(tech) {
   const planType = tech?.subscriptionType || "none";
   const expiresAt = Number(tech?.subscriptionExpiresAt || 0);
@@ -1983,7 +1972,7 @@ function filterByService(serviceName) {
 }
 
 function openSubserviceModal(serviceName, subs) {
-  $("subserviceModalTitle").innerText = "اختر نوع خدمة (" + serviceName + ")";
+  $("subserviceModalTitle").innerText = "اختر نوع الخدمة (" + serviceName + ")";
   let html = `<button type="button" class="subservice-btn all-btn" onclick="selectSubserviceAndShowTechs('${esc(serviceName)}', '')">الكل (جميع فروع ${esc(serviceName)})</button>`;
   html += subs.map(sub => `
     <button type="button" class="subservice-btn" onclick="selectSubserviceAndShowTechs('${esc(serviceName)}', '${esc(sub)}')">${esc(sub)}</button>
@@ -2127,121 +2116,143 @@ async function logUserAccount(uid, info) {
   } catch(e) {}
 }
 
+async function finalizeGoogleUserSession(gUser, roleHint = "auto") {
+  if(!gUser || !db) return;
+  if(gUser.email === ADMIN_EMAIL) {
+    currentRole = "admin";
+    closeModal("loginModal");
+    closeModal("customerAccountModal");
+    updateNavAuthButton();
+    navigateToSection("adminProfile");
+    loadAdminData();
+    runPendingGateAction();
+    return;
+  }
+
+  const techSnap = await db.ref("technicians/" + gUser.uid).once("value");
+  if(techSnap.exists() || roleHint === "technician") {
+    let techData = techSnap.exists() ? techSnap.val() : {
+      name: gUser.displayName || "فني صخر",
+      phone: "",
+      city: "",
+      area: "",
+      neighborhood: "",
+      service: SERVICES[0],
+      subservices: [],
+      bio: "",
+      extraInfo: "",
+      photoURL: gUser.photoURL || "",
+      approved: true,
+      available: true,
+      subscriptionStatus: "غير فعال",
+      subscriptionType: "none",
+      subscriptionExpiresAt: 0,
+      freeJobsUsed: 0,
+      completedJobs: 0,
+      ratingSum: 0,
+      ratingCount: 0,
+      ratingAverage: 0,
+      createdAt: Date.now()
+    };
+    if(!techSnap.exists()) {
+      await db.ref("technicians/" + gUser.uid).set(techData);
+    }
+    techData = await checkAndExpireSubscriptionIfNeeded(gUser.uid, techData);
+    currentTech = techData;
+    currentRole = techData.approved === false ? "suspended" : "technician";
+    await logUserAccount(gUser.uid, {
+      name: techData.name,
+      email: gUser.email || "",
+      phone: techData.phone || "",
+      role: "فني",
+      city: techData.city || "",
+      area: techData.area || ""
+    });
+    closeModal("loginModal");
+    closeModal("customerAccountModal");
+    updateNavAuthButton();
+    navigateToSection("techAccount");
+    renderTechAccount();
+    if(!String(techData.phone || "").trim()) {
+      openPhoneRequiredModal(runPendingGateAction);
+    } else {
+      runPendingGateAction();
+    }
+    return;
+  }
+
+  const accSnap = await db.ref("allAccounts/" + gUser.uid).once("value");
+  const existingAcc = accSnap.exists() ? accSnap.val() : {};
+  const custName = existingAcc.name || gUser.displayName || "زبون صخر";
+  const custPhone = existingAcc.phone || "";
+  const custCity = existingAcc.city || "";
+  const custArea = existingAcc.area || "";
+
+  localStorage.setItem("sakhrCustomerName", custName);
+  localStorage.setItem("sakhrCustomerUid", gUser.uid);
+  if(custPhone) localStorage.setItem("sakhrCustomerPhone", custPhone);
+  if(custCity) {
+    localStorage.setItem("sakhrCustomerCity", custCity);
+    chosenCustomerCity = custCity;
+  }
+  if(custArea) {
+    localStorage.setItem("sakhrCustomerArea", custArea);
+    chosenCustomerArea = custArea;
+  }
+
+  await logUserAccount(gUser.uid, {
+    name: custName,
+    email: gUser.email || "",
+    phone: custPhone,
+    role: "زبون",
+    city: custCity,
+    area: custArea
+  });
+
+  closeModal("loginModal");
+  closeModal("customerAccountModal");
+  updateNavAuthButton();
+
+  if(!custPhone.trim() || !custCity || !custArea) {
+    openPhoneRequiredModal(runPendingGateAction);
+  } else if(!isCityActive(custCity)) {
+    pendingAfterGate = null;
+    showCustomAlert(getCityExpansionMessage(custCity));
+  } else {
+    runPendingGateAction();
+  }
+}
+
 async function signInWithGoogleRole(roleHint = "auto") {
   if(!auth || !db) return showCustomAlert("تعذر الاتصال بنظام المصادقة حالياً.");
   preferredGoogleRole = roleHint;
   try {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    provider.setCustomParameters({ prompt: "select_account" });
+    localStorage.setItem("sakhrPendingGoogleRole", roleHint);
+  } catch(_) {}
+
+  const provider = new firebase.auth.GoogleAuthProvider();
+  provider.setCustomParameters({ prompt: "select_account" });
+
+  if (isMobileBrowser()) {
+    await auth.signInWithRedirect(provider);
+    return;
+  }
+
+  try {
     const result = await auth.signInWithPopup(provider);
-    const gUser = result.user;
-    if(!gUser) return;
-
-    if(gUser.email === ADMIN_EMAIL) {
-      currentRole = "admin";
-      closeModal("loginModal");
-      closeModal("customerAccountModal");
-      updateNavAuthButton();
-      navigateToSection("adminProfile");
-      loadAdminData();
-      runPendingGateAction();
-      return;
-    }
-
-    const techSnap = await db.ref("technicians/" + gUser.uid).once("value");
-    if(techSnap.exists() || roleHint === "technician") {
-      let techData = techSnap.exists() ? techSnap.val() : {
-        name: gUser.displayName || "فني صخر",
-        phone: "",
-        city: "",
-        area: "",
-        neighborhood: "",
-        service: SERVICES[0],
-        subservices: [],
-        bio: "",
-        extraInfo: "",
-        photoURL: gUser.photoURL || "",
-        approved: true,
-        available: true,
-        subscriptionStatus: "غير فعال",
-        subscriptionType: "none",
-        subscriptionExpiresAt: 0,
-        freeJobsUsed: 0,
-        completedJobs: 0,
-        ratingSum: 0,
-        ratingCount: 0,
-        ratingAverage: 0,
-        createdAt: Date.now()
-      };
-      if(!techSnap.exists()) {
-        await db.ref("technicians/" + gUser.uid).set(techData);
-      }
-      techData = await checkAndExpireSubscriptionIfNeeded(gUser.uid, techData);
-      currentTech = techData;
-      currentRole = techData.approved === false ? "suspended" : "technician";
-      await logUserAccount(gUser.uid, {
-        name: techData.name,
-        email: gUser.email || "",
-        phone: techData.phone || "",
-        role: "فني",
-        city: techData.city || "",
-        area: techData.area || ""
-      });
-      closeModal("loginModal");
-      closeModal("customerAccountModal");
-      updateNavAuthButton();
-      navigateToSection("techAccount");
-      renderTechAccount();
-      if(!String(techData.phone || "").trim()) {
-        openPhoneRequiredModal(runPendingGateAction);
-      } else {
-        runPendingGateAction();
-      }
-      return;
-    }
-
-    const accSnap = await db.ref("allAccounts/" + gUser.uid).once("value");
-    const existingAcc = accSnap.exists() ? accSnap.val() : {};
-    const custName = existingAcc.name || gUser.displayName || "زبون صخر";
-    const custPhone = existingAcc.phone || "";
-    const custCity = existingAcc.city || "";
-    const custArea = existingAcc.area || "";
-
-    localStorage.setItem("sakhrCustomerName", custName);
-    localStorage.setItem("sakhrCustomerUid", gUser.uid);
-    if(custPhone) localStorage.setItem("sakhrCustomerPhone", custPhone);
-    if(custCity) {
-      localStorage.setItem("sakhrCustomerCity", custCity);
-      chosenCustomerCity = custCity;
-    }
-    if(custArea) {
-      localStorage.setItem("sakhrCustomerArea", custArea);
-      chosenCustomerArea = custArea;
-    }
-
-    await logUserAccount(gUser.uid, {
-      name: custName,
-      email: gUser.email || "",
-      phone: custPhone,
-      role: "زبون",
-      city: custCity,
-      area: custArea
-    });
-
-    closeModal("loginModal");
-    closeModal("customerAccountModal");
-    updateNavAuthButton();
-
-    if(!custPhone.trim() || !custCity || !custArea) {
-      openPhoneRequiredModal(runPendingGateAction);
-    } else if(!isCityActive(custCity)) {
-      pendingAfterGate = null;
-      showCustomAlert(getCityExpansionMessage(custCity));
-    } else {
-      runPendingGateAction();
+    try { localStorage.removeItem("sakhrPendingGoogleRole"); } catch(_) {}
+    if(result && result.user) {
+      await finalizeGoogleUserSession(result.user, roleHint);
     }
   } catch(e) {
-    if(e.code !== "auth/popup-closed-by-user") {
+    if(
+      e.code === "auth/popup-blocked" ||
+      e.code === "auth/popup-closed-by-user" ||
+      e.code === "auth/cancelled-popup-request"
+    ) {
+      await auth.signInWithRedirect(provider);
+    } else {
+      try { localStorage.removeItem("sakhrPendingGoogleRole"); } catch(_) {}
       showCustomAlert("تعذر الدخول بحساب جوجل: " + e.message);
     }
   }
@@ -2470,6 +2481,20 @@ function initFirebase(){
     db = firebase.database();
     storage = firebase.storage();
     functions = firebase.functions();
+
+    auth.getRedirectResult().then(async (res) => {
+      const storedRole = localStorage.getItem("sakhrPendingGoogleRole") || preferredGoogleRole || "auto";
+      if(res && res.user) {
+        localStorage.removeItem("sakhrPendingGoogleRole");
+        await finalizeGoogleUserSession(res.user, storedRole);
+      }
+    }).catch((err) => {
+      localStorage.removeItem("sakhrPendingGoogleRole");
+      if(err && err.message && !err.message.includes("no pending")) {
+        showCustomAlert("تنبيه تسجيل جوجل: " + err.message);
+      }
+    });
+
     auth.onAuthStateChanged(onAuthChanged);
     loadPublicTechs();
     listenToAnnouncements();
@@ -2804,7 +2829,6 @@ function renderPublicTechs(){
   }).join("");
 }
 
-/* محادثة الطلب داخل التطبيق بين الزبون والفني حصراً */
 function getOrderChatSenderInfo() {
   if(["technician", "suspended"].includes(currentRole) && currentUser) {
     return {
@@ -3286,7 +3310,6 @@ async function saveTechAccountProfile() {
   }
 }
 
-/* تفعيل شهري أو سنوي أو إلغاء الاشتراك للمدير */
 async function activateTechSubscriptionPlan(techUid, planType) {
   if(currentRole !== "admin") return;
   const now = Date.now();
