@@ -226,12 +226,8 @@ header {
   box-shadow: 0 3px 0 var(--teal-shadow);
   transition: transform 0.12s, filter 0.2s;
 }
-.drawer-nav-btn:hover {
-  filter: brightness(1.06);
-}
-.drawer-nav-btn:active {
-  transform: translateY(2px);
-}
+.drawer-nav-btn:hover { filter: brightness(1.06); }
+.drawer-nav-btn:active { transform: translateY(2px); }
 .drawer-nav-btn.primary-drawer {
   background: linear-gradient(155deg, #f7d265 0%, #d4a024 100%);
   color: var(--navy-deep);
@@ -354,25 +350,6 @@ header {
   color: #ffffff;
   border-color: var(--gold-bright);
   box-shadow: 0 3px 0 var(--teal-shadow);
-}
-
-.cta-btn {
-  background: linear-gradient(155deg, var(--navy-mid) 0%, var(--teal-calm) 45%, var(--teal-deep) 100%);
-  color: #ffffff;
-  padding: 9px 20px;
-  border-radius: 18px;
-  font-weight: 800;
-  font-size: 13px;
-  border: 1.5px solid var(--gold-bright);
-  box-shadow: var(--btn-3d-teal);
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  transition: transform 0.12s;
-}
-.cta-btn:active {
-  transform: translateY(3px);
-  box-shadow: 0 2px 0 var(--teal-shadow);
 }
 
 .container { width: min(1060px, 92%); margin: 0 auto 36px; }
@@ -606,6 +583,29 @@ header {
   word-break: break-word;
 }
 
+.incomplete-checklist-card {
+  background: #fff7ed;
+  border: 2px solid #f59e0b;
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-soft);
+}
+.incomplete-checklist-card h3 {
+  margin: 0 0 8px;
+  color: #9a3412;
+  font-size: 15.5px;
+  font-weight: 900;
+}
+.checklist-items {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 10px 0 12px;
+  font-size: 13px;
+  font-weight: 800;
+}
+
 .admin-tech-full-card {
   background: var(--gold-tint);
   border: 1.5px solid var(--border-gold);
@@ -655,7 +655,6 @@ header {
   box-shadow: var(--shadow-soft);
 }
 
-/* أزرار موحدة ومتدرجة الألوان حسب الوظيفة */
 .btn {
   padding: 9px 15px;
   border-radius: 11px;
@@ -668,7 +667,6 @@ header {
 }
 .btn:active { transform: translateY(2px); }
 
-/* 1. أزرار الدخول والتأكيد الأساسية (كحلي/فيروزي ملكي + إطار ذهبي) */
 .primary {
   background: linear-gradient(155deg, var(--navy-mid) 0%, var(--teal-calm) 45%, var(--teal-deep) 100%);
   color: #ffffff;
@@ -677,7 +675,6 @@ header {
 }
 .primary:hover { filter: brightness(1.07); }
 
-/* 2. أزرار مميزة (ذهبي ملكي + خط كحلي داكن) */
 .gold-3d {
   background: linear-gradient(155deg, #f7d265 0%, #d4a024 100%);
   color: var(--navy-deep);
@@ -687,7 +684,6 @@ header {
 }
 .gold-3d:hover { filter: brightness(1.05); }
 
-/* 3. زر جوجل (أبيض ناصع أنيق + خط كحلي + إطار ذهبي) */
 .google-btn {
   background: #ffffff;
   color: var(--navy-deep);
@@ -702,7 +698,6 @@ header {
 }
 .google-btn:hover { background: #f8fafc; }
 
-/* 4. زر واتساب (أخضر زمردي احترافي) */
 .whatsapp-btn {
   background: linear-gradient(155deg, #22c55e 0%, #15803d 100%);
   color: #ffffff;
@@ -716,7 +711,6 @@ header {
 }
 .whatsapp-btn:hover { filter: brightness(1.06); }
 
-/* 5. أزرار ثانوية (كحلي متوسط هادئ) */
 .secondary {
   background: linear-gradient(155deg, #1e6b92 0%, #0a4664 100%);
   color: #ffffff;
@@ -725,7 +719,6 @@ header {
 }
 .secondary:hover { filter: brightness(1.06); }
 
-/* 6. أزرار تسجيل الخروج والحذف والإيقاف (أحمر عنابي واضح وأنيق) */
 .danger {
   background: linear-gradient(155deg, #dc2626 0%, var(--danger-calm) 50%, var(--danger-deep) 100%);
   color: #ffffff;
@@ -734,7 +727,6 @@ header {
 }
 .danger:hover { filter: brightness(1.07); }
 
-/* 7. أزرار مساعدة وإلغاء خفيفة (كريمي رملي دافئ) */
 .light {
   background: var(--bg-soft);
   color: var(--navy);
@@ -1172,7 +1164,7 @@ footer {
 <section id="join" class="container hidden">
  <h2 class="section-title">انضم إلى شبكة فنيي صخر</h2>
  <form class="card" style="max-width:650px;margin:0 auto" onsubmit="event.preventDefault(); registerTechFlexible();">
-  <div class="notice">تسجيل سريع ومبسط للفني (3 أعمال مجاناً بالكامل). يمكنك استكمال التخصصات الفرعية، النبذة، وصورتك الشخصية براحتك من داخل ملفك الشخصي بعد الدخول.</div>
+  <div class="notice">تسجيل سريع ومبسط للفني (3 أعمال مجاناً بالكامل). يمكنك التسجيل بحساب جوجل فوراً أو برقم الهاتف وكلمة المرور، واستكمال ملفك الشخصي من لوحتك.</div>
   <button type="button" class="btn google-btn" style="width:100%; margin-bottom:10px; padding:10px;" onclick="signInWithGoogleRole('technician')">
    <span>🌐</span> التسجيل السريع بحساب جوجل (Google)
   </button>
@@ -1213,6 +1205,9 @@ footer {
 
 <section id="techAccount" class="container hidden">
  <h2 class="section-title">الملف الشخصي - لوحة تحكم الفني</h2>
+
+ <div id="techIncompleteChecklist" class="incomplete-checklist-card hidden"></div>
+
  <div id="techAlertBox"></div>
  <div id="techSummary" class="card" style="margin-bottom:15px"></div>
 
@@ -1377,9 +1372,9 @@ footer {
 <div class="modal hidden" id="customerAccountModal">
  <div class="modal-box">
   <div class="modal-head"><h3>تسجيل حساب الزبون وتحديد الموقع</h3><div class="close" onclick="closeModal('customerAccountModal')">✕</div></div>
-  <div class="notice">تسجيل سريع ومبسط — أنت مخير بحساب جوجل، أو برقم الهاتف، أو بالبريد الإلكتروني:</div>
+  <div class="notice">سجّل بسرعة عبر حساب جوجل (Google) بضغطة واحدة، أو أدخل بياناتك مع رقم الهاتف وكلمة المرور:</div>
   <button type="button" class="btn google-btn" style="width:100%; margin-bottom:10px; padding:10px;" onclick="signInWithGoogleRole('customer')">
-   <span>🌐</span> متابعة بحساب جوجل (Google)
+   <span>🌐</span> الدخول السريع بحساب جوجل (Google)
   </button>
 
   <div class="auth-method-switch">
@@ -1409,15 +1404,19 @@ footer {
 
 <div class="modal hidden" id="phoneRequiredModal">
  <div class="modal-box">
-  <div class="modal-head"><h3>تحديث رقم الهاتف مطلوب</h3><div class="close" onclick="closeModal('phoneRequiredModal')">✕</div></div>
-  <div class="notice error">يجب إضافة أو تحديث رقم هاتفك والموقع حتى تتمكن من إرسال أو استلام الطلبات في منصة صخر.</div>
-  <div class="field"><label>الاسم الكامل</label><input id="reqPhoneName" placeholder="الاسم الكامل"></div>
-  <div class="field"><label>رقم الهاتف</label><input id="reqPhoneNumber" inputmode="tel" placeholder="07XXXXXXXXX"></div>
+  <div class="modal-head"><h3 id="reqPhoneModalTitle">استكمال البيانات الأساسية</h3><div class="close" onclick="closeModal('phoneRequiredModal')">✕</div></div>
+  <div class="notice">تأكد من كتابة اسمك الحقيقي وأكمل رقم الهاتف والمحافظة والقضاء حتى يتفعّل حسابك وتتمكن من المتابعة.</div>
+  <div class="field"><label>الاسم الكامل (يمكنك تعديله لاسمك الحقيقي)</label><input id="reqPhoneName" placeholder="الاسم الكامل"></div>
+  <div class="field"><label>رقم الهاتف (07XXXXXXXXX)</label><input id="reqPhoneNumber" inputmode="tel" placeholder="07XXXXXXXXX"></div>
   <div class="row">
    <div class="field"><label>المحافظة</label><select id="reqPhoneCity" onchange="setDistricts('reqPhoneArea', this.value)"></select></div>
    <div class="field"><label>القضاء</label><select id="reqPhoneArea"><option value="">اختر القضاء</option></select></div>
   </div>
-  <button type="button" class="btn primary" style="width:100%; margin-top:10px;" onclick="saveRequiredPhoneProfile()">حفظ رقم الهاتف والمتابعة</button>
+  <div class="field hidden" id="reqPhoneServiceField">
+   <label>الاختصاص الرئيسي للفني</label>
+   <select id="reqPhoneService"></select>
+  </div>
+  <button type="button" class="btn primary" style="width:100%; margin-top:10px;" onclick="saveRequiredPhoneProfile()">حفظ البيانات والمتابعة</button>
  </div>
 </div>
 
@@ -1481,7 +1480,7 @@ footer {
 <div class="modal hidden" id="techEditModal">
  <div class="modal-box">
   <div class="modal-head"><h3>استكمال وتعديل الملف الشخصي</h3><div class="close" onclick="closeModal('techEditModal')">✕</div></div>
-  <div class="field"><label>الاسم الكامل</label><input id="editTechName" placeholder="الاسم"></div>
+  <div class="field"><label>الاسم الكامل (تأكد من كتابة اسمك الحقيقي)</label><input id="editTechName" placeholder="الاسم الكامل"></div>
   <div class="row">
    <div class="field"><label>المحافظة</label><select id="editTechCity" onchange="setDistricts('editTechArea', this.value)"></select></div>
    <div class="field"><label>القضاء</label><select id="editTechArea"><option value="">اختر القضاء</option></select></div>
@@ -1491,7 +1490,7 @@ footer {
    <div class="field"><label>رقم الهاتف</label><input id="editTechPhone" inputmode="tel" placeholder="07XXXXXXXXX"></div>
   </div>
   <div class="field"><label>البريد الإلكتروني (اختياري لاسترجاع الرمز)</label><input id="editTechEmail" type="email" inputmode="email" placeholder="example@gmail.com"></div>
-  <div class="field"><label>الاختصاص</label><select id="editTechService" onchange="onTechServiceChange('editTechService', 'editTechSubservicesBox', 'editTechOtherAppliancesField')"></select></div>
+  <div class="field"><label>الاختصاص الرئيسي</label><select id="editTechService" onchange="onTechServiceChange('editTechService', 'editTechSubservicesBox', 'editTechOtherAppliancesField')"></select></div>
   <div class="field">
    <label>التخصصات الفرعية التي تشتغلها ضمن اختصاصك</label>
    <div id="editTechSubservicesBox" class="sub-checks-box"></div>
@@ -1503,7 +1502,7 @@ footer {
   <div class="field"><label>نبذة عن خبرتك</label><textarea id="editTechBio" placeholder="نبذة مختصرة..."></textarea></div>
   <div class="field"><label>إضافات أو ملاحظات أخرى في ملفك (اختياري)</label><textarea id="editTechExtra" placeholder="مثال: ساعات العمل، أدوات متوفرة، أو أي تفاصيل إضافية..."></textarea></div>
   <div class="field"><label>تحديث الصورة الشخصية (اختياري)</label><input id="editTechPhotoFile" type="file" accept="image/*"></div>
-  <button class="btn primary" style="width:100%; margin-top:10px;" onclick="saveTechAccountProfile()">حفظ تعديلات البروفايل</button>
+  <button class="btn primary" style="width:100%; margin-top:10px;" onclick="saveTechAccountProfile()">حفظ وتفعيل الملف الشخصي</button>
   <div id="editProfileMessage"></div>
  </div>
 </div>
@@ -1776,6 +1775,17 @@ function canTechAcceptMoreJobs(tech) {
   return freeUsed < 3;
 }
 
+function isTechProfileComplete(tech) {
+  if (!tech) return false;
+  return Boolean(
+    String(tech.name || "").trim() &&
+    isValidIraqiPhone(tech.phone || "") &&
+    String(tech.city || "").trim() &&
+    String(tech.area || "").trim() &&
+    String(tech.service || "").trim()
+  );
+}
+
 async function checkAndExpireSubscriptionIfNeeded(uid, tech) {
   if(!tech || !db) return tech;
   const info = getEffectiveSubscriptionInfo(tech);
@@ -1852,13 +1862,20 @@ function isUserEntered() {
   return false;
 }
 
+function hasCustomerCoreProfileConfigured() {
+  if(currentRole === "admin") return true;
+  const phone = localStorage.getItem("sakhrCustomerPhone") || "";
+  const city = localStorage.getItem("sakhrCustomerCity") || chosenCustomerCity || "";
+  const area = localStorage.getItem("sakhrCustomerArea") || chosenCustomerArea || "";
+  return Boolean(isValidIraqiPhone(phone) && city && area);
+}
+
 function hasValidPhoneConfigured() {
   if(currentRole === "admin") return true;
   if(["technician", "suspended"].includes(currentRole)) {
-    return Boolean(currentTech && isValidIraqiPhone(currentTech.phone || ""));
+    return isTechProfileComplete(currentTech);
   }
-  const phone = localStorage.getItem("sakhrCustomerPhone") || "";
-  return Boolean(isValidIraqiPhone(phone));
+  return hasCustomerCoreProfileConfigured();
 }
 
 function openPhoneRequiredModal(afterCallback) {
@@ -1866,13 +1883,21 @@ function openPhoneRequiredModal(afterCallback) {
   if($("reqPhoneCity")) {
     $("reqPhoneCity").innerHTML = '<option value="">اختر المحافظة</option>' + Object.keys(DISTRICTS).map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("");
   }
+  if($("reqPhoneService")) {
+    $("reqPhoneService").innerHTML = SERVICES.map(s=>`<option value="${esc(s)}">${esc(s)}</option>`).join("");
+  }
+
   if(["technician", "suspended"].includes(currentRole) && currentTech) {
+    $("reqPhoneModalTitle").innerText = "استكمال الملف الشخصي للفني";
     $("reqPhoneName").value = currentTech.name || "";
     $("reqPhoneNumber").value = currentTech.phone || "";
     $("reqPhoneCity").value = currentTech.city || "";
     setDistricts("reqPhoneArea", currentTech.city || "");
     if(currentTech.area) $("reqPhoneArea").value = currentTech.area;
+    $("reqPhoneServiceField")?.classList.remove("hidden");
+    if(currentTech.service) $("reqPhoneService").value = currentTech.service;
   } else {
+    $("reqPhoneModalTitle").innerText = "استكمال بيانات الزبون";
     const savedCity = localStorage.getItem("sakhrCustomerCity") || "";
     const savedArea = localStorage.getItem("sakhrCustomerArea") || "";
     $("reqPhoneName").value = localStorage.getItem("sakhrCustomerName") || "";
@@ -1880,6 +1905,7 @@ function openPhoneRequiredModal(afterCallback) {
     $("reqPhoneCity").value = savedCity;
     setDistricts("reqPhoneArea", savedCity);
     if(savedArea) $("reqPhoneArea").value = savedArea;
+    $("reqPhoneServiceField")?.classList.add("hidden");
   }
   $("phoneRequiredModal").classList.remove("hidden");
 }
@@ -1899,10 +1925,11 @@ async function saveRequiredPhoneProfile() {
 
   try {
     if(["technician", "suspended"].includes(currentRole) && currentUser && currentTech) {
-      const updated = { ...currentTech, name, phone, city, area };
-      await db.ref("technicians/" + currentUser.uid).update({ name, phone, city, area });
+      const service = $("reqPhoneService")?.value || currentTech.service || SERVICES[0];
+      const updated = { ...currentTech, name, phone, city, area, service };
+      await db.ref("technicians/" + currentUser.uid).update({ name, phone, city, area, service });
       await syncPublicTechnician(currentUser.uid, updated);
-      await logUserAccount(currentUser.uid, { name, phone, role: "فني", city, area });
+      await logUserAccount(currentUser.uid, { name, phone, role: "فني", service, city, area });
       currentTech = updated;
       renderTechAccount();
       loadPublicTechs();
@@ -1921,7 +1948,7 @@ async function saveRequiredPhoneProfile() {
     }
 
     closeModal("phoneRequiredModal");
-    showCustomAlert("تم حفظ رقم الهاتف بنجاح، يمكنك الآن متابعة الطلبات.");
+    showCustomAlert("تم حفظ بياناتك بنجاح، يمكنك الآن المتابعة!");
 
     if(!isCityActive(city)) {
       pendingAfterPhoneCheck = null;
@@ -1935,16 +1962,34 @@ async function saveRequiredPhoneProfile() {
       fn();
     }
   } catch(e) {
-    showCustomAlert("خطأ أثناء حفظ رقم الهاتف: " + e.message);
+    showCustomAlert("خطأ أثناء حفظ البيانات: " + e.message);
   }
 }
 
 function requireGate(actionCallback) {
   const wrapped = () => {
-    if(!hasValidPhoneConfigured()) {
+    if(["technician", "suspended"].includes(currentRole)) {
+      if(!isTechProfileComplete(currentTech)) {
+        navigateToSection("techAccount");
+        renderTechAccount();
+        showCustomAlert("يرجى إكمال بيانات ملفك الشخصي من القائمة أدناه أولاً.");
+        return;
+      }
+      actionCallback();
+      return;
+    }
+
+    if(!hasCustomerCoreProfileConfigured()) {
       openPhoneRequiredModal(actionCallback);
       return;
     }
+
+    const userCity = chosenCustomerCity || localStorage.getItem("sakhrCustomerCity") || "";
+    if(userCity && !isCityActive(userCity)) {
+      showCustomAlert(getCityExpansionMessage(userCity));
+      return;
+    }
+
     actionCallback();
   };
 
@@ -2332,7 +2377,7 @@ async function finalizeGoogleUserSession(gUser, roleHint = "auto") {
       city: "",
       area: "",
       neighborhood: "",
-      service: SERVICES[0],
+      service: "",
       subservices: [],
       otherAppliances: "",
       bio: "",
@@ -2361,6 +2406,7 @@ async function finalizeGoogleUserSession(gUser, roleHint = "auto") {
       email: gUser.email || "",
       phone: techData.phone || "",
       role: "فني",
+      service: techData.service || "",
       city: techData.city || "",
       area: techData.area || ""
     });
@@ -2369,11 +2415,6 @@ async function finalizeGoogleUserSession(gUser, roleHint = "auto") {
     updateNavAuthButton();
     navigateToSection("techAccount");
     renderTechAccount();
-    if(!isValidIraqiPhone(techData.phone || "")) {
-      openPhoneRequiredModal(runPendingGateAction);
-    } else {
-      runPendingGateAction();
-    }
     return;
   }
 
@@ -2410,13 +2451,11 @@ async function finalizeGoogleUserSession(gUser, roleHint = "auto") {
   closeModal("customerAccountModal");
   updateNavAuthButton();
 
-  if(!isValidIraqiPhone(custPhone) || !custCity || !custArea) {
-    openPhoneRequiredModal(runPendingGateAction);
-  } else if(!isCityActive(custCity)) {
-    pendingAfterGate = null;
-    showCustomAlert(getCityExpansionMessage(custCity));
-  } else {
+  if(typeof pendingAfterGate === "function") {
     runPendingGateAction();
+  } else {
+    showCustomAlert(`أهلاً بك ${custName}! تم تسجيل دخولك بنجاح عبر حساب كوكل.`);
+    navigateToSection("home");
   }
 }
 
@@ -2451,7 +2490,7 @@ async function submitCustomerRegistration(){
   if (custRegAuthMode === "phone") {
     cleanPhone = normalizeIraqiPhone($("custRegPhone").value);
     if (!name || !cleanPhone || !password || !city || !area) {
-      return showCustomAlert("يرجى إكمال الحقول الأساسية (الاسم، رقم الهاتف، الباسورد، المحافظة والقضاء).");
+      return showCustomAlert("يرجى إكمال الحقول الأساسية (الاسم، رقم الهاتف، كلمة المرور، المحافظة والقضاء).");
     }
     if (!isValidIraqiPhone(cleanPhone)) {
       return showCustomAlert("يرجى إدخال رقم هاتف عراقي صحيح مكون من 11 رقماً يبدأ بـ 07.");
@@ -2460,7 +2499,7 @@ async function submitCustomerRegistration(){
   } else {
     realEmail = $("custRegEmail").value.trim().toLowerCase();
     if (!name || !realEmail || !password || !city || !area) {
-      return showCustomAlert("يرجى إكمال الحقول الأساسية (الاسم، البريد الإلكتروني، الباسورد، المحافظة والقضاء).");
+      return showCustomAlert("يرجى إكمال الحقول الأساسية (الاسم، البريد الإلكتروني، كلمة المرور، المحافظة والقضاء).");
     }
     if (!isValidEmailAddress(realEmail)) {
       return showCustomAlert("يرجى إدخال بريد إلكتروني صحيح.");
@@ -2845,6 +2884,7 @@ async function uploadTechPhoto(uid, file){
 }
 
 async function syncPublicTechnician(uid, p){
+  if (!isTechProfileComplete(p)) return;
   const subInfo = getEffectiveSubscriptionInfo(p);
   const data = {
     uid,
@@ -2874,7 +2914,7 @@ async function registerTechFlexible(){
   const service = $("regService").value;
 
   if(!name || !phone || !password || !city || !area || !service) {
-    return showCustomAlert("أكمل الحقول الأساسية للفني (الاسم، الهاتف، الباسورد، المحافظة، القضاء والاختصاص).");
+    return showCustomAlert("أكمل الحقول الأساسية للفني (الاسم، الهاتف، كلمة المرور، المحافظة، القضاء والاختصاص).");
   }
   if(!isValidIraqiPhone(phone)) {
     return showCustomAlert("يرجى إدخال رقم هاتف عراقي صحيح مكون من 11 رقماً يبدأ بـ 07.");
@@ -3060,7 +3100,7 @@ async function loadPublicTechs(){
     const list = [];
     for (const [uid, rawTech] of Object.entries(data)) {
       const checked = await checkAndExpireSubscriptionIfNeeded(uid, rawTech);
-      if (checked.approved !== false) {
+      if (checked.approved !== false && isTechProfileComplete(checked)) {
         list.push({ ...checked, uid });
       }
     }
@@ -3376,7 +3416,7 @@ async function chooseServiceDirect(service, techUid){
       showCustomAlert("خطأ: " + e.message);
     }
   } else {
-    if(!hasValidPhoneConfigured()) {
+    if(!hasCustomerCoreProfileConfigured()) {
       openPhoneRequiredModal(() => chooseServiceDirect(service, techUid));
       return;
     }
@@ -3398,7 +3438,7 @@ async function submitCustomerOrder() {
   const custName = localStorage.getItem("sakhrCustomerName") || "زبون صخر";
   const custPhone = localStorage.getItem("sakhrCustomerPhone") || "";
 
-  if(!isValidIraqiPhone(custPhone)) {
+  if(!hasCustomerCoreProfileConfigured()) {
     closeModal("customerOrderModal");
     openPhoneRequiredModal(submitCustomerOrder);
     return;
@@ -3441,6 +3481,9 @@ async function submitCustomerOrder() {
 
 async function toggleTechAvailability() {
   if(!currentUser || !["technician","suspended"].includes(currentRole)) return;
+  if(!isTechProfileComplete(currentTech)) {
+    return showCustomAlert("يرجى إكمال بيانات ملفك الشخصي أولاً لتفعيل الظهور للزبائن.");
+  }
   const uid = currentUser.uid;
   const newAvail = !(currentTech.available !== false);
   try {
@@ -3454,6 +3497,33 @@ async function toggleTechAvailability() {
   }
 }
 
+function renderTechIncompleteChecklist(tech) {
+  const box = $("techIncompleteChecklist");
+  if(!box) return;
+  if(isTechProfileComplete(tech)) {
+    box.classList.add("hidden");
+    return;
+  }
+
+  const hasName = Boolean(String(tech.name || "").trim());
+  const hasPhone = isValidIraqiPhone(tech.phone || "");
+  const hasCityArea = Boolean(String(tech.city || "").trim() && String(tech.area || "").trim());
+  const hasService = Boolean(String(tech.service || "").trim());
+
+  box.classList.remove("hidden");
+  box.innerHTML = `
+    <h3>⚠️ استكمل ملفك الشخصي لتفعيل حسابك في البرنامج</h3>
+    <div style="font-size:12.5px; color:#7c2d12; font-weight:700;">حسابك غير ظاهر للزبائن حالياً حتى تكمل البيانات التالية (وتتأكد من اسمك الحقيقي):</div>
+    <div class="checklist-items">
+      <div>${hasName ? '✅' : '⬜'} الاسم الكامل: <b>${esc(tech.name || 'غير مكتمل')}</b></div>
+      <div>${hasPhone ? '✅' : '⬜'} رقم الهاتف: <b>${hasPhone ? esc(tech.phone) : 'مطلوب إدخال رقم 07XXXXXXXXX'}</b></div>
+      <div>${hasCityArea ? '✅' : '⬜'} المحافظة والقضاء: <b>${hasCityArea ? esc(tech.city + ' / ' + tech.area) : 'مطلوب تحديد المحافظة والقضاء'}</b></div>
+      <div>${hasService ? '✅' : '⬜'} الاختصاص الرئيسي: <b>${hasService ? esc(tech.service) : 'مطلوب اختيار الاختصاص'}</b></div>
+    </div>
+    <button type="button" class="btn gold-3d" style="width:100%;" onclick="openTechEditModal()">📝 إكمال البيانات الآن وتفعيل الحساب</button>
+  `;
+}
+
 async function renderTechAccount(){
   if(!currentUser || !["technician","suspended"].includes(currentRole)) return;
   const uid = currentUser.uid;
@@ -3465,10 +3535,12 @@ async function renderTechAccount(){
     currentTech = techData;
     const subInfo = getEffectiveSubscriptionInfo(currentTech);
 
+    renderTechIncompleteChecklist(currentTech);
+
     if($("techSummary")) {
-      const isAvail = currentTech.available !== false;
+      const isAvail = currentTech.available !== false && isTechProfileComplete(currentTech);
       const dotCls = isAvail ? "online-dot" : "offline-dot";
-      const statusLbl = isAvail ? "متاح لاستقبال الطلبات" : "غير متاح (مشغول / نائم)";
+      const statusLbl = !isTechProfileComplete(currentTech) ? "بانتظار استكمال الملف الشخصي" : (isAvail ? "متاح لاستقبال الطلبات" : "غير متاح (مشغول / نائم)");
       const subsArr = Array.isArray(currentTech.subservices) ? [...currentTech.subservices] : [];
       if(currentTech.otherAppliances && currentTech.service === "صيانة الأجهزة الكهربائية") {
         subsArr.push(`أجهزة أخرى: ${currentTech.otherAppliances}`);
@@ -3482,7 +3554,7 @@ async function renderTechAccount(){
         <div class="stars" style="margin-top:4px">${"★".repeat(Math.round(currentTech.ratingAverage||0))}${"☆".repeat(5-Math.round(currentTech.ratingAverage||0))}</div>
       </div>
       <div class="profile-list-card" style="margin-bottom:0;">
-        <div class="profile-list-row"><span class="profile-list-label">الاختصاص الرئيسي</span><span class="profile-list-value">${esc(currentTech.service)}</span></div>
+        <div class="profile-list-row"><span class="profile-list-label">الاختصاص الرئيسي</span><span class="profile-list-value">${esc(currentTech.service || "غير محدد")}</span></div>
         <div class="profile-list-row"><span class="profile-list-label">التخصصات الفرعية</span><span class="profile-list-value">${esc(subsText)}</span></div>
         <div class="profile-list-row"><span class="profile-list-label">رقم الهاتف</span><span class="profile-list-value">${esc(currentTech.phone || "غير مضاف (مطلوب لاستلام الطلبات)")}</span></div>
         <div class="profile-list-row"><span class="profile-list-label">البريد الإلكتروني</span><span class="profile-list-value">${esc(currentTech.email || "غير مضاف")}</span></div>
@@ -3672,7 +3744,7 @@ async function saveTechAccountProfile() {
     await syncPublicTechnician(uid, updated);
     await logUserAccount(uid, { name, phone, email, role: "فني", service, city, area });
     currentTech = updated;
-    showCustomAlert("تم حفظ وتحديث تعديلات البروفايل بنجاح!");
+    showCustomAlert("تم حفظ وتفعيل ملفك الشخصي بنجاح!");
     closeModal('techEditModal');
     renderTechAccount();
     loadPublicTechs();
