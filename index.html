@@ -120,7 +120,7 @@ header {
   background: linear-gradient(155deg, var(--navy-mid) 0%, var(--teal-calm) 45%, var(--teal-deep) 100%);
   color: #ffffff;
   border: 1.5px solid var(--gold-bright);
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 900;
   display: inline-flex;
   align-items: center;
@@ -253,7 +253,9 @@ header {
   font-weight: 800;
   font-size: 13px;
   position: absolute;
+  left: 0;
   will-change: transform;
+  padding: 0 16px;
 }
 
 .hero-banner {
@@ -323,6 +325,29 @@ header {
   box-shadow: var(--btn-3d-teal);
 }
 .role-btn:active { transform: translateY(3px); }
+
+.auth-method-switch {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.auth-method-btn {
+  flex: 1;
+  padding: 8px 10px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 800;
+  border: 1.5px solid var(--border-gold);
+  background: var(--bg-soft);
+  color: var(--navy);
+  transition: all 0.15s;
+}
+.auth-method-btn.active {
+  background: linear-gradient(155deg, var(--navy-mid) 0%, var(--teal-calm) 45%, var(--teal-deep) 100%);
+  color: #ffffff;
+  border-color: var(--gold-bright);
+  box-shadow: 0 3px 0 var(--teal-shadow);
+}
 
 .cta-btn {
   background: linear-gradient(155deg, var(--navy-mid) 0%, var(--teal-calm) 45%, var(--teal-deep) 100%);
@@ -963,7 +988,7 @@ footer {
 <header>
  <div class="header-top-row">
   <div class="header-right-slot">
-   <button type="button" class="back-icon-btn" onclick="goBackSmart()" title="رجوع">➔</button>
+   <button type="button" class="back-icon-btn" onclick="goBackSmart()" title="رجوع">←</button>
   </div>
 
   <div class="header-center-slot">
@@ -1098,16 +1123,26 @@ footer {
 
 <section id="join" class="container hidden">
  <h2 class="section-title">انضم إلى شبكة فنيي صخر</h2>
- <form class="card" style="max-width:700px;margin:0 auto" onsubmit="event.preventDefault(); registerTechWithPassword();">
-  <div class="notice">للفني 3 أعمال مجاناً بالكامل، وبعدها يحتاج لاشتراك شهري أو سنوي لمواصلة استقبال الطلبات بلا حدود. التسجيل آمن برقم الهاتف وكلمة السر أو بحساب جوجل.</div>
+ <form class="card" style="max-width:700px;margin:0 auto" onsubmit="event.preventDefault(); registerTechFlexible();">
+  <div class="notice">للفني 3 أعمال مجاناً بالكامل، وبعدها يحتاج لاشتراك شهري أو سنوي لمواصلة استقبال الطلبات بلا حدود. يمكنك التسجيل برقم الهاتف أو بالبريد الإلكتروني أو بحساب جوجل.</div>
   <button type="button" class="btn google-btn" style="width:100%; margin-bottom:10px; padding:10px;" onclick="signInWithGoogleRole('technician')">
    <span>🌐</span> التسجيل أو الدخول بحساب جوجل (للفني)
   </button>
+
+  <div class="auth-method-switch">
+   <button type="button" class="auth-method-btn active" id="techRegModePhoneBtn" onclick="switchTechRegAuthMode('phone')">📱 التسجيل برقم الهاتف</button>
+   <button type="button" class="auth-method-btn" id="techRegModeEmailBtn" onclick="switchTechRegAuthMode('email')">📧 التسجيل بالبريد الإلكتروني</button>
+  </div>
+
   <div class="row">
    <div class="field"><label>الاسم الكامل</label><input id="regName" placeholder="الاسم الكامل"></div>
-   <div class="field"><label>رقم الهاتف</label><input id="regPhone" inputmode="tel" placeholder="07XXXXXXXXX"></div>
+   <div class="field"><label>رقم الهاتف (للتواصل والواتساب)</label><input id="regPhone" inputmode="tel" placeholder="07XXXXXXXXX"></div>
   </div>
   <div class="row">
+   <div class="field hidden" id="regEmailField">
+    <label>البريد الإلكتروني (لتسجيل الدخول)</label>
+    <input id="regEmail" type="email" inputmode="email" placeholder="example@gmail.com">
+   </div>
    <div class="field">
     <label>كلمة المرور الخاصة بالحساب</label>
     <div class="password-wrapper">
@@ -1306,12 +1341,20 @@ footer {
 <div class="modal hidden" id="customerAccountModal">
  <div class="modal-box">
   <div class="modal-head"><h3>تسجيل حساب الزبون وتحديد الموقع</h3><div class="close" onclick="closeModal('customerAccountModal')">✕</div></div>
-  <div class="notice">سجّل بحساب جوجل أو برقم الهاتف لتحديد موقعك وطلب الخدمات:</div>
+  <div class="notice">أنت مخير بالتسجيل بحساب جوجل، أو برقم الهاتف، أو بالبريد الإلكتروني:</div>
   <button type="button" class="btn google-btn" style="width:100%; margin-bottom:10px; padding:10px;" onclick="signInWithGoogleRole('customer')">
    <span>🌐</span> متابعة بحساب جوجل (Google)
   </button>
+
+  <div class="auth-method-switch">
+   <button type="button" class="auth-method-btn active" id="custRegModePhoneBtn" onclick="switchCustRegAuthMode('phone')">📱 برقم الهاتف</button>
+   <button type="button" class="auth-method-btn" id="custRegModeEmailBtn" onclick="switchCustRegAuthMode('email')">📧 بالبريد الإلكتروني</button>
+  </div>
+
   <div class="field"><label>الاسم الكامل</label><input id="custRegName" placeholder="الاسم الكامل"></div>
-  <div class="field"><label>رقم الهاتف</label><input id="custRegPhone" inputmode="tel" placeholder="07XXXXXXXXX"></div>
+  <div class="field" id="custRegPhoneField"><label>رقم الهاتف</label><input id="custRegPhone" inputmode="tel" placeholder="07XXXXXXXXX"></div>
+  <div class="field hidden" id="custRegEmailField"><label>البريد الإلكتروني</label><input id="custRegEmail" type="email" inputmode="email" placeholder="example@gmail.com"></div>
+  <div class="field hidden" id="custRegOptionalPhoneField"><label>رقم الهاتف (اختياري الآن - يُطلب عند أول طلب)</label><input id="custRegOptionalPhone" inputmode="tel" placeholder="07XXXXXXXXX"></div>
   <div class="field">
    <label>كلمة المرور (الباسورد)</label>
    <div class="password-wrapper">
@@ -1324,6 +1367,7 @@ footer {
    <div class="field"><label>القضاء</label><select id="custRegArea" disabled><option value="">اختر المحافظة أولاً</option></select></div>
   </div>
   <button class="btn primary" style="width:100%; margin-top:10px;" onclick="submitCustomerRegistration()">حفظ الدخول والمتابعة</button>
+  <button type="button" class="btn light" style="width:100%; margin-top:6px;" onclick="closeModal('customerAccountModal'); openLogin();">لدي حساب مسبقاً (تسجيل الدخول)</button>
   <div id="custRegMessage"></div>
  </div>
 </div>
@@ -1445,7 +1489,7 @@ footer {
    <button type="button" class="btn google-btn" style="width:100%; margin-bottom:10px; padding:10px;" onclick="signInWithGoogleRole('auto')">
     <span>🌐</span> الدخول بحساب جوجل (Google)
    </button>
-   <div class="field"><label>رقم الهاتف أو البريد الإلكتروني</label><input id="loginPhone" placeholder="07XXXXXXXXX أو البريد الإلكتروني"></div>
+   <div class="field"><label>رقم الهاتف أو البريد الإلكتروني</label><input id="loginPhone" placeholder="07XXXXXXXXX أو example@gmail.com"></div>
    <div class="field">
     <label>كلمة المرور</label>
     <div class="password-wrapper">
@@ -1571,15 +1615,71 @@ let preferredGoogleRole="auto";
 let pendingAfterPhoneCheck=null;
 let announcementTimer=null;
 let pendingAfterGate=null;
+let custRegAuthMode="phone";
+let techRegAuthMode="phone";
 
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+function normalizeIraqiPhone(raw) {
+  let d = String(raw || "").trim().replace(/[\s\-().+]/g, "");
+  d = d.replace(/[٠-٩]/g, ch => "٠١٢٣٤٥٦٧٨٩".indexOf(ch));
+  if (d.startsWith("00964")) d = "0" + d.slice(5);
+  else if (d.startsWith("964")) d = "0" + d.slice(3);
+  else if (d.length === 10 && d.startsWith("7")) d = "0" + d;
+  return d;
+}
+
+function isValidIraqiPhone(phone) {
+  const norm = normalizeIraqiPhone(phone);
+  return /^07[3-9]\d{8}$/.test(norm);
+}
+
+function isValidEmailAddress(val) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(val || "").trim());
+}
+
+function buildAuthEmailFromInput(rawIdentifier) {
+  const trimmed = String(rawIdentifier || "").trim();
+  if (trimmed.includes("@")) {
+    return trimmed.toLowerCase();
+  }
+  const normPhone = normalizeIraqiPhone(trimmed);
+  return normPhone + "@sakhr.app";
+}
+
 const formatWhatsApp=phone=>{
-  let clean=(phone||"").replace(/\D/g,'');
+  let clean = normalizeIraqiPhone(phone).replace(/\D/g,'');
   if(clean.startsWith('0')) clean='964'+clean.substring(1);
   else if(!clean.startsWith('964')&&clean.length===10) clean='964'+clean;
   return clean;
 };
+
+function switchCustRegAuthMode(mode) {
+  custRegAuthMode = mode === "email" ? "email" : "phone";
+  $("custRegModePhoneBtn")?.classList.toggle("active", custRegAuthMode === "phone");
+  $("custRegModeEmailBtn")?.classList.toggle("active", custRegAuthMode === "email");
+  if (custRegAuthMode === "phone") {
+    $("custRegPhoneField")?.classList.remove("hidden");
+    $("custRegEmailField")?.classList.add("hidden");
+    $("custRegOptionalPhoneField")?.classList.add("hidden");
+  } else {
+    $("custRegPhoneField")?.classList.add("hidden");
+    $("custRegEmailField")?.classList.remove("hidden");
+    $("custRegOptionalPhoneField")?.classList.remove("hidden");
+  }
+}
+
+function switchTechRegAuthMode(mode) {
+  techRegAuthMode = mode === "email" ? "email" : "phone";
+  $("techRegModePhoneBtn")?.classList.toggle("active", techRegAuthMode === "phone");
+  $("techRegModeEmailBtn")?.classList.toggle("active", techRegAuthMode === "email");
+  if (techRegAuthMode === "phone") {
+    $("regEmailField")?.classList.add("hidden");
+  } else {
+    $("regEmailField")?.classList.remove("hidden");
+  }
+}
 
 function getEffectiveSubscriptionInfo(tech) {
   const planType = tech?.subscriptionType || "none";
@@ -1613,6 +1713,14 @@ function getEffectiveSubscriptionInfo(tech) {
     expiresAt: 0,
     label: "غير فعال"
   };
+}
+
+function canTechAcceptMoreJobs(tech) {
+  if (!tech) return false;
+  const subInfo = getEffectiveSubscriptionInfo(tech);
+  if (subInfo.isActive) return true;
+  const freeUsed = Number(tech.freeJobsUsed || 0);
+  return freeUsed < 3;
 }
 
 async function checkAndExpireSubscriptionIfNeeded(uid, tech) {
@@ -1668,6 +1776,9 @@ function goBackSmart() {
 }
 
 function navigateToSection(id) {
+  if (id === "home" || id === "services") {
+    currentSelectedSubservice = "";
+  }
   showSection(id, true);
 }
 
@@ -1691,10 +1802,10 @@ function isUserEntered() {
 function hasValidPhoneConfigured() {
   if(currentRole === "admin") return true;
   if(["technician", "suspended"].includes(currentRole)) {
-    return Boolean(currentTech && String(currentTech.phone || "").trim());
+    return Boolean(currentTech && isValidIraqiPhone(currentTech.phone || ""));
   }
   const phone = localStorage.getItem("sakhrCustomerPhone") || "";
-  return Boolean(phone.trim());
+  return Boolean(isValidIraqiPhone(phone));
 }
 
 function openPhoneRequiredModal(afterCallback) {
@@ -1722,12 +1833,15 @@ function openPhoneRequiredModal(afterCallback) {
 
 async function saveRequiredPhoneProfile() {
   const name = $("reqPhoneName").value.trim();
-  const phone = $("reqPhoneNumber").value.trim();
+  const phone = normalizeIraqiPhone($("reqPhoneNumber").value);
   const city = $("reqPhoneCity").value;
   const area = $("reqPhoneArea").value;
 
   if(!name || !phone || !city || !area) {
     return showCustomAlert("يرجى إدخال الاسم ورقم الهاتف والمحافظة والقضاء لإتمام التفعيل.");
+  }
+  if(!isValidIraqiPhone(phone)) {
+    return showCustomAlert("يرجى إدخال رقم هاتف عراقي صحيح مكون من 11 رقماً يبدأ بـ 07.");
   }
 
   try {
@@ -2001,8 +2115,11 @@ function handleCustomerRoleEntry() {
   if(!savedName) {
     $("custRegName").value = "";
     $("custRegPhone").value = "";
+    $("custRegEmail").value = "";
+    $("custRegOptionalPhone").value = "";
     $("custRegPassword").value = "";
     $("custRegMessage").innerHTML = "";
+    switchCustRegAuthMode("phone");
     $("customerAccountModal").classList.remove("hidden");
   } else {
     const savedCity = localStorage.getItem("sakhrCustomerCity") || "";
@@ -2095,7 +2212,7 @@ function setDistricts(id, city){
 }
 
 function checkInitialStartupModals() {
-  if(currentRole === "admin" || ["technician", "suspended"].includes(currentRole) || currentUser) return;
+  if(currentRole === "admin" || ["technician", "suspended"].includes(currentRole) || (currentUser && !currentUser.isAnonymous)) return;
   const termsAccepted = localStorage.getItem("sakhrTermsAccepted");
   if(!termsAccepted) {
     $("termsCheckbox").checked = false;
@@ -2141,6 +2258,7 @@ async function finalizeGoogleUserSession(gUser, roleHint = "auto") {
   if(techSnap.exists() || roleHint === "technician") {
     let techData = techSnap.exists() ? techSnap.val() : {
       name: gUser.displayName || "فني صخر",
+      email: gUser.email || "",
       phone: "",
       city: "",
       area: "",
@@ -2182,7 +2300,7 @@ async function finalizeGoogleUserSession(gUser, roleHint = "auto") {
     updateNavAuthButton();
     navigateToSection("techAccount");
     renderTechAccount();
-    if(!String(techData.phone || "").trim()) {
+    if(!isValidIraqiPhone(techData.phone || "")) {
       openPhoneRequiredModal(runPendingGateAction);
     } else {
       runPendingGateAction();
@@ -2199,6 +2317,7 @@ async function finalizeGoogleUserSession(gUser, roleHint = "auto") {
 
   localStorage.setItem("sakhrCustomerName", custName);
   localStorage.setItem("sakhrCustomerUid", gUser.uid);
+  if(gUser.email) localStorage.setItem("sakhrCustomerEmail", gUser.email);
   if(custPhone) localStorage.setItem("sakhrCustomerPhone", custPhone);
   if(custCity) {
     localStorage.setItem("sakhrCustomerCity", custCity);
@@ -2222,7 +2341,7 @@ async function finalizeGoogleUserSession(gUser, roleHint = "auto") {
   closeModal("customerAccountModal");
   updateNavAuthButton();
 
-  if(!custPhone.trim() || !custCity || !custArea) {
+  if(!isValidIraqiPhone(custPhone) || !custCity || !custArea) {
     openPhoneRequiredModal(runPendingGateAction);
   } else if(!isCityActive(custCity)) {
     pendingAfterGate = null;
@@ -2252,24 +2371,45 @@ async function signInWithGoogleRole(roleHint = "auto") {
 
 async function submitCustomerRegistration(){
   const name = $("custRegName").value.trim();
-  const phone = $("custRegPhone").value.trim();
   const password = $("custRegPassword").value;
   const city = $("custRegCity").value;
   const area = $("custRegArea").value;
 
-  if(!name || !phone || !password || !city || !area) {
-    showCustomAlert("يرجى إكمال جميع الحقول (الاسم، الهاتف، الباسورد، المحافظة والقضاء).");
-    return;
+  let authEmail = "";
+  let cleanPhone = "";
+  let realEmail = "";
+
+  if (custRegAuthMode === "phone") {
+    cleanPhone = normalizeIraqiPhone($("custRegPhone").value);
+    if (!name || !cleanPhone || !password || !city || !area) {
+      return showCustomAlert("يرجى إكمال جميع الحقول (الاسم، رقم الهاتف، الباسورد، المحافظة والقضاء).");
+    }
+    if (!isValidIraqiPhone(cleanPhone)) {
+      return showCustomAlert("يرجى إدخال رقم هاتف عراقي صحيح مكون من 11 رقماً يبدأ بـ 07.");
+    }
+    authEmail = cleanPhone + "@sakhr.app";
+  } else {
+    realEmail = $("custRegEmail").value.trim().toLowerCase();
+    cleanPhone = normalizeIraqiPhone($("custRegOptionalPhone").value);
+    if (!name || !realEmail || !password || !city || !area) {
+      return showCustomAlert("يرجى إكمال جميع الحقول (الاسم، البريد الإلكتروني، الباسورد، المحافظة والقضاء).");
+    }
+    if (!isValidEmailAddress(realEmail)) {
+      return showCustomAlert("يرجى إدخال بريد إلكتروني صحيح.");
+    }
+    if (cleanPhone && !isValidIraqiPhone(cleanPhone)) {
+      return showCustomAlert("رقم الهاتف الاختياري غير صحيح، اكتب 11 رقماً يبدأ بـ 07 أو اتركه فارغاً الآن.");
+    }
+    authEmail = realEmail;
   }
 
   try {
-    const emailPseudo = phone + "@sakhr.app";
     let userUid = "";
     try {
-      const res = await auth.createUserWithEmailAndPassword(emailPseudo, password);
+      const res = await auth.createUserWithEmailAndPassword(authEmail, password);
       userUid = res.user.uid;
     } catch(e) {
-      const res = await auth.signInWithEmailAndPassword(emailPseudo, password);
+      const res = await auth.signInWithEmailAndPassword(authEmail, password);
       userUid = res.user.uid;
     }
 
@@ -2278,11 +2418,20 @@ async function submitCustomerRegistration(){
     localStorage.setItem("sakhrCustomerCity", city);
     localStorage.setItem("sakhrCustomerArea", area);
     localStorage.setItem("sakhrCustomerName", name);
-    localStorage.setItem("sakhrCustomerPhone", phone);
     localStorage.setItem("sakhrCustomerUid", userUid);
+    if (cleanPhone) localStorage.setItem("sakhrCustomerPhone", cleanPhone);
+    else localStorage.removeItem("sakhrCustomerPhone");
+    if (realEmail) localStorage.setItem("sakhrCustomerEmail", realEmail);
+    else localStorage.removeItem("sakhrCustomerEmail");
 
     await logUserAccount(userUid, {
-      name, phone, role: "زبون", city, area, registeredAt: Date.now()
+      name,
+      phone: cleanPhone,
+      email: realEmail || authEmail,
+      role: "زبون",
+      city,
+      area,
+      registeredAt: Date.now()
     });
 
     closeModal("customerAccountModal");
@@ -2303,6 +2452,7 @@ async function submitCustomerRegistration(){
 function renderCustomerAccount() {
   const name = localStorage.getItem("sakhrCustomerName") || "زبون صخر";
   const phone = localStorage.getItem("sakhrCustomerPhone") || "غير محدد (مطلوب للطلبات)";
+  const email = localStorage.getItem("sakhrCustomerEmail") || "غير مضاف";
   const city = localStorage.getItem("sakhrCustomerCity") || "غير محدد";
   const area = localStorage.getItem("sakhrCustomerArea") || "غير محدد";
   const neighborhood = localStorage.getItem("sakhrCustomerNeighborhood") || "غير مضاف";
@@ -2313,6 +2463,7 @@ function renderCustomerAccount() {
     $("custProfileListBox").innerHTML = `
       <div class="profile-list-row"><span class="profile-list-label">الاسم الكامل</span><span class="profile-list-value">${esc(name)}</span></div>
       <div class="profile-list-row"><span class="profile-list-label">رقم الهاتف</span><span class="profile-list-value">${esc(phone)}</span></div>
+      <div class="profile-list-row"><span class="profile-list-label">البريد الإلكتروني</span><span class="profile-list-value">${esc(email)}</span></div>
       <div class="profile-list-row"><span class="profile-list-label">المحافظة</span><span class="profile-list-value">${esc(city)}</span></div>
       <div class="profile-list-row"><span class="profile-list-label">القضاء</span><span class="profile-list-value">${esc(area)}</span></div>
       <div class="profile-list-row"><span class="profile-list-label">الحي / المنطقة</span><span class="profile-list-value">${esc(neighborhood)}</span></div>
@@ -2342,7 +2493,7 @@ function openCustomerEditModal() {
 
 async function saveCustomerAccountProfile() {
   const name = $("editCustName").value.trim();
-  const phone = $("editCustPhone").value.trim();
+  const phone = normalizeIraqiPhone($("editCustPhone").value);
   const city = $("editCustCity").value;
   const area = $("editCustArea").value;
   const neighborhood = $("editCustNeighborhood").value.trim();
@@ -2350,6 +2501,9 @@ async function saveCustomerAccountProfile() {
 
   if(!name || !phone || !city || !area) {
     return showCustomAlert("يرجى إكمال الحقول الأساسية (الاسم، رقم الهاتف، المحافظة والقضاء).");
+  }
+  if(!isValidIraqiPhone(phone)) {
+    return showCustomAlert("يرجى إدخال رقم هاتف عراقي صحيح مكون من 11 رقماً يبدأ بـ 07.");
   }
 
   localStorage.setItem("sakhrCustomerName", name);
@@ -2381,9 +2535,10 @@ async function saveCustomerAccountProfile() {
 }
 
 function logoutCustomer() {
-  showCustomConfirm("هل أنت متأكد من تسجيل الخروج من حساب الزبون؟", () => {
+  showCustomConfirm("هل أنت متأكد من تسجيل الخروج من حساب الزبون؟", async () => {
     localStorage.removeItem("sakhrCustomerName");
     localStorage.removeItem("sakhrCustomerPhone");
+    localStorage.removeItem("sakhrCustomerEmail");
     localStorage.removeItem("sakhrCustomerCity");
     localStorage.removeItem("sakhrCustomerArea");
     localStorage.removeItem("sakhrCustomerNeighborhood");
@@ -2391,6 +2546,9 @@ function logoutCustomer() {
     localStorage.removeItem("sakhrCustomerUid");
     chosenCustomerCity = "";
     chosenCustomerArea = "";
+    if(auth && currentUser && !currentUser.isAnonymous) {
+      try { await auth.signOut(); } catch(_) {}
+    }
     updateNavAuthButton();
     showCustomAlert("تم تسجيل الخروج بنجاح.");
     navigateToSection("home");
@@ -2411,7 +2569,7 @@ function buildServiceCardsHtml(list, iconMap) {
     <div class="service-card" onclick="requireGate(() => filterByService('${esc(s)}'))">
       <div class="service-icon">${iconContent}</div>
       <h3>${esc(s)}</h3>
-      <div class="arrow-badge">➔</div>
+      <div class="arrow-badge">←</div>
     </div>`;
   }).join("");
 }
@@ -2553,7 +2711,7 @@ async function onAuthChanged(user){
     if(user.email !== ADMIN_EMAIL && !user.isAnonymous) {
       await logUserAccount(user.uid, {
         email: user.email || "",
-        role: currentRole === "technician" ? "فني" : "زبون/مسجل"
+        role: ["technician", "suspended"].includes(currentRole) ? "فني" : "زبون"
       });
     }
 
@@ -2572,6 +2730,19 @@ async function onAuthChanged(user){
       navigateToSection("techAccount");
       renderTechAccount();
       runPendingGateAction();
+    } else if(currentRole === "customer_auth") {
+      const accSnap = await db.ref("allAccounts/" + user.uid).once("value");
+      if(accSnap.exists()) {
+        const acc = accSnap.val();
+        if(acc.name) localStorage.setItem("sakhrCustomerName", acc.name);
+        if(acc.phone) localStorage.setItem("sakhrCustomerPhone", acc.phone);
+        if(acc.email) localStorage.setItem("sakhrCustomerEmail", acc.email);
+        if(acc.city) { localStorage.setItem("sakhrCustomerCity", acc.city); chosenCustomerCity = acc.city; }
+        if(acc.area) { localStorage.setItem("sakhrCustomerArea", acc.area); chosenCustomerArea = acc.area; }
+        localStorage.setItem("sakhrCustomerUid", user.uid);
+        updateNavAuthButton();
+      }
+      checkInitialStartupModals();
     } else {
       checkInitialStartupModals();
     }
@@ -2593,7 +2764,7 @@ async function syncPublicTechnician(uid, p){
   const subInfo = getEffectiveSubscriptionInfo(p);
   const data = {
     uid,
-    name: p.name||"", phone: p.phone||"", city: p.city||"", area: p.area||"",
+    name: p.name||"", phone: p.phone||"", email: p.email||"", city: p.city||"", area: p.area||"",
     neighborhood: p.neighborhood||"", service: p.service||"",
     subservices: Array.isArray(p.subservices) ? p.subservices : [],
     otherAppliances: p.otherAppliances||"",
@@ -2609,9 +2780,10 @@ async function syncPublicTechnician(uid, p){
   await db.ref("publicTechnicians/"+uid).update(data);
 }
 
-async function registerTechWithPassword(){
+async function registerTechFlexible(){
   const name = $("regName").value.trim();
-  const phone = $("regPhone").value.trim();
+  const phone = normalizeIraqiPhone($("regPhone").value);
+  const realEmail = techRegAuthMode === "email" ? ($("regEmail").value.trim().toLowerCase()) : "";
   const password = $("regPassword").value;
   const city = $("regCity").value;
   const area = $("regArea").value;
@@ -2622,20 +2794,27 @@ async function registerTechWithPassword(){
   const bio = $("regBio").value.trim();
   const file = $("regPhoto").files[0];
 
-  if(!name || !phone || !password || !city || !area || !service)
+  if(!name || !phone || !password || !city || !area || !service) {
     return showCustomAlert("أكمل جميع الحقول الأساسية للفني (الاسم، الهاتف، الباسورد، المحافظة، القضاء والاختصاص).");
+  }
+  if(!isValidIraqiPhone(phone)) {
+    return showCustomAlert("يرجى إدخال رقم هاتف عراقي صحيح مكون من 11 رقماً يبدأ بـ 07.");
+  }
+  if(techRegAuthMode === "email" && !isValidEmailAddress(realEmail)) {
+    return showCustomAlert("يرجى إدخال بريد إلكتروني صحيح للتسجيل.");
+  }
 
   let createdUser = null, profileSaved = false;
   try{
-    const emailPseudo = phone + "@sakhr.app";
-    const c = await auth.createUserWithEmailAndPassword(emailPseudo, password);
+    const authEmail = techRegAuthMode === "email" ? realEmail : (phone + "@sakhr.app");
+    const c = await auth.createUserWithEmailAndPassword(authEmail, password);
     createdUser = c.user;
     
     let photoURL = "";
     if(file) photoURL = await uploadTechPhoto(createdUser.uid, file);
 
     const profile = {
-      name, phone, city, area, neighborhood, service, subservices, otherAppliances, bio, extraInfo: "", photoURL,
+      name, phone, email: realEmail || "", city, area, neighborhood, service, subservices, otherAppliances, bio, extraInfo: "", photoURL,
       approved: true, available: true, subscriptionStatus: "غير فعال", subscriptionType: "none",
       subscriptionExpiresAt: 0, freeJobsUsed: 0, completedJobs: 0,
       ratingSum: 0, ratingCount: 0, ratingAverage: 0, createdAt: Date.now()
@@ -2646,7 +2825,7 @@ async function registerTechWithPassword(){
     await syncPublicTechnician(createdUser.uid, profile);
 
     await logUserAccount(createdUser.uid, {
-      name, phone, role: "فني", service, city, area, registeredAt: Date.now()
+      name, phone, email: realEmail || authEmail, role: "فني", service, city, area, registeredAt: Date.now()
     });
 
     currentUser = createdUser; currentRole = "technician"; currentTech = profile;
@@ -2677,22 +2856,35 @@ async function loginWithPhonePassword(){
       return;
     }
 
-    let emailPseudo = inputVal;
-    if(!inputVal.includes("@")) {
-      emailPseudo = inputVal + "@sakhr.app";
-    }
-
+    const emailPseudo = buildAuthEmailFromInput(inputVal);
     const c = await auth.signInWithEmailAndPassword(emailPseudo, password);
-    
-    await logUserAccount(c.user.uid, {
-      email: emailPseudo,
-      role: "مسجل دخول",
-      loginTime: Date.now()
-    });
 
     const s = await db.ref("technicians/"+c.user.uid).once("value");
     if(!s.exists()){
-      currentRole = "customer";
+      currentRole = "customer_auth";
+      const accSnap = await db.ref("allAccounts/"+c.user.uid).once("value");
+      const acc = accSnap.exists() ? accSnap.val() : {};
+      const cName = acc.name || "زبون صخر";
+      const cPhone = acc.phone || (!inputVal.includes("@") ? normalizeIraqiPhone(inputVal) : "");
+      const cEmail = acc.email || (inputVal.includes("@") ? inputVal.toLowerCase() : "");
+      const cCity = acc.city || "";
+      const cArea = acc.area || "";
+
+      localStorage.setItem("sakhrCustomerName", cName);
+      localStorage.setItem("sakhrCustomerUid", c.user.uid);
+      if(cPhone) localStorage.setItem("sakhrCustomerPhone", cPhone);
+      if(cEmail) localStorage.setItem("sakhrCustomerEmail", cEmail);
+      if(cCity) { localStorage.setItem("sakhrCustomerCity", cCity); chosenCustomerCity = cCity; }
+      if(cArea) { localStorage.setItem("sakhrCustomerArea", cArea); chosenCustomerArea = cArea; }
+
+      await logUserAccount(c.user.uid, {
+        name: cName,
+        phone: cPhone,
+        email: cEmail || emailPseudo,
+        role: "زبون",
+        loginTime: Date.now()
+      });
+
       closeModal("loginModal");
       closeModal("termsModal");
       closeModal("roleSelectionModal");
@@ -2703,11 +2895,20 @@ async function loginWithPhonePassword(){
       runPendingGateAction();
       return;
     }
+
     const checkedTech = await checkAndExpireSubscriptionIfNeeded(c.user.uid, s.val());
     currentRole = checkedTech.approved === false ? "suspended" : "technician";
     currentTech = checkedTech;
-    updateNavAuthButton();
 
+    await logUserAccount(c.user.uid, {
+      name: checkedTech.name || "",
+      phone: checkedTech.phone || "",
+      email: checkedTech.email || emailPseudo,
+      role: "فني",
+      loginTime: Date.now()
+    });
+
+    updateNavAuthButton();
     closeModal("loginModal");
     closeModal("termsModal");
     closeModal("roleSelectionModal");
@@ -2722,7 +2923,7 @@ async function loginWithPhonePassword(){
 
 async function submitForgotPasswordRequest() {
   const name = $("forgotName").value.trim();
-  const phone = $("forgotPhone").value.trim();
+  const phone = normalizeIraqiPhone($("forgotPhone").value);
   if(!name || !phone) {
     showCustomAlert("يرجى إدخال الاسم ورقم الهاتف المسجل.");
     return;
@@ -2827,8 +3028,9 @@ function renderPublicTechs(){
   }
   el.innerHTML = list.map(t=>{
     const isAvail = t.available !== false;
-    const dotClass = isAvail ? "online-dot" : "offline-dot";
-    const statusText = isAvail ? "متاح" : "غير متاح";
+    const hasQuota = canTechAcceptMoreJobs(t);
+    const dotClass = (isAvail && hasQuota) ? "online-dot" : "offline-dot";
+    const statusText = !hasQuota ? "مكتمل الرصيد" : (isAvail ? "متاح" : "غير متاح");
     const subsArr = Array.isArray(t.subservices) ? [...t.subservices] : [];
     if(t.otherAppliances && t.service === "صيانة الأجهزة الكهربائية") {
       subsArr.push(`أجهزة أخرى: ${t.otherAppliances}`);
@@ -2836,7 +3038,7 @@ function renderPublicTechs(){
     const subsHtml = subsArr.length ? `<div class="sub-badge">${esc(subsArr.join(" • "))}</div>` : "";
     return `
     <div class="tech-card">
-      <div style="position:absolute;top:10px;left:10px;" title="${statusText}"><span class="${dotClass}"></span> <span style="font-size:10px;font-weight:700;color:${isAvail?'var(--online-dot)':'var(--offline-dot)'}">${statusText}</span></div>
+      <div style="position:absolute;top:10px;left:10px;" title="${statusText}"><span class="${dotClass}"></span> <span style="font-size:10px;font-weight:700;color:${(isAvail && hasQuota)?'var(--online-dot)':'var(--offline-dot)'}">${statusText}</span></div>
       ${techPhoto(t)}
       <div style="text-align:center">
         <h4 style="margin:2px 0;font-size:13px;font-weight:900;color:var(--navy);">${esc(t.name)}</h4>
@@ -3090,6 +3292,9 @@ async function chooseServiceDirect(service, techUid){
     }
     selectedTargetTech = publicTechs.find(t => t.uid === techUid);
     if(!selectedTargetTech) return showCustomAlert("الفني غير موجود.");
+    if(!canTechAcceptMoreJobs(selectedTargetTech)) {
+      return showCustomAlert("عذراً، هذا الفني استنفذ رصيده المجاني ولم يجدد اشتراكه بعد. يرجى اختيار فني آخر متاح.");
+    }
     const subTitle = currentSelectedSubservice ? ` - ${currentSelectedSubservice}` : "";
     $("orderModalTitle").innerText = "طلب الفني: " + selectedTargetTech.name + subTitle;
     $("custOrderProblem").value = "";
@@ -3103,7 +3308,7 @@ async function submitCustomerOrder() {
   const custName = localStorage.getItem("sakhrCustomerName") || "زبون صخر";
   const custPhone = localStorage.getItem("sakhrCustomerPhone") || "";
 
-  if(!custPhone.trim()) {
+  if(!isValidIraqiPhone(custPhone)) {
     closeModal("customerOrderModal");
     openPhoneRequiredModal(submitCustomerOrder);
     return;
@@ -3115,7 +3320,9 @@ async function submitCustomerOrder() {
   }
 
   try {
-    let custId = currentUser ? currentUser.uid : (localStorage.getItem("sakhrCustomerUid") || "cust_" + Date.now());
+    let custId = (currentUser && !currentUser.isAnonymous) ? currentUser.uid : (localStorage.getItem("sakhrCustomerUid") || ("cust_" + normalizeIraqiPhone(custPhone)));
+    localStorage.setItem("sakhrCustomerUid", custId);
+
     const techUid = selectedTargetTech.uid;
     const id = db.ref("requests/"+custId).push().key;
     const now = Date.now();
@@ -3188,6 +3395,7 @@ async function renderTechAccount(){
         <div class="profile-list-row"><span class="profile-list-label">الاختصاص الرئيسي</span><span class="profile-list-value">${esc(currentTech.service)}</span></div>
         <div class="profile-list-row"><span class="profile-list-label">التخصصات الفرعية</span><span class="profile-list-value">${esc(subsText)}</span></div>
         <div class="profile-list-row"><span class="profile-list-label">رقم الهاتف</span><span class="profile-list-value">${esc(currentTech.phone || "غير مضاف (مطلوب لاستلام الطلبات)")}</span></div>
+        ${currentTech.email ? `<div class="profile-list-row"><span class="profile-list-label">البريد الإلكتروني</span><span class="profile-list-value">${esc(currentTech.email)}</span></div>` : ''}
         <div class="profile-list-row"><span class="profile-list-label">المحافظة والقضاء</span><span class="profile-list-value">${esc(currentTech.city || "---")} / ${esc(currentTech.area || "---")}</span></div>
         <div class="profile-list-row"><span class="profile-list-label">المنطقة / الحي</span><span class="profile-list-value">${esc(currentTech.neighborhood || "غير محدد")}</span></div>
         <div class="profile-list-row"><span class="profile-list-label">نبذة الخبرة</span><span class="profile-list-value">${esc(currentTech.bio || "لا توجد نبذة")}</span></div>
@@ -3267,6 +3475,8 @@ async function renderTechAccount(){
             let actionsHtml = `<div class="actions"><button type="button" class="btn secondary" onclick="openOrderChatModal('${esc(x.id)}','${esc(x.service)}')">💬 محادثة داخل التطبيق</button>`;
             if(x.status === "بانتظار رد الفني") {
               actionsHtml += `<button type="button" class="btn primary" onclick="technicianDecision('${esc(x.id)}','مقبول')">قبول الطلب</button><button type="button" class="btn danger" onclick="technicianDecision('${esc(x.id)}','مرفوض')">رفض</button>`;
+            } else if(x.status === "مقبول من الفني") {
+              actionsHtml += `<button type="button" class="btn gold-3d" onclick="completeTechnicianJob('${esc(x.id)}')">✅ تأكيد إتمام العمل</button>`;
             }
             actionsHtml += `</div>`;
             jobsHtml += '<div class="list-item"><h4>' + esc(x.service) + ' — ' + esc(x.status) + '</h4><div class="muted">الزبون: <b>' + esc(x.customerName || 'زبون معتمد') + '</b> | التواصل: <b style="color:var(--teal-calm)">داخل التطبيق حصراً</b></div><p style="margin:6px 0">' + esc(x.problem) + '</p>' + actionsHtml + '</div>';
@@ -3281,6 +3491,9 @@ async function renderTechAccount(){
 async function technicianDecision(jobId, decision) {
   if(!currentUser) return;
   const uid = currentUser.uid;
+  if (decision === "مقبول" && !canTechAcceptMoreJobs(currentTech)) {
+    return showCustomAlert("لقد استنفذت رصيدك المجاني (3 أعمال). يرجى مراسلة فريق الدعم لتفعيل اشتراكك قبل قبول طلبات جديدة.");
+  }
   const status = decision === "مقبول" ? "مقبول من الفني" : "مرفوض من الفني";
   try {
     await db.ref("technicianJobs/"+uid+"/"+jobId).update({ status });
@@ -3296,6 +3509,34 @@ async function technicianDecision(jobId, decision) {
   }
 }
 
+async function completeTechnicianJob(jobId) {
+  if(!currentUser || !currentTech) return;
+  const uid = currentUser.uid;
+  try {
+    const snap = await db.ref("technicianJobs/"+uid+"/"+jobId).once("value");
+    if(!snap.exists()) return;
+    const job = snap.val();
+    if(job.countedAsCompleted) return showCustomAlert("تم احتساب هذا العمل مسبقاً.");
+
+    const subInfo = getEffectiveSubscriptionInfo(currentTech);
+    const nextCompleted = Number(currentTech.completedJobs || 0) + 1;
+    const nextFreeUsed = subInfo.isActive ? Number(currentTech.freeJobsUsed || 0) : Math.min(3, Number(currentTech.freeJobsUsed || 0) + 1);
+
+    await db.ref("technicianJobs/"+uid+"/"+jobId).update({ status: "مكتمل", countedAsCompleted: true, completedAt: Date.now() });
+    await db.ref("requests/"+job.customerUid+"/"+jobId).update({ status: "مكتمل", countedAsCompleted: true, completedAt: Date.now() });
+    await db.ref("technicians/"+uid).update({ completedJobs: nextCompleted, freeJobsUsed: nextFreeUsed });
+    await db.ref("publicTechnicians/"+uid).update({ completedJobs: nextCompleted, freeJobsUsed: nextFreeUsed });
+
+    currentTech.completedJobs = nextCompleted;
+    currentTech.freeJobsUsed = nextFreeUsed;
+    showCustomAlert("تم تأكيد إتمام العمل بنجاح وتحديث رصيدك!");
+    renderTechAccount();
+    loadPublicTechs();
+  } catch(e) {
+    showCustomAlert("خطأ: " + e.message);
+  }
+}
+
 async function saveTechAccountProfile() {
   if(!currentUser || !["technician","suspended"].includes(currentRole)) return;
   const uid = currentUser.uid;
@@ -3306,13 +3547,17 @@ async function saveTechAccountProfile() {
   const city = $("editTechCity").value;
   const area = $("editTechArea").value;
   const neighborhood = $("editTechNeighborhood").value.trim();
-  const phone = $("editTechPhone").value.trim();
+  const phone = normalizeIraqiPhone($("editTechPhone").value);
   const bio = $("editTechBio").value.trim();
   const extraInfo = $("editTechExtra").value.trim();
   const file = $("editTechPhotoFile").files[0];
 
   if(!name || !phone || !city || !area || !service) {
     showCustomAlert("أكمل الحقول الأساسية (الاسم، الهاتف، المحافظة، القضاء، الاختصاص).");
+    return;
+  }
+  if(!isValidIraqiPhone(phone)) {
+    showCustomAlert("يرجى إدخال رقم هاتف عراقي صحيح مكون من 11 رقماً يبدأ بـ 07.");
     return;
   }
 
@@ -3387,6 +3632,7 @@ async function resetTechFreeJobs(techUid) {
     await db.ref("publicTechnicians/" + techUid).update({ freeJobsUsed: 0 });
     showCustomAlert("تم تصفير الأعمال المجانية للفني بنجاح.");
     loadAdminData();
+    loadPublicTechs();
   } catch(e) {
     showCustomAlert("خطأ: " + e.message);
   }
@@ -3427,6 +3673,7 @@ async function executeRootUserDeletion(uid, displayName) {
         await db.ref("publicTechnicians/" + uid).remove().catch(()=>{});
         await db.ref("technicianJobs/" + uid).remove().catch(()=>{});
         await db.ref("requests/" + uid).remove().catch(()=>{});
+        await db.ref("supportChats/" + uid).remove().catch(()=>{});
         
         const revSnap = await db.ref("reviews").once("value");
         if(revSnap.exists()) {
@@ -3550,7 +3797,8 @@ function listenToAnnouncements() {
   db.ref("settings/announcements").on("value", snap => {
     let list = (snap.val() || []).filter(x => x && x.trim().length > 0);
     const bar = $("globalAnnouncementBar");
-    if(!bar) return;
+    const container = bar?.parentElement;
+    if(!bar || !container) return;
     
     if(announcementTimer) {
       clearTimeout(announcementTimer);
@@ -3564,17 +3812,24 @@ function listenToAnnouncements() {
     let index = 0;
     function playNextAnnouncement() {
       bar.style.transition = "none";
-      bar.style.transform = "translateX(-100%)";
       bar.innerText = list[index];
+      const containerW = container.offsetWidth || window.innerWidth;
+      const textW = bar.offsetWidth || 300;
+      const startX = -textW;
+      const endX = containerW;
+      const totalDistance = containerW + textW;
+      const durationMs = Math.max(9000, Math.round((totalDistance / 85) * 1000));
+
+      bar.style.transform = `translateX(${startX}px)`;
       void bar.offsetWidth;
       
-      bar.style.transition = "transform 12s linear";
-      bar.style.transform = "translateX(100%)";
+      bar.style.transition = `transform ${durationMs}ms linear`;
+      bar.style.transform = `translateX(${endX}px)`;
       
       announcementTimer = setTimeout(() => {
         index = (index + 1) % list.length;
-        announcementTimer = setTimeout(playNextAnnouncement, 2000);
-      }, 12000);
+        announcementTimer = setTimeout(playNextAnnouncement, 800);
+      }, durationMs);
     }
     playNextAnnouncement();
   });
@@ -3720,7 +3975,7 @@ function renderAdminTechsFullList() {
   if(regBox) {
     const filteredTechs = technicians.filter(t => {
       if(!q) return true;
-      const hay = `${t.name||""} ${t.phone||""} ${t.city||""} ${t.area||""} ${t.neighborhood||""} ${t.service||""}`.toLowerCase();
+      const hay = `${t.name||""} ${t.phone||""} ${t.email||""} ${t.city||""} ${t.area||""} ${t.neighborhood||""} ${t.service||""}`.toLowerCase();
       return hay.includes(q);
     });
 
@@ -3759,6 +4014,7 @@ function renderAdminTechsFullList() {
 
           <div class="profile-list-card" style="margin-bottom:10px; padding:10px 12px;">
             <div class="profile-list-row"><span class="profile-list-label">رقم الهاتف</span><span class="profile-list-value">${esc(t.phone || '---')}</span></div>
+            ${t.email ? `<div class="profile-list-row"><span class="profile-list-label">البريد الإلكتروني</span><span class="profile-list-value">${esc(t.email)}</span></div>` : ''}
             <div class="profile-list-row"><span class="profile-list-label">المحافظة والقضاء</span><span class="profile-list-value">${esc(t.city || '---')} / ${esc(t.area || '---')}</span></div>
             <div class="profile-list-row"><span class="profile-list-label">المنطقة / الحي</span><span class="profile-list-value">${esc(t.neighborhood || 'غير محدد')}</span></div>
             <div class="profile-list-row"><span class="profile-list-label">التخصصات الفرعية</span><span class="profile-list-value">${esc(subsText)}</span></div>
@@ -3789,7 +4045,7 @@ function renderAdminTechsFullList() {
   if(issBox) {
     const filteredIssues = incompleteAccountsList.filter(item => {
       if(!q) return true;
-      const hay = `${item.name||""} ${item.phone||""} ${item.city||""} ${item.area||""} ${item.service||""} ${item.issueText||""} ${item.uid||""}`.toLowerCase();
+      const hay = `${item.name||""} ${item.phone||""} ${item.email||""} ${item.city||""} ${item.area||""} ${item.service||""} ${item.issueText||""} ${item.uid||""}`.toLowerCase();
       return hay.includes(q);
     });
 
