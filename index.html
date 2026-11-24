@@ -1546,7 +1546,7 @@ footer {
   <div class="notice">إذا كنت مسجلاً ببريد إلكتروني، سنرسل رابط إعادة تعيين الرمز مباشرة لبريدك. وإذا لم تسجل ببريد سابقاً، أدخل بريدك الإلكتروني ورقم هاتفك لإرسال الرمز إليك.</div>
   <div class="field"><label>البريد الإلكتروني لإرسال الرمز / الرابط</label><input id="forgotEmail" type="email" inputmode="email" placeholder="example@gmail.com"></div>
   <div class="field"><label>رقم الهاتف (في حال لم تسجل بالبريد مسبقاً)</label><input id="forgotPhone" inputmode="tel" placeholder="07XXXXXXXXX (اختياري)"></div>
-  <button class="btn primary" style="width:100%; margin-top:10px;" onclick="submitForgotPasswordRequest()">📧 إرسال الرمز إلى البريد الإلكتروني</button>
+  <button type="button" class="btn primary" style="width:100%; margin-top:10px;" onclick="submitForgotPasswordRequest()">📧 إرسال الرمز إلى البريد الإلكتروني</button>
  </div>
 </div>
 
@@ -1653,6 +1653,7 @@ let pendingAfterGate=null;
 let custRegAuthMode="phone";
 let techRegAuthMode="phone";
 let isSigningOutFlag=false;
+let isGoogleAuthInProgress=false;
 
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -2462,6 +2463,7 @@ async function finalizeGoogleUserSession(gUser, roleHint = "auto") {
 async function signInWithGoogleRole(roleHint = "auto") {
   if(!auth || !db) return showCustomAlert("تعذر الاتصال بنظام المصادقة حالياً.");
   preferredGoogleRole = roleHint;
+  isGoogleAuthInProgress = true;
   try {
     localStorage.setItem("sakhrPendingGoogleRole", roleHint);
   } catch(_) {}
@@ -2470,10 +2472,28 @@ async function signInWithGoogleRole(roleHint = "auto") {
   provider.setCustomParameters({ prompt: "select_account" });
 
   try {
-    await auth.signInWithRedirect(provider);
-  } catch(e) {
+    const res = await auth.signInWithPopup(provider);
+    isGoogleAuthInProgress = false;
     try { localStorage.removeItem("sakhrPendingGoogleRole"); } catch(_) {}
-    showCustomAlert(formatAuthErrorMessage(e));
+    if(res && res.user) {
+      await finalizeGoogleUserSession(res.user, roleHint);
+    }
+  } catch(e) {
+    if(e.code === "auth/popup-blocked" || e.code === "auth/operation-not-supported-in-this-environment") {
+      try {
+        await auth.signInWithRedirect(provider);
+      } catch(redirErr) {
+        isGoogleAuthInProgress = false;
+        try { localStorage.removeItem("sakhrPendingGoogleRole"); } catch(_) {}
+        showCustomAlert(formatAuthErrorMessage(redirErr));
+      }
+    } else {
+      isGoogleAuthInProgress = false;
+      try { localStorage.removeItem("sakhrPendingGoogleRole"); } catch(_) {}
+      if(e.code !== "auth/popup-closed-by-user" && e.code !== "auth/cancelled-popup-request") {
+        showCustomAlert(formatAuthErrorMessage(e));
+      }
+    }
   }
 }
 
@@ -2775,20 +2795,21 @@ function initFirebase(){
 
     auth.getRedirectResult().then(async (res) => {
       const storedRole = localStorage.getItem("sakhrPendingGoogleRole") || preferredGoogleRole || "auto";
+      try { localStorage.removeItem("sakhrPendingGoogleRole"); } catch(_) {}
+      isGoogleAuthInProgress = false;
       if(res && res.user) {
-        localStorage.removeItem("sakhrPendingGoogleRole");
         await finalizeGoogleUserSession(res.user, storedRole);
-      } else {
-        localStorage.removeItem("sakhrPendingGoogleRole");
       }
     }).catch((err) => {
-      localStorage.removeItem("sakhrPendingGoogleRole");
-      if(err && err.message && !err.message.includes("no pending")) {
+      try { localStorage.removeItem("sakhrPendingGoogleRole"); } catch(_) {}
+      isGoogleAuthInProgress = false;
+      if(err && err.code && err.code !== "auth/no-auth-event") {
         showCustomAlert(formatAuthErrorMessage(err));
       }
+    }).finally(() => {
+      auth.onAuthStateChanged(onAuthChanged);
     });
 
-    auth.onAuthStateChanged(onAuthChanged);
     loadPublicTechs();
     listenToAnnouncements();
     listenToActiveCities();
@@ -2814,9 +2835,9 @@ async function onAuthChanged(user){
   if(techJobsListener) { techJobsListener.off(); techJobsListener = null; }
   if(!user){ 
     updateNavAuthButton();
-    if (!isSigningOutFlag) {
+    if (!isSigningOutFlag && !isGoogleAuthInProgress && !localStorage.getItem("sakhrPendingGoogleRole")) {
       setTimeout(async () => {
-        if (!auth.currentUser && !isSigningOutFlag) {
+        if (!auth.currentUser && !isSigningOutFlag && !isGoogleAuthInProgress) {
           try { await auth.signInAnonymously(); } catch(e) {}
         }
       }, 600);
