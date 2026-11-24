@@ -32,10 +32,14 @@
   --online-dot: #16a34a;
   --offline-dot: #94a3b8;
   --danger-calm: #b91c1c;
+  --danger-deep: #7f1d1d;
+  --danger-shadow: #450a0a;
   --danger-tint: #fef2f2;
   --shadow-soft: 0 6px 20px rgba(5, 35, 52, 0.1);
   --btn-3d-teal: 0 5px 0 #031e2c, 0 8px 16px rgba(6, 56, 80, 0.34);
   --btn-3d-card: 0 6px 0 #031e2c, 0 10px 20px rgba(6, 56, 80, 0.28);
+  --btn-3d-danger: 0 4px 0 #450a0a, 0 7px 14px rgba(127, 29, 29, 0.3);
+  --btn-3d-gold: 0 4px 0 #92670c, 0 7px 14px rgba(180, 128, 16, 0.3);
 }
 
 html { scroll-behavior: smooth; }
@@ -229,11 +233,12 @@ header {
   transform: translateY(2px);
 }
 .drawer-nav-btn.primary-drawer {
-  background: linear-gradient(155deg, var(--navy-mid) 0%, var(--teal-calm) 45%, var(--teal-deep) 100%);
-  color: #ffffff;
-  border-color: var(--gold-bright);
-  box-shadow: var(--btn-3d-teal);
-  margin-top: 4px;
+  background: linear-gradient(155deg, #f7d265 0%, #d4a024 100%);
+  color: var(--navy-deep);
+  border-color: var(--navy);
+  box-shadow: var(--btn-3d-gold);
+  margin-top: 6px;
+  font-weight: 900;
 }
 
 .announcement-container {
@@ -307,23 +312,25 @@ header {
 }
 .role-btn {
   flex: 1;
-  padding: 11px 14px;
+  padding: 12px 14px;
   border-radius: 13px;
-  font-weight: 800;
+  font-weight: 900;
   font-size: 13.5px;
-  transition: transform 0.12s;
+  transition: transform 0.12s, filter 0.15s;
+}
+.role-btn.customer {
   background: linear-gradient(155deg, var(--navy-mid) 0%, var(--teal-calm) 45%, var(--teal-deep) 100%);
   color: #ffffff;
   border: 1.5px solid var(--gold-bright);
   box-shadow: var(--btn-3d-teal);
 }
-.role-btn.customer,
 .role-btn.technician {
-  background: linear-gradient(155deg, var(--navy-mid) 0%, var(--teal-calm) 45%, var(--teal-deep) 100%);
-  color: #ffffff;
-  border: 1.5px solid var(--gold-bright);
-  box-shadow: var(--btn-3d-teal);
+  background: linear-gradient(155deg, #f7d265 0%, #d4a024 100%);
+  color: var(--navy-deep);
+  border: 1.5px solid var(--navy);
+  box-shadow: var(--btn-3d-gold);
 }
+.role-btn:hover { filter: brightness(1.06); }
 .role-btn:active { transform: translateY(3px); }
 
 .auth-method-switch {
@@ -418,22 +425,20 @@ header {
 }
 
 .admin-tab-btn {
-  background: linear-gradient(155deg, var(--navy-mid) 0%, var(--teal-calm) 45%, var(--teal-deep) 100%);
-  color: #ffffff;
-  border: 1.5px solid var(--gold-bright);
+  background: var(--bg-soft);
+  color: var(--navy);
+  border: 1.5px solid var(--border-gold);
   padding: 8px 15px;
   border-radius: 11px;
   font-weight: 800;
   font-size: 12.5px;
-  box-shadow: 0 3px 0 var(--teal-shadow);
-  opacity: 0.85;
+  box-shadow: 0 3px 0 #c99d3b;
 }
 .admin-tab-btn.active, .admin-tab-btn:hover {
   background: linear-gradient(155deg, var(--navy-mid) 0%, var(--teal-calm) 45%, var(--teal-deep) 100%);
   color: #ffffff;
   border-color: var(--gold-bright);
   box-shadow: 0 3px 0 var(--teal-shadow);
-  opacity: 1;
 }
 
 .service-card {
@@ -505,10 +510,11 @@ header {
 }
 .subservice-btn:active { transform: translateY(2px); }
 .subservice-btn.all-btn {
-  background: linear-gradient(155deg, var(--navy-mid) 0%, var(--teal-calm) 45%, var(--teal-deep) 100%);
-  color: #ffffff;
-  border-color: var(--gold-bright);
-  box-shadow: 0 4px 0 var(--teal-shadow);
+  background: linear-gradient(155deg, #f7d265 0%, #d4a024 100%);
+  color: var(--navy-deep);
+  border-color: var(--navy);
+  box-shadow: var(--btn-3d-gold);
+  font-weight: 900;
 }
 .subservice-list {
   display: flex;
@@ -558,15 +564,16 @@ header {
   color: #ffffff;
 }
 .city-toggle-btn.active-city {
-  background: linear-gradient(155deg, var(--navy-mid) 0%, var(--teal-calm) 45%, var(--teal-deep) 100%);
+  background: linear-gradient(155deg, #16a34a 0%, #15803d 100%);
   color: #ffffff;
-  border-color: var(--gold-bright);
-  box-shadow: 0 3px 0 var(--teal-shadow);
+  border-color: #bbf7d0;
+  box-shadow: 0 3px 0 #052e16;
 }
 .city-toggle-btn.inactive-city {
-  background: linear-gradient(155deg, var(--navy-mid) 0%, var(--teal-calm) 45%, var(--teal-deep) 100%);
-  color: #ffffff;
-  opacity: 0.6;
+  background: var(--bg-soft);
+  color: var(--text-muted);
+  border-color: var(--border-soft);
+  box-shadow: 0 2px 0 #cbd5e1;
 }
 
 .profile-list-card {
@@ -648,6 +655,7 @@ header {
   box-shadow: var(--shadow-soft);
 }
 
+/* أزرار موحدة ومتدرجة الألوان حسب الوظيفة */
 .btn {
   padding: 9px 15px;
   border-radius: 11px;
@@ -656,44 +664,84 @@ header {
   text-decoration: none;
   text-align: center;
   font-size: 12.5px;
-  transition: transform 0.12s;
-  background: linear-gradient(155deg, var(--navy-mid) 0%, var(--teal-calm) 45%, var(--teal-deep) 100%);
-  color: #ffffff;
-  border: 1.5px solid var(--gold-bright);
-  box-shadow: 0 4px 0 var(--teal-shadow);
+  transition: transform 0.12s, filter 0.15s;
 }
 .btn:active { transform: translateY(2px); }
 
-.primary,
-.gold-3d,
-.google-btn,
-.whatsapp-btn,
-.secondary,
-.danger,
-.light {
+/* 1. أزرار الدخول والتأكيد الأساسية (كحلي/فيروزي ملكي + إطار ذهبي) */
+.primary {
   background: linear-gradient(155deg, var(--navy-mid) 0%, var(--teal-calm) 45%, var(--teal-deep) 100%);
   color: #ffffff;
   border: 1.5px solid var(--gold-bright);
   box-shadow: 0 4px 0 var(--teal-shadow);
 }
-.primary:hover,
-.gold-3d:hover,
-.google-btn:hover,
-.whatsapp-btn:hover,
-.secondary:hover,
-.danger:hover,
-.light:hover {
-  filter: brightness(1.06);
-}
+.primary:hover { filter: brightness(1.07); }
 
-.google-btn,
+/* 2. أزرار مميزة (ذهبي ملكي + خط كحلي داكن) */
+.gold-3d {
+  background: linear-gradient(155deg, #f7d265 0%, #d4a024 100%);
+  color: var(--navy-deep);
+  border: 1.5px solid var(--navy);
+  box-shadow: var(--btn-3d-gold);
+  font-weight: 900;
+}
+.gold-3d:hover { filter: brightness(1.05); }
+
+/* 3. زر جوجل (أبيض ناصع أنيق + خط كحلي + إطار ذهبي) */
+.google-btn {
+  background: #ffffff;
+  color: var(--navy-deep);
+  border: 1.5px solid var(--gold-calm);
+  box-shadow: 0 4px 0 #cbd5e1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+  font-weight: 900;
+}
+.google-btn:hover { background: #f8fafc; }
+
+/* 4. زر واتساب (أخضر زمردي احترافي) */
 .whatsapp-btn {
+  background: linear-gradient(155deg, #22c55e 0%, #15803d 100%);
+  color: #ffffff;
+  border: 1.5px solid #bbf7d0;
+  box-shadow: 0 4px 0 #052e16;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   text-decoration: none;
 }
+.whatsapp-btn:hover { filter: brightness(1.06); }
+
+/* 5. أزرار ثانوية (كحلي متوسط هادئ) */
+.secondary {
+  background: linear-gradient(155deg, #1e6b92 0%, #0a4664 100%);
+  color: #ffffff;
+  border: 1.5px solid var(--gold-soft);
+  box-shadow: 0 4px 0 var(--teal-shadow);
+}
+.secondary:hover { filter: brightness(1.06); }
+
+/* 6. أزرار تسجيل الخروج والحذف والإيقاف (أحمر عنابي واضح وأنيق) */
+.danger {
+  background: linear-gradient(155deg, #dc2626 0%, var(--danger-calm) 50%, var(--danger-deep) 100%);
+  color: #ffffff;
+  border: 1.5px solid #fecaca;
+  box-shadow: var(--btn-3d-danger);
+}
+.danger:hover { filter: brightness(1.07); }
+
+/* 7. أزرار مساعدة وإلغاء خفيفة (كريمي رملي دافئ) */
+.light {
+  background: var(--bg-soft);
+  color: var(--navy);
+  border: 1.5px solid var(--border-gold);
+  box-shadow: 0 3px 0 #c99d3b;
+}
+.light:hover { background: #edd9ad; }
 
 .field { margin: 11px 0; }
 .field label {
@@ -860,7 +908,7 @@ header {
 }
 .modal-head h3 { margin: 0; font-size: 15.5px; font-weight: 900; }
 .close {
-  background: linear-gradient(155deg, var(--navy-mid) 0%, var(--teal-calm) 45%, var(--teal-deep) 100%);
+  background: linear-gradient(155deg, #dc2626 0%, var(--danger-calm) 100%);
   border-radius: 50%;
   width: 28px;
   height: 28px;
@@ -870,7 +918,7 @@ header {
   cursor: pointer;
   font-weight: bold;
   color: #ffffff;
-  border: 1.5px solid var(--gold-bright);
+  border: 1.5px solid #fecaca;
 }
 
 .list-item {
@@ -1021,7 +1069,7 @@ footer {
  <button type="button" class="drawer-nav-btn" onclick="closeNavDrawer(); requireGate(() => openSupportChatModal())">💬 فريق الدعم</button>
  <button type="button" class="drawer-nav-btn" onclick="closeNavDrawer(); navigateToSection('reviewsChat')">⭐ دردشة تقييم الخدمات</button>
  <button type="button" class="drawer-nav-btn hidden" id="adminNavBtn" onclick="closeNavDrawer(); navigateToSection('admin')">⚙️ الإدارة</button>
- <button type="button" class="drawer-nav-btn primary-drawer" id="authNavBtn" onclick="closeNavDrawer(); handleAuthNav()">تسجيل الدخول</button>
+ <button type="button" class="drawer-nav-btn primary-drawer" id="authNavBtn" onclick="closeNavDrawer(); handleAuthNav()">🔐 تسجيل الدخول</button>
 </aside>
 
 <main>
@@ -1123,10 +1171,10 @@ footer {
 
 <section id="join" class="container hidden">
  <h2 class="section-title">انضم إلى شبكة فنيي صخر</h2>
- <form class="card" style="max-width:700px;margin:0 auto" onsubmit="event.preventDefault(); registerTechFlexible();">
-  <div class="notice">للفني 3 أعمال مجاناً بالكامل، وبعدها يحتاج لاشتراك شهري أو سنوي لمواصلة استقبال الطلبات بلا حدود. يمكنك التسجيل برقم الهاتف أو بالبريد الإلكتروني أو بحساب جوجل.</div>
+ <form class="card" style="max-width:650px;margin:0 auto" onsubmit="event.preventDefault(); registerTechFlexible();">
+  <div class="notice">تسجيل سريع ومبسط للفني (3 أعمال مجاناً بالكامل). يمكنك استكمال التخصصات الفرعية، النبذة، وصورتك الشخصية براحتك من داخل ملفك الشخصي بعد الدخول.</div>
   <button type="button" class="btn google-btn" style="width:100%; margin-bottom:10px; padding:10px;" onclick="signInWithGoogleRole('technician')">
-   <span>🌐</span> التسجيل أو الدخول بحساب جوجل (للفني)
+   <span>🌐</span> التسجيل السريع بحساب جوجل (Google)
   </button>
 
   <div class="auth-method-switch">
@@ -1140,7 +1188,7 @@ footer {
   </div>
   <div class="row">
    <div class="field hidden" id="regEmailField">
-    <label>البريد الإلكتروني (لتسجيل الدخول)</label>
+    <label>البريد الإلكتروني (لتسجيل الدخول واسترجاع الرمز)</label>
     <input id="regEmail" type="email" inputmode="email" placeholder="example@gmail.com">
    </div>
    <div class="field">
@@ -1150,27 +1198,15 @@ footer {
      <button type="button" class="toggle-password" onclick="togglePassword('regPassword', this)">👁️</button>
     </div>
    </div>
-   <div class="field"><label>الاختصاص الرئيسي</label><select id="regService" onchange="onTechServiceChange('regService', 'regSubservicesBox', 'regOtherAppliancesField')"></select></div>
-  </div>
-  <div class="field">
-   <label>التخصصات الفرعية التي تشتغلها ضمن اختصاصك</label>
-   <div id="regSubservicesBox" class="sub-checks-box"></div>
-  </div>
-  <div class="field hidden" id="regOtherAppliancesField">
-   <label>أجهزة أخرى (ضمن صيانة الأجهزة الكهربائية)</label>
-   <input id="regOtherAppliances" placeholder="مثلاً: مايكروويف، سخانات، مكانس...">
+   <div class="field"><label>الاختصاص الرئيسي</label><select id="regService"></select></div>
   </div>
   <div class="row">
    <div class="field"><label>المحافظة</label><select id="regCity" onchange="setDistricts('regArea', this.value)"></select></div>
-   <div class="field"><label>القضاء</label><select id="regArea"><option value="">اختر القضاء</option></select></div>
+   <div class="field"><label>القضاء</label><select id="regArea" disabled><option value="">اختر المحافظة أولاً</option></select></div>
   </div>
-  <div class="row">
-   <div class="field"><label>المنطقة أو الحي</label><input id="regNeighborhood" placeholder="اسم المنطقة أو الحي"></div>
-  </div>
-  <div class="field"><label>نبذة عن خبرتك ومهاراتك</label><textarea id="regBio" placeholder="اكتب نبذة مختصرة عن خبرتك..."></textarea></div>
-  <div class="field"><label>الصورة الشخصية للفني</label><input id="regPhoto" type="file" accept="image/*"><img id="regPreview" class="avatar hidden" alt="معاينة"></div>
   
-  <button type="submit" class="btn primary" style="width:100%;margin-top:8px;">تسجيل حساب فني جديد</button>
+  <button type="submit" class="btn gold-3d" style="width:100%;margin-top:10px;padding:11px;">🛠️ إنشاء حساب فني والدخول</button>
+  <button type="button" class="btn light" style="width:100%;margin-top:8px;" onclick="openLogin()">لدي حساب فني مسبقاً (تسجيل الدخول)</button>
   <div id="regMessage"></div>
  </form>
 </section>
@@ -1197,14 +1233,14 @@ footer {
  </div>
 
  <div style="text-align:center; margin-bottom:18px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
-  <button class="btn primary" style="padding: 10px 20px; font-size: 13.5px;" onclick="openTechEditModal()">⚙️ تعديل الملف الشخصي وتحديث الهاتف</button>
+  <button class="btn gold-3d" style="padding: 10px 20px; font-size: 13.5px;" onclick="openTechEditModal()">⚙️ استكمال وتعديل الملف الشخصي</button>
  </div>
 
  <div id="techJobsArea">
   <h3 class="section-title" style="font-size:16px;">طلبات الزبائن الواردة إليك</h3>
   <div id="techJobs"></div>
  </div>
- <button class="btn danger" style="margin-top:15px" onclick="logout()">تسجيل الخروج</button>
+ <button class="btn danger" style="margin-top:18px; width:100%;" onclick="logout()">🚪 تسجيل الخروج</button>
 </section>
 
 <section id="customerAccountView" class="container hidden">
@@ -1218,8 +1254,8 @@ footer {
   <div id="custProfileListBox" class="profile-list-card"></div>
 
   <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:center;">
-   <button class="btn primary" style="flex:1; min-width:180px;" onclick="openCustomerEditModal()">⚙️ تعديل الملف الشخصي ورقم الهاتف</button>
-   <button class="btn danger" style="flex:1; min-width:150px;" onclick="logoutCustomer()">تسجيل الخروج</button>
+   <button class="btn gold-3d" style="flex:1; min-width:180px;" onclick="openCustomerEditModal()">⚙️ استكمال وتعديل الملف الشخصي</button>
+   <button class="btn danger" style="flex:1; min-width:150px;" onclick="logoutCustomer()">🚪 تسجيل الخروج</button>
   </div>
  </div>
 </section>
@@ -1233,10 +1269,10 @@ footer {
  </div>
 
  <hr style="border-color:var(--border-soft)">
- <h3 class="section-title" style="font-size:16px;">إدارة طلبات إعادة تعيين كلمات المرور (النسيان)</h3>
+ <h3 class="section-title" style="font-size:16px;">إدارة طلبات إعادة تعيين كلمات المرور</h3>
  <div id="adminPasswordRequests"><div class="empty">لا توجد طلبات استرجاع رمز حالياً.</div></div>
 
- <button class="btn danger" style="margin-top:22px" onclick="logout()">تسجيل الخروج من حساب المدير</button>
+ <button class="btn danger" style="margin-top:22px; width:100%;" onclick="logout()">🚪 تسجيل الخروج من حساب المدير</button>
 </section>
 
 <section id="admin" class="container hidden">
@@ -1264,7 +1300,7 @@ footer {
   <div id="adminRequests"></div>
  </div>
 
- <button class="btn danger" style="margin-top:22px" onclick="logout()">تسجيل الخروج من لوحة الإدارة</button>
+ <button class="btn danger" style="margin-top:22px; width:100%;" onclick="logout()">🚪 تسجيل الخروج من لوحة الإدارة</button>
 </section>
 </main>
 
@@ -1341,7 +1377,7 @@ footer {
 <div class="modal hidden" id="customerAccountModal">
  <div class="modal-box">
   <div class="modal-head"><h3>تسجيل حساب الزبون وتحديد الموقع</h3><div class="close" onclick="closeModal('customerAccountModal')">✕</div></div>
-  <div class="notice">أنت مخير بالتسجيل بحساب جوجل، أو برقم الهاتف، أو بالبريد الإلكتروني:</div>
+  <div class="notice">تسجيل سريع ومبسط — أنت مخير بحساب جوجل، أو برقم الهاتف، أو بالبريد الإلكتروني:</div>
   <button type="button" class="btn google-btn" style="width:100%; margin-bottom:10px; padding:10px;" onclick="signInWithGoogleRole('customer')">
    <span>🌐</span> متابعة بحساب جوجل (Google)
   </button>
@@ -1354,7 +1390,6 @@ footer {
   <div class="field"><label>الاسم الكامل</label><input id="custRegName" placeholder="الاسم الكامل"></div>
   <div class="field" id="custRegPhoneField"><label>رقم الهاتف</label><input id="custRegPhone" inputmode="tel" placeholder="07XXXXXXXXX"></div>
   <div class="field hidden" id="custRegEmailField"><label>البريد الإلكتروني</label><input id="custRegEmail" type="email" inputmode="email" placeholder="example@gmail.com"></div>
-  <div class="field hidden" id="custRegOptionalPhoneField"><label>رقم الهاتف (اختياري الآن - يُطلب عند أول طلب)</label><input id="custRegOptionalPhone" inputmode="tel" placeholder="07XXXXXXXXX"></div>
   <div class="field">
    <label>كلمة المرور (الباسورد)</label>
    <div class="password-wrapper">
@@ -1388,9 +1423,10 @@ footer {
 
 <div class="modal hidden" id="customerEditModal">
  <div class="modal-box">
-  <div class="modal-head"><h3>تعديل الملف الشخصي للزبون</h3><div class="close" onclick="closeModal('customerEditModal')">✕</div></div>
+  <div class="modal-head"><h3>استكمال وتعديل الملف الشخصي</h3><div class="close" onclick="closeModal('customerEditModal')">✕</div></div>
   <div class="field"><label>الاسم الكامل</label><input id="editCustName" placeholder="الاسم الكامل"></div>
   <div class="field"><label>رقم الهاتف</label><input id="editCustPhone" inputmode="tel" placeholder="07XXXXXXXXX"></div>
+  <div class="field"><label>البريد الإلكتروني (اختياري لاسترجاع الرمز)</label><input id="editCustEmail" type="email" inputmode="email" placeholder="example@gmail.com"></div>
   <div class="row">
    <div class="field"><label>المحافظة</label><select id="editCustCity" onchange="setDistricts('editCustArea', this.value)"></select></div>
    <div class="field"><label>القضاء</label><select id="editCustArea"><option value="">اختر القضاء</option></select></div>
@@ -1444,7 +1480,7 @@ footer {
 
 <div class="modal hidden" id="techEditModal">
  <div class="modal-box">
-  <div class="modal-head"><h3>تعديل الملف الشخصي والمعلومات</h3><div class="close" onclick="closeModal('techEditModal')">✕</div></div>
+  <div class="modal-head"><h3>استكمال وتعديل الملف الشخصي</h3><div class="close" onclick="closeModal('techEditModal')">✕</div></div>
   <div class="field"><label>الاسم الكامل</label><input id="editTechName" placeholder="الاسم"></div>
   <div class="row">
    <div class="field"><label>المحافظة</label><select id="editTechCity" onchange="setDistricts('editTechArea', this.value)"></select></div>
@@ -1454,6 +1490,7 @@ footer {
    <div class="field"><label>المنطقة أو الحي</label><input id="editTechNeighborhood" placeholder="اسم الحي أو المنطقة"></div>
    <div class="field"><label>رقم الهاتف</label><input id="editTechPhone" inputmode="tel" placeholder="07XXXXXXXXX"></div>
   </div>
+  <div class="field"><label>البريد الإلكتروني (اختياري لاسترجاع الرمز)</label><input id="editTechEmail" type="email" inputmode="email" placeholder="example@gmail.com"></div>
   <div class="field"><label>الاختصاص</label><select id="editTechService" onchange="onTechServiceChange('editTechService', 'editTechSubservicesBox', 'editTechOtherAppliancesField')"></select></div>
   <div class="field">
    <label>التخصصات الفرعية التي تشتغلها ضمن اختصاصك</label>
@@ -1497,9 +1534,8 @@ footer {
      <button type="button" class="toggle-password" onclick="togglePassword('loginPassword', this)">👁️</button>
     </div>
    </div>
-   <button type="submit" class="btn primary" style="width:100%">دخول إلى الحساب</button>
-   <button type="button" class="btn light" style="width:100%;margin-top:6px" onclick="openForgotPasswordModal()">نسيت كلمة المرور؟ (طلب استرجاع)</button>
-   <button type="button" class="role-btn technician" style="width:100%; margin-top:10px; padding:10px; font-size:13px;" onclick="closeModal('loginModal');navigateToSection('join')">🛠️ تسجيل فني جديد (انضم إلينا)</button>
+   <button type="submit" class="btn primary" style="width:100%; padding:11px; font-size:13.5px;">🔐 دخول إلى الحساب</button>
+   <button type="button" class="btn light" style="width:100%; margin-top:8px;" onclick="openForgotPasswordModal()">🔑 نسيت كلمة المرور؟ (استرجاع عبر البريد)</button>
    <div id="loginMessage"></div>
   </form>
  </div>
@@ -1507,11 +1543,11 @@ footer {
 
 <div class="modal hidden" id="forgotPasswordModal">
  <div class="modal-box">
-  <div class="modal-head"><h3>طلب استرجاع كلمة المرور</h3><div class="close" onclick="closeModal('forgotPasswordModal')">✕</div></div>
-  <div class="notice">أدخل اسمك ورقم هاتفك وسنرسل طلباً مباشراً للمدير لمراجعة وتعيين رمز جديد لك.</div>
-  <div class="field"><label>الاسم الكامل</label><input id="forgotName" placeholder="اسمك الكريم"></div>
-  <div class="field"><label>رقم الهاتف المسجل</label><input id="forgotPhone" inputmode="tel" placeholder="07XXXXXXXXX"></div>
-  <button class="btn primary" style="width:100%; margin-top:10px;" onclick="submitForgotPasswordRequest()">إرسال طلب الاسترجاع للمدير</button>
+  <div class="modal-head"><h3>استرجاع كلمة المرور عبر البريد</h3><div class="close" onclick="closeModal('forgotPasswordModal')">✕</div></div>
+  <div class="notice">إذا كنت مسجلاً ببريد إلكتروني، سنرسل رابط إعادة تعيين الرمز مباشرة لبريدك. وإذا لم تسجل ببريد سابقاً، أدخل بريدك الإلكتروني ورقم هاتفك لإرسال الرمز إليك.</div>
+  <div class="field"><label>البريد الإلكتروني لإرسال الرمز / الرابط</label><input id="forgotEmail" type="email" inputmode="email" placeholder="example@gmail.com"></div>
+  <div class="field"><label>رقم الهاتف (في حال لم تسجل بالبريد مسبقاً)</label><input id="forgotPhone" inputmode="tel" placeholder="07XXXXXXXXX (اختياري)"></div>
+  <button class="btn primary" style="width:100%; margin-top:10px;" onclick="submitForgotPasswordRequest()">📧 إرسال الرمز إلى البريد الإلكتروني</button>
  </div>
 </div>
 
@@ -1617,6 +1653,7 @@ let announcementTimer=null;
 let pendingAfterGate=null;
 let custRegAuthMode="phone";
 let techRegAuthMode="phone";
+let isSigningOutFlag=false;
 
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -1648,6 +1685,24 @@ function buildAuthEmailFromInput(rawIdentifier) {
   return normPhone + "@sakhr.app";
 }
 
+function formatAuthErrorMessage(err) {
+  const code = err?.code || "";
+  const msg = err?.message || "";
+  if (code === "auth/network-request-failed" || msg.includes("network-request-failed")) {
+    return "تعذر الاتصال بخدمة الدخول بسبب ضعف أو انقطاع الإنترنت. تحقق من اتصالك بالشبكة وحاول مرة أخرى.";
+  }
+  if (code === "auth/wrong-password" || code === "auth/invalid-credential" || code === "auth/user-not-found") {
+    return "رقم الهاتف / البريد الإلكتروني أو كلمة المرور غير صحيحة.";
+  }
+  if (code === "auth/too-many-requests") {
+    return "تم إيقاف المحاولات مؤقتاً لكثرة التكرار. انتظر قليلاً ثم حاول مرة أخرى.";
+  }
+  if (code === "auth/email-already-in-use") {
+    return "هذا الرقم أو البريد الإلكتروني مسجل مسبقاً. يرجى تسجيل الدخول.";
+  }
+  return "خطأ في بيانات الدخول: " + msg;
+}
+
 const formatWhatsApp=phone=>{
   let clean = normalizeIraqiPhone(phone).replace(/\D/g,'');
   if(clean.startsWith('0')) clean='964'+clean.substring(1);
@@ -1662,11 +1717,9 @@ function switchCustRegAuthMode(mode) {
   if (custRegAuthMode === "phone") {
     $("custRegPhoneField")?.classList.remove("hidden");
     $("custRegEmailField")?.classList.add("hidden");
-    $("custRegOptionalPhoneField")?.classList.add("hidden");
   } else {
     $("custRegPhoneField")?.classList.add("hidden");
     $("custRegEmailField")?.classList.remove("hidden");
-    $("custRegOptionalPhoneField")?.classList.remove("hidden");
   }
 }
 
@@ -1984,7 +2037,18 @@ function showSection(id, pushHistory = true) {
 
 function closeModal(id) { const m = $(id); if(m) m.classList.add("hidden"); }
 function openLogin() { $("loginMessage").innerHTML = ""; $("loginModal").classList.remove("hidden"); }
-function openForgotPasswordModal() { closeModal('loginModal'); $("forgotPasswordModal").classList.remove("hidden"); }
+function openForgotPasswordModal() {
+  closeModal('loginModal');
+  const prefill = $("loginPhone")?.value?.trim() || localStorage.getItem("sakhrCustomerEmail") || (currentTech?.email) || "";
+  if (prefill.includes("@")) {
+    $("forgotEmail").value = prefill;
+    $("forgotPhone").value = "";
+  } else {
+    $("forgotEmail").value = "";
+    $("forgotPhone").value = prefill;
+  }
+  $("forgotPasswordModal").classList.remove("hidden");
+}
 
 function openTechEditModal() {
   $("editProfileMessage").innerHTML = "";
@@ -2116,7 +2180,6 @@ function handleCustomerRoleEntry() {
     $("custRegName").value = "";
     $("custRegPhone").value = "";
     $("custRegEmail").value = "";
-    $("custRegOptionalPhone").value = "";
     $("custRegPassword").value = "";
     $("custRegMessage").innerHTML = "";
     switchCustRegAuthMode("phone");
@@ -2135,7 +2198,13 @@ function handleTechnicianRoleEntry() {
   if(["technician", "suspended"].includes(currentRole)) {
     runPendingGateAction();
   } else {
-    openLogin();
+    $("regName").value = "";
+    $("regPhone").value = "";
+    $("regEmail").value = "";
+    $("regPassword").value = "";
+    $("regMessage").innerHTML = "";
+    switchTechRegAuthMode("phone");
+    navigateToSection("join");
   }
 }
 
@@ -2365,7 +2434,7 @@ async function signInWithGoogleRole(roleHint = "auto") {
     await auth.signInWithRedirect(provider);
   } catch(e) {
     try { localStorage.removeItem("sakhrPendingGoogleRole"); } catch(_) {}
-    showCustomAlert("تعذر الدخول بحساب جوجل: " + (e.message || e.code || "خطأ غير معروف"));
+    showCustomAlert(formatAuthErrorMessage(e));
   }
 }
 
@@ -2382,7 +2451,7 @@ async function submitCustomerRegistration(){
   if (custRegAuthMode === "phone") {
     cleanPhone = normalizeIraqiPhone($("custRegPhone").value);
     if (!name || !cleanPhone || !password || !city || !area) {
-      return showCustomAlert("يرجى إكمال جميع الحقول (الاسم، رقم الهاتف، الباسورد، المحافظة والقضاء).");
+      return showCustomAlert("يرجى إكمال الحقول الأساسية (الاسم، رقم الهاتف، الباسورد، المحافظة والقضاء).");
     }
     if (!isValidIraqiPhone(cleanPhone)) {
       return showCustomAlert("يرجى إدخال رقم هاتف عراقي صحيح مكون من 11 رقماً يبدأ بـ 07.");
@@ -2390,15 +2459,11 @@ async function submitCustomerRegistration(){
     authEmail = cleanPhone + "@sakhr.app";
   } else {
     realEmail = $("custRegEmail").value.trim().toLowerCase();
-    cleanPhone = normalizeIraqiPhone($("custRegOptionalPhone").value);
     if (!name || !realEmail || !password || !city || !area) {
-      return showCustomAlert("يرجى إكمال جميع الحقول (الاسم، البريد الإلكتروني، الباسورد، المحافظة والقضاء).");
+      return showCustomAlert("يرجى إكمال الحقول الأساسية (الاسم، البريد الإلكتروني، الباسورد، المحافظة والقضاء).");
     }
     if (!isValidEmailAddress(realEmail)) {
       return showCustomAlert("يرجى إدخال بريد إلكتروني صحيح.");
-    }
-    if (cleanPhone && !isValidIraqiPhone(cleanPhone)) {
-      return showCustomAlert("رقم الهاتف الاختياري غير صحيح، اكتب 11 رقماً يبدأ بـ 07 أو اتركه فارغاً الآن.");
     }
     authEmail = realEmail;
   }
@@ -2409,8 +2474,12 @@ async function submitCustomerRegistration(){
       const res = await auth.createUserWithEmailAndPassword(authEmail, password);
       userUid = res.user.uid;
     } catch(e) {
-      const res = await auth.signInWithEmailAndPassword(authEmail, password);
-      userUid = res.user.uid;
+      if (e.code === "auth/email-already-in-use") {
+        const res = await auth.signInWithEmailAndPassword(authEmail, password);
+        userUid = res.user.uid;
+      } else {
+        throw e;
+      }
     }
 
     chosenCustomerCity = city;
@@ -2445,13 +2514,13 @@ async function submitCustomerRegistration(){
 
     runPendingGateAction();
   } catch(e) {
-    showCustomAlert("خطأ في التسجيل: " + e.message);
+    showCustomAlert(formatAuthErrorMessage(e));
   }
 }
 
 function renderCustomerAccount() {
   const name = localStorage.getItem("sakhrCustomerName") || "زبون صخر";
-  const phone = localStorage.getItem("sakhrCustomerPhone") || "غير محدد (مطلوب للطلبات)";
+  const phone = localStorage.getItem("sakhrCustomerPhone") || "غير محدد (يُضاف عند الطلب)";
   const email = localStorage.getItem("sakhrCustomerEmail") || "غير مضاف";
   const city = localStorage.getItem("sakhrCustomerCity") || "غير محدد";
   const area = localStorage.getItem("sakhrCustomerArea") || "غير محدد";
@@ -2475,6 +2544,7 @@ function renderCustomerAccount() {
 function openCustomerEditModal() {
   const name = localStorage.getItem("sakhrCustomerName") || "";
   const phone = localStorage.getItem("sakhrCustomerPhone") || "";
+  const email = localStorage.getItem("sakhrCustomerEmail") || "";
   const city = localStorage.getItem("sakhrCustomerCity") || "";
   const area = localStorage.getItem("sakhrCustomerArea") || "";
   const neighborhood = localStorage.getItem("sakhrCustomerNeighborhood") || "";
@@ -2482,6 +2552,7 @@ function openCustomerEditModal() {
 
   $("editCustName").value = name;
   $("editCustPhone").value = phone;
+  if($("editCustEmail")) $("editCustEmail").value = email;
   $("editCustCity").value = city;
   setDistricts("editCustArea", city);
   if(area) $("editCustArea").value = area;
@@ -2494,6 +2565,7 @@ function openCustomerEditModal() {
 async function saveCustomerAccountProfile() {
   const name = $("editCustName").value.trim();
   const phone = normalizeIraqiPhone($("editCustPhone").value);
+  const email = ($("editCustEmail")?.value || "").trim().toLowerCase();
   const city = $("editCustCity").value;
   const area = $("editCustArea").value;
   const neighborhood = $("editCustNeighborhood").value.trim();
@@ -2505,9 +2577,13 @@ async function saveCustomerAccountProfile() {
   if(!isValidIraqiPhone(phone)) {
     return showCustomAlert("يرجى إدخال رقم هاتف عراقي صحيح مكون من 11 رقماً يبدأ بـ 07.");
   }
+  if(email && !isValidEmailAddress(email)) {
+    return showCustomAlert("صيغة البريد الإلكتروني غير صحيحة.");
+  }
 
   localStorage.setItem("sakhrCustomerName", name);
   localStorage.setItem("sakhrCustomerPhone", phone);
+  if(email) localStorage.setItem("sakhrCustomerEmail", email);
   localStorage.setItem("sakhrCustomerCity", city);
   localStorage.setItem("sakhrCustomerArea", area);
   localStorage.setItem("sakhrCustomerNeighborhood", neighborhood);
@@ -2519,7 +2595,7 @@ async function saveCustomerAccountProfile() {
   const uid = (currentUser && !currentUser.isAnonymous) ? currentUser.uid : localStorage.getItem("sakhrCustomerUid");
   if(uid && db) {
     await logUserAccount(uid, {
-      name, phone, role: "زبون", city, area, neighborhood, notes
+      name, phone, email, role: "زبون", city, area, neighborhood, notes
     });
   }
 
@@ -2536,6 +2612,7 @@ async function saveCustomerAccountProfile() {
 
 function logoutCustomer() {
   showCustomConfirm("هل أنت متأكد من تسجيل الخروج من حساب الزبون؟", async () => {
+    isSigningOutFlag = true;
     localStorage.removeItem("sakhrCustomerName");
     localStorage.removeItem("sakhrCustomerPhone");
     localStorage.removeItem("sakhrCustomerEmail");
@@ -2546,9 +2623,12 @@ function logoutCustomer() {
     localStorage.removeItem("sakhrCustomerUid");
     chosenCustomerCity = "";
     chosenCustomerArea = "";
+    currentRole = "guest";
+    currentTech = null;
     if(auth && currentUser && !currentUser.isAnonymous) {
       try { await auth.signOut(); } catch(_) {}
     }
+    setTimeout(() => { isSigningOutFlag = false; }, 1200);
     updateNavAuthButton();
     showCustomAlert("تم تسجيل الخروج بنجاح.");
     navigateToSection("home");
@@ -2598,8 +2678,6 @@ function renderServices(){
   if($("allOtherServicesPage")) $("allOtherServicesPage").innerHTML = otherHtml;
 
   fillSelect("regService");
-  renderSubserviceCheckboxes("regSubservicesBox", SERVICES[0]);
-  toggleOtherAppliancesField(SERVICES[0], "regOtherAppliancesField");
 }
 
 function listenToActiveCities() {
@@ -2667,7 +2745,7 @@ function initFirebase(){
     }).catch((err) => {
       localStorage.removeItem("sakhrPendingGoogleRole");
       if(err && err.message && !err.message.includes("no pending")) {
-        showCustomAlert("تنبيه تسجيل جوجل: " + err.message);
+        showCustomAlert(formatAuthErrorMessage(err));
       }
     });
 
@@ -2697,7 +2775,13 @@ async function onAuthChanged(user){
   if(techJobsListener) { techJobsListener.off(); techJobsListener = null; }
   if(!user){ 
     updateNavAuthButton();
-    try{ await auth.signInAnonymously(); }catch(e){} 
+    if (!isSigningOutFlag) {
+      setTimeout(async () => {
+        if (!auth.currentUser && !isSigningOutFlag) {
+          try { await auth.signInAnonymously(); } catch(e) {}
+        }
+      }, 600);
+    }
     checkInitialStartupModals();
     return; 
   }
@@ -2787,15 +2871,10 @@ async function registerTechFlexible(){
   const password = $("regPassword").value;
   const city = $("regCity").value;
   const area = $("regArea").value;
-  const neighborhood = $("regNeighborhood").value.trim();
   const service = $("regService").value;
-  const subservices = getCheckedSubservices("regSubservicesBox");
-  const otherAppliances = service === "صيانة الأجهزة الكهربائية" ? ($("regOtherAppliances")?.value.trim() || "") : "";
-  const bio = $("regBio").value.trim();
-  const file = $("regPhoto").files[0];
 
   if(!name || !phone || !password || !city || !area || !service) {
-    return showCustomAlert("أكمل جميع الحقول الأساسية للفني (الاسم، الهاتف، الباسورد، المحافظة، القضاء والاختصاص).");
+    return showCustomAlert("أكمل الحقول الأساسية للفني (الاسم، الهاتف، الباسورد، المحافظة، القضاء والاختصاص).");
   }
   if(!isValidIraqiPhone(phone)) {
     return showCustomAlert("يرجى إدخال رقم هاتف عراقي صحيح مكون من 11 رقماً يبدأ بـ 07.");
@@ -2809,12 +2888,9 @@ async function registerTechFlexible(){
     const authEmail = techRegAuthMode === "email" ? realEmail : (phone + "@sakhr.app");
     const c = await auth.createUserWithEmailAndPassword(authEmail, password);
     createdUser = c.user;
-    
-    let photoURL = "";
-    if(file) photoURL = await uploadTechPhoto(createdUser.uid, file);
 
     const profile = {
-      name, phone, email: realEmail || "", city, area, neighborhood, service, subservices, otherAppliances, bio, extraInfo: "", photoURL,
+      name, phone, email: realEmail || "", city, area, neighborhood: "", service, subservices: [], otherAppliances: "", bio: "", extraInfo: "", photoURL: "",
       approved: true, available: true, subscriptionStatus: "غير فعال", subscriptionType: "none",
       subscriptionExpiresAt: 0, freeJobsUsed: 0, completedJobs: 0,
       ratingSum: 0, ratingCount: 0, ratingAverage: 0, createdAt: Date.now()
@@ -2832,8 +2908,9 @@ async function registerTechFlexible(){
     updateNavAuthButton();
     navigateToSection("techAccount");
     await renderTechAccount();
+    showCustomAlert("تم إنشاء حسابك كفني بنجاح! يمكنك استكمال باقي تفاصيل ملفك الشخصي من زر التعديل بالأسفل.");
   }catch(e){
-    showCustomAlert(e.message);
+    showCustomAlert(formatAuthErrorMessage(e));
     if(createdUser && !profileSaved){ try{await createdUser.delete()}catch(_){} }
   }
 }
@@ -2917,49 +2994,62 @@ async function loginWithPhonePassword(){
     renderTechAccount();
     runPendingGateAction();
   }catch(e){
-    showCustomAlert("خطأ في بيانات الدخول: "+e.message);
+    showCustomAlert(formatAuthErrorMessage(e));
   }
 }
 
 async function submitForgotPasswordRequest() {
-  const name = $("forgotName").value.trim();
+  const email = $("forgotEmail").value.trim().toLowerCase();
   const phone = normalizeIraqiPhone($("forgotPhone").value);
-  if(!name || !phone) {
-    showCustomAlert("يرجى إدخال الاسم ورقم الهاتف المسجل.");
-    return;
+
+  if(!email || !isValidEmailAddress(email)) {
+    return showCustomAlert("يرجى إدخال بريد إلكتروني صحيح لإرسال رابط/رمز استرجاع كلمة المرور إليه.");
   }
+
   try {
-    const id = db.ref("passwordRequests").push().key;
-    await db.ref("passwordRequests/"+id).set({
-      name, phone, status: "قيد الانتظار", createdAt: Date.now()
-    });
+    await auth.sendPasswordResetEmail(email);
     closeModal("forgotPasswordModal");
-    showCustomAlert("تم إرسال طلب استرجاع كلمة المرور إلى المدير بنجاح. سيتم التواصل معك أو اعتماد الرمز قريباً.");
+    showCustomAlert(`تم إرسال رابط استرجاع كلمة المرور بنجاح إلى بريدك (${email}). يرجى مراجعة البريد الوارد أو الرسائل غير المرغوبة.`);
   } catch(e) {
-    showCustomAlert("خطأ: " + e.message);
+    if (e.code === "auth/user-not-found" || phone) {
+      try {
+        const id = db.ref("passwordRequests").push().key;
+        await db.ref("passwordRequests/"+id).set({
+          name: "طلب عبر البريد (" + email + ")",
+          email,
+          phone: phone || "غير مضاف",
+          status: "بانتظار الإرسال للبريد",
+          createdAt: Date.now()
+        });
+        closeModal("forgotPasswordModal");
+        showCustomAlert(`تم تسجيل طلب استرجاع كلمة المرور لبريدك (${email}) وإحالته للمتابعة الفورية.`);
+      } catch(dbErr) {
+        showCustomAlert("خطأ: " + dbErr.message);
+      }
+    } else {
+      showCustomAlert(formatAuthErrorMessage(e));
+    }
   }
 }
 
 async function logout(){
   try{
+    isSigningOutFlag = true;
     if(techJobsListener) { techJobsListener.off(); techJobsListener = null; }
     if(supportChatListener) { supportChatListener.off(); supportChatListener = null; }
     if(orderChatListener) { orderChatListener.off(); orderChatListener = null; }
+    currentRole = "guest";
+    currentTech = null;
+    currentUser = null;
     await auth.signOut();
-    currentRole = "guest"; currentTech = null; currentUser = null;
+    setTimeout(() => { isSigningOutFlag = false; }, 1200);
     updateNavAuthButton();
+    showCustomAlert("تم تسجيل الخروج بنجاح.");
     navigateToSection("home");
-    checkInitialStartupModals();
-  }catch(e){}
-}
-
-if($("regPhoto")) {
-  $("regPhoto").addEventListener("change", ()=>{
-    const f = $("regPhoto").files[0];
-    if(!f) return;
-    $("regPreview").src = URL.createObjectURL(f);
-    $("regPreview").classList.remove("hidden");
-  });
+  }catch(e){
+    isSigningOutFlag = false;
+    showCustomAlert(formatAuthErrorMessage(e));
+  }
 }
 
 async function loadPublicTechs(){
@@ -3395,7 +3485,7 @@ async function renderTechAccount(){
         <div class="profile-list-row"><span class="profile-list-label">الاختصاص الرئيسي</span><span class="profile-list-value">${esc(currentTech.service)}</span></div>
         <div class="profile-list-row"><span class="profile-list-label">التخصصات الفرعية</span><span class="profile-list-value">${esc(subsText)}</span></div>
         <div class="profile-list-row"><span class="profile-list-label">رقم الهاتف</span><span class="profile-list-value">${esc(currentTech.phone || "غير مضاف (مطلوب لاستلام الطلبات)")}</span></div>
-        ${currentTech.email ? `<div class="profile-list-row"><span class="profile-list-label">البريد الإلكتروني</span><span class="profile-list-value">${esc(currentTech.email)}</span></div>` : ''}
+        <div class="profile-list-row"><span class="profile-list-label">البريد الإلكتروني</span><span class="profile-list-value">${esc(currentTech.email || "غير مضاف")}</span></div>
         <div class="profile-list-row"><span class="profile-list-label">المحافظة والقضاء</span><span class="profile-list-value">${esc(currentTech.city || "---")} / ${esc(currentTech.area || "---")}</span></div>
         <div class="profile-list-row"><span class="profile-list-label">المنطقة / الحي</span><span class="profile-list-value">${esc(currentTech.neighborhood || "غير محدد")}</span></div>
         <div class="profile-list-row"><span class="profile-list-label">نبذة الخبرة</span><span class="profile-list-value">${esc(currentTech.bio || "لا توجد نبذة")}</span></div>
@@ -3451,6 +3541,7 @@ async function renderTechAccount(){
     if($("editTechOtherAppliances")) $("editTechOtherAppliances").value = currentTech.otherAppliances || "";
     if($("editTechNeighborhood")) $("editTechNeighborhood").value = currentTech.neighborhood || "";
     if($("editTechPhone")) $("editTechPhone").value = currentTech.phone || "";
+    if($("editTechEmail")) $("editTechEmail").value = currentTech.email || "";
     if($("editTechBio")) $("editTechBio").value = currentTech.bio || "";
     if($("editTechExtra")) $("editTechExtra").value = currentTech.extraInfo || "";
 
@@ -3548,6 +3639,7 @@ async function saveTechAccountProfile() {
   const area = $("editTechArea").value;
   const neighborhood = $("editTechNeighborhood").value.trim();
   const phone = normalizeIraqiPhone($("editTechPhone").value);
+  const email = ($("editTechEmail")?.value || "").trim().toLowerCase();
   const bio = $("editTechBio").value.trim();
   const extraInfo = $("editTechExtra").value.trim();
   const file = $("editTechPhotoFile").files[0];
@@ -3560,6 +3652,10 @@ async function saveTechAccountProfile() {
     showCustomAlert("يرجى إدخال رقم هاتف عراقي صحيح مكون من 11 رقماً يبدأ بـ 07.");
     return;
   }
+  if(email && !isValidEmailAddress(email)) {
+    showCustomAlert("صيغة البريد الإلكتروني غير صحيحة.");
+    return;
+  }
 
   try {
     let photoURL = currentTech.photoURL || "";
@@ -3569,12 +3665,12 @@ async function saveTechAccountProfile() {
 
     const updated = {
       ...currentTech,
-      name, service, subservices, otherAppliances, city, area, neighborhood, phone, bio, extraInfo, photoURL
+      name, service, subservices, otherAppliances, city, area, neighborhood, phone, email, bio, extraInfo, photoURL
     };
 
     await db.ref("technicians/"+uid).update(updated);
     await syncPublicTechnician(uid, updated);
-    await logUserAccount(uid, { name, phone, role: "فني", service, city, area });
+    await logUserAccount(uid, { name, phone, email, role: "فني", service, city, area });
     currentTech = updated;
     showCustomAlert("تم حفظ وتحديث تعديلات البروفايل بنجاح!");
     closeModal('techEditModal');
@@ -4127,15 +4223,15 @@ function renderAdmin(){
   if($("adminPasswordRequests")) {
     $("adminPasswordRequests").innerHTML = passwordRequests.length ? passwordRequests.map(p=>`
     <div class="list-item" style="background:var(--gold-tint); border-color:var(--border-gold);">
-      <h4>طلب استرجاع رمز جديد</h4>
-      <div class="muted">الاسم: <b>${esc(p.name)}</b> | رقم الهاتف: <b style="color:var(--navy); font-size:13.5px;">${esc(p.phone)}</b></div>
+      <h4>طلب استرجاع رمز عبر البريد</h4>
+      <div class="muted">التفاصيل: <b>${esc(p.name)}</b> | البريد: <b style="color:var(--navy); font-size:13.5px;">${esc(p.email || '---')}</b> | الهاتف: <b>${esc(p.phone || '---')}</b></div>
       <div class="muted" style="margin-top:4px;">تاريخ الطلب: ${new Date(p.createdAt).toLocaleString('ar-IQ')}</div>
       <div class="field" style="margin:10px 0 6px 0;">
-       <label style="color:var(--navy); font-size:12px; font-weight:800;">أدخل الرمز المؤقت الجديد للرقم:</label>
+       <label style="color:var(--navy); font-size:12px; font-weight:800;">أدخل الرمز المؤقت الجديد لإرساله عبر البريد أو الواتساب:</label>
        <input id="tempPassInput_${esc(p.id)}" placeholder="مثال: 123456" style="background:var(--bg-soft);">
       </div>
       <div class="actions" style="margin-top:8px;">
-       <button type="button" class="btn whatsapp-btn" onclick="sendWhatsAppPassword('${esc(p.phone)}', 'tempPassInput_${esc(p.id)}')">💬 إرسال الرمز عبر الواتساب</button>
+       ${p.phone && p.phone !== 'غير مضاف' ? `<button type="button" class="btn whatsapp-btn" onclick="sendWhatsAppPassword('${esc(p.phone)}', 'tempPassInput_${esc(p.id)}')">💬 إرسال الرمز عبر الواتساب</button>` : ''}
        <button type="button" class="btn danger" onclick="adminDeletePasswordRequest('${esc(p.id)}')">حذف الطلب بعد المعالجة</button>
       </div>
     </div>`).join("") : '<div class="empty">لا توجد طلبات استرجاع رمز حالياً.</div>';
