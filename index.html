@@ -99,23 +99,9 @@ header {
   gap: 10px;
 }
 
-.header-right-slot {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-}
-
-.header-center-slot {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.header-left-slot {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-}
+.header-right-slot { display: flex; align-items: center; justify-content: flex-start; }
+.header-center-slot { display: flex; align-items: center; justify-content: center; }
+.header-left-slot { display: flex; align-items: center; justify-content: flex-end; }
 
 .back-icon-btn {
   width: 40px;
@@ -132,10 +118,7 @@ header {
   box-shadow: 0 3px 0 var(--teal-shadow), 0 5px 10px rgba(6, 56, 80, 0.28);
   transition: transform 0.12s, filter 0.2s;
 }
-.back-icon-btn:active {
-  transform: translateY(2px);
-  box-shadow: 0 1px 0 var(--teal-shadow);
-}
+.back-icon-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--teal-shadow); }
 
 .brand {
   display: inline-flex;
@@ -147,12 +130,7 @@ header {
   box-shadow: none;
   cursor: pointer;
 }
-.brand img {
-  height: 46px;
-  width: auto;
-  object-fit: contain;
-  display: block;
-}
+.brand img { height: 46px; width: auto; object-fit: contain; display: block; }
 
 .hamburger-btn {
   width: 42px;
@@ -169,10 +147,7 @@ header {
   box-shadow: var(--btn-3d-teal);
   transition: transform 0.12s;
 }
-.hamburger-btn:active {
-  transform: translateY(3px);
-  box-shadow: 0 2px 0 var(--teal-shadow);
-}
+.hamburger-btn:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--teal-shadow); }
 
 .drawer-backdrop {
   position: fixed;
@@ -207,11 +182,7 @@ header {
   margin-bottom: 6px;
   border-bottom: 1px solid var(--border-soft);
 }
-.drawer-head strong {
-  color: var(--navy);
-  font-size: 15px;
-  font-weight: 900;
-}
+.drawer-head strong { color: var(--navy); font-size: 15px; font-weight: 900; }
 
 .drawer-nav-btn {
   width: 100%;
@@ -277,80 +248,21 @@ header {
     radial-gradient(circle at 85% 65%, rgba(242, 196, 72, 0.14) 0%, transparent 45%);
   pointer-events: none;
 }
-.hero-banner > * {
-  position: relative;
-  z-index: 1;
-}
-.hero-banner h2 {
-  font-size: 19px;
-  margin: 0 0 6px;
-  font-weight: 800;
-  color: #ffffff;
-}
-.hero-banner .slogan {
-  font-size: 27px;
-  font-weight: 900;
-  color: var(--gold-bright);
-  margin: 4px 0 8px;
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
-}
-.hero-banner p {
-  font-size: 13.5px;
-  color: #e2e8f0;
-  margin: 0;
-  font-weight: 600;
-}
+.hero-banner > * { position: relative; z-index: 1; }
+.hero-banner h2 { font-size: 19px; margin: 0 0 6px; font-weight: 800; color: #ffffff; }
+.hero-banner .slogan { font-size: 27px; font-weight: 900; color: var(--gold-bright); margin: 4px 0 8px; text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35); }
+.hero-banner p { font-size: 13.5px; color: #e2e8f0; margin: 0; font-weight: 600; }
 
-.role-btns {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-}
-.role-btn {
-  flex: 1;
-  padding: 12px 14px;
-  border-radius: 13px;
-  font-weight: 900;
-  font-size: 13.5px;
-  transition: transform 0.12s, filter 0.15s;
-}
-.role-btn.customer {
-  background: linear-gradient(155deg, var(--navy-mid) 0%, var(--teal-calm) 45%, var(--teal-deep) 100%);
-  color: #ffffff;
-  border: 1.5px solid var(--gold-bright);
-  box-shadow: var(--btn-3d-teal);
-}
-.role-btn.technician {
-  background: linear-gradient(155deg, #f7d265 0%, #d4a024 100%);
-  color: var(--navy-deep);
-  border: 1.5px solid var(--navy);
-  box-shadow: var(--btn-3d-gold);
-}
+.role-btns { display: flex; gap: 10px; justify-content: center; }
+.role-btn { flex: 1; padding: 12px 14px; border-radius: 13px; font-weight: 900; font-size: 13.5px; transition: transform 0.12s, filter 0.15s; }
+.role-btn.customer { background: linear-gradient(155deg, var(--navy-mid) 0%, var(--teal-calm) 45%, var(--teal-deep) 100%); color: #ffffff; border: 1.5px solid var(--gold-bright); box-shadow: var(--btn-3d-teal); }
+.role-btn.technician { background: linear-gradient(155deg, #f7d265 0%, #d4a024 100%); color: var(--navy-deep); border: 1.5px solid var(--navy); box-shadow: var(--btn-3d-gold); }
 .role-btn:hover { filter: brightness(1.06); }
 .role-btn:active { transform: translateY(3px); }
 
-.auth-method-switch {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 10px;
-}
-.auth-method-btn {
-  flex: 1;
-  padding: 8px 10px;
-  border-radius: 10px;
-  font-size: 12px;
-  font-weight: 800;
-  border: 1.5px solid var(--border-gold);
-  background: var(--bg-soft);
-  color: var(--navy);
-  transition: all 0.15s;
-}
-.auth-method-btn.active {
-  background: linear-gradient(155deg, var(--navy-mid) 0%, var(--teal-calm) 45%, var(--teal-deep) 100%);
-  color: #ffffff;
-  border-color: var(--gold-bright);
-  box-shadow: 0 3px 0 var(--teal-shadow);
-}
+.auth-method-switch { display: flex; gap: 8px; margin-bottom: 10px; }
+.auth-method-btn { flex: 1; padding: 8px 10px; border-radius: 10px; font-size: 12px; font-weight: 800; border: 1.5px solid var(--border-gold); background: var(--bg-soft); color: var(--navy); transition: all 0.15s; }
+.auth-method-btn.active { background: linear-gradient(155deg, var(--navy-mid) 0%, var(--teal-calm) 45%, var(--teal-deep) 100%); color: #ffffff; border-color: var(--gold-bright); box-shadow: 0 3px 0 var(--teal-shadow); }
 
 .container { width: min(1060px, 92%); margin: 0 auto 36px; }
 
@@ -374,32 +286,11 @@ header {
   background: linear-gradient(90deg, transparent, var(--gold-bright), var(--gold-calm));
   border-radius: 2px;
 }
-.section-title::after {
-  background: linear-gradient(90deg, var(--gold-calm), var(--gold-bright), transparent);
-}
+.section-title::after { background: linear-gradient(90deg, var(--gold-calm), var(--gold-bright), transparent); }
 
-.services-grid, .techs-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
-  max-width: 560px;
-  margin: 0 auto;
-}
-
-.admin-stats-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-  margin-bottom: 18px;
-}
-
-.admin-tabs-nav {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 18px;
-  flex-wrap: wrap;
-  justify-content: center;
-}
+.services-grid, .techs-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; max-width: 560px; margin: 0 auto; }
+.admin-stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 18px; }
+.admin-tabs-nav { display: flex; gap: 8px; margin-bottom: 18px; flex-wrap: wrap; justify-content: center; }
 
 .admin-tab-btn {
   background: var(--bg-soft);
@@ -430,14 +321,9 @@ header {
   box-shadow: var(--btn-3d-card);
   transition: transform 0.14s, filter 0.18s;
 }
-.service-card:hover {
-  transform: translateY(-2px);
-  filter: brightness(1.06);
-}
-.service-card:active {
-  transform: translateY(3px);
-  box-shadow: 0 2px 0 var(--teal-shadow);
-}
+.service-card:hover { transform: translateY(-2px); filter: brightness(1.06); }
+.service-card:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--teal-shadow); }
+
 .service-icon {
   width: 54px;
   height: 54px;
@@ -452,12 +338,7 @@ header {
   font-size: 25px;
   color: #ffffff;
 }
-.service-card h3 {
-  font-size: 15.5px;
-  margin: 4px 0 10px;
-  color: #ffffff;
-  font-weight: 900;
-}
+.service-card h3 { font-size: 15.5px; margin: 4px 0 10px; color: #ffffff; font-weight: 900; }
 .service-card .arrow-badge {
   background: linear-gradient(160deg, #0e587d 0%, #052536 100%);
   width: 32px;
@@ -493,458 +374,129 @@ header {
   box-shadow: var(--btn-3d-gold);
   font-weight: 900;
 }
-.subservice-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-top: 10px;
-}
+.subservice-list { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
 
-.sub-checks-box {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 8px;
-  background: var(--gold-tint);
-  border: 1px solid var(--border-soft);
-  border-radius: 10px;
-  padding: 10px;
-}
-.sub-check-item {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--navy);
-  cursor: pointer;
-}
-.sub-check-item input {
-  width: auto;
-  margin: 0;
-  accent-color: var(--teal-calm);
-}
+.sub-checks-box { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px; background: var(--gold-tint); border: 1px solid var(--border-soft); border-radius: 10px; padding: 10px; }
+.sub-check-item { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; color: var(--navy); cursor: pointer; }
+.sub-check-item input { width: auto; margin: 0; accent-color: var(--teal-calm); }
 
-.cities-toggle-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(125px, 1fr));
-  gap: 8px;
-  margin-top: 10px;
-}
-.city-toggle-btn {
-  padding: 8px 10px;
-  border-radius: 10px;
-  font-size: 12px;
-  font-weight: 800;
-  border: 1.5px solid var(--gold-bright);
-  box-shadow: 0 3px 0 var(--teal-shadow);
-  background: linear-gradient(155deg, var(--navy-mid) 0%, var(--teal-calm) 45%, var(--teal-deep) 100%);
-  color: #ffffff;
-}
-.city-toggle-btn.active-city {
-  background: linear-gradient(155deg, #16a34a 0%, #15803d 100%);
-  color: #ffffff;
-  border-color: #bbf7d0;
-  box-shadow: 0 3px 0 #052e16;
-}
-.city-toggle-btn.inactive-city {
-  background: var(--bg-soft);
-  color: var(--text-muted);
-  border-color: var(--border-soft);
-  box-shadow: 0 2px 0 #cbd5e1;
-}
+.cities-toggle-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(125px, 1fr)); gap: 8px; margin-top: 10px; }
+.city-toggle-btn { padding: 8px 10px; border-radius: 10px; font-size: 12px; font-weight: 800; border: 1.5px solid var(--gold-bright); box-shadow: 0 3px 0 var(--teal-shadow); background: linear-gradient(155deg, var(--navy-mid) 0%, var(--teal-calm) 45%, var(--teal-deep) 100%); color: #ffffff; }
+.city-toggle-btn.active-city { background: linear-gradient(155deg, #16a34a 0%, #15803d 100%); color: #ffffff; border-color: #bbf7d0; box-shadow: 0 3px 0 #052e16; }
+.city-toggle-btn.inactive-city { background: var(--bg-soft); color: var(--text-muted); border-color: var(--border-soft); box-shadow: 0 2px 0 #cbd5e1; }
 
-.profile-list-card {
-  background: var(--gold-tint);
-  border: 1.5px solid var(--border-gold);
-  border-radius: 14px;
-  padding: 14px;
-  margin-bottom: 14px;
-  text-align: right;
-}
-.profile-list-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-  padding: 9px 4px;
-  border-bottom: 1px solid var(--border-soft);
-  font-size: 12.5px;
-}
+.profile-list-card { background: var(--gold-tint); border: 1.5px solid var(--border-gold); border-radius: 14px; padding: 14px; margin-bottom: 14px; text-align: right; }
+.profile-list-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 9px 4px; border-bottom: 1px solid var(--border-soft); font-size: 12.5px; }
 .profile-list-row:last-child { border-bottom: none; }
-.profile-list-label {
-  color: var(--text-muted);
-  font-weight: 700;
-  white-space: nowrap;
-}
-.profile-list-value {
-  color: var(--navy);
-  font-weight: 800;
-  text-align: left;
-  word-break: break-word;
-}
+.profile-list-label { color: var(--text-muted); font-weight: 700; white-space: nowrap; }
+.profile-list-value { color: var(--navy); font-weight: 800; text-align: left; word-break: break-word; }
 
-.incomplete-checklist-card {
-  background: #fff7ed;
-  border: 2px solid #f59e0b;
-  border-radius: 16px;
-  padding: 16px;
-  margin-bottom: 16px;
-  box-shadow: var(--shadow-soft);
-}
-.incomplete-checklist-card h3 {
-  margin: 0 0 8px;
-  color: #9a3412;
-  font-size: 15.5px;
-  font-weight: 900;
-}
-.checklist-items {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin: 10px 0 12px;
-  font-size: 13px;
-  font-weight: 800;
-}
+.incomplete-checklist-card { background: #fff7ed; border: 2px solid #f59e0b; border-radius: 16px; padding: 16px; margin-bottom: 16px; box-shadow: var(--shadow-soft); }
+.incomplete-checklist-card h3 { margin: 0 0 8px; color: #9a3412; font-size: 15.5px; font-weight: 900; }
+.checklist-items { display: flex; flex-direction: column; gap: 6px; margin: 10px 0 12px; font-size: 13px; font-weight: 800; }
 
-.admin-tech-full-card {
-  background: var(--gold-tint);
-  border: 1.5px solid var(--border-gold);
-  border-radius: 14px;
-  padding: 15px;
-  color: var(--text-main);
-  box-shadow: var(--shadow-soft);
-}
-.admin-tech-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  border-bottom: 1px solid var(--border-soft);
-  padding-bottom: 10px;
-  margin-bottom: 10px;
-}
+.admin-tech-full-card { background: var(--gold-tint); border: 1.5px solid var(--border-gold); border-radius: 14px; padding: 15px; color: var(--text-main); box-shadow: var(--shadow-soft); }
+.admin-tech-header { display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--border-soft); padding-bottom: 10px; margin-bottom: 10px; }
 
-.trust-bar {
-  background: var(--gold-tint);
-  border-top: 2px solid var(--border-gold);
-  border-bottom: 2px solid var(--border-gold);
-  padding: 12px 5%;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 22px;
-  text-align: center;
-}
-.trust-item {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-weight: 800;
-  font-size: 12.5px;
-  color: var(--navy);
-}
+.trust-bar { background: var(--gold-tint); border-top: 2px solid var(--border-gold); border-bottom: 2px solid var(--border-gold); padding: 12px 5%; display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap; gap: 12px; margin-top: 22px; text-align: center; }
+.trust-item { display: flex; align-items: center; gap: 6px; font-weight: 800; font-size: 12.5px; color: var(--navy); }
 .trust-item span { font-size: 17px; }
 
-.card {
-  background: var(--gold-tint);
-  color: var(--text-main);
-  border: 1.5px solid var(--border-gold);
-  border-radius: 16px;
-  padding: 18px;
-  box-shadow: var(--shadow-soft);
-}
+.card { background: var(--gold-tint); color: var(--text-main); border: 1.5px solid var(--border-gold); border-radius: 16px; padding: 18px; box-shadow: var(--shadow-soft); }
 
-.btn {
-  padding: 9px 15px;
-  border-radius: 11px;
-  font-weight: 800;
-  display: inline-block;
-  text-decoration: none;
-  text-align: center;
-  font-size: 12.5px;
-  transition: transform 0.12s, filter 0.15s;
-}
+.btn { padding: 9px 15px; border-radius: 11px; font-weight: 800; display: inline-block; text-decoration: none; text-align: center; font-size: 12.5px; transition: transform 0.12s, filter 0.15s; }
 .btn:active { transform: translateY(2px); }
 
-.primary {
-  background: linear-gradient(155deg, var(--navy-mid) 0%, var(--teal-calm) 45%, var(--teal-deep) 100%);
-  color: #ffffff;
-  border: 1.5px solid var(--gold-bright);
-  box-shadow: 0 4px 0 var(--teal-shadow);
-}
+.primary { background: linear-gradient(155deg, var(--navy-mid) 0%, var(--teal-calm) 45%, var(--teal-deep) 100%); color: #ffffff; border: 1.5px solid var(--gold-bright); box-shadow: 0 4px 0 var(--teal-shadow); }
 .primary:hover { filter: brightness(1.07); }
 
-.gold-3d {
-  background: linear-gradient(155deg, #f7d265 0%, #d4a024 100%);
-  color: var(--navy-deep);
-  border: 1.5px solid var(--navy);
-  box-shadow: var(--btn-3d-gold);
-  font-weight: 900;
-}
+.gold-3d { background: linear-gradient(155deg, #f7d265 0%, #d4a024 100%); color: var(--navy-deep); border: 1.5px solid var(--navy); box-shadow: var(--btn-3d-gold); font-weight: 900; }
 .gold-3d:hover { filter: brightness(1.05); }
 
-.google-btn {
-  background: #ffffff;
-  color: var(--navy-deep);
-  border: 1.5px solid var(--gold-calm);
-  box-shadow: 0 4px 0 #cbd5e1;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  text-decoration: none;
-  font-weight: 900;
-}
+.google-btn { background: #ffffff; color: var(--navy-deep); border: 1.5px solid var(--gold-calm); box-shadow: 0 4px 0 #cbd5e1; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; font-weight: 900; }
 .google-btn:hover { background: #f8fafc; }
 
-.whatsapp-btn {
-  background: linear-gradient(155deg, #22c55e 0%, #15803d 100%);
-  color: #ffffff;
-  border: 1.5px solid #bbf7d0;
-  box-shadow: 0 4px 0 #052e16;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  text-decoration: none;
-}
+.whatsapp-btn { background: linear-gradient(155deg, #22c55e 0%, #15803d 100%); color: #ffffff; border: 1.5px solid #bbf7d0; box-shadow: 0 4px 0 #052e16; display: inline-flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none; }
 .whatsapp-btn:hover { filter: brightness(1.06); }
 
-.secondary {
-  background: linear-gradient(155deg, #1e6b92 0%, #0a4664 100%);
-  color: #ffffff;
-  border: 1.5px solid var(--gold-soft);
-  box-shadow: 0 4px 0 var(--teal-shadow);
-}
+.secondary { background: linear-gradient(155deg, #1e6b92 0%, #0a4664 100%); color: #ffffff; border: 1.5px solid var(--gold-soft); box-shadow: 0 4px 0 var(--teal-shadow); }
 .secondary:hover { filter: brightness(1.06); }
 
-.danger {
-  background: linear-gradient(155deg, #dc2626 0%, var(--danger-calm) 50%, var(--danger-deep) 100%);
-  color: #ffffff;
-  border: 1.5px solid #fecaca;
-  box-shadow: var(--btn-3d-danger);
-}
+.danger { background: linear-gradient(155deg, #dc2626 0%, var(--danger-calm) 50%, var(--danger-deep) 100%); color: #ffffff; border: 1.5px solid #fecaca; box-shadow: var(--btn-3d-danger); }
 .danger:hover { filter: brightness(1.07); }
 
-.light {
-  background: var(--bg-soft);
-  color: var(--navy);
-  border: 1.5px solid var(--border-gold);
-  box-shadow: 0 3px 0 #c99d3b;
-}
+.light { background: var(--bg-soft); color: var(--navy); border: 1.5px solid var(--border-gold); box-shadow: 0 3px 0 #c99d3b; }
 .light:hover { background: #edd9ad; }
 
 .field { margin: 11px 0; }
-.field label {
-  display: block;
-  font-weight: 800;
-  font-size: 12px;
-  margin-bottom: 5px;
-  color: var(--navy);
-}
-.field input, .field select, .field textarea {
-  width: 100%;
-  padding: 9px 11px;
-  border: 1.5px solid var(--border-gold);
-  border-radius: 10px;
-  background: var(--bg-soft);
-  outline: none;
-  color: var(--text-main);
-  font-size: 13px;
-  font-weight: 600;
-}
+.field label { display: block; font-weight: 800; font-size: 12px; margin-bottom: 5px; color: var(--navy); }
+.field input, .field select, .field textarea { width: 100%; padding: 9px 11px; border: 1.5px solid var(--border-gold); border-radius: 10px; background: var(--bg-soft); outline: none; color: var(--text-main); font-size: 13px; font-weight: 600; }
 .field textarea { min-height: 76px; resize: vertical; }
 
 .password-wrapper { position: relative; }
 .password-wrapper input { padding-left: 38px; }
-.toggle-password {
-  position: absolute;
-  left: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: transparent;
-  font-size: 15px;
-}
+.toggle-password { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: transparent; font-size: 15px; }
 
 .row { display: flex; gap: 10px; flex-wrap: wrap; }
 .row > * { flex: 1; min-width: 130px; }
 .hidden { display: none !important; }
 
-.notice {
-  padding: 11px 12px;
-  border-radius: 10px;
-  background: var(--bg-soft);
-  color: var(--teal-deep);
-  margin: 10px 0;
-  font-size: 12px;
-  line-height: 1.5;
-  border: 1.5px solid var(--border-gold);
-  font-weight: 700;
-}
+.notice { padding: 11px 12px; border-radius: 10px; background: var(--bg-soft); color: var(--teal-deep); margin: 10px 0; font-size: 12px; line-height: 1.5; border: 1.5px solid var(--border-gold); font-weight: 700; }
 .success { background: #f0fdf4; color: var(--green-calm); border-color: #bbf7d0; }
 .error { background: var(--danger-tint); color: var(--danger-calm); border-color: #fecaca; }
 
-.free-jobs-highlight-card {
-  background: var(--gold-tint);
-  border: 1.5px solid var(--border-gold);
-  border-radius: 14px;
-  padding: 15px;
-  text-align: center;
-  margin-bottom: 14px;
-}
-.free-jobs-counter {
-  font-size: 22px;
-  font-weight: 900;
-  color: var(--navy);
-  margin: 6px 0;
-}
+.free-jobs-highlight-card { background: var(--gold-tint); border: 1.5px solid var(--border-gold); border-radius: 14px; padding: 15px; text-align: center; margin-bottom: 14px; }
+.free-jobs-counter { font-size: 22px; font-weight: 900; color: var(--navy); margin: 6px 0; }
 
-.badge {
-  display: inline-block;
-  padding: 2px 9px;
-  border-radius: 12px;
-  background: var(--teal-tint);
-  color: var(--teal-deep);
-  font-size: 10.5px;
-  font-weight: 800;
-  border: 1px solid var(--border-gold);
-}
-.sub-badge {
-  display: inline-block;
-  padding: 2px 8px;
-  border-radius: 10px;
-  background: var(--gold-tint);
-  color: var(--navy);
-  font-size: 10px;
-  font-weight: 700;
-  border: 1px solid var(--border-gold);
-  margin-top: 3px;
-}
+.badge { display: inline-block; padding: 2px 9px; border-radius: 12px; background: var(--teal-tint); color: var(--teal-deep); font-size: 10.5px; font-weight: 800; border: 1px solid var(--border-gold); }
+.sub-badge { display: inline-block; padding: 2px 8px; border-radius: 10px; background: var(--gold-tint); color: var(--navy); font-size: 10px; font-weight: 700; border: 1px solid var(--border-gold); margin-top: 3px; }
 
-.tech-card {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  background: var(--gold-tint);
-  color: var(--text-main);
-  position: relative;
-  padding: 14px;
-  border-radius: 16px;
-  border: 1.5px solid var(--border-gold);
-  box-shadow: var(--shadow-soft);
-}
+.tech-card { display: flex; flex-direction: column; gap: 8px; background: var(--gold-tint); color: var(--text-main); position: relative; padding: 14px; border-radius: 16px; border: 1.5px solid var(--border-gold); box-shadow: var(--shadow-soft); }
 .tech-card .btn { width: 100%; font-size: 11.5px; padding: 8px; }
 
 .muted { color: var(--text-muted); font-size: 11.5px; font-weight: 600; }
-.empty {
-  text-align: center;
-  padding: 28px;
-  color: var(--text-muted);
-  background: var(--gold-tint);
-  border-radius: 14px;
-  border: 1.5px dashed var(--border-gold);
-  font-weight: 700;
-  grid-column: span 2;
-}
+.empty { text-align: center; padding: 28px; color: var(--text-muted); background: var(--gold-tint); border-radius: 14px; border: 1.5px dashed var(--border-gold); font-weight: 700; grid-column: span 2; }
 
-.online-dot {
-  display: inline-block;
-  width: 9px;
-  height: 9px;
-  background-color: var(--online-dot);
-  border-radius: 50%;
-  vertical-align: middle;
-  margin-right: 4px;
-}
-.offline-dot {
-  display: inline-block;
-  width: 9px;
-  height: 9px;
-  background-color: var(--offline-dot);
-  border-radius: 50%;
-  vertical-align: middle;
-  margin-right: 4px;
-}
+.online-dot { display: inline-block; width: 9px; height: 9px; background-color: var(--online-dot); border-radius: 50%; vertical-align: middle; margin-right: 4px; }
+.offline-dot { display: inline-block; width: 9px; height: 9px; background-color: var(--offline-dot); border-radius: 50%; vertical-align: middle; margin-right: 4px; }
 
-.modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(5, 35, 52, 0.58);
-  backdrop-filter: blur(3px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 12px;
-  z-index: 1000;
-}
-.modal-box {
-  background: var(--gold-tint);
-  color: var(--text-main);
-  border-radius: 18px;
-  padding: 20px;
-  width: min(470px, 100%);
-  max-height: 90vh;
-  overflow: auto;
-  box-shadow: 0 16px 36px rgba(5, 35, 52, 0.25);
-  border: 2px solid var(--gold-bright);
-}
-.modal-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: var(--navy);
-  margin-bottom: 12px;
-  border-bottom: 1px solid var(--border-soft);
-  padding-bottom: 8px;
-}
+.modal { position: fixed; inset: 0; background: rgba(5, 35, 52, 0.58); backdrop-filter: blur(3px); display: flex; align-items: center; justify-content: center; padding: 12px; z-index: 1000; }
+.modal-box { background: var(--gold-tint); color: var(--text-main); border-radius: 18px; padding: 20px; width: min(490px, 100%); max-height: 90vh; overflow: auto; box-shadow: 0 16px 36px rgba(5, 35, 52, 0.25); border: 2px solid var(--gold-bright); }
+.modal-head { display: flex; justify-content: space-between; align-items: center; color: var(--navy); margin-bottom: 12px; border-bottom: 1px solid var(--border-soft); padding-bottom: 8px; }
 .modal-head h3 { margin: 0; font-size: 15.5px; font-weight: 900; }
-.close {
-  background: linear-gradient(155deg, #dc2626 0%, var(--danger-calm) 100%);
-  border-radius: 50%;
-  width: 28px;
-  height: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  font-weight: bold;
-  color: #ffffff;
-  border: 1.5px solid #fecaca;
-}
+.close { background: linear-gradient(155deg, #dc2626 0%, var(--danger-calm) 100%); border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-weight: bold; color: #ffffff; border: 1.5px solid #fecaca; }
 
-.list-item {
-  border: 1.5px solid var(--border-gold);
-  padding: 14px;
-  border-radius: 14px;
-  margin: 10px 0;
-  background: var(--gold-tint);
-  color: var(--text-main);
-  box-shadow: var(--shadow-soft);
-}
+.list-item { border: 1.5px solid var(--border-gold); padding: 14px; border-radius: 14px; margin: 10px 0; background: var(--gold-tint); color: var(--text-main); box-shadow: var(--shadow-soft); }
 .list-item h4 { margin: 0 0 5px; color: var(--navy); font-size: 14.5px; font-weight: 900; }
 .actions { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
 .actions button, .actions a { font-size: 11px; padding: 6px 11px; border-radius: 8px; font-weight: 800; }
 
 .stat { font-size: 18px; font-weight: 900; color: var(--navy); }
-.avatar {
-  width: 58px;
-  height: 58px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid var(--gold-bright);
-  background: var(--gold-tint);
-  box-shadow: 0 4px 10px rgba(5, 35, 52, 0.16);
-  display: block;
-  margin: 0 auto 6px;
-  cursor: pointer;
-}
+.avatar { width: 58px; height: 58px; border-radius: 50%; object-fit: cover; border: 2px solid var(--gold-bright); background: var(--gold-tint); box-shadow: 0 4px 10px rgba(5, 35, 52, 0.16); display: block; margin: 0 auto 6px; cursor: pointer; }
 .avatar.small { width: 44px; height: 44px; margin: 0; }
 
 .stars { color: #d99b07; font-size: 13.5px; letter-spacing: 1px; }
 
+.chat-status-banner {
+  background: var(--bg-soft);
+  border: 1.5px solid var(--border-gold);
+  border-radius: 10px;
+  padding: 8px 10px;
+  margin-bottom: 8px;
+  font-size: 11.5px;
+  font-weight: 800;
+  color: var(--navy);
+  line-height: 1.5;
+}
+.chat-decision-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
 .chat-box {
-  height: 250px;
+  height: 230px;
   overflow-y: auto;
   border: 1.5px solid var(--border-gold);
   border-radius: 12px;
@@ -955,129 +507,26 @@ header {
   flex-direction: column;
   gap: 8px;
 }
-.chat-bubble {
-  max-width: 84%;
-  padding: 8px 12px;
-  border-radius: 12px;
-  font-size: 12.5px;
-  font-weight: 700;
-  line-height: 1.5;
-}
-.chat-bubble.mine {
-  background: linear-gradient(155deg, var(--navy-mid) 0%, var(--teal-calm) 45%, var(--teal-deep) 100%);
-  color: #ffffff;
-  align-self: flex-start;
-  border: 1px solid var(--gold-bright);
-}
-.chat-bubble.other {
-  background: var(--gold-tint);
-  color: var(--text-main);
-  align-self: flex-end;
-  border: 1.5px solid var(--border-gold);
-}
-.chat-bubble.wa-card {
-  max-width: 92%;
-  background: #f0fdf4;
-  color: #14532d;
-  border: 1.5px solid #22c55e;
-  align-self: center;
-  text-align: center;
-}
-.chat-bubble audio {
-  width: 100%;
-  max-width: 230px;
-  height: 34px;
-  margin-top: 4px;
-  display: block;
-}
-.chat-bubble small {
-  display: block;
-  font-size: 10px;
-  opacity: 0.78;
-  margin-top: 3px;
-}
-.chat-toolbar {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 8px;
-  justify-content: space-between;
-  align-items: center;
-}
-.chat-send-row {
-  display: flex;
-  gap: 6px;
-  align-items: center;
-}
-.chat-send-row input {
-  flex: 1;
-  padding: 9px 11px;
-  border: 1.5px solid var(--border-gold);
-  border-radius: 10px;
-  background: var(--bg-soft);
-  color: var(--text-main);
-  font-weight: 700;
-  outline: none;
-  min-width: 0;
-}
-.mic-btn {
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  background: linear-gradient(155deg, #f7d265 0%, #d4a024 100%);
-  color: var(--navy-deep);
-  border: 1.5px solid var(--navy);
-  font-size: 17px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  box-shadow: 0 3px 0 #92670c;
-}
-.mic-btn.recording {
-  background: linear-gradient(155deg, #dc2626 0%, #991b1b 100%);
-  color: #ffffff;
-  border-color: #fecaca;
-  animation: pulseRec 1s infinite;
-}
-@keyframes pulseRec {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.06); }
-}
-.voice-rec-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  background: var(--danger-tint);
-  border: 1.5px solid #fca5a5;
-  border-radius: 10px;
-  padding: 7px 10px;
-  margin-bottom: 8px;
-  color: var(--danger-calm);
-  font-size: 12px;
-  font-weight: 800;
-}
+.chat-bubble { max-width: 84%; padding: 8px 12px; border-radius: 12px; font-size: 12.5px; font-weight: 700; line-height: 1.5; }
+.chat-bubble.mine { background: linear-gradient(155deg, var(--navy-mid) 0%, var(--teal-calm) 45%, var(--teal-deep) 100%); color: #ffffff; align-self: flex-start; border: 1px solid var(--gold-bright); }
+.chat-bubble.other { background: var(--gold-tint); color: var(--text-main); align-self: flex-end; border: 1.5px solid var(--border-gold); }
+.chat-bubble.wa-card { max-width: 92%; background: #f0fdf4; color: #14532d; border: 1.5px solid #22c55e; align-self: center; text-align: center; }
+.chat-bubble.sys-card { max-width: 94%; background: #fffbeb; color: #78350f; border: 1.5px solid #f59e0b; align-self: center; text-align: center; font-size: 11.5px; }
+.chat-bubble audio { width: 100%; max-width: 230px; height: 34px; margin-top: 4px; display: block; }
+.chat-bubble small { display: block; font-size: 10px; opacity: 0.78; margin-top: 3px; }
+.chat-toolbar { display: flex; gap: 8px; margin-bottom: 8px; justify-content: space-between; align-items: center; }
+.chat-send-row { display: flex; gap: 6px; align-items: center; }
+.chat-send-row input { flex: 1; padding: 9px 11px; border: 1.5px solid var(--border-gold); border-radius: 10px; background: var(--bg-soft); color: var(--text-main); font-weight: 700; outline: none; min-width: 0; }
 
-footer {
-  background: linear-gradient(180deg, var(--teal-deep) 0%, var(--navy-deep) 100%);
-  color: #e2e8f0;
-  text-align: center;
-  padding: 22px;
-  margin-top: 30px;
-  font-size: 12px;
-  line-height: 1.8;
-  border-top: 3px solid var(--gold-bright);
-}
+.mic-btn { width: 40px; height: 40px; border-radius: 10px; background: linear-gradient(155deg, #f7d265 0%, #d4a024 100%); color: var(--navy-deep); border: 1.5px solid var(--navy); font-size: 17px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 3px 0 #92670c; }
+.mic-btn.recording { background: linear-gradient(155deg, #dc2626 0%, #991b1b 100%); color: #ffffff; border-color: #fecaca; animation: pulseRec 1s infinite; }
+@keyframes pulseRec { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); } }
+
+.voice-rec-bar { display: flex; align-items: center; justify-content: space-between; gap: 8px; background: var(--danger-tint); border: 1.5px solid #fca5a5; border-radius: 10px; padding: 7px 10px; margin-bottom: 8px; color: var(--danger-calm); font-size: 12px; font-weight: 800; }
+
+footer { background: linear-gradient(180deg, var(--teal-deep) 0%, var(--navy-deep) 100%); color: #e2e8f0; text-align: center; padding: 22px; margin-top: 30px; font-size: 12px; line-height: 1.8; border-top: 3px solid var(--gold-bright); }
 .footer-links { margin-top: 8px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
-.footer-links button {
-  background: linear-gradient(155deg, var(--navy-mid) 0%, var(--teal-calm) 45%, var(--teal-deep) 100%);
-  color: #ffffff;
-  padding: 6px 14px;
-  border-radius: 10px;
-  border: 1.5px solid var(--gold-bright);
-  font-size: 12px;
-  font-weight: 700;
-}
+.footer-links button { background: linear-gradient(155deg, var(--navy-mid) 0%, var(--teal-calm) 45%, var(--teal-deep) 100%); color: #ffffff; padding: 6px 14px; border-radius: 10px; border: 1.5px solid var(--gold-bright); font-size: 12px; font-weight: 700; }
 
 @media(max-width:768px) {
   .brand img { height: 40px; }
@@ -1206,7 +655,7 @@ footer {
  </div>
 
  <div class="card" style="max-width:700px;margin:0 auto 22px">
-  <div class="notice">شاركنا رأيك وملاحظتك حول الخدمات، وتقييمك يهمنا لتطوير أداء المنصة. (التقييم متاح بعد إتمام العمل والتواصل).</div>
+  <div class="notice">شاركنا رأيك وملاحظتك حول الخدمات، وتقييمك يهمنا لتطوير أداء المنصة.</div>
   <div class="field"><label>اسمك الكريم</label><input id="reviewName" placeholder="اسمك الكامل"></div>
   <div class="field">
    <label>التقييم بالنجوم</label>
@@ -1229,7 +678,7 @@ footer {
 <section id="join" class="container hidden">
  <h2 class="section-title">انضم إلى شبكة فنيي صخر</h2>
  <form class="card" style="max-width:650px;margin:0 auto" onsubmit="event.preventDefault(); registerTechFlexible();">
-  <div class="notice">تسجيل سريع ومبسط للفني (3 أعمال مجاناً بالكامل). يمكنك التسجيل بحساب جوجل أو البريد الإلكتروني أو رقم الهاتف، وإضافة رقم الهاتف اختيارية إلا عند طلب واتساب.</div>
+  <div class="notice">تسجيل سريع ومبسط للفني (3 أعمال مجاناً بالكامل). يمكنك التسجيل بحساب جوجل أو البريد الإلكتروني أو رقم الهاتف.</div>
   <button type="button" class="btn google-btn" style="width:100%; margin-bottom:10px; padding:10px;" onclick="signInWithGoogleRole('technician')">
    <span>🌐</span> التسجيل السريع بحساب جوجل (Google)
   </button>
@@ -1269,10 +718,8 @@ footer {
  <h2 class="section-title">الملف الشخصي - لوحة تحكم الفني</h2>
 
  <div id="techIncompleteChecklist" class="incomplete-checklist-card hidden"></div>
-
  <div id="techAlertBox"></div>
  <div id="techSummary" class="card" style="margin-bottom:15px"></div>
-
  <div id="techFreeJobsHighlight" class="free-jobs-highlight-card"></div>
 
  <div class="card" style="margin-bottom:15px;">
@@ -1487,7 +934,6 @@ footer {
  </div>
 </div>
 
-<!-- نافذة إضافة رقم الهاتف السري داخل الملف الشخصي لربط الواتساب -->
 <div class="modal hidden" id="whatsappPhoneOnlyModal">
  <div class="modal-box">
   <div class="modal-head"><h3>📱 إضافة رقم الهاتف للربط عبر واتساب</h3><div class="close" onclick="closeModal('whatsappPhoneOnlyModal')">✕</div></div>
@@ -1519,22 +965,34 @@ footer {
 <div class="modal hidden" id="customerOrderModal">
  <div class="modal-box">
   <div class="modal-head"><h3 id="orderModalTitle">طلب الفني المعتمد</h3><div class="close" onclick="closeModal('customerOrderModal')">✕</div></div>
-  <div class="notice">اكتب تفاصيل العطل أو المشكلة لإرسال الطلب إلى الفني، وستتم المحادثة (نص وبصمة صوتية وطلب واتساب) داخل التطبيق.</div>
+  <div class="notice">اكتب تفاصيل العطل أو المشكلة لإرسال الطلب إلى الفني، وبعد موافقته تبقى المحادثة مفتوحة حتى انتهاء العمل.</div>
   <div class="field"><label>الملاحظة أو تفاصيل المشكلة</label><textarea id="custOrderProblem" placeholder="اكتب تفاصيل العطل هنا..."></textarea></div>
   <button class="btn primary" style="width:100%; margin-top:10px;" onclick="submitCustomerOrder()">إرسال الطلب إلى الفني</button>
   <div id="custOrderMessage"></div>
  </div>
 </div>
 
+<!-- نافذة محادثة الطلب الدائمة بعد الموافقة + إنهاء / استمرار -->
 <div class="modal hidden" id="orderChatModal">
  <div class="modal-box">
-  <div class="modal-head"><h3 id="orderChatTitle">💬 محادثة الطلب داخل التطبيق</h3><div class="close" onclick="closeOrderChatModal()">✕</div></div>
+  <div class="modal-head"><h3 id="orderChatTitle">💬 محادثة الطلب الدائمة</h3><div class="close" onclick="closeOrderChatModal()">✕</div></div>
+
+  <div id="orderChatStatusBanner" class="chat-status-banner">
+   جارٍ تحميل حالة الطلب والمحادثة...
+  </div>
+
+  <div id="orderChatDecisionRow" class="chat-decision-row hidden">
+   <button type="button" class="btn gold-3d" style="flex:1; padding:8px; font-size:12px;" onclick="setOrderContinuationDecision('ended')">✅ إنهاء الطلب</button>
+   <button type="button" class="btn secondary" style="flex:1; padding:8px; font-size:12px;" onclick="setOrderContinuationDecision('continued')">🔄 الاستمرار بالطلب</button>
+  </div>
+
   <div class="chat-toolbar">
-   <span class="muted" style="font-weight:800;">رقمك محمي حتى توافق على واتساب</span>
+   <span class="muted" style="font-weight:800;">تبقى مفتوحة طوال فترة العمل</span>
    <button type="button" class="btn whatsapp-btn" style="padding:6px 10px; font-size:11.5px;" onclick="requestWhatsappInChat()">
     <span>🟢</span> طلب واتساب
    </button>
   </div>
+
   <div id="orderChatMessages" class="chat-box"></div>
 
   <div id="voiceRecordingBar" class="voice-rec-bar hidden">
@@ -1677,22 +1135,10 @@ const MONTHLY_DURATION_MS = 30 * 24 * 60 * 60 * 1000;
 const YEARLY_DURATION_MS = 365 * 24 * 60 * 60 * 1000;
 
 const MAIN_SERVICES = [
-  "كهربائيات",
-  "سباكة",
-  "تكييف",
-  "صيانة عامة",
-  "بناء وترميم",
-  "مطابخ وديكور",
-  "ألمنيوم",
-  "نجارة",
-  "صبغ منازل"
+  "كهربائيات", "سباكة", "تكييف", "صيانة عامة",
+  "بناء وترميم", "مطابخ وديكور", "ألمنيوم", "نجارة", "صبغ منازل"
 ];
-
-const OTHER_SERVICES = [
-  "صيانة الأجهزة الكهربائية",
-  "صيانة الأجهزة الإلكترونية"
-];
-
+const OTHER_SERVICES = ["صيانة الأجهزة الكهربائية", "صيانة الأجهزة الإلكترونية"];
 const SERVICES = [...MAIN_SERVICES, ...OTHER_SERVICES];
 
 const SUBSERVICES = {
@@ -1728,38 +1174,33 @@ const DISTRICTS={
 };
 
 let activeCities = ["المثنى", "بغداد"];
-
 let auth=null,db=null,storage=null,functions=null,currentUser=null,currentRole="guest",currentTech=null;
 let publicTechs=[],requests=[],technicians=[],passwordRequests=[],allAccountsList=[],incompleteAccountsList=[];
 let chosenCustomerCity="",chosenCustomerArea="",selectedTargetTech=null;
-let currentSelectedService="";
-let currentSelectedSubservice="";
-let currentAdminTechsSubTab="registered";
-let currentSectionId="home";
-let navigationHistory=["home"];
-let techJobsListener=null;
-let supportChatListener=null;
-let orderChatListener=null;
-let activeOrderChatId=null;
-let preferredGoogleRole="auto";
-let pendingAfterPhoneCheck=null;
-let pendingAfterWhatsappPhone=null;
-let announcementTimer=null;
-let pendingAfterGate=null;
-let custRegAuthMode="phone";
-let techRegAuthMode="phone";
-let isSigningOutFlag=false;
-let isGoogleAuthInProgress=false;
+let currentSelectedService="",currentSelectedSubservice="",currentAdminTechsSubTab="registered";
+let currentSectionId="home",navigationHistory=["home"];
+let techJobsListener=null,supportChatListener=null,orderChatListener=null,orderMetaListener=null;
+let activeOrderChatId=null,activeOrderMeta=null;
+let preferredGoogleRole="auto",pendingAfterPhoneCheck=null,pendingAfterWhatsappPhone=null,announcementTimer=null,pendingAfterGate=null;
+let custRegAuthMode="phone",techRegAuthMode="phone",isSigningOutFlag=false,isGoogleAuthInProgress=false;
 
-// متغيرات تسجيل البصمة الصوتية
-let mediaRecorder=null;
-let audioChunks=[];
-let voiceRecordTimer=null;
-let voiceRecordSeconds=0;
-let isVoiceCancelled=false;
+let mediaRecorder=null,audioChunks=[],voiceRecordTimer=null,voiceRecordSeconds=0,isVoiceCancelled=false;
 
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+function formatOpenDuration(startedAt, endedAt = null) {
+  if (!startedAt) return "غير محدد";
+  const endTs = endedAt || Date.now();
+  const diffMs = Math.max(0, endTs - Number(startedAt));
+  const totalMinutes = Math.floor(diffMs / 60000);
+  const days = Math.floor(totalMinutes / (60 * 24));
+  const hours = Math.floor((totalMinutes % (60 * 24)) / 60);
+  const mins = totalMinutes % 60;
+  if (days > 0) return `${days} يوم و ${hours} ساعة`;
+  if (hours > 0) return `${hours} ساعة و ${mins} دقيقة`;
+  return `${mins} دقيقة`;
+}
 
 function normalizeIraqiPhone(raw) {
   let d = String(raw || "").trim().replace(/[\s\-().+]/g, "");
@@ -1770,45 +1211,22 @@ function normalizeIraqiPhone(raw) {
   return d;
 }
 
-function isValidIraqiPhone(phone) {
-  const norm = normalizeIraqiPhone(phone);
-  return /^07[3-9]\d{8}$/.test(norm);
-}
-
-function isValidEmailAddress(val) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(val || "").trim());
-}
-
+function isValidIraqiPhone(phone) { return /^07[3-9]\d{8}$/.test(normalizeIraqiPhone(phone)); }
+function isValidEmailAddress(val) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(val || "").trim()); }
 function buildAuthEmailFromInput(rawIdentifier) {
   const trimmed = String(rawIdentifier || "").trim();
-  if (trimmed.includes("@")) {
-    return trimmed.toLowerCase();
-  }
-  const normPhone = normalizeIraqiPhone(trimmed);
-  return normPhone + "@sakhr.app";
+  return trimmed.includes("@") ? trimmed.toLowerCase() : (normalizeIraqiPhone(trimmed) + "@sakhr.app");
 }
 
 function formatAuthErrorMessage(err) {
   const code = err?.code || "";
   const msg = err?.message || "";
-  if (code === "auth/network-request-failed" || msg.includes("network-request-failed")) {
-    return "تعذر الاتصال بخدمة الدخول بسبب ضعف أو انقطاع الإنترنت. تحقق من اتصالك بالشبكة وحاول مرة أخرى.";
-  }
-  if (code === "auth/unauthorized-domain") {
-    return "تنبيه إعدادات Firebase: هذا الرابط غير مضاف ضمن Authorized domains في لوحة مصادقة Firebase.";
-  }
-  if (code === "auth/operation-not-allowed") {
-    return "تنبيه إعدادات Firebase: تسجيل الدخول عبر Google غير مفعّل في Sign-in method.";
-  }
-  if (code === "auth/wrong-password" || code === "auth/invalid-credential" || code === "auth/user-not-found") {
-    return "رقم الهاتف / البريد الإلكتروني أو كلمة المرور غير صحيحة.";
-  }
-  if (code === "auth/too-many-requests") {
-    return "تم إيقاف المحاولات مؤقتاً لكثرة التكرار. انتظر قليلاً ثم حاول مرة أخرى.";
-  }
-  if (code === "auth/email-already-in-use") {
-    return "هذا الرقم أو البريد الإلكتروني مسجل مسبقاً. يرجى تسجيل الدخول.";
-  }
+  if (code === "auth/network-request-failed" || msg.includes("network-request-failed")) return "تعذر الاتصال بخدمة الدخول بسبب ضعف أو انقطاع الإنترنت.";
+  if (code === "auth/unauthorized-domain") return "هذا الرابط غير مضاف ضمن Authorized domains في Firebase.";
+  if (code === "auth/operation-not-allowed") return "طريقة تسجيل الدخول هذه غير مفعّلة في Firebase.";
+  if (code === "auth/wrong-password" || code === "auth/invalid-credential" || code === "auth/user-not-found") return "رقم الهاتف / البريد الإلكتروني أو كلمة المرور غير صحيحة.";
+  if (code === "auth/too-many-requests") return "تم إيقاف المحاولات مؤقتاً لكثرة التكرار.";
+  if (code === "auth/email-already-in-use") return "هذا الرقم أو البريد الإلكتروني مسجل مسبقاً. يرجى تسجيل الدخول.";
   return "خطأ في بيانات الدخول (" + code + "): " + msg;
 }
 
@@ -1823,26 +1241,16 @@ function switchCustRegAuthMode(mode) {
   custRegAuthMode = mode === "email" ? "email" : "phone";
   $("custRegModePhoneBtn")?.classList.toggle("active", custRegAuthMode === "phone");
   $("custRegModeEmailBtn")?.classList.toggle("active", custRegAuthMode === "email");
-  if (custRegAuthMode === "phone") {
-    $("custRegPhoneField")?.classList.remove("hidden");
-    $("custRegEmailField")?.classList.add("hidden");
-  } else {
-    $("custRegPhoneField")?.classList.add("hidden");
-    $("custRegEmailField")?.classList.remove("hidden");
-  }
+  $("custRegPhoneField")?.classList.toggle("hidden", custRegAuthMode !== "phone");
+  $("custRegEmailField")?.classList.toggle("hidden", custRegAuthMode === "phone");
 }
 
 function switchTechRegAuthMode(mode) {
   techRegAuthMode = mode === "email" ? "email" : "phone";
   $("techRegModePhoneBtn")?.classList.toggle("active", techRegAuthMode === "phone");
   $("techRegModeEmailBtn")?.classList.toggle("active", techRegAuthMode === "email");
-  if (techRegAuthMode === "phone") {
-    $("regPhoneField")?.classList.remove("hidden");
-    $("regEmailField")?.classList.add("hidden");
-  } else {
-    $("regPhoneField")?.classList.add("hidden");
-    $("regEmailField")?.classList.remove("hidden");
-  }
+  $("regPhoneField")?.classList.toggle("hidden", techRegAuthMode !== "phone");
+  $("regEmailField")?.classList.toggle("hidden", techRegAuthMode === "phone");
 }
 
 function getEffectiveSubscriptionInfo(tech) {
@@ -1850,44 +1258,23 @@ function getEffectiveSubscriptionInfo(tech) {
   const expiresAt = Number(tech?.subscriptionExpiresAt || 0);
   const manualActive = tech?.subscriptionStatus === "فعال";
   const now = Date.now();
-
   if(manualActive && expiresAt > 0 && now >= expiresAt) {
-    return {
-      isActive: false,
-      expired: true,
-      planType,
-      expiresAt,
-      label: planType === "yearly" ? "منتهي (سنوي)" : "منتهي (شهري)"
-    };
+    return { isActive: false, expired: true, planType, expiresAt, label: planType === "yearly" ? "منتهي (سنوي)" : "منتهي (شهري)" };
   }
   if(manualActive) {
     const typeText = planType === "yearly" ? "سنوي" : (planType === "monthly" ? "شهري" : "فعال");
-    return {
-      isActive: true,
-      expired: false,
-      planType,
-      expiresAt,
-      label: `فعال (${typeText})`
-    };
+    return { isActive: true, expired: false, planType, expiresAt, label: `فعال (${typeText})` };
   }
-  return {
-    isActive: false,
-    expired: false,
-    planType,
-    expiresAt: 0,
-    label: "غير فعال"
-  };
+  return { isActive: false, expired: false, planType, expiresAt: 0, label: "غير فعال" };
 }
 
 function canTechAcceptMoreJobs(tech) {
   if (!tech) return false;
   const subInfo = getEffectiveSubscriptionInfo(tech);
   if (subInfo.isActive) return true;
-  const freeUsed = Number(tech.freeJobsUsed || 0);
-  return freeUsed < 3;
+  return Number(tech.freeJobsUsed || 0) < 3;
 }
 
-// رقم الهاتف أصبح اختيارياً لاكتمال الملف الشخصي (يُطلب فقط عند طلب واتساب)
 function isTechProfileComplete(tech) {
   if (!tech) return false;
   return Boolean(
@@ -1902,10 +1289,7 @@ async function checkAndExpireSubscriptionIfNeeded(uid, tech) {
   if(!tech || !db) return tech;
   const info = getEffectiveSubscriptionInfo(tech);
   if(info.expired) {
-    const updates = {
-      subscriptionStatus: "غير فعال",
-      subscriptionExpiredAt: Date.now()
-    };
+    const updates = { subscriptionStatus: "غير فعال", subscriptionExpiredAt: Date.now() };
     await db.ref("technicians/" + uid).update(updates).catch(()=>{});
     await db.ref("publicTechnicians/" + uid).update(updates).catch(()=>{});
     return { ...tech, ...updates };
@@ -1914,16 +1298,11 @@ async function checkAndExpireSubscriptionIfNeeded(uid, tech) {
 }
 
 function toggleNavDrawer() {
-  const drawer = $("navDrawer");
-  const backdrop = $("navDrawerBackdrop");
+  const drawer = $("navDrawer"), backdrop = $("navDrawerBackdrop");
   if(!drawer || !backdrop) return;
   const isClosed = drawer.classList.contains("hidden");
-  if(isClosed) {
-    drawer.classList.remove("hidden");
-    backdrop.classList.remove("hidden");
-  } else {
-    closeNavDrawer();
-  }
+  drawer.classList.toggle("hidden", !isClosed);
+  backdrop.classList.toggle("hidden", !isClosed);
 }
 
 function closeNavDrawer() {
@@ -1940,20 +1319,16 @@ function goBackSmart() {
     else openModal.classList.add("hidden");
     return;
   }
-
   if(navigationHistory.length > 1) {
     navigationHistory.pop();
-    const prevId = navigationHistory[navigationHistory.length - 1] || "home";
-    showSection(prevId, false);
+    showSection(navigationHistory[navigationHistory.length - 1] || "home", false);
   } else if(currentSectionId !== "home") {
     showSection("home", false);
   }
 }
 
 function navigateToSection(id) {
-  if (id === "home" || id === "services") {
-    currentSelectedSubservice = "";
-  }
+  if (id === "home" || id === "services") currentSelectedSubservice = "";
   showSection(id, true);
 }
 
@@ -1970,8 +1345,7 @@ function getCityExpansionMessage(city) {
 
 function isUserEntered() {
   if(currentRole === "admin" || ["technician", "suspended"].includes(currentRole)) return true;
-  if(localStorage.getItem("sakhrCustomerName")) return true;
-  return false;
+  return Boolean(localStorage.getItem("sakhrCustomerName"));
 }
 
 function hasCustomerCoreProfileConfigured() {
@@ -1983,12 +1357,8 @@ function hasCustomerCoreProfileConfigured() {
 
 function openPhoneRequiredModal(afterCallback) {
   pendingAfterPhoneCheck = typeof afterCallback === "function" ? afterCallback : null;
-  if($("reqPhoneCity")) {
-    $("reqPhoneCity").innerHTML = '<option value="">اختر المحافظة</option>' + Object.keys(DISTRICTS).map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("");
-  }
-  if($("reqPhoneService")) {
-    $("reqPhoneService").innerHTML = SERVICES.map(s=>`<option value="${esc(s)}">${esc(s)}</option>`).join("");
-  }
+  if($("reqPhoneCity")) $("reqPhoneCity").innerHTML = '<option value="">اختر المحافظة</option>' + Object.keys(DISTRICTS).map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("");
+  if($("reqPhoneService")) $("reqPhoneService").innerHTML = SERVICES.map(s=>`<option value="${esc(s)}">${esc(s)}</option>`).join("");
 
   if(["technician", "suspended"].includes(currentRole) && currentTech) {
     $("reqPhoneModalTitle").innerText = "استكمال الملف الشخصي للفني";
@@ -2020,12 +1390,8 @@ async function saveRequiredPhoneProfile() {
   const city = $("reqPhoneCity").value;
   const area = $("reqPhoneArea").value;
 
-  if(!name || !city || !area) {
-    return showCustomAlert("يرجى إدخال الاسم وتحديد المحافظة والقضاء لإتمام التفعيل.");
-  }
-  if(phone && !isValidIraqiPhone(phone)) {
-    return showCustomAlert("إذا أدخلت رقم هاتف، يجب أن يكون رقماً عراقياً صحيحاً من 11 رقماً يبدأ بـ 07.");
-  }
+  if(!name || !city || !area) return showCustomAlert("يرجى إدخال الاسم وتحديد المحافظة والقضاء.");
+  if(phone && !isValidIraqiPhone(phone)) return showCustomAlert("رقم الهاتف العراقي يجب أن يتكون من 11 رقماً ويبدأ بـ 07.");
 
   try {
     if(["technician", "suspended"].includes(currentRole) && currentUser && currentTech) {
@@ -2045,21 +1411,14 @@ async function saveRequiredPhoneProfile() {
       chosenCustomerCity = city;
       chosenCustomerArea = area;
       const uid = (currentUser && !currentUser.isAnonymous) ? currentUser.uid : localStorage.getItem("sakhrCustomerUid");
-      if(uid) {
-        await logUserAccount(uid, { name, phone, role: "زبون", city, area });
-      }
+      if(uid) await logUserAccount(uid, { name, phone, role: "زبون", city, area });
       updateNavAuthButton();
     }
-
     closeModal("phoneRequiredModal");
-    showCustomAlert("تم حفظ بياناتك بنجاح، يمكنك الآن المتابعة!");
-
     if(!isCityActive(city)) {
       pendingAfterPhoneCheck = null;
-      showCustomAlert(getCityExpansionMessage(city));
-      return;
+      return showCustomAlert(getCityExpansionMessage(city));
     }
-
     if(typeof pendingAfterPhoneCheck === "function") {
       const fn = pendingAfterPhoneCheck;
       pendingAfterPhoneCheck = null;
@@ -2076,30 +1435,24 @@ function requireGate(actionCallback) {
       if(!isTechProfileComplete(currentTech)) {
         navigateToSection("techAccount");
         renderTechAccount();
-        showCustomAlert("يرجى إكمال بيانات ملفك الشخصي (الاسم، المحافظة، القضاء، والاختصاص) من القائمة أدناه أولاً.");
-        return;
+        return showCustomAlert("يرجى إكمال بيانات ملفك الشخصي (الاسم، المحافظة، القضاء، والاختصاص) أولاً.");
       }
       actionCallback();
       return;
     }
-
     if(!hasCustomerCoreProfileConfigured()) {
       openPhoneRequiredModal(actionCallback);
       return;
     }
-
     const userCity = chosenCustomerCity || localStorage.getItem("sakhrCustomerCity") || "";
     if(userCity && !isCityActive(userCity)) {
-      showCustomAlert(getCityExpansionMessage(userCity));
-      return;
+      return showCustomAlert(getCityExpansionMessage(userCity));
     }
-
     actionCallback();
   };
 
-  if(isUserEntered()) {
-    wrapped();
-  } else {
+  if(isUserEntered()) wrapped();
+  else {
     pendingAfterGate = wrapped;
     $("roleSelectionModal").classList.remove("hidden");
   }
@@ -2160,11 +1513,7 @@ function showSection(id, pushHistory = true) {
   const section = $(id);
   if (section) section.classList.remove("hidden");
   currentSectionId = id;
-  if(pushHistory) {
-    if(navigationHistory[navigationHistory.length - 1] !== id) {
-      navigationHistory.push(id);
-    }
-  }
+  if(pushHistory && navigationHistory[navigationHistory.length - 1] !== id) navigationHistory.push(id);
   window.scrollTo({ top: 0, behavior: "smooth" });
 
   if (id === "technicians") loadPublicTechs();
@@ -2174,12 +1523,9 @@ function showSection(id, pushHistory = true) {
     if(currentRole === "admin") {
       $("adminAnnouncementBox").classList.remove("hidden");
       loadAdminAnnouncementsInputs();
-    } else {
-      $("adminAnnouncementBox").classList.add("hidden");
-    }
+    } else $("adminAnnouncementBox").classList.add("hidden");
   }
-  if (id === "admin" && currentRole === "admin") loadAdminData();
-  if (id === "adminProfile" && currentRole === "admin") loadAdminData();
+  if ((id === "admin" || id === "adminProfile") && currentRole === "admin") loadAdminData();
   if (id === "techAccount" && ["technician", "suspended"].includes(currentRole)) renderTechAccount();
   if (id === "customerAccountView") renderCustomerAccount();
 }
@@ -2189,13 +1535,8 @@ function openLogin() { $("loginMessage").innerHTML = ""; $("loginModal").classLi
 function openForgotPasswordModal() {
   closeModal('loginModal');
   const prefill = $("loginPhone")?.value?.trim() || localStorage.getItem("sakhrCustomerEmail") || (currentTech?.email) || "";
-  if (prefill.includes("@")) {
-    $("forgotEmail").value = prefill;
-    $("forgotPhone").value = "";
-  } else {
-    $("forgotEmail").value = "";
-    $("forgotPhone").value = prefill;
-  }
+  $("forgotEmail").value = prefill.includes("@") ? prefill : "";
+  $("forgotPhone").value = prefill.includes("@") ? "" : prefill;
   $("forgotPasswordModal").classList.remove("hidden");
 }
 
@@ -2208,36 +1549,20 @@ function openTechEditModal() {
   $("techEditModal").classList.remove("hidden");
 }
 
-function openAdminTechsView() {
-  if(currentRole !== "admin") return;
-  navigateToSection("adminTechsSection");
-}
+function openAdminTechsView() { if(currentRole === "admin") navigateToSection("adminTechsSection"); }
 
 function switchAdminTechsSubTab(subTab) {
   currentAdminTechsSubTab = subTab;
-  const regBtn = $("btnTechsRegisteredTab");
-  const issBtn = $("btnTechsIssuesTab");
-  const regBox = $("adminTechsRegisteredBox");
-  const issBox = $("adminTechsIssuesBox");
-
-  if(subTab === "registered") {
-    regBtn?.classList.add("active");
-    issBtn?.classList.remove("active");
-    regBox?.classList.remove("hidden");
-    issBox?.classList.add("hidden");
-  } else {
-    issBtn?.classList.add("active");
-    regBtn?.classList.remove("active");
-    issBox?.classList.remove("hidden");
-    regBox?.classList.add("hidden");
-  }
+  $("btnTechsRegisteredTab")?.classList.toggle("active", subTab === "registered");
+  $("btnTechsIssuesTab")?.classList.toggle("active", subTab !== "registered");
+  $("adminTechsRegisteredBox")?.classList.toggle("hidden", subTab !== "registered");
+  $("adminTechsIssuesBox")?.classList.toggle("hidden", subTab === "registered");
   renderAdminTechsFullList();
 }
 
 function switchAdminTab(tab) {
   document.querySelectorAll(".admin-tab-content").forEach(el => el.classList.add("hidden"));
   document.querySelectorAll(".admin-tab-btn").forEach(el => el.classList.remove("active"));
-  
   if(tab === 'accounts') {
     $("adminAccountsTab").classList.remove("hidden");
     $("btnTabAccounts").classList.add("active");
@@ -2249,12 +1574,7 @@ function switchAdminTab(tab) {
 
 function toggleOtherAppliancesField(serviceName, fieldId) {
   const el = $(fieldId);
-  if(!el) return;
-  if(serviceName === "صيانة الأجهزة الكهربائية") {
-    el.classList.remove("hidden");
-  } else {
-    el.classList.add("hidden");
-  }
+  if(el) el.classList.toggle("hidden", serviceName !== "صيانة الأجهزة الكهربائية");
 }
 
 function onTechServiceChange(selectId, boxId, otherFieldId) {
@@ -2273,45 +1593,29 @@ function renderSubserviceCheckboxes(containerId, serviceName, selectedList = [])
   }
   box.innerHTML = subs.map(sub => {
     const checked = selectedList.includes(sub) ? "checked" : "";
-    return `
-      <label class="sub-check-item">
-        <input type="checkbox" value="${esc(sub)}" ${checked}>
-        <span>${esc(sub)}</span>
-      </label>
-    `;
+    return `<label class="sub-check-item"><input type="checkbox" value="${esc(sub)}" ${checked}><span>${esc(sub)}</span></label>`;
   }).join("");
 }
 
 function getCheckedSubservices(containerId) {
   const box = $(containerId);
-  if(!box) return [];
-  return Array.from(box.querySelectorAll('input[type="checkbox"]:checked')).map(el => el.value);
+  return box ? Array.from(box.querySelectorAll('input[type="checkbox"]:checked')).map(el => el.value) : [];
 }
 
 function filterByService(serviceName) {
   const userCity = chosenCustomerCity || localStorage.getItem("sakhrCustomerCity") || "";
-  if(userCity && !isCityActive(userCity)) {
-    showCustomAlert(getCityExpansionMessage(userCity));
-    return;
-  }
-
+  if(userCity && !isCityActive(userCity)) return showCustomAlert(getCityExpansionMessage(userCity));
   currentSelectedService = serviceName;
   currentSelectedSubservice = "";
-
   const subs = SUBSERVICES[serviceName] || [];
-  if(subs.length > 0) {
-    openSubserviceModal(serviceName, subs);
-  } else {
-    navigateToSection("technicians");
-  }
+  if(subs.length > 0) openSubserviceModal(serviceName, subs);
+  else navigateToSection("technicians");
 }
 
 function openSubserviceModal(serviceName, subs) {
   $("subserviceModalTitle").innerText = "اختر نوع الخدمة (" + serviceName + ")";
   let html = `<button type="button" class="subservice-btn all-btn" onclick="selectSubserviceAndShowTechs('${esc(serviceName)}', '')">الكل (جميع فروع ${esc(serviceName)})</button>`;
-  html += subs.map(sub => `
-    <button type="button" class="subservice-btn" onclick="selectSubserviceAndShowTechs('${esc(serviceName)}', '${esc(sub)}')">${esc(sub)}</button>
-  `).join("");
+  html += subs.map(sub => `<button type="button" class="subservice-btn" onclick="selectSubserviceAndShowTechs('${esc(serviceName)}', '${esc(sub)}')">${esc(sub)}</button>`).join("");
   $("subserviceOptionsList").innerHTML = html;
   $("subserviceModal").classList.remove("hidden");
 }
@@ -2326,32 +1630,22 @@ function selectSubserviceAndShowTechs(serviceName, subserviceName) {
 function handleCustomerRoleEntry() {
   const savedName = localStorage.getItem("sakhrCustomerName");
   if(!savedName) {
-    $("custRegName").value = "";
-    $("custRegPhone").value = "";
-    $("custRegEmail").value = "";
-    $("custRegPassword").value = "";
-    $("custRegMessage").innerHTML = "";
+    $("custRegName").value = ""; $("custRegPhone").value = ""; $("custRegEmail").value = "";
+    $("custRegPassword").value = ""; $("custRegMessage").innerHTML = "";
     switchCustRegAuthMode("phone");
     $("customerAccountModal").classList.remove("hidden");
   } else {
     const savedCity = localStorage.getItem("sakhrCustomerCity") || "";
-    if(savedCity && !isCityActive(savedCity)) {
-      showCustomAlert(getCityExpansionMessage(savedCity));
-      return;
-    }
+    if(savedCity && !isCityActive(savedCity)) return showCustomAlert(getCityExpansionMessage(savedCity));
     runPendingGateAction();
   }
 }
 
 function handleTechnicianRoleEntry() {
-  if(["technician", "suspended"].includes(currentRole)) {
-    runPendingGateAction();
-  } else {
-    $("regName").value = "";
-    $("regPhone").value = "";
-    $("regEmail").value = "";
-    $("regPassword").value = "";
-    $("regMessage").innerHTML = "";
+  if(["technician", "suspended"].includes(currentRole)) runPendingGateAction();
+  else {
+    $("regName").value = ""; $("regPhone").value = ""; $("regEmail").value = "";
+    $("regPassword").value = ""; $("regMessage").innerHTML = "";
     switchTechRegAuthMode("phone");
     navigateToSection("join");
   }
@@ -2359,59 +1653,38 @@ function handleTechnicianRoleEntry() {
 
 function handleAuthNav() {
   const customerName = localStorage.getItem("sakhrCustomerName");
-  if(currentRole === "admin") { 
-    navigateToSection("adminProfile"); 
-  } else if(["technician", "suspended"].includes(currentRole)) { 
-    navigateToSection("techAccount"); 
-  } else if(customerName) {
-    navigateToSection("customerAccountView");
-  } else { 
-    openLogin(); 
-  }
+  if(currentRole === "admin") navigateToSection("adminProfile");
+  else if(["technician", "suspended"].includes(currentRole)) navigateToSection("techAccount");
+  else if(customerName) navigateToSection("customerAccountView");
+  else openLogin();
 }
 
 function updateNavAuthButton() {
-  const btn = $("authNavBtn");
-  const adminBtn = $("adminNavBtn");
-  const techsBtn = $("techsNavBtn");
+  const btn = $("authNavBtn"), adminBtn = $("adminNavBtn"), techsBtn = $("techsNavBtn");
   if(!btn) return;
   const customerName = localStorage.getItem("sakhrCustomerName");
-  
-  if(currentRole === "admin") {
-    if(adminBtn) adminBtn.classList.remove("hidden");
-    if(techsBtn) techsBtn.classList.remove("hidden");
+  const isAdmin = currentRole === "admin";
+  adminBtn?.classList.toggle("hidden", !isAdmin);
+  techsBtn?.classList.toggle("hidden", !isAdmin);
+
+  if(isAdmin || ["technician", "suspended"].includes(currentRole)) {
     btn.innerText = "👤 الملف الشخصي";
-    btn.className = "drawer-nav-btn primary-drawer";
+  } else if(customerName) {
+    btn.innerText = "👤 " + customerName;
   } else {
-    if(adminBtn) adminBtn.classList.add("hidden");
-    if(techsBtn) techsBtn.classList.add("hidden");
-    if(["technician", "suspended"].includes(currentRole)) {
-      btn.innerText = "👤 الملف الشخصي";
-      btn.className = "drawer-nav-btn primary-drawer";
-    } else if(customerName) {
-      btn.innerText = "👤 " + customerName;
-      btn.className = "drawer-nav-btn primary-drawer";
-    } else {
-      btn.innerText = "🔐 تسجيل الدخول";
-      btn.className = "drawer-nav-btn primary-drawer";
-    }
+    btn.innerText = "🔐 تسجيل الدخول";
   }
+  btn.className = "drawer-nav-btn primary-drawer";
 }
 
 function setupLocations(){
   const cityOptions = Object.keys(DISTRICTS).map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("");
-  if($("custRegCity")) $("custRegCity").innerHTML = '<option value="">اختر المحافظة</option>' + cityOptions;
-  if($("editCustCity")) $("editCustCity").innerHTML = '<option value="">اختر المحافظة</option>' + cityOptions;
-  if($("regCity")) $("regCity").innerHTML = '<option value="">اختر المحافظة</option>' + cityOptions;
-  if($("editTechCity")) $("editTechCity").innerHTML = '<option value="">اختر المحافظة</option>' + cityOptions;
-  if($("reqPhoneCity")) $("reqPhoneCity").innerHTML = '<option value="">اختر المحافظة</option>' + cityOptions;
-
+  ["custRegCity","editCustCity","regCity","editTechCity","reqPhoneCity"].forEach(id => {
+    if($(id)) $(id).innerHTML = '<option value="">اختر المحافظة</option>' + cityOptions;
+  });
   const savedCity = localStorage.getItem("sakhrCustomerCity") || "";
   const savedArea = localStorage.getItem("sakhrCustomerArea") || "";
-  if(savedCity) {
-    chosenCustomerCity = savedCity;
-    chosenCustomerArea = savedArea;
-  }
+  if(savedCity) { chosenCustomerCity = savedCity; chosenCustomerArea = savedArea; }
 }
 
 function setDistricts(id, city){
@@ -2431,40 +1704,28 @@ function setDistricts(id, city){
 
 function checkInitialStartupModals() {
   if(currentRole === "admin" || ["technician", "suspended"].includes(currentRole) || (currentUser && !currentUser.isAnonymous)) return;
-  const termsAccepted = localStorage.getItem("sakhrTermsAccepted");
-  if(!termsAccepted) {
+  if(!localStorage.getItem("sakhrTermsAccepted")) {
     $("termsCheckbox").checked = false;
     $("termsModal").classList.remove("hidden");
   }
 }
 
 function acceptTermsWithCheck() {
-  const checkbox = $("termsCheckbox");
-  if(!checkbox || !checkbox.checked) {
-    showCustomAlert("يرجى الموافقة على شروط الاستخدام والأحكام بتحديد المربع أولاً.");
-    return;
-  }
+  if(!$("termsCheckbox")?.checked) return showCustomAlert("يرجى الموافقة على شروط الاستخدام أولاً.");
   localStorage.setItem("sakhrTermsAccepted", "true");
   closeModal("termsModal");
 }
 
 async function logUserAccount(uid, info) {
-  if(!db) return;
-  try {
-    await db.ref("allAccounts/" + uid).update({
-      uid,
-      lastLogin: Date.now(),
-      ...info
-    });
-  } catch(e) {}
+  if(!db || !uid) return;
+  try { await db.ref("allAccounts/" + uid).update({ uid, lastLogin: Date.now(), ...info }); } catch(e) {}
 }
 
 async function finalizeGoogleUserSession(gUser, roleHint = "auto") {
   if(!gUser || !db) return;
   if(gUser.email === ADMIN_EMAIL) {
     currentRole = "admin";
-    closeModal("loginModal");
-    closeModal("customerAccountModal");
+    ["loginModal","customerAccountModal"].forEach(closeModal);
     updateNavAuthButton();
     navigateToSection("adminProfile");
     loadAdminData();
@@ -2475,47 +1736,21 @@ async function finalizeGoogleUserSession(gUser, roleHint = "auto") {
   const techSnap = await db.ref("technicians/" + gUser.uid).once("value");
   if(techSnap.exists() || roleHint === "technician") {
     let techData = techSnap.exists() ? techSnap.val() : {
-      name: gUser.displayName || "فني صخر",
-      email: gUser.email || "",
-      phone: "",
-      city: "",
-      area: "",
-      neighborhood: "",
-      service: "",
-      subservices: [],
-      otherAppliances: "",
-      bio: "",
-      extraInfo: "",
-      photoURL: gUser.photoURL || "",
-      approved: true,
-      available: true,
-      subscriptionStatus: "غير فعال",
-      subscriptionType: "none",
-      subscriptionExpiresAt: 0,
-      freeJobsUsed: 0,
-      completedJobs: 0,
-      ratingSum: 0,
-      ratingCount: 0,
-      ratingAverage: 0,
-      createdAt: Date.now()
+      name: gUser.displayName || "فني صخر", email: gUser.email || "", phone: "", city: "", area: "",
+      neighborhood: "", service: "", subservices: [], otherAppliances: "", bio: "", extraInfo: "",
+      photoURL: gUser.photoURL || "", approved: true, available: true, subscriptionStatus: "غير فعال",
+      subscriptionType: "none", subscriptionExpiresAt: 0, freeJobsUsed: 0, completedJobs: 0,
+      ratingSum: 0, ratingCount: 0, ratingAverage: 0, createdAt: Date.now()
     };
-    if(!techSnap.exists()) {
-      await db.ref("technicians/" + gUser.uid).set(techData);
-    }
+    if(!techSnap.exists()) await db.ref("technicians/" + gUser.uid).set(techData);
     techData = await checkAndExpireSubscriptionIfNeeded(gUser.uid, techData);
     currentTech = techData;
     currentRole = techData.approved === false ? "suspended" : "technician";
     await logUserAccount(gUser.uid, {
-      name: techData.name,
-      email: gUser.email || "",
-      phone: techData.phone || "",
-      role: "فني",
-      service: techData.service || "",
-      city: techData.city || "",
-      area: techData.area || ""
+      name: techData.name, email: gUser.email || "", phone: techData.phone || "",
+      role: "فني", service: techData.service || "", city: techData.city || "", area: techData.area || ""
     });
-    closeModal("loginModal");
-    closeModal("customerAccountModal");
+    ["loginModal","customerAccountModal"].forEach(closeModal);
     updateNavAuthButton();
     navigateToSection("techAccount");
     renderTechAccount();
@@ -2533,59 +1768,32 @@ async function finalizeGoogleUserSession(gUser, roleHint = "auto") {
   localStorage.setItem("sakhrCustomerUid", gUser.uid);
   if(gUser.email) localStorage.setItem("sakhrCustomerEmail", gUser.email);
   if(custPhone) localStorage.setItem("sakhrCustomerPhone", custPhone);
-  if(custCity) {
-    localStorage.setItem("sakhrCustomerCity", custCity);
-    chosenCustomerCity = custCity;
-  }
-  if(custArea) {
-    localStorage.setItem("sakhrCustomerArea", custArea);
-    chosenCustomerArea = custArea;
-  }
+  if(custCity) { localStorage.setItem("sakhrCustomerCity", custCity); chosenCustomerCity = custCity; }
+  if(custArea) { localStorage.setItem("sakhrCustomerArea", custArea); chosenCustomerArea = custArea; }
 
-  await logUserAccount(gUser.uid, {
-    name: custName,
-    email: gUser.email || "",
-    phone: custPhone,
-    role: "زبون",
-    city: custCity,
-    area: custArea
-  });
-
-  closeModal("loginModal");
-  closeModal("customerAccountModal");
+  await logUserAccount(gUser.uid, { name: custName, email: gUser.email || "", phone: custPhone, role: "زبون", city: custCity, area: custArea });
+  ["loginModal","customerAccountModal"].forEach(closeModal);
   updateNavAuthButton();
 
-  if(typeof pendingAfterGate === "function") {
-    runPendingGateAction();
-  } else {
-    showCustomAlert(`أهلاً بك ${custName}! تم تسجيل دخولك بنجاح عبر حساب كوكل.`);
-    navigateToSection("home");
-  }
+  if(typeof pendingAfterGate === "function") runPendingGateAction();
+  else { showCustomAlert(`أهلاً بك ${custName}! تم تسجيل دخولك بنجاح.`); navigateToSection("home"); }
 }
 
 async function signInWithGoogleRole(roleHint = "auto") {
   if(!auth || !db) return showCustomAlert("تعذر الاتصال بنظام المصادقة حالياً.");
   preferredGoogleRole = roleHint;
   isGoogleAuthInProgress = true;
-  try {
-    localStorage.setItem("sakhrPendingGoogleRole", roleHint);
-  } catch(_) {}
-
+  try { localStorage.setItem("sakhrPendingGoogleRole", roleHint); } catch(_) {}
   const provider = new firebase.auth.GoogleAuthProvider();
   provider.setCustomParameters({ prompt: "select_account" });
-
   try {
     const res = await auth.signInWithPopup(provider);
     isGoogleAuthInProgress = false;
     try { localStorage.removeItem("sakhrPendingGoogleRole"); } catch(_) {}
-    if(res && res.user) {
-      await finalizeGoogleUserSession(res.user, roleHint);
-    }
+    if(res && res.user) await finalizeGoogleUserSession(res.user, roleHint);
   } catch(e) {
     if(e.code === "auth/popup-blocked" || e.code === "auth/operation-not-supported-in-this-environment") {
-      try {
-        await auth.signInWithRedirect(provider);
-      } catch(redirErr) {
+      try { await auth.signInWithRedirect(provider); } catch(redirErr) {
         isGoogleAuthInProgress = false;
         try { localStorage.removeItem("sakhrPendingGoogleRole"); } catch(_) {}
         showCustomAlert(formatAuthErrorMessage(redirErr));
@@ -2593,9 +1801,7 @@ async function signInWithGoogleRole(roleHint = "auto") {
     } else {
       isGoogleAuthInProgress = false;
       try { localStorage.removeItem("sakhrPendingGoogleRole"); } catch(_) {}
-      if(e.code !== "auth/popup-closed-by-user" && e.code !== "auth/cancelled-popup-request") {
-        showCustomAlert(formatAuthErrorMessage(e));
-      }
+      if(e.code !== "auth/popup-closed-by-user" && e.code !== "auth/cancelled-popup-request") showCustomAlert(formatAuthErrorMessage(e));
     }
   }
 }
@@ -2605,28 +1811,17 @@ async function submitCustomerRegistration(){
   const password = $("custRegPassword").value;
   const city = $("custRegCity").value;
   const area = $("custRegArea").value;
-
-  let authEmail = "";
-  let cleanPhone = "";
-  let realEmail = "";
+  let authEmail = "", cleanPhone = "", realEmail = "";
 
   if (custRegAuthMode === "phone") {
     cleanPhone = normalizeIraqiPhone($("custRegPhone").value);
-    if (!name || !cleanPhone || !password || !city || !area) {
-      return showCustomAlert("يرجى إكمال الحقول الأساسية (الاسم، رقم الهاتف، كلمة المرور، المحافظة والقضاء).");
-    }
-    if (!isValidIraqiPhone(cleanPhone)) {
-      return showCustomAlert("يرجى إدخال رقم هاتف عراقي صحيح مكون من 11 رقماً يبدأ بـ 07.");
-    }
+    if (!name || !cleanPhone || !password || !city || !area) return showCustomAlert("يرجى إكمال الحقول الأساسية.");
+    if (!isValidIraqiPhone(cleanPhone)) return showCustomAlert("رقم الهاتف العراقي يجب أن يتكون من 11 رقماً ويبدأ بـ 07.");
     authEmail = cleanPhone + "@sakhr.app";
   } else {
     realEmail = $("custRegEmail").value.trim().toLowerCase();
-    if (!name || !realEmail || !password || !city || !area) {
-      return showCustomAlert("يرجى إكمال الحقول الأساسية (الاسم، البريد الإلكتروني، كلمة المرور، المحافظة والقضاء).");
-    }
-    if (!isValidEmailAddress(realEmail)) {
-      return showCustomAlert("يرجى إدخال بريد إلكتروني صحيح.");
-    }
+    if (!name || !realEmail || !password || !city || !area) return showCustomAlert("يرجى إكمال الحقول الأساسية.");
+    if (!isValidEmailAddress(realEmail)) return showCustomAlert("يرجى إدخال بريد إلكتروني صحيح.");
     authEmail = realEmail;
   }
 
@@ -2639,41 +1834,19 @@ async function submitCustomerRegistration(){
       if (e.code === "auth/email-already-in-use") {
         const res = await auth.signInWithEmailAndPassword(authEmail, password);
         userUid = res.user.uid;
-      } else {
-        throw e;
-      }
+      } else throw e;
     }
 
-    chosenCustomerCity = city;
-    chosenCustomerArea = area;
-    localStorage.setItem("sakhrCustomerCity", city);
-    localStorage.setItem("sakhrCustomerArea", area);
-    localStorage.setItem("sakhrCustomerName", name);
-    localStorage.setItem("sakhrCustomerUid", userUid);
-    if (cleanPhone) localStorage.setItem("sakhrCustomerPhone", cleanPhone);
-    else localStorage.removeItem("sakhrCustomerPhone");
-    if (realEmail) localStorage.setItem("sakhrCustomerEmail", realEmail);
-    else localStorage.removeItem("sakhrCustomerEmail");
+    chosenCustomerCity = city; chosenCustomerArea = area;
+    localStorage.setItem("sakhrCustomerCity", city); localStorage.setItem("sakhrCustomerArea", area);
+    localStorage.setItem("sakhrCustomerName", name); localStorage.setItem("sakhrCustomerUid", userUid);
+    if (cleanPhone) localStorage.setItem("sakhrCustomerPhone", cleanPhone); else localStorage.removeItem("sakhrCustomerPhone");
+    if (realEmail) localStorage.setItem("sakhrCustomerEmail", realEmail); else localStorage.removeItem("sakhrCustomerEmail");
 
-    await logUserAccount(userUid, {
-      name,
-      phone: cleanPhone,
-      email: realEmail || authEmail,
-      role: "زبون",
-      city,
-      area,
-      registeredAt: Date.now()
-    });
-
+    await logUserAccount(userUid, { name, phone: cleanPhone, email: realEmail || authEmail, role: "زبون", city, area, registeredAt: Date.now() });
     closeModal("customerAccountModal");
     updateNavAuthButton();
-
-    if(!isCityActive(city)) {
-      pendingAfterGate = null;
-      showCustomAlert(getCityExpansionMessage(city));
-      return;
-    }
-
+    if(!isCityActive(city)) { pendingAfterGate = null; return showCustomAlert(getCityExpansionMessage(city)); }
     runPendingGateAction();
   } catch(e) {
     showCustomAlert(formatAuthErrorMessage(e));
@@ -2712,39 +1885,33 @@ async function renderCustomerAccount() {
       if(!list.length) {
         ordersBox.innerHTML = '<div class="empty">لا توجد طلبات مرسلة حالياً.</div>';
       } else {
-        ordersBox.innerHTML = list.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0)).map(o => `
+        ordersBox.innerHTML = list.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0)).map(o => {
+          const durationStr = o.chatStartedAt ? formatOpenDuration(o.chatStartedAt, o.chatEndedAt || null) : "لم تبدأ بعد";
+          return `
           <div class="list-item">
             <h4>${esc(o.service)} — ${esc(o.status)}</h4>
-            <div class="muted">الفني: <b>${esc(o.assignedTechName || 'فني معتمد')}</b></div>
+            <div class="muted">الفني: <b>${esc(o.assignedTechName || 'فني معتمد')}</b> | مدة المحادثة: <b>${esc(durationStr)}</b></div>
             <p style="margin:6px 0; font-size:12.5px;">${esc(o.problem)}</p>
             <div class="actions">
               <button type="button" class="btn secondary" onclick="openOrderChatModal('${esc(o.id)}','${esc(o.service)}')">💬 محادثة وبصمة وطلب واتساب</button>
             </div>
-          </div>
-        `).join("");
+          </div>`;
+        }).join("");
       }
     } catch(_) {}
   }
 }
 
 function openCustomerEditModal() {
-  const name = localStorage.getItem("sakhrCustomerName") || "";
-  const phone = localStorage.getItem("sakhrCustomerPhone") || "";
-  const email = localStorage.getItem("sakhrCustomerEmail") || "";
+  $("editCustName").value = localStorage.getItem("sakhrCustomerName") || "";
+  $("editCustPhone").value = localStorage.getItem("sakhrCustomerPhone") || "";
+  if($("editCustEmail")) $("editCustEmail").value = localStorage.getItem("sakhrCustomerEmail") || "";
   const city = localStorage.getItem("sakhrCustomerCity") || "";
-  const area = localStorage.getItem("sakhrCustomerArea") || "";
-  const neighborhood = localStorage.getItem("sakhrCustomerNeighborhood") || "";
-  const notes = localStorage.getItem("sakhrCustomerNotes") || "";
-
-  $("editCustName").value = name;
-  $("editCustPhone").value = phone;
-  if($("editCustEmail")) $("editCustEmail").value = email;
   $("editCustCity").value = city;
   setDistricts("editCustArea", city);
-  if(area) $("editCustArea").value = area;
-  $("editCustNeighborhood").value = neighborhood;
-  $("editCustNotes").value = notes;
-
+  if(localStorage.getItem("sakhrCustomerArea")) $("editCustArea").value = localStorage.getItem("sakhrCustomerArea");
+  $("editCustNeighborhood").value = localStorage.getItem("sakhrCustomerNeighborhood") || "";
+  $("editCustNotes").value = localStorage.getItem("sakhrCustomerNotes") || "";
   $("customerEditModal").classList.remove("hidden");
 }
 
@@ -2753,69 +1920,35 @@ async function saveCustomerAccountProfile() {
   const rawPhone = $("editCustPhone").value.trim();
   const phone = rawPhone ? normalizeIraqiPhone(rawPhone) : "";
   const email = ($("editCustEmail")?.value || "").trim().toLowerCase();
-  const city = $("editCustCity").value;
-  const area = $("editCustArea").value;
-  const neighborhood = $("editCustNeighborhood").value.trim();
-  const notes = $("editCustNotes").value.trim();
+  const city = $("editCustCity").value, area = $("editCustArea").value;
+  const neighborhood = $("editCustNeighborhood").value.trim(), notes = $("editCustNotes").value.trim();
 
-  if(!name || !city || !area) {
-    return showCustomAlert("يرجى إكمال الحقول الأساسية (الاسم، المحافظة والقضاء).");
-  }
-  if(phone && !isValidIraqiPhone(phone)) {
-    return showCustomAlert("يرجى إدخال رقم هاتف عراقي صحيح مكون من 11 رقماً يبدأ بـ 07.");
-  }
-  if(email && !isValidEmailAddress(email)) {
-    return showCustomAlert("صيغة البريد الإلكتروني غير صحيحة.");
-  }
+  if(!name || !city || !area) return showCustomAlert("يرجى إكمال الحقول الأساسية.");
+  if(phone && !isValidIraqiPhone(phone)) return showCustomAlert("رقم الهاتف العراقي يجب أن يتكون من 11 رقماً ويبدأ بـ 07.");
+  if(email && !isValidEmailAddress(email)) return showCustomAlert("صيغة البريد الإلكتروني غير صحيحة.");
 
   localStorage.setItem("sakhrCustomerName", name);
-  if(phone) localStorage.setItem("sakhrCustomerPhone", phone);
-  else localStorage.removeItem("sakhrCustomerPhone");
+  if(phone) localStorage.setItem("sakhrCustomerPhone", phone); else localStorage.removeItem("sakhrCustomerPhone");
   if(email) localStorage.setItem("sakhrCustomerEmail", email);
-  localStorage.setItem("sakhrCustomerCity", city);
-  localStorage.setItem("sakhrCustomerArea", area);
-  localStorage.setItem("sakhrCustomerNeighborhood", neighborhood);
-  localStorage.setItem("sakhrCustomerNotes", notes);
-
-  chosenCustomerCity = city;
-  chosenCustomerArea = area;
+  localStorage.setItem("sakhrCustomerCity", city); localStorage.setItem("sakhrCustomerArea", area);
+  localStorage.setItem("sakhrCustomerNeighborhood", neighborhood); localStorage.setItem("sakhrCustomerNotes", notes);
+  chosenCustomerCity = city; chosenCustomerArea = area;
 
   const uid = (currentUser && !currentUser.isAnonymous) ? currentUser.uid : localStorage.getItem("sakhrCustomerUid");
-  if(uid && db) {
-    await logUserAccount(uid, {
-      name, phone, email, role: "زبون", city, area, neighborhood, notes
-    });
-  }
+  if(uid && db) await logUserAccount(uid, { name, phone, email, role: "زبون", city, area, neighborhood, notes });
 
   closeModal("customerEditModal");
   updateNavAuthButton();
   renderCustomerAccount();
-
-  if(!isCityActive(city)) {
-    showCustomAlert("تم حفظ التعديلات. تنبيه: " + getCityExpansionMessage(city));
-  } else {
-    showCustomAlert("تم تحديث ملفك الشخصي بنجاح!");
-  }
+  showCustomAlert(!isCityActive(city) ? "تم حفظ التعديلات. تنبيه: " + getCityExpansionMessage(city) : "تم تحديث ملفك الشخصي بنجاح!");
 }
 
 function logoutCustomer() {
   showCustomConfirm("هل أنت متأكد من تسجيل الخروج من حساب الزبون؟", async () => {
     isSigningOutFlag = true;
-    localStorage.removeItem("sakhrCustomerName");
-    localStorage.removeItem("sakhrCustomerPhone");
-    localStorage.removeItem("sakhrCustomerEmail");
-    localStorage.removeItem("sakhrCustomerCity");
-    localStorage.removeItem("sakhrCustomerArea");
-    localStorage.removeItem("sakhrCustomerNeighborhood");
-    localStorage.removeItem("sakhrCustomerNotes");
-    localStorage.removeItem("sakhrCustomerUid");
-    chosenCustomerCity = "";
-    chosenCustomerArea = "";
-    currentRole = "guest";
-    currentTech = null;
-    if(auth && currentUser && !currentUser.isAnonymous) {
-      try { await auth.signOut(); } catch(_) {}
-    }
+    ["sakhrCustomerName","sakhrCustomerPhone","sakhrCustomerEmail","sakhrCustomerCity","sakhrCustomerArea","sakhrCustomerNeighborhood","sakhrCustomerNotes","sakhrCustomerUid"].forEach(k => localStorage.removeItem(k));
+    chosenCustomerCity = ""; chosenCustomerArea = ""; currentRole = "guest"; currentTech = null;
+    if(auth && currentUser && !currentUser.isAnonymous) { try { await auth.signOut(); } catch(_) {} }
     setTimeout(() => { isSigningOutFlag = false; }, 1200);
     updateNavAuthButton();
     showCustomAlert("تم تسجيل الخروج بنجاح.");
@@ -2823,10 +1956,7 @@ function logoutCustomer() {
   });
 }
 
-function fillSelect(id){
-  const el = $(id);
-  if(el) el.innerHTML = SERVICES.map(s=>`<option>${esc(s)}</option>`).join("");
-}
+function fillSelect(id){ if($(id)) $(id).innerHTML = SERVICES.map(s=>`<option>${esc(s)}</option>`).join(""); }
 
 function buildServiceCardsHtml(list, iconMap) {
   return list.map(s => {
@@ -2844,27 +1974,16 @@ function buildServiceCardsHtml(list, iconMap) {
 
 function renderServices(){
   const iconMap = {
-    "كهربائيات": "⚡",
-    "سباكة": "💧",
-    "تكييف": "❄️",
-    "صيانة عامة": "🛠️",
-    "بناء وترميم": "🧱",
-    "مطابخ وديكور": "🪚",
-    "ألمنيوم": "🪟",
-    "نجارة": "🪚",
-    "صبغ منازل": "🎨",
-    "صيانة الأجهزة الكهربائية": "🔌",
-    "صيانة الأجهزة الإلكترونية": "💻"
+    "كهربائيات": "⚡", "سباكة": "💧", "تكييف": "❄️", "صيانة عامة": "🛠️",
+    "بناء وترميم": "🧱", "مطابخ وديكور": "🪚", "ألمنيوم": "🪟", "نجارة": "🪚",
+    "صبغ منازل": "🎨", "صيانة الأجهزة الكهربائية": "🔌", "صيانة الأجهزة الإلكترونية": "💻"
   };
-
   const mainHtml = buildServiceCardsHtml(MAIN_SERVICES, iconMap);
   const otherHtml = buildServiceCardsHtml(OTHER_SERVICES, iconMap);
-
   if($("homeServicesGrid")) $("homeServicesGrid").innerHTML = mainHtml;
   if($("homeOtherServicesGrid")) $("homeOtherServicesGrid").innerHTML = otherHtml;
   if($("allServicesPage")) $("allServicesPage").innerHTML = mainHtml;
   if($("allOtherServicesPage")) $("allOtherServicesPage").innerHTML = otherHtml;
-
   fillSelect("regService");
 }
 
@@ -2872,9 +1991,8 @@ function listenToActiveCities() {
   if(!db) return;
   db.ref("settings/activeCities").on("value", snap => {
     const val = snap.val();
-    if(Array.isArray(val) && val.length > 0) {
-      activeCities = val;
-    } else if(val && typeof val === "object") {
+    if(Array.isArray(val) && val.length > 0) activeCities = val;
+    else if(val && typeof val === "object") {
       const list = Object.keys(val).filter(k => val[k] === true);
       if(list.length > 0) activeCities = list;
     }
@@ -2885,14 +2003,9 @@ function listenToActiveCities() {
 function renderAdminActiveCities() {
   const box = $("adminActiveCitiesBox");
   if(!box) return;
-  const allCities = Object.keys(DISTRICTS);
-  box.innerHTML = allCities.map(city => {
+  box.innerHTML = Object.keys(DISTRICTS).map(city => {
     const isAct = activeCities.includes(city);
-    return `
-      <button type="button" class="city-toggle-btn ${isAct ? 'active-city' : 'inactive-city'}" onclick="toggleCityActive('${esc(city)}')">
-        ${isAct ? '✅' : '⏸️'} ${esc(city)}
-      </button>
-    `;
+    return `<button type="button" class="city-toggle-btn ${isAct ? 'active-city' : 'inactive-city'}" onclick="toggleCityActive('${esc(city)}')">${isAct ? '✅' : '⏸️'} ${esc(city)}</button>`;
   }).join("");
 }
 
@@ -2902,16 +2015,12 @@ async function toggleCityActive(city) {
   if(nextList.includes(city)) {
     if(nextList.length === 1) return showCustomAlert("يجب أن تبقى محافظة واحدة فعّالة على الأقل.");
     nextList = nextList.filter(c => c !== city);
-  } else {
-    nextList.push(city);
-  }
+  } else nextList.push(city);
   try {
     await db.ref("settings/activeCities").set(nextList);
     activeCities = nextList;
     renderAdminActiveCities();
-  } catch(e) {
-    showCustomAlert("خطأ في تحديث المحافظات: " + e.message);
-  }
+  } catch(e) { showCustomAlert("خطأ: " + e.message); }
 }
 
 function initFirebase(){
@@ -2926,15 +2035,11 @@ function initFirebase(){
       const storedRole = localStorage.getItem("sakhrPendingGoogleRole") || preferredGoogleRole || "auto";
       try { localStorage.removeItem("sakhrPendingGoogleRole"); } catch(_) {}
       isGoogleAuthInProgress = false;
-      if(res && res.user) {
-        await finalizeGoogleUserSession(res.user, storedRole);
-      }
+      if(res && res.user) await finalizeGoogleUserSession(res.user, storedRole);
     }).catch((err) => {
       try { localStorage.removeItem("sakhrPendingGoogleRole"); } catch(_) {}
       isGoogleAuthInProgress = false;
-      if(err && err.code && err.code !== "auth/no-auth-event") {
-        showCustomAlert(formatAuthErrorMessage(err));
-      }
+      if(err && err.code && err.code !== "auth/no-auth-event") showCustomAlert(formatAuthErrorMessage(err));
     }).finally(() => {
       auth.onAuthStateChanged(onAuthChanged);
     });
@@ -2957,12 +2062,9 @@ async function resolveRole(user){
 }
 
 async function onAuthChanged(user){
-  currentUser = user;
-  currentRole = "guest";
-  currentTech = null;
-
+  currentUser = user; currentRole = "guest"; currentTech = null;
   if(techJobsListener) { techJobsListener.off(); techJobsListener = null; }
-  if(!user){ 
+  if(!user){
     updateNavAuthButton();
     if (!isSigningOutFlag && !isGoogleAuthInProgress && !localStorage.getItem("sakhrPendingGoogleRole")) {
       setTimeout(async () => {
@@ -2972,34 +2074,24 @@ async function onAuthChanged(user){
       }, 600);
     }
     checkInitialStartupModals();
-    return; 
+    return;
   }
 
   try{
     const result = await resolveRole(user);
-    currentRole = result.role;
-    currentTech = result.tech;
+    currentRole = result.role; currentTech = result.tech;
     updateNavAuthButton();
 
     if(user.email !== ADMIN_EMAIL && !user.isAnonymous) {
-      await logUserAccount(user.uid, {
-        email: user.email || "",
-        role: ["technician", "suspended"].includes(currentRole) ? "فني" : "زبون"
-      });
+      await logUserAccount(user.uid, { email: user.email || "", role: ["technician", "suspended"].includes(currentRole) ? "فني" : "زبون" });
     }
 
     if(currentRole === "admin"){
-      closeModal("termsModal");
-      closeModal("roleSelectionModal");
-      closeModal("customerAccountModal");
-      closeModal("loginModal");
+      ["termsModal","roleSelectionModal","customerAccountModal","loginModal"].forEach(closeModal);
       updateNavAuthButton();
       runPendingGateAction();
     } else if(["technician", "suspended"].includes(currentRole)){
-      closeModal("termsModal");
-      closeModal("roleSelectionModal");
-      closeModal("customerAccountModal");
-      closeModal("loginModal");
+      ["termsModal","roleSelectionModal","customerAccountModal","loginModal"].forEach(closeModal);
       navigateToSection("techAccount");
       renderTechAccount();
       runPendingGateAction();
@@ -3016,9 +2108,7 @@ async function onAuthChanged(user){
         updateNavAuthButton();
       }
       checkInitialStartupModals();
-    } else {
-      checkInitialStartupModals();
-    }
+    } else checkInitialStartupModals();
   }catch(e){
     updateNavAuthButton();
     checkInitialStartupModals();
@@ -3037,51 +2127,32 @@ async function syncPublicTechnician(uid, p){
   if (!isTechProfileComplete(p)) return;
   const subInfo = getEffectiveSubscriptionInfo(p);
   const data = {
-    uid,
-    name: p.name||"", phone: p.phone||"", email: p.email||"", city: p.city||"", area: p.area||"",
+    uid, name: p.name||"", phone: p.phone||"", email: p.email||"", city: p.city||"", area: p.area||"",
     neighborhood: p.neighborhood||"", service: p.service||"",
     subservices: Array.isArray(p.subservices) ? p.subservices : [],
-    otherAppliances: p.otherAppliances||"",
-    bio: p.bio||"", extraInfo: p.extraInfo||"", photoURL: p.photoURL||"", approved: p.approved!==false,
-    available: p.available !== false,
+    otherAppliances: p.otherAppliances||"", bio: p.bio||"", extraInfo: p.extraInfo||"",
+    photoURL: p.photoURL||"", approved: p.approved!==false, available: p.available !== false,
     subscriptionStatus: subInfo.isActive ? "فعال" : "غير فعال",
-    subscriptionType: p.subscriptionType || "none",
-    subscriptionExpiresAt: Number(p.subscriptionExpiresAt || 0),
-    freeJobsUsed: Number(p.freeJobsUsed)||0,
-    ratingSum: Number(p.ratingSum||0), ratingCount: Number(p.ratingCount||0),
-    ratingAverage: Number(p.ratingAverage||0), createdAt: p.createdAt||Date.now()
+    subscriptionType: p.subscriptionType || "none", subscriptionExpiresAt: Number(p.subscriptionExpiresAt || 0),
+    freeJobsUsed: Number(p.freeJobsUsed)||0, ratingSum: Number(p.ratingSum||0),
+    ratingCount: Number(p.ratingCount||0), ratingAverage: Number(p.ratingAverage||0), createdAt: p.createdAt||Date.now()
   };
   await db.ref("publicTechnicians/"+uid).update(data);
 }
 
 async function registerTechFlexible(){
-  const name = $("regName").value.trim();
-  const password = $("regPassword").value;
-  const city = $("regCity").value;
-  const area = $("regArea").value;
-  const service = $("regService").value;
-
-  let cleanPhone = "";
-  let realEmail = "";
-  let authEmail = "";
+  const name = $("regName").value.trim(), password = $("regPassword").value, city = $("regCity").value, area = $("regArea").value, service = $("regService").value;
+  let cleanPhone = "", realEmail = "", authEmail = "";
 
   if (techRegAuthMode === "phone") {
     cleanPhone = normalizeIraqiPhone($("regPhone").value);
-    if(!name || !cleanPhone || !password || !city || !area || !service) {
-      return showCustomAlert("أكمل الحقول الأساسية للفني (الاسم، الهاتف، كلمة المرور، المحافظة، القضاء والاختصاص).");
-    }
-    if(!isValidIraqiPhone(cleanPhone)) {
-      return showCustomAlert("يرجى إدخال رقم هاتف عراقي صحيح مكون من 11 رقماً يبدأ بـ 07.");
-    }
+    if(!name || !cleanPhone || !password || !city || !area || !service) return showCustomAlert("أكمل الحقول الأساسية للفني.");
+    if(!isValidIraqiPhone(cleanPhone)) return showCustomAlert("رقم الهاتف العراقي يجب أن يتكون من 11 رقماً ويبدأ بـ 07.");
     authEmail = cleanPhone + "@sakhr.app";
   } else {
     realEmail = $("regEmail").value.trim().toLowerCase();
-    if(!name || !realEmail || !password || !city || !area || !service) {
-      return showCustomAlert("أكمل الحقول الأساسية للفني (الاسم، البريد الإلكتروني، كلمة المرور، المحافظة، القضاء والاختصاص).");
-    }
-    if(!isValidEmailAddress(realEmail)) {
-      return showCustomAlert("يرجى إدخال بريد إلكتروني صحيح للتسجيل.");
-    }
+    if(!name || !realEmail || !password || !city || !area || !service) return showCustomAlert("أكمل الحقول الأساسية للفني.");
+    if(!isValidEmailAddress(realEmail)) return showCustomAlert("يرجى إدخال بريد إلكتروني صحيح.");
     authEmail = realEmail;
   }
 
@@ -3089,21 +2160,16 @@ async function registerTechFlexible(){
   try{
     const c = await auth.createUserWithEmailAndPassword(authEmail, password);
     createdUser = c.user;
-
     const profile = {
       name, phone: cleanPhone, email: realEmail || "", city, area, neighborhood: "", service, subservices: [], otherAppliances: "", bio: "", extraInfo: "", photoURL: "",
       approved: true, available: true, subscriptionStatus: "غير فعال", subscriptionType: "none",
       subscriptionExpiresAt: 0, freeJobsUsed: 0, completedJobs: 0,
       ratingSum: 0, ratingCount: 0, ratingAverage: 0, createdAt: Date.now()
     };
-
     await db.ref("technicians/"+createdUser.uid).set(profile);
     profileSaved = true;
     await syncPublicTechnician(createdUser.uid, profile);
-
-    await logUserAccount(createdUser.uid, {
-      name, phone: cleanPhone, email: realEmail || authEmail, role: "فني", service, city, area, registeredAt: Date.now()
-    });
+    await logUserAccount(createdUser.uid, { name, phone: cleanPhone, email: realEmail || authEmail, role: "فني", service, city, area, registeredAt: Date.now() });
 
     currentUser = createdUser; currentRole = "technician"; currentTech = profile;
     updateNavAuthButton();
@@ -3117,26 +2183,20 @@ async function registerTechFlexible(){
 }
 
 async function loginWithPhonePassword(){
-  const inputVal = $("loginPhone").value.trim();
-  const password = $("loginPassword").value;
+  const inputVal = $("loginPhone").value.trim(), password = $("loginPassword").value;
   if(!inputVal || !password) return showCustomAlert("أدخل رقم الهاتف أو البريد الإلكتروني وكلمة المرور.");
 
   try{
     if(inputVal.toLowerCase() === ADMIN_EMAIL){
       const c = await auth.signInWithEmailAndPassword(ADMIN_EMAIL, password);
-      currentUser = c.user;
-      currentRole = "admin";
-      closeModal("loginModal"); closeModal("termsModal"); closeModal("roleSelectionModal"); closeModal("customerAccountModal");
-      updateNavAuthButton();
-      navigateToSection("adminProfile");
-      loadAdminData();
-      runPendingGateAction();
+      currentUser = c.user; currentRole = "admin";
+      ["loginModal","termsModal","roleSelectionModal","customerAccountModal"].forEach(closeModal);
+      updateNavAuthButton(); navigateToSection("adminProfile"); loadAdminData(); runPendingGateAction();
       return;
     }
 
     const emailPseudo = buildAuthEmailFromInput(inputVal);
     const c = await auth.signInWithEmailAndPassword(emailPseudo, password);
-
     const s = await db.ref("technicians/"+c.user.uid).once("value");
     if(!s.exists()){
       currentRole = "customer_auth";
@@ -3148,88 +2208,47 @@ async function loginWithPhonePassword(){
       const cCity = acc.city || "";
       const cArea = acc.area || "";
 
-      localStorage.setItem("sakhrCustomerName", cName);
-      localStorage.setItem("sakhrCustomerUid", c.user.uid);
+      localStorage.setItem("sakhrCustomerName", cName); localStorage.setItem("sakhrCustomerUid", c.user.uid);
       if(cPhone) localStorage.setItem("sakhrCustomerPhone", cPhone);
       if(cEmail) localStorage.setItem("sakhrCustomerEmail", cEmail);
       if(cCity) { localStorage.setItem("sakhrCustomerCity", cCity); chosenCustomerCity = cCity; }
       if(cArea) { localStorage.setItem("sakhrCustomerArea", cArea); chosenCustomerArea = cArea; }
 
-      await logUserAccount(c.user.uid, {
-        name: cName,
-        phone: cPhone,
-        email: cEmail || emailPseudo,
-        role: "زبون",
-        loginTime: Date.now()
-      });
-
-      closeModal("loginModal");
-      closeModal("termsModal");
-      closeModal("roleSelectionModal");
-      closeModal("customerAccountModal");
-      updateNavAuthButton();
-      showCustomAlert("أهلاً بك مجدداً في منصة صخر!");
-      navigateToSection("home");
-      runPendingGateAction();
+      await logUserAccount(c.user.uid, { name: cName, phone: cPhone, email: cEmail || emailPseudo, role: "زبون", loginTime: Date.now() });
+      ["loginModal","termsModal","roleSelectionModal","customerAccountModal"].forEach(closeModal);
+      updateNavAuthButton(); showCustomAlert("أهلاً بك مجدداً في منصة صخر!"); navigateToSection("home"); runPendingGateAction();
       return;
     }
 
     const checkedTech = await checkAndExpireSubscriptionIfNeeded(c.user.uid, s.val());
     currentRole = checkedTech.approved === false ? "suspended" : "technician";
     currentTech = checkedTech;
-
-    await logUserAccount(c.user.uid, {
-      name: checkedTech.name || "",
-      phone: checkedTech.phone || "",
-      email: checkedTech.email || emailPseudo,
-      role: "فني",
-      loginTime: Date.now()
-    });
+    await logUserAccount(c.user.uid, { name: checkedTech.name || "", phone: checkedTech.phone || "", email: checkedTech.email || emailPseudo, role: "فني", loginTime: Date.now() });
 
     updateNavAuthButton();
-    closeModal("loginModal");
-    closeModal("termsModal");
-    closeModal("roleSelectionModal");
-    closeModal("customerAccountModal");
-    navigateToSection("techAccount");
-    renderTechAccount();
-    runPendingGateAction();
-  }catch(e){
-    showCustomAlert(formatAuthErrorMessage(e));
-  }
+    ["loginModal","termsModal","roleSelectionModal","customerAccountModal"].forEach(closeModal);
+    navigateToSection("techAccount"); renderTechAccount(); runPendingGateAction();
+  }catch(e){ showCustomAlert(formatAuthErrorMessage(e)); }
 }
 
 async function submitForgotPasswordRequest() {
   const email = $("forgotEmail").value.trim().toLowerCase();
   const phone = normalizeIraqiPhone($("forgotPhone").value);
-
-  if(!email || !isValidEmailAddress(email)) {
-    return showCustomAlert("يرجى إدخال بريد إلكتروني صحيح لإرسال رابط/رمز استرجاع كلمة المرور إليه.");
-  }
+  if(!email || !isValidEmailAddress(email)) return showCustomAlert("يرجى إدخال بريد إلكتروني صحيح.");
 
   try {
     await auth.sendPasswordResetEmail(email);
     closeModal("forgotPasswordModal");
-    showCustomAlert(`تم إرسال رابط استرجاع كلمة المرور بنجاح إلى بريدك (${email}). يرجى مراجعة البريد الوارد أو الرسائل غير المرغوبة.`);
+    showCustomAlert(`تم إرسال رابط استرجاع كلمة المرور بنجاح إلى بريدك (${email}).`);
   } catch(e) {
     if (e.code === "auth/user-not-found" || phone) {
       try {
         const id = db.ref("passwordRequests").push().key;
-        await db.ref("passwordRequests/"+id).set({
-          name: "طلب عبر البريد (" + email + ")",
-          email,
-          phone: phone || "غير مضاف",
-          status: "بانتظار الإرسال للبريد",
-          createdAt: Date.now()
-        });
+        await db.ref("passwordRequests/"+id).set({ name: "طلب عبر البريد (" + email + ")", email, phone: phone || "غير مضاف", status: "بانتظار الإرسال للبريد", createdAt: Date.now() });
         closeModal("forgotPasswordModal");
-        showCustomAlert(`تم تسجيل طلب استرجاع كلمة المرور لبريدك (${email}) وإحالته للمتابعة الفورية.`);
-      } catch(dbErr) {
-        showCustomAlert("خطأ: " + dbErr.message);
-      }
-    } else {
-      showCustomAlert(formatAuthErrorMessage(e));
-    }
+        showCustomAlert(`تم تسجيل طلب استرجاع كلمة المرور لبريدك (${email}).`);
+      } catch(dbErr) { showCustomAlert("خطأ: " + dbErr.message); }
+    } else showCustomAlert(formatAuthErrorMessage(e));
   }
 }
 
@@ -3239,18 +2258,14 @@ async function logout(){
     if(techJobsListener) { techJobsListener.off(); techJobsListener = null; }
     if(supportChatListener) { supportChatListener.off(); supportChatListener = null; }
     if(orderChatListener) { orderChatListener.off(); orderChatListener = null; }
-    currentRole = "guest";
-    currentTech = null;
-    currentUser = null;
+    if(orderMetaListener) { orderMetaListener.off(); orderMetaListener = null; }
+    currentRole = "guest"; currentTech = null; currentUser = null;
     await auth.signOut();
     setTimeout(() => { isSigningOutFlag = false; }, 1200);
     updateNavAuthButton();
     showCustomAlert("تم تسجيل الخروج بنجاح.");
     navigateToSection("home");
-  }catch(e){
-    isSigningOutFlag = false;
-    showCustomAlert(formatAuthErrorMessage(e));
-  }
+  }catch(e){ isSigningOutFlag = false; showCustomAlert(formatAuthErrorMessage(e)); }
 }
 
 async function loadPublicTechs(){
@@ -3261,9 +2276,7 @@ async function loadPublicTechs(){
     const list = [];
     for (const [uid, rawTech] of Object.entries(data)) {
       const checked = await checkAndExpireSubscriptionIfNeeded(uid, rawTech);
-      if (checked.approved !== false && isTechProfileComplete(checked)) {
-        list.push({ ...checked, uid });
-      }
+      if (checked.approved !== false && isTechProfileComplete(checked)) list.push({ ...checked, uid });
     }
     publicTechs = list;
     renderPublicTechs();
@@ -3276,6 +2289,7 @@ function techPhoto(t, small=false){
   return `<img class="${cls}" src="${esc(pUrl)}" alt="صورة الفني" onclick="event.stopPropagation(); openPhotoModal('${esc(pUrl)}')" onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2250%22 fill=%22%23fdf5e4%22/%3E%3Ctext x=%2250%22 y=%2264%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22%230a3d58%22%3E👤%3C/text%3E%3C/svg%3E'">`;
 }
 
+// معالجة البحث: إظهار كل فنيي الاختصاص بمرونة وعدم حجبهم إذا لم يحددوا فروعاً فرعية
 function renderPublicTechs(){
   const el = $("publicTechList");
   if(!el) return;
@@ -3286,7 +2300,7 @@ function renderPublicTechs(){
   if($("techsSectionTitle")) {
     const subLabel = currentSelectedSubservice ? ` (${currentSelectedSubservice})` : "";
     const svcLabel = selectedService ? ` — ${selectedService}${subLabel}` : "";
-    $("techsSectionTitle").innerText = "الفنيون المعتمدون والمتاحون في قضائك" + svcLabel;
+    $("techsSectionTitle").innerText = "الفنيون المعتمدون والمتاحون" + svcLabel;
   }
 
   if(currentRole !== "admin" && userCity && !isCityActive(userCity)) {
@@ -3294,38 +2308,40 @@ function renderPublicTechs(){
     return;
   }
 
-  const list = publicTechs.filter(t => {
+  const byService = publicTechs.filter(t => {
     if(currentUser && currentUser.uid === t.uid) return false;
     if(selectedService && t.service !== selectedService) return false;
-
     if(currentSelectedSubservice) {
       const techSubs = Array.isArray(t.subservices) ? t.subservices : [];
       const hasOther = currentSelectedSubservice === "أجهزة أخرى" && Boolean(String(t.otherAppliances || "").trim());
       if(techSubs.length > 0 && !techSubs.includes(currentSelectedSubservice) && !hasOther) return false;
     }
-
     if(currentRole === "admin") return true;
-
     if(userCity && t.city !== userCity) return false;
-    if(userArea && t.area !== userArea) return false;
-
     return true;
   });
 
-  if(!list.length){
+  let finalList = byService.filter(t => !userArea || t.area === userArea);
+  let fallbackCityNotice = "";
+
+  if(!finalList.length && byService.length > 0 && userArea) {
+    finalList = byService;
+    fallbackCityNotice = `<div class="empty" style="padding:12px;">لا يوجد فنيون بنفس القضاء حالياً، فتم عرض فنيي الاختصاص في محافظة <b>${esc(userCity)}</b>:</div>`;
+  }
+
+  if(!finalList.length){
     const subTxt = currentSelectedSubservice ? ` (${currentSelectedSubservice})` : "";
-    el.innerHTML = '<div class="empty">لا يوجد فنيون مسجلون في اختصاص (' + esc(selectedService || "الكل") + esc(subTxt) + ') ضمن قضاء (' + esc(userArea || "قضائك") + ') حالياً.</div>';
+    el.innerHTML = '<div class="empty">لا يوجد فنيون مسجلون في اختصاص (' + esc(selectedService || "الكل") + esc(subTxt) + ') حالياً.</div>';
     return;
   }
-  el.innerHTML = list.map(t=>{
+
+  const cardsHtml = finalList.map(t=>{
     const isAvail = t.available !== false;
     const hasQuota = canTechAcceptMoreJobs(t);
     const dotClass = (isAvail && hasQuota) ? "online-dot" : "offline-dot";
     const statusText = !hasQuota ? "مكتمل الرصيد" : (isAvail ? "متاح" : "غير متاح");
     const subsArr = Array.isArray(t.subservices) ? [...t.subservices] : [];
-    if(t.otherAppliances && t.service === "صيانة الأجهزة الكهربائية") {
-      subsArr.push(`أجهزة أخرى: ${t.otherAppliances}`);
-    }
+    if(t.otherAppliances && t.service === "صيانة الأجهزة الكهربائية") subsArr.push(`أجهزة أخرى: ${t.otherAppliances}`);
     const subsHtml = subsArr.length ? `<div class="sub-badge">${esc(subsArr.join(" • "))}</div>` : "";
     return `
     <div class="tech-card">
@@ -3344,41 +2360,33 @@ function renderPublicTechs(){
       <button class="btn primary" onclick="chooseServiceDirect('${esc(t.service)}','${esc(t.uid)}')">اطلب هذا الفني مباشرة</button>
     </div>`;
   }).join("");
+
+  el.innerHTML = fallbackCityNotice + cardsHtml;
 }
 
 // ==========================================
-// منطق المحادثة، طلب الواتساب بالموافقة، والبصمة الصوتية
+// منطق المحادثة الدائمة، طلب الواتساب، والبصمة الصوتية، وإنهاء / استمرار
 // ==========================================
-function getOrderChatSenderInfo() {
+function getActorMeta() {
+  if(currentRole === "admin") {
+    return { actorId: currentUser?.uid || "admin", actorName: "الإدارة", actorRole: "admin", labelAr: "الإدارة" };
+  }
   if(["technician", "suspended"].includes(currentRole) && currentUser) {
-    return {
-      senderId: currentUser.uid,
-      senderName: (currentTech?.name || "فني") + " (فني)",
-      senderRole: "technician"
-    };
+    return { actorId: currentUser.uid, actorName: currentTech?.name || "فني", actorRole: "technician", labelAr: "الفني (" + (currentTech?.name || "") + ")" };
   }
   const custUid = (currentUser && !currentUser.isAnonymous) ? currentUser.uid : (localStorage.getItem("sakhrCustomerUid") || "customer");
   const custName = localStorage.getItem("sakhrCustomerName") || "زبون";
-  return {
-    senderId: custUid,
-    senderName: custName + " (زبون)",
-    senderRole: "customer"
-  };
+  return { actorId: custUid, actorName: custName, actorRole: "customer", labelAr: "الزبون (" + custName + ")" };
 }
 
 function getCurrentUserPrivatePhone() {
-  if(["technician", "suspended"].includes(currentRole)) {
-    return normalizeIraqiPhone(currentTech?.phone || "");
-  }
+  if(["technician", "suspended"].includes(currentRole)) return normalizeIraqiPhone(currentTech?.phone || "");
   return normalizeIraqiPhone(localStorage.getItem("sakhrCustomerPhone") || "");
 }
 
 function ensurePrivatePhoneBeforeWhatsapp(callback) {
   const existingPhone = getCurrentUserPrivatePhone();
-  if(isValidIraqiPhone(existingPhone)) {
-    callback(existingPhone);
-    return;
-  }
+  if(isValidIraqiPhone(existingPhone)) { callback(existingPhone); return; }
   pendingAfterWhatsappPhone = callback;
   $("waPrivatePhoneInput").value = "";
   $("whatsappPhoneOnlyModal").classList.remove("hidden");
@@ -3386,10 +2394,7 @@ function ensurePrivatePhoneBeforeWhatsapp(callback) {
 
 async function savePrivateWhatsappPhone() {
   const phone = normalizeIraqiPhone($("waPrivatePhoneInput").value);
-  if(!isValidIraqiPhone(phone)) {
-    return showCustomAlert("يرجى إدخال رقم هاتف عراقي صحيح مكون من 11 رقماً يبدأ بـ 07.");
-  }
-
+  if(!isValidIraqiPhone(phone)) return showCustomAlert("يرجى إدخال رقم هاتف عراقي صحيح من 11 رقماً يبدأ بـ 07.");
   try {
     if(["technician", "suspended"].includes(currentRole) && currentUser && currentTech) {
       await db.ref("technicians/" + currentUser.uid).update({ phone });
@@ -3400,123 +2405,219 @@ async function savePrivateWhatsappPhone() {
     } else {
       localStorage.setItem("sakhrCustomerPhone", phone);
       const uid = (currentUser && !currentUser.isAnonymous) ? currentUser.uid : localStorage.getItem("sakhrCustomerUid");
-      if(uid && db) {
-        await logUserAccount(uid, { phone });
-      }
+      if(uid && db) await logUserAccount(uid, { phone });
     }
-
     closeModal("whatsappPhoneOnlyModal");
     showCustomAlert("تم حفظ رقم هاتفك في ملفك الشخصي بشكل سري بنجاح.");
-
     if(typeof pendingAfterWhatsappPhone === "function") {
       const fn = pendingAfterWhatsappPhone;
       pendingAfterWhatsappPhone = null;
       fn(phone);
     }
-  } catch(e) {
-    showCustomAlert("خطأ أثناء حفظ الرقم: " + e.message);
-  }
+  } catch(e) { showCustomAlert("خطأ أثناء حفظ الرقم: " + e.message); }
 }
 
 function requestWhatsappInChat() {
   if(!activeOrderChatId || !db) return;
   ensurePrivatePhoneBeforeWhatsapp(async (myPhone) => {
-    const sender = getOrderChatSenderInfo();
+    const sender = getActorMeta();
     try {
       const msgId = db.ref("orderChats/" + activeOrderChatId + "/messages").push().key;
       await db.ref("orderChats/" + activeOrderChatId + "/messages/" + msgId).set({
-        type: "whatsapp_request",
-        waStatus: "pending",
-        requesterId: sender.senderId,
-        requesterName: sender.senderName,
-        requesterPhone: myPhone,
-        responderPhone: "",
-        senderId: sender.senderId,
-        senderName: sender.senderName,
-        senderRole: sender.senderRole,
+        type: "whatsapp_request", waStatus: "pending",
+        requesterId: sender.actorId, requesterName: sender.actorName, requesterPhone: myPhone,
+        responderPhone: "", senderId: sender.actorId, senderName: sender.actorName, senderRole: sender.actorRole,
         createdAt: Date.now()
       });
-    } catch(e) {
-      showCustomAlert("تعذر إرسال طلب الواتساب: " + e.message);
-    }
+    } catch(e) { showCustomAlert("تعذر إرسال طلب الواتساب: " + e.message); }
   });
 }
 
 function respondWhatsappRequest(msgKey, decision) {
   if(!activeOrderChatId || !db || !msgKey) return;
   if(decision === "rejected") {
-    db.ref("orderChats/" + activeOrderChatId + "/messages/" + msgKey).update({
-      waStatus: "rejected",
-      respondedAt: Date.now()
-    }).catch(()=>{});
+    db.ref("orderChats/" + activeOrderChatId + "/messages/" + msgKey).update({ waStatus: "rejected", respondedAt: Date.now() }).catch(()=>{});
     return;
   }
-
   ensurePrivatePhoneBeforeWhatsapp(async (myPhone) => {
     try {
       const msgRef = db.ref("orderChats/" + activeOrderChatId + "/messages/" + msgKey);
       const snap = await msgRef.once("value");
       const msgData = snap.val() || {};
-      await msgRef.update({
-        waStatus: "accepted",
-        responderPhone: myPhone,
-        respondedAt: Date.now()
-      });
-      if(msgData.requesterPhone) {
-        window.open(`https://wa.me/${formatWhatsApp(msgData.requesterPhone)}`, "_blank");
-      }
-    } catch(e) {
-      showCustomAlert("تعذر إتمام الموافقة: " + e.message);
-    }
+      await msgRef.update({ waStatus: "accepted", responderPhone: myPhone, respondedAt: Date.now() });
+      if(msgData.requesterPhone) window.open(`https://wa.me/${formatWhatsApp(msgData.requesterPhone)}`, "_blank");
+    } catch(e) { showCustomAlert("تعذر إتمام الموافقة: " + e.message); }
   });
 }
 
-function openOrderChatModal(orderId, labelText = "") {
+async function setOrderContinuationDecision(decision) {
+  if(!activeOrderChatId || !db || !activeOrderMeta) return;
+  const actor = getActorMeta();
+  const now = Date.now();
+  const isEnding = decision === "ended";
+  const newStatus = isEnding ? "منتهي" : "مستمر";
+  const decisionLabelAr = isEnding ? "إنهاء الطلب" : "الاستمرار بالطلب";
+
+  const metaPatch = {
+    status: newStatus,
+    continuationState: decision,
+    lastDecisionBy: actor.labelAr,
+    lastDecisionRole: actor.actorRole,
+    lastDecisionAt: now
+  };
+  if(isEnding) {
+    metaPatch.chatEndedAt = now;
+    metaPatch.countedAsCompleted = true;
+  } else {
+    metaPatch.chatEndedAt = null;
+    metaPatch.chatStartedAt = activeOrderMeta.chatStartedAt || now;
+  }
+
+  try {
+    const updates = {};
+    updates[`orderChats/${activeOrderChatId}/meta/status`] = newStatus;
+    updates[`orderChats/${activeOrderChatId}/meta/continuationState`] = decision;
+    updates[`orderChats/${activeOrderChatId}/meta/lastDecisionBy`] = actor.labelAr;
+    updates[`orderChats/${activeOrderChatId}/meta/lastDecisionRole`] = actor.actorRole;
+    updates[`orderChats/${activeOrderChatId}/meta/lastDecisionAt`] = now;
+    if(isEnding) updates[`orderChats/${activeOrderChatId}/meta/chatEndedAt`] = now;
+    else updates[`orderChats/${activeOrderChatId}/meta/chatEndedAt`] = null;
+
+    if(activeOrderMeta.customerUid) {
+      updates[`requests/${activeOrderMeta.customerUid}/${activeOrderChatId}/status`] = newStatus;
+      updates[`requests/${activeOrderMeta.customerUid}/${activeOrderChatId}/continuationState`] = decision;
+      updates[`requests/${activeOrderMeta.customerUid}/${activeOrderChatId}/lastDecisionBy`] = actor.labelAr;
+      updates[`requests/${activeOrderMeta.customerUid}/${activeOrderChatId}/lastDecisionAt`] = now;
+      if(isEnding) updates[`requests/${activeOrderMeta.customerUid}/${activeOrderChatId}/chatEndedAt`] = now;
+    }
+    if(activeOrderMeta.assignedTech) {
+      updates[`technicianJobs/${activeOrderMeta.assignedTech}/${activeOrderChatId}/status`] = newStatus;
+      updates[`technicianJobs/${activeOrderMeta.assignedTech}/${activeOrderChatId}/continuationState`] = decision;
+      updates[`technicianJobs/${activeOrderMeta.assignedTech}/${activeOrderChatId}/lastDecisionBy`] = actor.labelAr;
+      updates[`technicianJobs/${activeOrderMeta.assignedTech}/${activeOrderChatId}/lastDecisionAt`] = now;
+      if(isEnding) updates[`technicianJobs/${activeOrderMeta.assignedTech}/${activeOrderChatId}/chatEndedAt`] = now;
+    }
+
+    await db.ref().update(updates);
+
+    const sysMsgId = db.ref(`orderChats/${activeOrderChatId}/messages`).push().key;
+    await db.ref(`orderChats/${activeOrderChatId}/messages/${sysMsgId}`).set({
+      type: "system_decision",
+      text: `تم اختيار (${decisionLabelAr}) بواسطة: ${actor.labelAr}`,
+      senderId: actor.actorId,
+      senderName: actor.labelAr,
+      senderRole: actor.actorRole,
+      createdAt: now
+    });
+  } catch(e) {
+    showCustomAlert("تعذر تحديث حالة الطلب: " + e.message);
+  }
+}
+
+function renderOrderChatHeaderBanner() {
+  const banner = $("orderChatStatusBanner");
+  const decRow = $("orderChatDecisionRow");
+  if(!banner) return;
+
+  const meta = activeOrderMeta || {};
+  const status = meta.status || "بانتظار رد الفني";
+  const isApprovedOrActive = ["مقبول من الفني", "مستمر", "منتهي", "مكتمل"].includes(status);
+  const startedAt = meta.chatStartedAt || (isApprovedOrActive ? meta.createdAt : null);
+  const openDuration = startedAt ? formatOpenDuration(startedAt, meta.chatEndedAt || null) : "تبدأ بعد موافقة الفني";
+
+  let decisionLine = "";
+  if(meta.lastDecisionBy) {
+    const actText = meta.continuationState === "ended" ? "إنهاء الطلب" : "الاستمرار بالطلب";
+    decisionLine = `<br>آخر قرار: <b>${esc(actText)}</b> — قام به: <b>${esc(meta.lastDecisionBy)}</b>`;
+  }
+
+  let adminDurationLine = "";
+  if(currentRole === "admin") {
+    adminDurationLine = `<br><span style="color:var(--teal-calm);">📊 للإدارة — مدة بقاء المحادثة مفتوحة: <b>${esc(openDuration)}</b></span>`;
+  }
+
+  banner.innerHTML = `حالة الطلب: <b>${esc(status)}</b> • المحادثة: <b>${isApprovedOrActive ? 'مفتوحة ومستمرة' : 'جاهزة'}</b>${decisionLine}${adminDurationLine}`;
+
+  if(decRow) {
+    decRow.classList.toggle("hidden", !isApprovedOrActive);
+  }
+}
+
+async function resolveOrderMeta(orderId) {
+  let meta = { id: orderId, status: "بانتظار رد الفني", createdAt: Date.now() };
+  try {
+    const chatMetaSnap = await db.ref(`orderChats/${orderId}/meta`).once("value");
+    if(chatMetaSnap.exists()) meta = { ...meta, ...chatMetaSnap.val() };
+
+    if(currentTech && currentUser) {
+      const jobSnap = await db.ref(`technicianJobs/${currentUser.uid}/${orderId}`).once("value");
+      if(jobSnap.exists()) meta = { ...meta, ...jobSnap.val() };
+    }
+    const custUid = (currentUser && !currentUser.isAnonymous && currentRole !== "admin")
+      ? currentUser.uid
+      : (meta.customerUid || localStorage.getItem("sakhrCustomerUid"));
+    if(custUid) {
+      const reqSnap = await db.ref(`requests/${custUid}/${orderId}`).once("value");
+      if(reqSnap.exists()) meta = { ...meta, ...reqSnap.val(), customerUid: custUid };
+    }
+  } catch(_) {}
+  return meta;
+}
+
+async function openOrderChatModal(orderId, labelText = "") {
   if(!orderId || !db) return;
   if(orderChatListener) { orderChatListener.off(); orderChatListener = null; }
+  if(orderMetaListener) { orderMetaListener.off(); orderMetaListener = null; }
+
   activeOrderChatId = orderId;
-  $("orderChatTitle").innerText = labelText ? `💬 محادثة: ${labelText}` : "💬 محادثة الطلب داخل التطبيق";
+  activeOrderMeta = await resolveOrderMeta(orderId);
+  $("orderChatTitle").innerText = labelText ? `💬 محادثة: ${labelText}` : "💬 محادثة الطلب الدائمة";
   $("orderChatInput").value = "";
+  renderOrderChatHeaderBanner();
   $("orderChatModal").classList.remove("hidden");
+
+  orderMetaListener = db.ref(`orderChats/${orderId}/meta`);
+  orderMetaListener.on("value", snap => {
+    if(snap.exists()) {
+      activeOrderMeta = { ...(activeOrderMeta || {}), ...snap.val() };
+      renderOrderChatHeaderBanner();
+    }
+  });
 
   const box = $("orderChatMessages");
   box.innerHTML = '<div class="muted" style="text-align:center;margin-top:85px;">جارٍ تحميل رسائل الطلب...</div>';
 
-  const sender = getOrderChatSenderInfo();
-  orderChatListener = db.ref("orderChats/" + orderId + "/messages").limitToLast(80);
+  const sender = getActorMeta();
+  orderChatListener = db.ref("orderChats/" + orderId + "/messages").limitToLast(100);
   orderChatListener.on("value", snap => {
     const msgs = [];
     snap.forEach(c => msgs.push({ ...c.val(), _key: c.key }));
     if(!msgs.length) {
-      box.innerHTML = '<div class="muted" style="text-align:center;margin-top:85px;">ابدأ المحادثة بالكتابة أو البصمة الصوتية أو اطلب التواصل عبر واتساب...</div>';
+      box.innerHTML = '<div class="muted" style="text-align:center;margin-top:85px;">المحادثة مفتوحة — ابدأ بالتواصل بالكتابة أو البصمة الصوتية...</div>';
       return;
     }
     box.innerHTML = msgs.map(m => {
-      const isMine = m.senderId === sender.senderId;
+      const isMine = m.senderId === sender.actorId;
       const tStr = m.createdAt ? new Date(m.createdAt).toLocaleTimeString('ar-IQ', { hour: '2-digit', minute: '2-digit' }) : '';
 
-      // رسالة طلب واتساب التفاعلية
+      if(m.type === "system_decision") {
+        return `<div class="chat-bubble sys-card"><div>📌 ${esc(m.text)}</div><small>${tStr}</small></div>`;
+      }
+
       if(m.type === "whatsapp_request") {
         if(m.waStatus === "pending") {
           if(isMine) {
-            return `
-              <div class="chat-bubble wa-card">
-                <div>🟢 أرسلت طلباً للانتقال إلى واتساب — بانتظار موافقة الطرف الآخر...</div>
-                <small>${tStr}</small>
-              </div>
-            `;
-          } else {
-            return `
-              <div class="chat-bubble wa-card">
-                <div style="margin-bottom:8px;">🟢 يطلب <b>${esc(m.senderName || 'الطرف الآخر')}</b> فتح محادثة واتساب بينكما. هل توافق؟</div>
-                <div style="display:flex; gap:8px; justify-content:center;">
-                  <button type="button" class="btn whatsapp-btn" style="padding:6px 12px; font-size:11.5px;" onclick="respondWhatsappRequest('${esc(m._key)}','accepted')">✅ موافقة وفتح واتساب</button>
-                  <button type="button" class="btn danger" style="padding:6px 12px; font-size:11.5px;" onclick="respondWhatsappRequest('${esc(m._key)}','rejected')">❌ رفض</button>
-                </div>
-                <small>${tStr}</small>
-              </div>
-            `;
+            return `<div class="chat-bubble wa-card"><div>🟢 أرسلت طلباً للانتقال إلى واتساب — بانتظار موافقة الطرف الآخر...</div><small>${tStr}</small></div>`;
           }
+          return `
+            <div class="chat-bubble wa-card">
+              <div style="margin-bottom:8px;">🟢 يطلب <b>${esc(m.senderName || 'الطرف الآخر')}</b> فتح محادثة واتساب بينكما. هل توافق؟</div>
+              <div style="display:flex; gap:8px; justify-content:center;">
+                <button type="button" class="btn whatsapp-btn" style="padding:6px 12px; font-size:11.5px;" onclick="respondWhatsappRequest('${esc(m._key)}','accepted')">✅ موافقة وفتح واتساب</button>
+                <button type="button" class="btn danger" style="padding:6px 12px; font-size:11.5px;" onclick="respondWhatsappRequest('${esc(m._key)}','rejected')">❌ رفض</button>
+              </div>
+              <small>${tStr}</small>
+            </div>`;
         } else if(m.waStatus === "accepted") {
           const targetPhone = isMine ? m.responderPhone : m.requesterPhone;
           const waHref = targetPhone ? `https://wa.me/${formatWhatsApp(targetPhone)}` : "#";
@@ -3525,36 +2626,26 @@ function openOrderChatModal(orderId, labelText = "") {
               <div style="margin-bottom:6px;">✅ تمت الموافقة على التواصل عبر واتساب</div>
               ${targetPhone ? `<a class="btn whatsapp-btn" style="padding:6px 14px; font-size:12px;" href="${waHref}" target="_blank">📲 فتح محادثة الواتساب الآن</a>` : ''}
               <small>${tStr}</small>
-            </div>
-          `;
+            </div>`;
         } else {
-          return `
-            <div class="chat-bubble wa-card" style="background:var(--danger-tint); border-color:#fca5a5; color:var(--danger-calm);">
-              <div>❌ تم رفض طلب الواتساب — يستمر التواصل داخل التطبيق</div>
-              <small>${tStr}</small>
-            </div>
-          `;
+          return `<div class="chat-bubble wa-card" style="background:var(--danger-tint); border-color:#fca5a5; color:var(--danger-calm);"><div>❌ تم رفض طلب الواتساب — يستمر التواصل داخل التطبيق</div><small>${tStr}</small></div>`;
         }
       }
 
-      // رسالة بصمة صوتية
       if(m.type === "audio" && m.audioURL) {
         return `
           <div class="chat-bubble ${isMine ? 'mine' : 'other'}">
             <div>🎙️ بصمة صوتية ${m.duration ? '(' + esc(m.duration) + ')' : ''}</div>
             <audio controls preload="metadata" src="${esc(m.audioURL)}"></audio>
             <small>${esc(m.senderName || '')} ${tStr ? '• ' + tStr : ''}</small>
-          </div>
-        `;
+          </div>`;
       }
 
-      // رسالة نصية اعتيادية
       return `
         <div class="chat-bubble ${isMine ? 'mine' : 'other'}">
           <div>${esc(m.text)}</div>
           <small>${esc(m.senderName || '')} ${tStr ? '• ' + tStr : ''}</small>
-        </div>
-      `;
+        </div>`;
     }).join("");
     box.scrollTop = box.scrollHeight;
   });
@@ -3564,60 +2655,42 @@ async function sendOrderChatMessage() {
   const input = $("orderChatInput");
   const text = input.value.trim();
   if(!text || !activeOrderChatId || !db) return;
-  const sender = getOrderChatSenderInfo();
+  const sender = getActorMeta();
   input.value = "";
   try {
     const msgId = db.ref("orderChats/" + activeOrderChatId + "/messages").push().key;
     await db.ref("orderChats/" + activeOrderChatId + "/messages/" + msgId).set({
-      type: "text",
-      text,
-      senderId: sender.senderId,
-      senderName: sender.senderName,
-      senderRole: sender.senderRole,
-      createdAt: Date.now()
+      type: "text", text, senderId: sender.actorId, senderName: sender.actorName, senderRole: sender.actorRole, createdAt: Date.now()
     });
-  } catch(e) {
-    showCustomAlert("تعذر إرسال الرسالة: " + e.message);
-  }
+  } catch(e) { showCustomAlert("تعذر إرسال الرسالة: " + e.message); }
 }
 
 function formatVoiceTimer(sec) {
-  const m = String(Math.floor(sec / 60)).padStart(2, "0");
-  const s = String(sec % 60).padStart(2, "0");
-  return `${m}:${s}`;
+  return `${String(Math.floor(sec / 60)).padStart(2, "0")}:${String(sec % 60).padStart(2, "0")}`;
 }
 
 async function toggleVoiceRecording() {
-  if(mediaRecorder && mediaRecorder.state === "recording") {
-    stopAndSendVoiceRecording();
-    return;
-  }
-
-  if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-    return showCustomAlert("متصفحك الحالي لا يدعم تسجيل البصمة الصوتية.");
-  }
+  if(mediaRecorder && mediaRecorder.state === "recording") { stopAndSendVoiceRecording(); return; }
+  if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) return showCustomAlert("متصفحك الحالي لا يدعم تسجيل البصمة الصوتية.");
 
   try {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    audioChunks = [];
-    isVoiceCancelled = false;
-    voiceRecordSeconds = 0;
-    mediaRecorder = new MediaRecorder(stream);
+    audioChunks = []; isVoiceCancelled = false; voiceRecordSeconds = 0;
+    const mimeCandidates = ["audio/webm;codecs=opus", "audio/webm", "audio/mp4", "audio/ogg"];
+    const chosenMime = mimeCandidates.find(m => typeof MediaRecorder !== "undefined" && MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(m)) || "";
+    mediaRecorder = chosenMime ? new MediaRecorder(stream, { mimeType: chosenMime }) : new MediaRecorder(stream);
 
-    mediaRecorder.ondataavailable = (ev) => {
-      if(ev.data && ev.data.size > 0) audioChunks.push(ev.data);
-    };
-
+    mediaRecorder.ondataavailable = (ev) => { if(ev.data && ev.data.size > 0) audioChunks.push(ev.data); };
     mediaRecorder.onstop = async () => {
       stream.getTracks().forEach(t => t.stop());
       clearInterval(voiceRecordTimer);
       $("voiceRecordingBar")?.classList.add("hidden");
       $("voiceMicBtn")?.classList.remove("recording");
-
       if(isVoiceCancelled || !audioChunks.length || !activeOrderChatId) return;
       const durationStr = formatVoiceTimer(voiceRecordSeconds);
-      const blob = new Blob(audioChunks, { type: mediaRecorder.mimeType || "audio/webm" });
-      await uploadAndSendVoiceBlob(blob, durationStr);
+      const blobType = mediaRecorder.mimeType || "audio/webm";
+      const blob = new Blob(audioChunks, { type: blobType });
+      await uploadAndSendVoiceBlob(blob, durationStr, blobType);
     };
 
     mediaRecorder.start();
@@ -3628,42 +2701,31 @@ async function toggleVoiceRecording() {
     voiceRecordTimer = setInterval(() => {
       voiceRecordSeconds++;
       $("voiceRecTimer").innerText = formatVoiceTimer(voiceRecordSeconds);
-      if(voiceRecordSeconds >= 120) {
-        stopAndSendVoiceRecording();
-      }
+      if(voiceRecordSeconds >= 120) stopAndSendVoiceRecording();
     }, 1000);
-  } catch(e) {
-    showCustomAlert("يرجى السماح بصلاحية المايكروفون لتسجيل البصمة الصوتية.");
-  }
+  } catch(e) { showCustomAlert("يرجى السماح بصلاحية المايكروفون لتسجيل البصمة الصوتية."); }
 }
 
 function stopAndSendVoiceRecording() {
-  if(mediaRecorder && mediaRecorder.state === "recording") {
-    isVoiceCancelled = false;
-    mediaRecorder.stop();
-  }
+  if(mediaRecorder && mediaRecorder.state === "recording") { isVoiceCancelled = false; mediaRecorder.stop(); }
 }
 
 function cancelVoiceRecording() {
-  if(mediaRecorder && mediaRecorder.state === "recording") {
-    isVoiceCancelled = true;
-    mediaRecorder.stop();
-  } else {
-    $("voiceRecordingBar")?.classList.add("hidden");
-    $("voiceMicBtn")?.classList.remove("recording");
-  }
+  if(mediaRecorder && mediaRecorder.state === "recording") { isVoiceCancelled = true; mediaRecorder.stop(); }
+  else { $("voiceRecordingBar")?.classList.add("hidden"); $("voiceMicBtn")?.classList.remove("recording"); }
 }
 
-async function uploadAndSendVoiceBlob(blob, durationStr) {
+async function uploadAndSendVoiceBlob(blob, durationStr, mimeType = "audio/webm") {
   if(!activeOrderChatId || !db) return;
-  const sender = getOrderChatSenderInfo();
+  const sender = getActorMeta();
   const chatId = activeOrderChatId;
+  const ext = mimeType.includes("mp4") ? "mp4" : (mimeType.includes("ogg") ? "ogg" : "webm");
 
   try {
     let audioURL = "";
     if(storage) {
-      const ref = storage.ref(`orderVoiceNotes/${chatId}/voice_${Date.now()}.webm`);
-      const snap = await ref.put(blob);
+      const ref = storage.ref(`orderVoiceNotes/${chatId}/voice_${Date.now()}.${ext}`);
+      const snap = await ref.put(blob, { contentType: mimeType });
       audioURL = await snap.ref.getDownloadURL();
     } else {
       audioURL = await new Promise((resolve) => {
@@ -3675,46 +2737,29 @@ async function uploadAndSendVoiceBlob(blob, durationStr) {
 
     const msgId = db.ref("orderChats/" + chatId + "/messages").push().key;
     await db.ref("orderChats/" + chatId + "/messages/" + msgId).set({
-      type: "audio",
-      audioURL,
-      duration: durationStr,
-      senderId: sender.senderId,
-      senderName: sender.senderName,
-      senderRole: sender.senderRole,
-      createdAt: Date.now()
+      type: "audio", audioURL, duration: durationStr,
+      senderId: sender.actorId, senderName: sender.actorName, senderRole: sender.actorRole, createdAt: Date.now()
     });
-  } catch(e) {
-    showCustomAlert("تعذر إرسال البصمة الصوتية: " + e.message);
-  }
+  } catch(e) { showCustomAlert("تعذر إرسال البصمة الصوتية: " + e.message); }
 }
 
 function closeOrderChatModal() {
   cancelVoiceRecording();
   if(orderChatListener) { orderChatListener.off(); orderChatListener = null; }
+  if(orderMetaListener) { orderMetaListener.off(); orderMetaListener = null; }
   activeOrderChatId = null;
+  activeOrderMeta = null;
   closeModal("orderChatModal");
 }
 
 function getCurrentSupportActor() {
-  if(currentRole === "admin") {
-    return { threadId: null, senderId: currentUser?.uid || "admin", senderName: "فريق الدعم (المدير)", senderRole: "admin" };
-  }
+  if(currentRole === "admin") return { threadId: null, senderId: currentUser?.uid || "admin", senderName: "فريق الدعم (المدير)", senderRole: "admin" };
   if(["technician", "suspended"].includes(currentRole) && currentUser) {
-    return {
-      threadId: currentUser.uid,
-      senderId: currentUser.uid,
-      senderName: (currentTech?.name || "فني") + " (فني)",
-      senderRole: "technician"
-    };
+    return { threadId: currentUser.uid, senderId: currentUser.uid, senderName: (currentTech?.name || "فني") + " (فني)", senderRole: "technician" };
   }
   const custUid = (currentUser && !currentUser.isAnonymous) ? currentUser.uid : (localStorage.getItem("sakhrCustomerUid") || "guest_thread");
   const custName = localStorage.getItem("sakhrCustomerName") || "زبون";
-  return {
-    threadId: custUid,
-    senderId: custUid,
-    senderName: custName + " (زبون)",
-    senderRole: "client"
-  };
+  return { threadId: custUid, senderId: custUid, senderName: custName + " (زبون)", senderRole: "client" };
 }
 
 async function openSupportChatModal() {
@@ -3728,27 +2773,16 @@ async function openSupportChatModal() {
     const sel = $("adminSupportThreadSelect");
     sel.innerHTML = '<option value="">اختر محادثة...</option>';
     try {
-      const [chatsSnap, accSnap] = await Promise.all([
-        db.ref("supportChats").once("value"),
-        db.ref("allAccounts").once("value")
-      ]);
-      const accMap = accSnap.val() || {};
-      const chatsObj = chatsSnap.val() || {};
-      const threadIds = Object.keys(chatsObj);
+      const [chatsSnap, accSnap] = await Promise.all([db.ref("supportChats").once("value"), db.ref("allAccounts").once("value")]);
+      const accMap = accSnap.val() || {}, chatsObj = chatsSnap.val() || {}, threadIds = Object.keys(chatsObj);
       threadIds.forEach(tid => {
-        const labelName = accMap[tid]?.name || tid;
-        const labelRole = accMap[tid]?.role ? ` (${accMap[tid].role})` : "";
         const opt = document.createElement("option");
         opt.value = tid;
-        opt.textContent = labelName + labelRole;
+        opt.textContent = (accMap[tid]?.name || tid) + (accMap[tid]?.role ? ` (${accMap[tid].role})` : "");
         sel.appendChild(opt);
       });
-      if(threadIds.length > 0) {
-        sel.value = threadIds[0];
-        subscribeSupportThread(threadIds[0]);
-      } else {
-        $("supportChatMessages").innerHTML = '<div class="muted" style="text-align:center;margin-top:90px;">لا توجد محادثات دعم واردة حتى الآن.</div>';
-      }
+      if(threadIds.length > 0) { sel.value = threadIds[0]; subscribeSupportThread(threadIds[0]); }
+      else $("supportChatMessages").innerHTML = '<div class="muted" style="text-align:center;margin-top:90px;">لا توجد محادثات دعم واردة حتى الآن.</div>';
     } catch(e) {}
   } else {
     $("adminSupportThreadPicker").classList.add("hidden");
@@ -3770,47 +2804,28 @@ function subscribeSupportThread(threadId) {
   supportChatListener.on("value", snap => {
     const msgs = [];
     snap.forEach(child => msgs.push(child.val()));
-    if(!msgs.length) {
-      box.innerHTML = '<div class="muted" style="text-align:center;margin-top:90px;">ابدأ المحادثة مع فريق الدعم الآن...</div>';
-      return;
-    }
+    if(!msgs.length) { box.innerHTML = '<div class="muted" style="text-align:center;margin-top:90px;">ابدأ المحادثة مع فريق الدعم الآن...</div>'; return; }
     const actor = getCurrentSupportActor();
     box.innerHTML = msgs.map(m => {
       const isMine = (currentRole === "admin" && m.senderRole === "admin") || (currentRole !== "admin" && m.senderId === actor.senderId);
       const timeStr = m.createdAt ? new Date(m.createdAt).toLocaleTimeString('ar-IQ', { hour: '2-digit', minute: '2-digit' }) : '';
-      return `
-        <div class="chat-bubble ${isMine ? 'mine' : 'other'}">
-          <div>${esc(m.text)}</div>
-          <small>${esc(m.senderName || '')} ${timeStr ? '• ' + timeStr : ''}</small>
-        </div>
-      `;
+      return `<div class="chat-bubble ${isMine ? 'mine' : 'other'}"><div>${esc(m.text)}</div><small>${esc(m.senderName || '')} ${timeStr ? '• ' + timeStr : ''}</small></div>`;
     }).join("");
     box.scrollTop = box.scrollHeight;
   });
 }
 
 async function sendSupportMessage() {
-  const input = $("supportChatInput");
-  const text = input.value.trim();
+  const input = $("supportChatInput"), text = input.value.trim();
   if(!text || !db) return;
-
   const actor = getCurrentSupportActor();
   const targetThread = currentRole === "admin" ? $("adminSupportThreadSelect").value : actor.threadId;
   if(!targetThread) return showCustomAlert("اختر محادثة أولاً.");
-
   input.value = "";
   try {
     const msgId = db.ref("supportChats/" + targetThread + "/messages").push().key;
-    await db.ref("supportChats/" + targetThread + "/messages/" + msgId).set({
-      text,
-      senderId: actor.senderId,
-      senderName: actor.senderName,
-      senderRole: actor.senderRole,
-      createdAt: Date.now()
-    });
-  } catch(e) {
-    showCustomAlert("تعذر إرسال الرسالة: " + e.message);
-  }
+    await db.ref("supportChats/" + targetThread + "/messages/" + msgId).set({ text, senderId: actor.senderId, senderName: actor.senderName, senderRole: actor.senderRole, createdAt: Date.now() });
+  } catch(e) { showCustomAlert("تعذر إرسال الرسالة: " + e.message); }
 }
 
 function closeSupportChatModal() {
@@ -3823,45 +2838,31 @@ async function chooseServiceDirect(service, techUid){
     try {
       const tech = publicTechs.find(t => t.uid === techUid) || technicians.find(t => t.uid === techUid);
       if(!tech) throw new Error("الفني غير موجود.");
-      
-      const custId = "admin_manager";
-      const id = db.ref("requests/"+custId).push().key;
-      const now = Date.now();
+      const custId = "admin_manager", id = db.ref("requests/"+custId).push().key, now = Date.now();
       const subLabel = currentSelectedSubservice ? ` (${currentSelectedSubservice})` : "";
-      
       const record = {
         id, uid: custId, name: "إدارة المنصة (المدير)", phone: "محجوب (خاص بالإدارة)", city: "كل المحافظات",
         area: "كل الأقضية", neighborhood: "", service: service + subLabel, problem: "طلب مباشر من إدارة المنصة",
         preferredTech: techUid, assignedTech: techUid, assignedTechName: tech.name,
         status: "بانتظار رد الفني", createdAt: now, countedAsCompleted: false, rated: false
       };
-
       const job = { id, customerUid: custId, customerName: "إدارة المنصة", customerPhone: "محجوب (خاص بالإدارة)", service: service + subLabel, city: "كل المحافظات", area: "كل الأقضية", neighborhood: "", problem: "طلب مباشر من إدارة المنصة", status: "بانتظار رد الفني", createdAt: now };
-
       const u = {};
       u["requests/"+custId+"/"+id] = record;
       u["technicianJobs/"+techUid+"/"+id] = job;
+      u["orderChats/"+id+"/meta"] = { orderId: id, customerUid: custId, assignedTech: techUid, service: service + subLabel, status: "بانتظار رد الفني", createdAt: now };
       await db.ref().update(u);
-
       $("adminDirectRequestText").innerHTML = "تم إرسال الطلب إلى الفني (" + esc(tech.name) + ") بنجاح.<br>الطلب قيد التنفيذ، بانتظار موافقة الفني.";
       $("adminDirectRequestModal").classList.remove("hidden");
-    } catch(e) {
-      showCustomAlert("خطأ: " + e.message);
-    }
+    } catch(e) { showCustomAlert("خطأ: " + e.message); }
   } else {
-    if(!hasCustomerCoreProfileConfigured()) {
-      openPhoneRequiredModal(() => chooseServiceDirect(service, techUid));
-      return;
-    }
+    if(!hasCustomerCoreProfileConfigured()) return openPhoneRequiredModal(() => chooseServiceDirect(service, techUid));
     selectedTargetTech = publicTechs.find(t => t.uid === techUid);
     if(!selectedTargetTech) return showCustomAlert("الفني غير موجود.");
-    if(!canTechAcceptMoreJobs(selectedTargetTech)) {
-      return showCustomAlert("عذراً، هذا الفني استنفذ رصيده المجاني ولم يجدد اشتراكه بعد. يرجى اختيار فني آخر متاح.");
-    }
+    if(!canTechAcceptMoreJobs(selectedTargetTech)) return showCustomAlert("عذراً، هذا الفني استنفذ رصيده المجاني ولم يجدد اشتراكه بعد.");
     const subTitle = currentSelectedSubservice ? ` - ${currentSelectedSubservice}` : "";
     $("orderModalTitle").innerText = "طلب الفني: " + selectedTargetTech.name + subTitle;
-    $("custOrderProblem").value = "";
-    $("custOrderMessage").innerHTML = "";
+    $("custOrderProblem").value = ""; $("custOrderMessage").innerHTML = "";
     $("customerOrderModal").classList.remove("hidden");
   }
 }
@@ -3871,24 +2872,14 @@ async function submitCustomerOrder() {
   const custName = localStorage.getItem("sakhrCustomerName") || "زبون صخر";
   const custPhone = localStorage.getItem("sakhrCustomerPhone") || "";
 
-  if(!hasCustomerCoreProfileConfigured()) {
-    closeModal("customerOrderModal");
-    openPhoneRequiredModal(submitCustomerOrder);
-    return;
-  }
-
-  if(!problem) {
-    showCustomAlert("يرجى كتابة تفاصيل العطل أو المشكلة.");
-    return;
-  }
+  if(!hasCustomerCoreProfileConfigured()) { closeModal("customerOrderModal"); return openPhoneRequiredModal(submitCustomerOrder); }
+  if(!problem) return showCustomAlert("يرجى كتابة تفاصيل العطل أو المشكلة.");
 
   try {
     let custId = (currentUser && !currentUser.isAnonymous) ? currentUser.uid : (localStorage.getItem("sakhrCustomerUid") || ("cust_" + Date.now()));
     localStorage.setItem("sakhrCustomerUid", custId);
 
-    const techUid = selectedTargetTech.uid;
-    const id = db.ref("requests/"+custId).push().key;
-    const now = Date.now();
+    const techUid = selectedTargetTech.uid, id = db.ref("requests/"+custId).push().key, now = Date.now();
     const fullServiceLabel = currentSelectedSubservice ? `${selectedTargetTech.service} (${currentSelectedSubservice})` : selectedTargetTech.service;
 
     const record = {
@@ -3897,62 +2888,48 @@ async function submitCustomerOrder() {
       preferredTech: techUid, assignedTech: techUid, assignedTechName: selectedTargetTech.name,
       status: "بانتظار رد الفني", createdAt: now, countedAsCompleted: false, rated: false
     };
-
     const job = { id, customerUid: custId, customerName: custName, customerPhone: "محجوب (للإدارة فقط)", service: fullServiceLabel, city: chosenCustomerCity || "", area: chosenCustomerArea || "", neighborhood: "", problem, status: "بانتظار رد الفني", createdAt: now };
 
     const u = {};
     u["requests/"+custId+"/"+id] = record;
     u["technicianJobs/"+techUid+"/"+id] = job;
+    u["orderChats/"+id+"/meta"] = { orderId: id, customerUid: custId, assignedTech: techUid, service: fullServiceLabel, status: "بانتظار رد الفني", createdAt: now };
     await db.ref().update(u);
 
     closeModal("customerOrderModal");
     openOrderChatModal(id, fullServiceLabel);
-  } catch(e) {
-    showCustomAlert("خطأ في إرسال الطلب: " + e.message);
-  }
+  } catch(e) { showCustomAlert("خطأ في إرسال الطلب: " + e.message); }
 }
 
 async function toggleTechAvailability() {
   if(!currentUser || !["technician","suspended"].includes(currentRole)) return;
-  if(!isTechProfileComplete(currentTech)) {
-    return showCustomAlert("يرجى إكمال بيانات ملفك الشخصي أولاً لتفعيل الظهور للزبائن.");
-  }
-  const uid = currentUser.uid;
-  const newAvail = !(currentTech.available !== false);
+  if(!isTechProfileComplete(currentTech)) return showCustomAlert("يرجى إكمال بيانات ملفك الشخصي أولاً.");
+  const uid = currentUser.uid, newAvail = !(currentTech.available !== false);
   try {
     await db.ref("technicians/"+uid).update({ available: newAvail });
     await db.ref("publicTechnicians/"+uid).update({ available: newAvail });
     currentTech.available = newAvail;
-    renderTechAccount();
-    loadPublicTechs();
-  } catch(e) {
-    showCustomAlert("خطأ: " + e.message);
-  }
+    renderTechAccount(); loadPublicTechs();
+  } catch(e) { showCustomAlert("خطأ: " + e.message); }
 }
 
 function renderTechIncompleteChecklist(tech) {
   const box = $("techIncompleteChecklist");
   if(!box) return;
-  if(isTechProfileComplete(tech)) {
-    box.classList.add("hidden");
-    return;
-  }
-
+  if(isTechProfileComplete(tech)) { box.classList.add("hidden"); return; }
   const hasName = Boolean(String(tech.name || "").trim());
   const hasCityArea = Boolean(String(tech.city || "").trim() && String(tech.area || "").trim());
   const hasService = Boolean(String(tech.service || "").trim());
-
   box.classList.remove("hidden");
   box.innerHTML = `
     <h3>⚠️ استكمل ملفك الشخصي لتفعيل حسابك في البرنامج</h3>
-    <div style="font-size:12.5px; color:#7c2d12; font-weight:700;">حسابك غير ظاهر للزبائن حالياً حتى تكمل البيانات التالية (رقم الهاتف اختياري ويُضاف عند طلب واتساب):</div>
+    <div style="font-size:12.5px; color:#7c2d12; font-weight:700;">حسابك غير ظاهر للزبائن حالياً حتى تكمل البيانات التالية:</div>
     <div class="checklist-items">
       <div>${hasName ? '✅' : '⬜'} الاسم الكامل: <b>${esc(tech.name || 'غير مكتمل')}</b></div>
       <div>${hasCityArea ? '✅' : '⬜'} المحافظة والقضاء: <b>${hasCityArea ? esc(tech.city + ' / ' + tech.area) : 'مطلوب تحديد المحافظة والقضاء'}</b></div>
       <div>${hasService ? '✅' : '⬜'} الاختصاص الرئيسي: <b>${hasService ? esc(tech.service) : 'مطلوب اختيار الاختصاص'}</b></div>
     </div>
-    <button type="button" class="btn gold-3d" style="width:100%;" onclick="openTechEditModal()">📝 إكمال البيانات الآن وتفعيل الحساب</button>
-  `;
+    <button type="button" class="btn gold-3d" style="width:100%;" onclick="openTechEditModal()">📝 إكمال البيانات الآن وتفعيل الحساب</button>`;
 }
 
 async function renderTechAccount(){
@@ -3965,17 +2942,14 @@ async function renderTechAccount(){
     techData = await checkAndExpireSubscriptionIfNeeded(uid, techData);
     currentTech = techData;
     const subInfo = getEffectiveSubscriptionInfo(currentTech);
-
     renderTechIncompleteChecklist(currentTech);
 
     if($("techSummary")) {
       const isAvail = currentTech.available !== false && isTechProfileComplete(currentTech);
       const dotCls = isAvail ? "online-dot" : "offline-dot";
-      const statusLbl = !isTechProfileComplete(currentTech) ? "بانتظار استكمال الملف الشخصي" : (isAvail ? "متاح لاستقبال الطلبات" : "غير متاح (مشغول / نائم)");
+      const statusLbl = !isTechProfileComplete(currentTech) ? "بانتظار استكمال الملف الشخصي" : (isAvail ? "متاح لاستقبال الطلبات" : "غير متاح");
       const subsArr = Array.isArray(currentTech.subservices) ? [...currentTech.subservices] : [];
-      if(currentTech.otherAppliances && currentTech.service === "صيانة الأجهزة الكهربائية") {
-        subsArr.push(`أجهزة أخرى: ${currentTech.otherAppliances}`);
-      }
+      if(currentTech.otherAppliances && currentTech.service === "صيانة الأجهزة الكهربائية") subsArr.push(`أجهزة أخرى: ${currentTech.otherAppliances}`);
       const subsText = subsArr.length ? subsArr.join(" • ") : "جميع الفروع";
       $("techSummary").innerHTML = `
       ${techPhoto(currentTech)}
@@ -3996,37 +2970,27 @@ async function renderTechAccount(){
       </div>`;
     }
 
-    const isAvailBtn = currentTech.available !== false;
-    const availBtn = $("toggleAvailableBtn");
+    const isAvailBtn = currentTech.available !== false, availBtn = $("toggleAvailableBtn");
     if(availBtn) {
       availBtn.innerText = isAvailBtn ? "🔴 إيقاف التواجد (تحويل إلى غير متاح / للنوم)" : "🟢 تفعيل التواجد (تحويل إلى متاح)";
       availBtn.className = isAvailBtn ? "btn danger" : "btn primary";
-      $("availabilityMsg").innerHTML = isAvailBtn ? "حالتك الحالية: <b>متاح</b> وتظهر للزبائن." : "حالتك الحالية: <b>غير متاح</b> ومخفي تماماً عن قوائم البحث حتى لا ينزعجك أحد.";
+      $("availabilityMsg").innerHTML = isAvailBtn ? "حالتك الحالية: <b>متاح</b> وتظهر للزبائن." : "حالتك الحالية: <b>غير متاح</b> ومخفي عن قوائم البحث.";
     }
 
-    const freeUsed = Number(currentTech.freeJobsUsed || 0);
-    const freeRemaining = Math.max(0, 3 - freeUsed);
-
+    const freeUsed = Number(currentTech.freeJobsUsed || 0), freeRemaining = Math.max(0, 3 - freeUsed);
     if($("techFreeJobsHighlight")) {
       $("techFreeJobsHighlight").innerHTML = `
         <div style="font-size:13px; font-weight:800; color:var(--navy);">🎁 رصيد الأعمال المجانية الخاصة بك</div>
         <div class="free-jobs-counter">متبقي لديك <span style="color:var(--teal-calm);">${freeRemaining}</span> من أصل 3 أعمال مجانية</div>
-        <div style="font-size:11px; color:var(--text-muted); font-weight:700;">تم إنجاز واستخدام ${freeUsed} أعمال مجاناً عبر المنصة.</div>
-      `;
+        <div style="font-size:11px; color:var(--text-muted); font-weight:700;">تم إنجاز واستخدام ${freeUsed} أعمال مجاناً عبر المنصة.</div>`;
     }
 
     if($("techSubDetails")) {
-      const expiryStr = subInfo.isActive && subInfo.expiresAt
-        ? `<br>ينتهي الاشتراك تلقائياً بتاريخ: <b>${new Date(subInfo.expiresAt).toLocaleDateString('ar-IQ')}</b>`
-        : "";
+      const expiryStr = subInfo.isActive && subInfo.expiresAt ? `<br>ينتهي الاشتراك تلقائياً بتاريخ: <b>${new Date(subInfo.expiresAt).toLocaleDateString('ar-IQ')}</b>` : "";
       let subNoticeHtml = "";
-      if(!subInfo.isActive && freeUsed >= 3) {
-        subNoticeHtml = '<div class="notice error" style="margin-top:8px; font-size:12px;">⚠️ لقد استنفذت أعمالك المجانية الـ 3 أو انتهت مدة اشتراكك. تواصل مع فريق الدعم داخل التطبيق لتفعيل اشتراك شهري أو سنوي.</div>';
-      } else if(subInfo.expired) {
-        subNoticeHtml = '<div class="notice error" style="margin-top:8px; font-size:12px;">⏳ انتهت مدة اشتراكك تلقائياً وتم إيقاف التفعيل. راسل فريق الدعم لتجديد الاشتراك الشهري أو السنوي.</div>';
-      } else {
-        subNoticeHtml = '<div class="notice" style="margin-top:8px; font-size:12px;">💡 تتوفر باقات اشتراك شهري وسنوي يتم تفعيلها من الإدارة وتنتهي تلقائياً بعد انتهاء مدتها.</div>';
-      }
+      if(!subInfo.isActive && freeUsed >= 3) subNoticeHtml = '<div class="notice error" style="margin-top:8px; font-size:12px;">⚠️ لقد استنفذت أعمالك المجانية الـ 3. تواصل مع فريق الدعم لتفعيل اشتراك شهري أو سنوي.</div>';
+      else if(subInfo.expired) subNoticeHtml = '<div class="notice error" style="margin-top:8px; font-size:12px;">⏳ انتهت مدة اشتراكك تلقائياً. راسل فريق الدعم للتجديد.</div>';
+      else subNoticeHtml = '<div class="notice" style="margin-top:8px; font-size:12px;">💡 تتوفر باقات اشتراك شهري وسنوي يتم تفعيلها من الإدارة.</div>';
       $("techSubDetails").innerHTML = 'حالة الاشتراك: <b style="color:' + (subInfo.isActive?'var(--green-calm)':'var(--danger-calm)') + ';">' + esc(subInfo.label) + '</b>' + expiryStr + '<br>الأعمال المجانية المستهلكة: <b>' + freeUsed + ' من 3 أعمال مجانية</b>' + subNoticeHtml;
     }
 
@@ -4036,9 +3000,7 @@ async function renderTechAccount(){
       setDistricts("editTechArea", currentTech.city);
       if($("editTechArea")) $("editTechArea").value = currentTech.area || "";
     }
-    if($("editTechService")) {
-      $("editTechService").innerHTML = SERVICES.map(s=>`<option value="${esc(s)}" ${s===currentTech.service?'selected':''}>${esc(s)}</option>`).join("");
-    }
+    if($("editTechService")) $("editTechService").innerHTML = SERVICES.map(s=>`<option value="${esc(s)}" ${s===currentTech.service?'selected':''}>${esc(s)}</option>`).join("");
     renderSubserviceCheckboxes("editTechSubservicesBox", currentTech.service || SERVICES[0], currentTech.subservices || []);
     toggleOtherAppliancesField(currentTech.service || SERVICES[0], "editTechOtherAppliancesField");
     if($("editTechOtherAppliances")) $("editTechOtherAppliances").value = currentTech.otherAppliances || "";
@@ -4069,8 +3031,8 @@ async function renderTechAccount(){
             let actionsHtml = `<div class="actions"><button type="button" class="btn secondary" onclick="openOrderChatModal('${esc(x.id)}','${esc(x.service)}')">💬 محادثة وبصمة وطلب واتساب</button>`;
             if(x.status === "بانتظار رد الفني") {
               actionsHtml += `<button type="button" class="btn primary" onclick="technicianDecision('${esc(x.id)}','مقبول')">قبول الطلب</button><button type="button" class="btn danger" onclick="technicianDecision('${esc(x.id)}','مرفوض')">رفض</button>`;
-            } else if(x.status === "مقبول من الفني") {
-              actionsHtml += `<button type="button" class="btn gold-3d" onclick="completeTechnicianJob('${esc(x.id)}')">✅ تأكيد إتمام العمل</button>`;
+            } else if(x.status === "مقبول من الفني" || x.status === "مستمر") {
+              actionsHtml += `<button type="button" class="btn gold-3d" onclick="completeTechnicianJob('${esc(x.id)}')">✅ إنهاء الطلب</button>`;
             }
             actionsHtml += `</div>`;
             jobsHtml += '<div class="list-item"><h4>' + esc(x.service) + ' — ' + esc(x.status) + '</h4><div class="muted">الزبون: <b>' + esc(x.customerName || 'زبون معتمد') + '</b> | التواصل: <b style="color:var(--teal-calm)">داخل التطبيق (واتساب بالموافقة)</b></div><p style="margin:6px 0">' + esc(x.problem) + '</p>' + actionsHtml + '</div>';
@@ -4088,15 +3050,45 @@ async function technicianDecision(jobId, decision) {
   if (decision === "مقبول" && !canTechAcceptMoreJobs(currentTech)) {
     return showCustomAlert("لقد استنفذت رصيدك المجاني (3 أعمال). يرجى مراسلة فريق الدعم لتفعيل اشتراكك قبل قبول طلبات جديدة.");
   }
-  const status = decision === "مقبول" ? "مقبول من الفني" : "مرفوض من الفني";
+
+  const isAccepted = decision === "مقبول";
+  const status = isAccepted ? "مقبول من الفني" : "مرفوض من الفني";
+  const now = Date.now();
+
   try {
-    await db.ref("technicianJobs/"+uid+"/"+jobId).update({ status });
     const snap = await db.ref("technicianJobs/"+uid+"/"+jobId).once("value");
-    if(snap.exists()) {
-      const job = snap.val();
-      await db.ref("requests/"+job.customerUid+"/"+jobId).update({ status });
+    const job = snap.exists() ? snap.val() : null;
+
+    const updates = {};
+    updates[`technicianJobs/${uid}/${jobId}/status`] = status;
+    if(isAccepted) updates[`technicianJobs/${uid}/${jobId}/chatStartedAt`] = now;
+
+    if(job && job.customerUid) {
+      updates[`requests/${job.customerUid}/${jobId}/status`] = status;
+      if(isAccepted) updates[`requests/${job.customerUid}/${jobId}/chatStartedAt`] = now;
     }
-    showCustomAlert("تم تحديث حالة الطلب بنجاح.");
+
+    updates[`orderChats/${jobId}/meta/status`] = status;
+    if(isAccepted) {
+      updates[`orderChats/${jobId}/meta/chatStartedAt`] = now;
+      updates[`orderChats/${jobId}/meta/continuationState`] = "continued";
+    }
+
+    await db.ref().update(updates);
+
+    if(isAccepted) {
+      const sysId = db.ref(`orderChats/${jobId}/messages`).push().key;
+      await db.ref(`orderChats/${jobId}/messages/${sysId}`).set({
+        type: "system_decision",
+        text: `وافق الفني (${currentTech?.name || 'فني'}) على الطلب — المحادثة مفتوحة حتى انتهاء العمل.`,
+        senderId: uid,
+        senderName: currentTech?.name || "فني",
+        senderRole: "technician",
+        createdAt: now
+      });
+    }
+
+    showCustomAlert(isAccepted ? "تم قبول الطلب وفتح المحادثة الدائمة بنجاح!" : "تم رفض الطلب بنجاح.");
     renderTechAccount();
   } catch(e) {
     showCustomAlert("خطأ: " + e.message);
@@ -4110,119 +3102,92 @@ async function completeTechnicianJob(jobId) {
     const snap = await db.ref("technicianJobs/"+uid+"/"+jobId).once("value");
     if(!snap.exists()) return;
     const job = snap.val();
-    if(job.countedAsCompleted) return showCustomAlert("تم احتساب هذا العمل مسبقاً.");
+    const now = Date.now();
+    const updates = {};
+    updates[`technicianJobs/${uid}/${jobId}/status`] = "منتهي";
+    updates[`technicianJobs/${uid}/${jobId}/continuationState`] = "ended";
+    updates[`technicianJobs/${uid}/${jobId}/lastDecisionBy`] = "الفني (" + (currentTech.name || "") + ")";
+    updates[`technicianJobs/${uid}/${jobId}/chatEndedAt`] = now;
+    updates[`requests/${job.customerUid}/${jobId}/status`] = "منتهي";
+    updates[`requests/${job.customerUid}/${jobId}/continuationState`] = "ended";
+    updates[`requests/${job.customerUid}/${jobId}/lastDecisionBy`] = "الفني (" + (currentTech.name || "") + ")";
+    updates[`requests/${job.customerUid}/${jobId}/chatEndedAt`] = now;
+    updates[`orderChats/${jobId}/meta/status`] = "منتهي";
+    updates[`orderChats/${jobId}/meta/continuationState`] = "ended";
+    updates[`orderChats/${jobId}/meta/lastDecisionBy`] = "الفني (" + (currentTech.name || "") + ")";
+    updates[`orderChats/${jobId}/meta/chatEndedAt`] = now;
 
-    const subInfo = getEffectiveSubscriptionInfo(currentTech);
-    const nextCompleted = Number(currentTech.completedJobs || 0) + 1;
-    const nextFreeUsed = subInfo.isActive ? Number(currentTech.freeJobsUsed || 0) : Math.min(3, Number(currentTech.freeJobsUsed || 0) + 1);
+    if(!job.countedAsCompleted) {
+      const subInfo = getEffectiveSubscriptionInfo(currentTech);
+      const nextCompleted = Number(currentTech.completedJobs || 0) + 1;
+      const nextFreeUsed = subInfo.isActive ? Number(currentTech.freeJobsUsed || 0) : Math.min(3, Number(currentTech.freeJobsUsed || 0) + 1);
+      updates[`technicians/${uid}/completedJobs`] = nextCompleted;
+      updates[`technicians/${uid}/freeJobsUsed`] = nextFreeUsed;
+      updates[`publicTechnicians/${uid}/completedJobs`] = nextCompleted;
+      updates[`publicTechnicians/${uid}/freeJobsUsed`] = nextFreeUsed;
+      updates[`technicianJobs/${uid}/${jobId}/countedAsCompleted`] = true;
+      updates[`requests/${job.customerUid}/${jobId}/countedAsCompleted`] = true;
+      currentTech.completedJobs = nextCompleted;
+      currentTech.freeJobsUsed = nextFreeUsed;
+    }
 
-    await db.ref("technicianJobs/"+uid+"/"+jobId).update({ status: "مكتمل", countedAsCompleted: true, completedAt: Date.now() });
-    await db.ref("requests/"+job.customerUid+"/"+jobId).update({ status: "مكتمل", countedAsCompleted: true, completedAt: Date.now() });
-    await db.ref("technicians/"+uid).update({ completedJobs: nextCompleted, freeJobsUsed: nextFreeUsed });
-    await db.ref("publicTechnicians/"+uid).update({ completedJobs: nextCompleted, freeJobsUsed: nextFreeUsed });
-
-    currentTech.completedJobs = nextCompleted;
-    currentTech.freeJobsUsed = nextFreeUsed;
-    showCustomAlert("تم تأكيد إتمام العمل بنجاح وتحديث رصيدك!");
+    await db.ref().update(updates);
+    showCustomAlert("تم إنهاء الطلب وتحديث رصيدك بنجاح!");
     renderTechAccount();
     loadPublicTechs();
-  } catch(e) {
-    showCustomAlert("خطأ: " + e.message);
-  }
+  } catch(e) { showCustomAlert("خطأ: " + e.message); }
 }
 
 async function saveTechAccountProfile() {
   if(!currentUser || !["technician","suspended"].includes(currentRole)) return;
   const uid = currentUser.uid;
-  const name = $("editTechName").value.trim();
-  const service = $("editTechService").value;
+  const name = $("editTechName").value.trim(), service = $("editTechService").value;
   const subservices = getCheckedSubservices("editTechSubservicesBox");
   const otherAppliances = service === "صيانة الأجهزة الكهربائية" ? ($("editTechOtherAppliances")?.value.trim() || "") : "";
-  const city = $("editTechCity").value;
-  const area = $("editTechArea").value;
-  const neighborhood = $("editTechNeighborhood").value.trim();
-  const rawPhone = $("editTechPhone").value.trim();
-  const phone = rawPhone ? normalizeIraqiPhone(rawPhone) : "";
+  const city = $("editTechCity").value, area = $("editTechArea").value, neighborhood = $("editTechNeighborhood").value.trim();
+  const rawPhone = $("editTechPhone").value.trim(), phone = rawPhone ? normalizeIraqiPhone(rawPhone) : "";
   const email = ($("editTechEmail")?.value || "").trim().toLowerCase();
-  const bio = $("editTechBio").value.trim();
-  const extraInfo = $("editTechExtra").value.trim();
-  const file = $("editTechPhotoFile").files[0];
+  const bio = $("editTechBio").value.trim(), extraInfo = $("editTechExtra").value.trim(), file = $("editTechPhotoFile").files[0];
 
-  if(!name || !city || !area || !service) {
-    showCustomAlert("أكمل الحقول الأساسية (الاسم، المحافظة، القضاء، الاختصاص).");
-    return;
-  }
-  if(phone && !isValidIraqiPhone(phone)) {
-    showCustomAlert("يرجى إدخال رقم هاتف عراقي صحيح مكون من 11 رقماً يبدأ بـ 07.");
-    return;
-  }
-  if(email && !isValidEmailAddress(email)) {
-    showCustomAlert("صيغة البريد الإلكتروني غير صحيحة.");
-    return;
-  }
+  if(!name || !city || !area || !service) return showCustomAlert("أكمل الحقول الأساسية.");
+  if(phone && !isValidIraqiPhone(phone)) return showCustomAlert("رقم الهاتف العراقي يجب أن يتكون من 11 رقماً ويبدأ بـ 07.");
+  if(email && !isValidEmailAddress(email)) return showCustomAlert("صيغة البريد الإلكتروني غير صحيحة.");
 
   try {
     let photoURL = currentTech.photoURL || "";
-    if(file) {
-      photoURL = await uploadTechPhoto(uid, file);
-    }
-
-    const updated = {
-      ...currentTech,
-      name, service, subservices, otherAppliances, city, area, neighborhood, phone, email, bio, extraInfo, photoURL
-    };
-
+    if(file) photoURL = await uploadTechPhoto(uid, file);
+    const updated = { ...currentTech, name, service, subservices, otherAppliances, city, area, neighborhood, phone, email, bio, extraInfo, photoURL };
     await db.ref("technicians/"+uid).update(updated);
     await syncPublicTechnician(uid, updated);
     await logUserAccount(uid, { name, phone, email, role: "فني", service, city, area });
     currentTech = updated;
     showCustomAlert("تم حفظ وتفعيل ملفك الشخصي بنجاح!");
     closeModal('techEditModal');
-    renderTechAccount();
-    loadPublicTechs();
-  } catch(e) {
-    showCustomAlert("خطأ في الحفظ: "+e.message);
-  }
+    renderTechAccount(); loadPublicTechs();
+  } catch(e) { showCustomAlert("خطأ في الحفظ: "+e.message); }
 }
 
 async function activateTechSubscriptionPlan(techUid, planType) {
   if(currentRole !== "admin") return;
-  const now = Date.now();
-  const isYearly = planType === "yearly";
-  const expiresAt = now + (isYearly ? YEARLY_DURATION_MS : MONTHLY_DURATION_MS);
-  const payload = {
-    subscriptionStatus: "فعال",
-    subscriptionType: isYearly ? "yearly" : "monthly",
-    subscriptionStartedAt: now,
-    subscriptionExpiresAt: expiresAt
-  };
+  const now = Date.now(), isYearly = planType === "yearly", expiresAt = now + (isYearly ? YEARLY_DURATION_MS : MONTHLY_DURATION_MS);
+  const payload = { subscriptionStatus: "فعال", subscriptionType: isYearly ? "yearly" : "monthly", subscriptionStartedAt: now, subscriptionExpiresAt: expiresAt };
   try {
     await db.ref("technicians/" + techUid).update(payload);
     await db.ref("publicTechnicians/" + techUid).update(payload);
     showCustomAlert(isYearly ? "تم تفعيل الاشتراك السنوي (365 يوم) بنجاح." : "تم تفعيل الاشتراك الشهري (30 يوم) بنجاح.");
-    loadAdminData();
-    loadPublicTechs();
-  } catch(e) {
-    showCustomAlert("خطأ: " + e.message);
-  }
+    loadAdminData(); loadPublicTechs();
+  } catch(e) { showCustomAlert("خطأ: " + e.message); }
 }
 
 async function deactivateTechSubscription(techUid) {
   if(currentRole !== "admin") return;
-  const payload = {
-    subscriptionStatus: "غير فعال",
-    subscriptionType: "none",
-    subscriptionExpiresAt: 0
-  };
+  const payload = { subscriptionStatus: "غير فعال", subscriptionType: "none", subscriptionExpiresAt: 0 };
   try {
     await db.ref("technicians/" + techUid).update(payload);
     await db.ref("publicTechnicians/" + techUid).update(payload);
     showCustomAlert("تم إلغاء تفعيل اشتراك الفني.");
-    loadAdminData();
-    loadPublicTechs();
-  } catch(e) {
-    showCustomAlert("خطأ: " + e.message);
-  }
+    loadAdminData(); loadPublicTechs();
+  } catch(e) { showCustomAlert("خطأ: " + e.message); }
 }
 
 async function resetTechFreeJobs(techUid) {
@@ -4231,11 +3196,8 @@ async function resetTechFreeJobs(techUid) {
     await db.ref("technicians/" + techUid).update({ freeJobsUsed: 0 });
     await db.ref("publicTechnicians/" + techUid).update({ freeJobsUsed: 0 });
     showCustomAlert("تم تصفير الأعمال المجانية للفني بنجاح.");
-    loadAdminData();
-    loadPublicTechs();
-  } catch(e) {
-    showCustomAlert("خطأ: " + e.message);
-  }
+    loadAdminData(); loadPublicTechs();
+  } catch(e) { showCustomAlert("خطأ: " + e.message); }
 }
 
 async function toggleTechApprovalByAdmin(techUid, currentApproved) {
@@ -4244,66 +3206,38 @@ async function toggleTechApprovalByAdmin(techUid, currentApproved) {
   try {
     await db.ref("technicians/" + techUid).update({ approved: nextApproved });
     await db.ref("publicTechnicians/" + techUid).update({ approved: nextApproved });
-    showCustomAlert(nextApproved ? "تم تفعيل حساب الفني في المنصة." : "تم إيقاف حساب الفني مؤقتاً.");
-    loadAdminData();
-    loadPublicTechs();
-  } catch(e) {
-    showCustomAlert("خطأ: " + e.message);
-  }
+    showCustomAlert(nextApproved ? "تم تفعيل حساب الفني." : "تم إيقاف حساب الفني مؤقتاً.");
+    loadAdminData(); loadPublicTechs();
+  } catch(e) { showCustomAlert("خطأ: " + e.message); }
 }
 
 async function executeRootUserDeletion(uid, displayName) {
-  if(!auth || !auth.currentUser) {
-    showCustomAlert("يرجى تسجيل الدخول بحساب المدير أولاً.");
-    return;
-  }
-
-  showCustomConfirm(`هل أنت متأكد من حذف (${displayName}) نهائياً من كل السجلات ونظام المصادقة؟`, async () => {
+  if(!auth || !auth.currentUser) return showCustomAlert("يرجى تسجيل الدخول بحساب المدير أولاً.");
+  showCustomConfirm(`هل أنت متأكد من حذف (${displayName}) نهائياً؟`, async () => {
     try {
       const deleteUserCompletely = functions.httpsCallable('deleteUserCompletely');
-      const response = await deleteUserCompletely({ uid: uid });
+      const response = await deleteUserCompletely({ uid });
       showCustomAlert(response.data.message || "تم الحذف بنجاح تام.");
-      loadAdminData();
-      loadPublicTechs();
-      loadReviews();
+      loadAdminData(); loadPublicTechs(); loadReviews();
     } catch (e) {
       try {
-        await db.ref("allAccounts/" + uid).remove().catch(()=>{});
-        await db.ref("technicians/" + uid).remove().catch(()=>{});
-        await db.ref("publicTechnicians/" + uid).remove().catch(()=>{});
-        await db.ref("technicianJobs/" + uid).remove().catch(()=>{});
-        await db.ref("requests/" + uid).remove().catch(()=>{});
-        await db.ref("supportChats/" + uid).remove().catch(()=>{});
-        
-        const revSnap = await db.ref("reviews").once("value");
-        if(revSnap.exists()) {
-          const revs = revSnap.val();
-          for(const [k, v] of Object.entries(revs)) {
-            if(v.uid === uid || v.userId === uid) {
-              await db.ref("reviews/" + k).remove();
-            }
-          }
-        }
+        await Promise.all([
+          db.ref("allAccounts/" + uid).remove().catch(()=>{}),
+          db.ref("technicians/" + uid).remove().catch(()=>{}),
+          db.ref("publicTechnicians/" + uid).remove().catch(()=>{}),
+          db.ref("technicianJobs/" + uid).remove().catch(()=>{}),
+          db.ref("requests/" + uid).remove().catch(()=>{}),
+          db.ref("supportChats/" + uid).remove().catch(()=>{})
+        ]);
         showCustomAlert("تم حذف السجلات بنجاح.");
-        loadAdminData();
-        loadPublicTechs();
-        loadReviews();
-      } catch(dbErr) {
-        showCustomAlert("خطأ أثناء الحذف: " + dbErr.message);
-      }
+        loadAdminData(); loadPublicTechs(); loadReviews();
+      } catch(dbErr) { showCustomAlert("خطأ أثناء الحذف: " + dbErr.message); }
     }
   });
 }
 
-async function adminDeleteTechnician(techUid, techName) {
-  if(currentRole !== "admin") return;
-  await executeRootUserDeletion(techUid, techName);
-}
-
-async function adminDeleteAccount(uid, name) {
-  if(currentRole !== "admin") return;
-  await executeRootUserDeletion(uid, name);
-}
+async function adminDeleteTechnician(techUid, techName) { if(currentRole === "admin") await executeRootUserDeletion(techUid, techName); }
+async function adminDeleteAccount(uid, name) { if(currentRole === "admin") await executeRootUserDeletion(uid, name); }
 
 async function adminDeleteIncompleteItem(uid, isTechRecord, displayName) {
   if(currentRole !== "admin") return;
@@ -4314,118 +3248,70 @@ async function adminDeleteIncompleteItem(uid, isTechRecord, displayName) {
         await db.ref("technicians/" + uid).remove().catch(()=>{});
         await db.ref("publicTechnicians/" + uid).remove().catch(()=>{});
         await db.ref("technicianJobs/" + uid).remove().catch(()=>{});
-      } else {
-        await db.ref("requests/" + uid).remove().catch(()=>{});
-      }
+      } else await db.ref("requests/" + uid).remove().catch(()=>{});
       showCustomAlert("تم حذف السجل بنجاح.");
-      loadAdminData();
-      loadPublicTechs();
-    } catch(e) {
-      showCustomAlert("خطأ أثناء الحذف: " + e.message);
-    }
+      loadAdminData(); loadPublicTechs();
+    } catch(e) { showCustomAlert("خطأ أثناء الحذف: " + e.message); }
   });
 }
 
 async function adminDeleteRequest(custUid, reqId) {
   if(currentRole !== "admin") return;
   showCustomConfirm("هل أنت متأكد من حذف هذا الطلب نهائياً؟", async () => {
-    try {
-      await db.ref("requests/" + custUid + "/" + reqId).remove();
-      showCustomAlert("تم حذف الطلب بنجاح.");
-      loadAdminData();
-    } catch(e) {
-      showCustomAlert("خطأ: " + e.message);
-    }
+    try { await db.ref("requests/" + custUid + "/" + reqId).remove(); showCustomAlert("تم حذف الطلب بنجاح."); loadAdminData(); }
+    catch(e) { showCustomAlert("خطأ: " + e.message); }
   });
 }
 
 async function adminDeletePasswordRequest(reqId) {
   if(currentRole !== "admin" && currentUser?.email !== ADMIN_EMAIL) return;
   showCustomConfirm("هل أنت متأكد من حذف طلب استرجاع الرمز هذا؟", async () => {
-    try {
-      await db.ref("passwordRequests/" + reqId).remove();
-      showCustomAlert("تم الحذف بنجاح.");
-      loadAdminData();
-    } catch(e) {
-      showCustomAlert("خطأ: " + e.message);
-    }
+    try { await db.ref("passwordRequests/" + reqId).remove(); showCustomAlert("تم الحذف بنجاح."); loadAdminData(); }
+    catch(e) { showCustomAlert("خطأ: " + e.message); }
   });
 }
 
 function sendWhatsAppPassword(phone, inputId) {
   if(currentRole !== "admin") return;
-  const passInput = $(inputId);
-  const pass = passInput ? passInput.value.trim() : "";
-  if(!pass) {
-    showCustomAlert("يرجى إدخال الرمز المؤقت الجديد أولاً.");
-    return;
-  }
-  const text = encodeURIComponent(`مرحباً بك، بناءً على طلبك لاسترجاع كلمة المرور في منصة صخر، رمزك الجديد المؤقت هو: ${pass}`);
-  window.open(`https://wa.me/${formatWhatsApp(phone)}?text=${text}`, '_blank');
+  const pass = $(inputId)?.value?.trim() || "";
+  if(!pass) return showCustomAlert("يرجى إدخال الرمز المؤقت الجديد أولاً.");
+  window.open(`https://wa.me/${formatWhatsApp(phone)}?text=${encodeURIComponent(`مرحباً بك، رمزك الجديد المؤقت في منصة صخر هو: ${pass}`)}`, '_blank');
 }
 
 async function saveAdminAnnouncements() {
   if(currentRole !== "admin") return;
-  const anns = [
-    $("annInput1").value.trim(),
-    $("annInput2").value.trim(),
-    $("annInput3").value.trim(),
-    $("annInput4").value.trim(),
-    $("annInput5").value.trim()
-  ].filter(x => x.length > 0);
-
-  try {
-    await db.ref("settings/announcements").set(anns);
-    showCustomAlert("تم تحديث الأشرطة الإعلانية بنجاح!");
-  } catch(e) {
-    showCustomAlert("خطأ: " + e.message);
-  }
+  const anns = [1,2,3,4,5].map(i => $("annInput"+i)?.value?.trim() || "").filter(Boolean);
+  try { await db.ref("settings/announcements").set(anns); showCustomAlert("تم تحديث الأشرطة الإعلانية بنجاح!"); }
+  catch(e) { showCustomAlert("خطأ: " + e.message); }
 }
 
 async function loadAdminAnnouncementsInputs() {
   try {
     const snap = await db.ref("settings/announcements").once("value");
     const arr = snap.val() || [];
-    for(let i=0; i<5; i++) {
-      const input = $("annInput" + (i+1));
-      if(input) input.value = arr[i] || "";
-    }
+    for(let i=0; i<5; i++) { if($("annInput" + (i+1))) $("annInput" + (i+1)).value = arr[i] || ""; }
   } catch(e) {}
 }
 
 function listenToAnnouncements() {
   db.ref("settings/announcements").on("value", snap => {
     let list = (snap.val() || []).filter(x => x && x.trim().length > 0);
-    const bar = $("globalAnnouncementBar");
-    const container = bar?.parentElement;
+    const bar = $("globalAnnouncementBar"), container = bar?.parentElement;
     if(!bar || !container) return;
-    
-    if(announcementTimer) {
-      clearTimeout(announcementTimer);
-      announcementTimer = null;
-    }
-
-    if(list.length === 0) {
-      list = ["📢 أهلاً بكم في منصة صخر للصيانة المنزلية - تواصل مع أفضل الفنيين المعتمدين في منطقتك بكل سهولة."];
-    }
+    if(announcementTimer) { clearTimeout(announcementTimer); announcementTimer = null; }
+    if(!list.length) list = ["📢 أهلاً بكم في منصة صخر للصيانة المنزلية - تواصل مع أفضل الفنيين المعتمدين في منطقتك بكل سهولة."];
 
     let index = 0;
     function playNextAnnouncement() {
       bar.style.transition = "none";
       bar.innerText = list[index];
-      const containerW = container.offsetWidth || window.innerWidth;
-      const textW = bar.offsetWidth || 300;
-      const startX = -textW;
-      const endX = containerW;
-      const totalDistance = containerW + textW;
+      const containerW = container.offsetWidth || window.innerWidth, textW = bar.offsetWidth || 300;
+      const startX = -textW, endX = containerW, totalDistance = containerW + textW;
       const durationMs = Math.max(9000, Math.round((totalDistance / 85) * 1000));
-
       bar.style.transform = `translateX(${startX}px)`;
       void bar.offsetWidth;
-      
       bar.style.transition = `transform ${durationMs}ms linear`;
       bar.style.transform = `translateX(${endX}px)`;
-      
       announcementTimer = setTimeout(() => {
         index = (index + 1) % list.length;
         announcementTimer = setTimeout(playNextAnnouncement, 800);
@@ -4445,58 +3331,24 @@ function getAccountIssueReasons(acc, isTechContext = false) {
 }
 
 async function loadAdminData(){
-  if(!auth || !auth.currentUser) {
-    showCustomAlert("جاري التحقق من جلسة المدير...");
-    return;
-  }
-  
-  if(currentRole !== "admin" && auth.currentUser.email !== ADMIN_EMAIL) {
-    showCustomAlert("عذراً، ليس لديك صلاحية المدير.");
-    return;
-  }
+  if(!auth || !auth.currentUser) return showCustomAlert("جاري التحقق من جلسة المدير...");
+  if(currentRole !== "admin" && auth.currentUser.email !== ADMIN_EMAIL) return showCustomAlert("عذراً، ليس لديك صلاحية المدير.");
 
   try{
-    const safeOnce = async (path) => {
-      try {
-        return await db.ref(path).once("value");
-      } catch (err) {
-        return null;
-      }
-    };
-
+    const safeOnce = async (path) => { try { return await db.ref(path).once("value"); } catch (_) { return null; } };
     const [r, t, pubT, p, acc] = await Promise.all([
-      safeOnce("requests"),
-      safeOnce("technicians"),
-      safeOnce("publicTechnicians"),
-      safeOnce("passwordRequests"),
-      safeOnce("allAccounts")
+      safeOnce("requests"), safeOnce("technicians"), safeOnce("publicTechnicians"), safeOnce("passwordRequests"), safeOnce("allAccounts")
     ]);
-    
-    requests = [];
-    passwordRequests = [];
-    allAccountsList = [];
-    incompleteAccountsList = [];
 
-    if(r && r.exists()) {
-      r.forEach(u => u.forEach(q => requests.push({...q.val(), uid: u.key, id: q.key})));
-    }
-    if(p && p.exists()) {
-      p.forEach(x => passwordRequests.push({...x.val(), id: x.key}));
-    }
+    requests = []; passwordRequests = []; allAccountsList = []; incompleteAccountsList = [];
+    if(r && r.exists()) r.forEach(u => u.forEach(q => requests.push({...q.val(), uid: u.key, id: q.key})));
+    if(p && p.exists()) p.forEach(x => passwordRequests.push({...x.val(), id: x.key}));
 
     const accMap = {};
-    if(acc && acc.exists()) {
-      acc.forEach(a => {
-        accMap[a.key] = {...a.val(), uid: a.key};
-      });
-    }
+    if(acc && acc.exists()) acc.forEach(a => { accMap[a.key] = {...a.val(), uid: a.key}; });
 
     const techsMap = {};
-    if(pubT && pubT.exists()) {
-      pubT.forEach(s => {
-        techsMap[s.key] = { uid: s.key, ...s.val(), _isTech: true };
-      });
-    }
+    if(pubT && pubT.exists()) pubT.forEach(s => { techsMap[s.key] = { uid: s.key, ...s.val(), _isTech: true }; });
     if(t && t.exists()) {
       for (const [k, v] of Object.entries(t.val() || {})) {
         const checked = await checkAndExpireSubscriptionIfNeeded(k, v);
@@ -4504,182 +3356,103 @@ async function loadAdminData(){
       }
     }
     Object.entries(accMap).forEach(([uid, a]) => {
-      if(a.role === "فني" || a.role === "technician" || a.service) {
-        techsMap[uid] = { ...(techsMap[uid] || {}), uid, ...a, _isTech: true };
-      }
+      if(a.role === "فني" || a.role === "technician" || a.service) techsMap[uid] = { ...(techsMap[uid] || {}), uid, ...a, _isTech: true };
     });
 
     const completeTechs = [];
     Object.values(techsMap).forEach(tech => {
       const issues = getAccountIssueReasons(tech, true);
-      if(issues.length === 0) {
-        completeTechs.push(tech);
-      } else {
-        incompleteAccountsList.push({
-          ...tech,
-          accountTypeLabel: "فني (تسجيل غير مكتمل)",
-          isTechRecord: true,
-          issueText: "نقص في: " + issues.join("، ")
-        });
-      }
+      if(!issues.length) completeTechs.push(tech);
+      else incompleteAccountsList.push({ ...tech, accountTypeLabel: "فني (تسجيل غير مكتمل)", isTechRecord: true, issueText: "نقص في: " + issues.join("، ") });
     });
-
     technicians = completeTechs.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
 
     Object.entries(accMap).forEach(([uid, a]) => {
       if(techsMap[uid]) return;
       const issues = getAccountIssueReasons(a, false);
-      if(issues.length > 0) {
-        incompleteAccountsList.push({
-          uid,
-          ...a,
-          accountTypeLabel: a.role || "زبون (تسجيل غير مكتمل)",
-          isTechRecord: false,
-          issueText: "نقص في: " + issues.join("، ")
-        });
-      }
+      if(issues.length > 0) incompleteAccountsList.push({ uid, ...a, accountTypeLabel: a.role || "زبون (تسجيل غير مكتمل)", isTechRecord: false, issueText: "نقص في: " + issues.join("، ") });
     });
-
     incompleteAccountsList.sort((a, b) => (b.registeredAt || b.lastLogin || 0) - (a.registeredAt || a.lastLogin || 0));
 
     technicians.forEach(tech => {
-      if(!accMap[tech.uid]) {
-        accMap[tech.uid] = {
-          uid: tech.uid,
-          name: tech.name,
-          phone: tech.phone,
-          city: tech.city,
-          area: tech.area,
-          role: "فني",
-          registeredAt: tech.createdAt || Date.now()
-        };
-      }
+      if(!accMap[tech.uid]) accMap[tech.uid] = { uid: tech.uid, name: tech.name, phone: tech.phone, city: tech.city, area: tech.area, role: "فني", registeredAt: tech.createdAt || Date.now() };
     });
-
     allAccountsList = Object.values(accMap);
 
-    renderAdmin();
-    renderAdminActiveCities();
-    renderAdminTechsFullList();
-  }catch(e){
-    showCustomAlert("خطأ في تحميل بيانات الإدارة: " + e.message);
-  }
+    renderAdmin(); renderAdminActiveCities(); renderAdminTechsFullList();
+  }catch(e){ showCustomAlert("خطأ في تحميل بيانات الإدارة: " + e.message); }
 }
 
 function renderAdminTechsFullList() {
-  const regBox = $("adminTechsRegisteredBox");
-  const issBox = $("adminTechsIssuesBox");
-  const q = ($("adminTechSearchInput")?.value || "").trim().toLowerCase();
+  const regBox = $("adminTechsRegisteredBox"), issBox = $("adminTechsIssuesBox"), q = ($("adminTechSearchInput")?.value || "").trim().toLowerCase();
 
   if(regBox) {
-    const filteredTechs = technicians.filter(t => {
-      if(!q) return true;
-      const hay = `${t.name||""} ${t.phone||""} ${t.email||""} ${t.city||""} ${t.area||""} ${t.neighborhood||""} ${t.service||""}`.toLowerCase();
-      return hay.includes(q);
-    });
+    const filteredTechs = technicians.filter(t => !q || `${t.name||""} ${t.phone||""} ${t.email||""} ${t.city||""} ${t.area||""} ${t.neighborhood||""} ${t.service||""}`.toLowerCase().includes(q));
+    regBox.innerHTML = filteredTechs.length ? filteredTechs.map(t => {
+      const isAvail = t.available !== false, isApproved = t.approved !== false, subInfo = getEffectiveSubscriptionInfo(t);
+      const subsArr = Array.isArray(t.subservices) ? [...t.subservices] : [];
+      if(t.otherAppliances && t.service === "صيانة الأجهزة الكهربائية") subsArr.push(`أجهزة أخرى: ${t.otherAppliances}`);
+      const subsText = subsArr.length ? subsArr.join(" • ") : "جميع الفروع";
+      const regDate = t.createdAt ? new Date(t.createdAt).toLocaleDateString('ar-IQ') : '---';
+      const expText = subInfo.isActive && subInfo.expiresAt ? ` (ينتهي: ${new Date(subInfo.expiresAt).toLocaleDateString('ar-IQ')})` : "";
 
-    if(!filteredTechs.length) {
-      regBox.innerHTML = '<div class="empty">لا يوجد فنيون مسجلون مكتملون حالياً.</div>';
-    } else {
-      regBox.innerHTML = filteredTechs.map(t => {
-        const isAvail = t.available !== false;
-        const isApproved = t.approved !== false;
-        const subInfo = getEffectiveSubscriptionInfo(t);
-        const subsArr = Array.isArray(t.subservices) ? [...t.subservices] : [];
-        if(t.otherAppliances && t.service === "صيانة الأجهزة الكهربائية") {
-          subsArr.push(`أجهزة أخرى: ${t.otherAppliances}`);
-        }
-        const subsText = subsArr.length ? subsArr.join(" • ") : "جميع الفروع";
-        const regDate = t.createdAt ? new Date(t.createdAt).toLocaleDateString('ar-IQ') : '---';
-        const expText = subInfo.isActive && subInfo.expiresAt
-          ? ` (ينتهي: ${new Date(subInfo.expiresAt).toLocaleDateString('ar-IQ')})`
-          : "";
-
-        return `
-        <div class="admin-tech-full-card">
-          <div class="admin-tech-header">
-            ${techPhoto(t, true)}
-            <div style="flex:1;">
-              <h4 style="margin:0; font-size:15px; font-weight:900; color:var(--navy);">
-                ${esc(t.name)} — <span class="badge">${esc(t.service)}</span>
-              </h4>
-              <div class="muted" style="margin-top:3px;">
-                <span class="${isAvail ? 'online-dot' : 'offline-dot'}"></span>
-                <b>${isAvail ? 'متاح حالياً' : 'غير متاح'}</b> |
-                حالة الحساب: <b style="color:${isApproved ? 'var(--green-calm)' : 'var(--danger-calm)'};">${isApproved ? 'معتمد ونشط' : 'موقوف مؤقتاً'}</b>
-              </div>
-            </div>
+      return `
+      <div class="admin-tech-full-card">
+        <div class="admin-tech-header">
+          ${techPhoto(t, true)}
+          <div style="flex:1;">
+            <h4 style="margin:0; font-size:15px; font-weight:900; color:var(--navy);">${esc(t.name)} — <span class="badge">${esc(t.service)}</span></h4>
+            <div class="muted" style="margin-top:3px;"><span class="${isAvail ? 'online-dot' : 'offline-dot'}"></span><b>${isAvail ? 'متاح حالياً' : 'غير متاح'}</b> | حالة الحساب: <b style="color:${isApproved ? 'var(--green-calm)' : 'var(--danger-calm)'};">${isApproved ? 'معتمد ونشط' : 'موقوف مؤقتاً'}</b></div>
           </div>
-
-          <div class="profile-list-card" style="margin-bottom:10px; padding:10px 12px;">
-            <div class="profile-list-row"><span class="profile-list-label">رقم الهاتف</span><span class="profile-list-value">${esc(t.phone || 'غير مضاف')}</span></div>
-            ${t.email ? `<div class="profile-list-row"><span class="profile-list-label">البريد الإلكتروني</span><span class="profile-list-value">${esc(t.email)}</span></div>` : ''}
-            <div class="profile-list-row"><span class="profile-list-label">المحافظة والقضاء</span><span class="profile-list-value">${esc(t.city || '---')} / ${esc(t.area || '---')}</span></div>
-            <div class="profile-list-row"><span class="profile-list-label">المنطقة / الحي</span><span class="profile-list-value">${esc(t.neighborhood || 'غير محدد')}</span></div>
-            <div class="profile-list-row"><span class="profile-list-label">التخصصات الفرعية</span><span class="profile-list-value">${esc(subsText)}</span></div>
-            <div class="profile-list-row"><span class="profile-list-label">التقييم العام</span><span class="profile-list-value">${Number(t.ratingAverage||0).toFixed(1)} / 5 (${Number(t.ratingCount||0)} تقييم)</span></div>
-            <div class="profile-list-row"><span class="profile-list-label">الاشتراك والمجاني</span><span class="profile-list-value">${esc(subInfo.label + expText)} • (${Number(t.freeJobsUsed||0)} من 3 مجانية)</span></div>
-            <div class="profile-list-row"><span class="profile-list-label">نبذة الخبرة</span><span class="profile-list-value">${esc(t.bio || 'لا توجد نبذة')}</span></div>
-            ${t.extraInfo ? `<div class="profile-list-row"><span class="profile-list-label">إضافات الفني</span><span class="profile-list-value">${esc(t.extraInfo)}</span></div>` : ''}
-            <div class="profile-list-row"><span class="profile-list-label">تاريخ الانضمام</span><span class="profile-list-value">${regDate}</span></div>
-          </div>
-
-          <div class="actions">
-            <button type="button" class="btn primary" onclick="activateTechSubscriptionPlan('${esc(t.uid)}','monthly')">تفعيل شهري (30 يوم)</button>
-            <button type="button" class="btn gold-3d" onclick="activateTechSubscriptionPlan('${esc(t.uid)}','yearly')">تفعيل سنوي (365 يوم)</button>
-            ${subInfo.isActive ? `<button type="button" class="btn danger" onclick="deactivateTechSubscription('${esc(t.uid)}')">إلغاء الاشتراك</button>` : ''}
-            <button type="button" class="btn ${isApproved ? 'light' : 'secondary'}" onclick="toggleTechApprovalByAdmin('${esc(t.uid)}', ${isApproved})">
-              ${isApproved ? 'إيقاف الحساب مؤقتاً' : 'إعادة تفعيل الحساب'}
-            </button>
-            <button type="button" class="btn light" onclick="resetTechFreeJobs('${esc(t.uid)}')">تصفير المجانية</button>
-            <button type="button" class="btn primary" onclick="chooseServiceDirect('${esc(t.service)}','${esc(t.uid)}')">إرسال طلب مباشر</button>
-            ${currentRole === 'admin' && t.phone ? `<a class="btn whatsapp-btn" href="https://wa.me/${formatWhatsApp(t.phone)}" target="_blank">واتساب الفني</a>` : ''}
-            <button type="button" class="btn danger" onclick="adminDeleteTechnician('${esc(t.uid)}','${esc(t.name)}')">حذف نهائي</button>
-          </div>
-        </div>`;
-      }).join("");
-    }
+        </div>
+        <div class="profile-list-card" style="margin-bottom:10px; padding:10px 12px;">
+          <div class="profile-list-row"><span class="profile-list-label">رقم الهاتف</span><span class="profile-list-value">${esc(t.phone || 'غير مضاف')}</span></div>
+          ${t.email ? `<div class="profile-list-row"><span class="profile-list-label">البريد الإلكتروني</span><span class="profile-list-value">${esc(t.email)}</span></div>` : ''}
+          <div class="profile-list-row"><span class="profile-list-label">المحافظة والقضاء</span><span class="profile-list-value">${esc(t.city || '---')} / ${esc(t.area || '---')}</span></div>
+          <div class="profile-list-row"><span class="profile-list-label">المنطقة / الحي</span><span class="profile-list-value">${esc(t.neighborhood || 'غير محدد')}</span></div>
+          <div class="profile-list-row"><span class="profile-list-label">التخصصات الفرعية</span><span class="profile-list-value">${esc(subsText)}</span></div>
+          <div class="profile-list-row"><span class="profile-list-label">التقييم العام</span><span class="profile-list-value">${Number(t.ratingAverage||0).toFixed(1)} / 5 (${Number(t.ratingCount||0)} تقييم)</span></div>
+          <div class="profile-list-row"><span class="profile-list-label">الاشتراك والمجاني</span><span class="profile-list-value">${esc(subInfo.label + expText)} • (${Number(t.freeJobsUsed||0)} من 3 مجانية)</span></div>
+          <div class="profile-list-row"><span class="profile-list-label">نبذة الخبرة</span><span class="profile-list-value">${esc(t.bio || 'لا توجد نبذة')}</span></div>
+          ${t.extraInfo ? `<div class="profile-list-row"><span class="profile-list-label">إضافات الفني</span><span class="profile-list-value">${esc(t.extraInfo)}</span></div>` : ''}
+          <div class="profile-list-row"><span class="profile-list-label">تاريخ الانضمام</span><span class="profile-list-value">${regDate}</span></div>
+        </div>
+        <div class="actions">
+          <button type="button" class="btn primary" onclick="activateTechSubscriptionPlan('${esc(t.uid)}','monthly')">تفعيل شهري (30 يوم)</button>
+          <button type="button" class="btn gold-3d" onclick="activateTechSubscriptionPlan('${esc(t.uid)}','yearly')">تفعيل سنوي (365 يوم)</button>
+          ${subInfo.isActive ? `<button type="button" class="btn danger" onclick="deactivateTechSubscription('${esc(t.uid)}')">إلغاء الاشتراك</button>` : ''}
+          <button type="button" class="btn ${isApproved ? 'light' : 'secondary'}" onclick="toggleTechApprovalByAdmin('${esc(t.uid)}', ${isApproved})">${isApproved ? 'إيقاف الحساب مؤقتاً' : 'إعادة تفعيل الحساب'}</button>
+          <button type="button" class="btn light" onclick="resetTechFreeJobs('${esc(t.uid)}')">تصفير المجانية</button>
+          <button type="button" class="btn primary" onclick="chooseServiceDirect('${esc(t.service)}','${esc(t.uid)}')">إرسال طلب مباشر</button>
+          ${t.phone ? `<a class="btn whatsapp-btn" href="https://wa.me/${formatWhatsApp(t.phone)}" target="_blank">واتساب الفني</a>` : ''}
+          <button type="button" class="btn danger" onclick="adminDeleteTechnician('${esc(t.uid)}','${esc(t.name)}')">حذف نهائي</button>
+        </div>
+      </div>`;
+    }).join("") : '<div class="empty">لا يوجد فنيون مسجلون مكتملون حالياً.</div>';
   }
 
   if(issBox) {
-    const filteredIssues = incompleteAccountsList.filter(item => {
-      if(!q) return true;
-      const hay = `${item.name||""} ${item.phone||""} ${item.email||""} ${item.city||""} ${item.area||""} ${item.service||""} ${item.issueText||""} ${item.uid||""}`.toLowerCase();
-      return hay.includes(q);
-    });
-
-    if(!filteredIssues.length) {
-      issBox.innerHTML = '<div class="empty">لا توجد مشاكل أو حسابات تسجيل غير مكتملة حالياً.</div>';
-    } else {
-      issBox.innerHTML = filteredIssues.map(item => {
-        const displayName = item.name || ("سجل بدون اسم (" + (item.uid || "").slice(0, 6) + ")");
-        return `
-        <div class="admin-tech-full-card" style="border-color:#fca5a5; background:var(--danger-tint);">
-          <div class="admin-tech-header">
-            <div style="flex:1;">
-              <h4 style="margin:0; font-size:15px; font-weight:900; color:var(--danger-calm);">
-                ${esc(displayName)} — <span class="badge">${esc(item.accountTypeLabel)}</span>
-              </h4>
-              <div style="margin-top:4px; font-size:12px; font-weight:800; color:var(--danger-calm);">
-                ⚠️ المشكلة: ${esc(item.issueText)}
-              </div>
-            </div>
+    const filteredIssues = incompleteAccountsList.filter(item => !q || `${item.name||""} ${item.phone||""} ${item.email||""} ${item.city||""} ${item.area||""} ${item.service||""} ${item.issueText||""} ${item.uid||""}`.toLowerCase().includes(q));
+    issBox.innerHTML = filteredIssues.length ? filteredIssues.map(item => {
+      const displayName = item.name || ("سجل بدون اسم (" + (item.uid || "").slice(0, 6) + ")");
+      return `
+      <div class="admin-tech-full-card" style="border-color:#fca5a5; background:var(--danger-tint);">
+        <div class="admin-tech-header">
+          <div style="flex:1;">
+            <h4 style="margin:0; font-size:15px; font-weight:900; color:var(--danger-calm);">${esc(displayName)} — <span class="badge">${esc(item.accountTypeLabel)}</span></h4>
+            <div style="margin-top:4px; font-size:12px; font-weight:800; color:var(--danger-calm);">⚠️ المشكلة: ${esc(item.issueText)}</div>
           </div>
-
-          <div class="profile-list-card" style="margin-bottom:10px; padding:10px 12px; background:var(--gold-tint);">
-            <div class="profile-list-row"><span class="profile-list-label">المعرف (UID)</span><span class="profile-list-value">${esc(item.uid || '---')}</span></div>
-            <div class="profile-list-row"><span class="profile-list-label">الاسم</span><span class="profile-list-value">${esc(item.name || 'غير مكتمل')}</span></div>
-            <div class="profile-list-row"><span class="profile-list-label">رقم الهاتف</span><span class="profile-list-value">${esc(item.phone || 'اختياري / غير مضاف')}</span></div>
-            <div class="profile-list-row"><span class="profile-list-label">المحافظة / القضاء</span><span class="profile-list-value">${esc(item.city || '---')} / ${esc(item.area || '---')}</span></div>
-            ${item.isTechRecord ? `<div class="profile-list-row"><span class="profile-list-label">الاختصاص</span><span class="profile-list-value">${esc(item.service || 'غير مكتمل')}</span></div>` : ''}
-          </div>
-
-          <div class="actions">
-            <button type="button" class="btn danger" onclick="adminDeleteIncompleteItem('${esc(item.uid)}', ${Boolean(item.isTechRecord)}, '${esc(displayName)}')">حذف السجل نهائياً</button>
-          </div>
-        </div>`;
-      }).join("");
-    }
+        </div>
+        <div class="profile-list-card" style="margin-bottom:10px; padding:10px 12px; background:var(--gold-tint);">
+          <div class="profile-list-row"><span class="profile-list-label">المعرف (UID)</span><span class="profile-list-value">${esc(item.uid || '---')}</span></div>
+          <div class="profile-list-row"><span class="profile-list-label">الاسم</span><span class="profile-list-value">${esc(item.name || 'غير مكتمل')}</span></div>
+          <div class="profile-list-row"><span class="profile-list-label">رقم الهاتف</span><span class="profile-list-value">${esc(item.phone || 'اختياري / غير مضاف')}</span></div>
+          <div class="profile-list-row"><span class="profile-list-label">المحافظة / القضاء</span><span class="profile-list-value">${esc(item.city || '---')} / ${esc(item.area || '---')}</span></div>
+          ${item.isTechRecord ? `<div class="profile-list-row"><span class="profile-list-label">الاختصاص</span><span class="profile-list-value">${esc(item.service || 'غير مكتمل')}</span></div>` : ''}
+        </div>
+        <div class="actions"><button type="button" class="btn danger" onclick="adminDeleteIncompleteItem('${esc(item.uid)}', ${Boolean(item.isTechRecord)}, '${esc(displayName)}')">حذف السجل نهائياً</button></div>
+      </div>`;
+    }).join("") : '<div class="empty">لا توجد مشاكل أو حسابات تسجيل غير مكتملة حالياً.</div>';
   }
 }
 
@@ -4694,7 +3467,7 @@ function renderAdmin(){
     <div class="card" style="text-align:center"><div class="muted">إجمالي الزبائن</div><div class="stat">${uniqueCustomersCount}</div></div>
     <div class="card" style="text-align:center"><div class="muted">إجمالي الفنيين</div><div class="stat">${technicians.length}</div></div>`;
   }
-  
+
   if($("adminAllAccounts")) {
     $("adminAllAccounts").innerHTML = customersOnly.length ? customersOnly.map(a=>`
     <div class="list-item">
@@ -4703,24 +3476,26 @@ function renderAdmin(){
       <div class="muted">الموقع: ${esc(a.city || "غير محدد")} / ${esc(a.area || "غير محدد")} ${a.neighborhood ? '('+esc(a.neighborhood)+')' : ''}</div>
       ${a.notes ? `<div class="muted" style="margin-top:3px;">إضافات الزبون: <b>${esc(a.notes)}</b></div>` : ''}
       <div class="muted" style="margin-top:4px;">وقت التسجيل: ${a.registeredAt ? new Date(a.registeredAt).toLocaleString('ar-IQ') : '---'}</div>
-      <div class="actions" style="margin-top:8px;">
-       <button type="button" class="btn danger" onclick="adminDeleteAccount('${esc(a.uid)}', '${esc(a.name || a.phone || 'المستخدم')}')">حذف الحساب نهائياً</button>
-      </div>
+      <div class="actions" style="margin-top:8px;"><button type="button" class="btn danger" onclick="adminDeleteAccount('${esc(a.uid)}', '${esc(a.name || a.phone || 'المستخدم')}')">حذف الحساب نهائياً</button></div>
     </div>`).join("") : '<div class="empty">لا توجد حسابات زبائن مسجلة حالياً.</div>';
   }
 
   if($("adminRequests")) {
-    $("adminRequests").innerHTML = requests.length ? requests.map(r=>`
-    <div class="list-item">
-      <h4>${esc(r.service)} — الحالة: ${esc(r.status)}</h4>
-      <div class="muted">الزبون: <b>${esc(r.name)}</b> | الهاتف الشخصي: <b style="color:var(--navy); font-size:13.5px;">${esc(r.phone || 'غير مضاف')}</b></div>
-      <div class="muted">الموقع: ${esc(r.city)} / ${esc(r.area)} (${esc(r.neighborhood||"")})</div>
-      <p style="margin:5px 0; font-size:13px;">المشكلة: ${esc(r.problem)}</p>
-      <div class="actions">
-       <button type="button" class="btn secondary" onclick="openOrderChatModal('${esc(r.id)}','${esc(r.service)}')">💬 محادثة الطلب</button>
-       <button type="button" class="btn danger" onclick="adminDeleteRequest('${esc(r.uid)}','${esc(r.id)}')">حذف الطلب</button>
-      </div>
-    </div>`).join("") : '<div class="empty">لا توجد طلبات مسجلة.</div>';
+    $("adminRequests").innerHTML = requests.length ? requests.map(r=>{
+      const openDur = r.chatStartedAt ? formatOpenDuration(r.chatStartedAt, r.chatEndedAt || null) : "لم تُفتح بعد";
+      const decInfo = r.lastDecisionBy ? ` | آخر قرار: <b>${esc(r.continuationState === 'ended' ? 'إنهاء' : 'استمرار')}</b> بواسطة <b>${esc(r.lastDecisionBy)}</b>` : "";
+      return `
+      <div class="list-item">
+        <h4>${esc(r.service)} — الحالة: ${esc(r.status)}</h4>
+        <div class="muted">الزبون: <b>${esc(r.name)}</b> | الفني: <b>${esc(r.assignedTechName || '---')}</b></div>
+        <div class="muted" style="margin-top:3px;">⏱️ مدة بقاء المحادثة مفتوحة: <b style="color:var(--teal-calm);">${esc(openDur)}</b>${decInfo}</div>
+        <p style="margin:5px 0; font-size:13px;">المشكلة: ${esc(r.problem)}</p>
+        <div class="actions">
+         <button type="button" class="btn secondary" onclick="openOrderChatModal('${esc(r.id)}','${esc(r.service)}')">💬 محادثة الطلب</button>
+         <button type="button" class="btn danger" onclick="adminDeleteRequest('${esc(r.uid)}','${esc(r.id)}')">حذف الطلب</button>
+        </div>
+      </div>`;
+    }).join("") : '<div class="empty">لا توجد طلبات مسجلة.</div>';
   }
 
   if($("adminPasswordRequests")) {
@@ -4742,40 +3517,24 @@ function renderAdmin(){
 }
 
 async function submitReview() {
-  const name = $("reviewName").value.trim();
-  const stars = Number($("reviewStars").value);
-  const text = $("reviewText").value.trim();
-  if(!name || !text) {
-    showCustomAlert("يرجى كتابة الاسم والملاحظة.");
-    return;
-  }
-  
+  const name = $("reviewName").value.trim(), stars = Number($("reviewStars").value), text = $("reviewText").value.trim();
+  if(!name || !text) return showCustomAlert("يرجى كتابة الاسم والملاحظة.");
   try {
-    const id = db.ref("reviews").push().key;
-    const authorUid = currentUser ? currentUser.uid : (localStorage.getItem("sakhrCustomerUid") || "");
-    await db.ref("reviews/"+id).set({
-      uid: authorUid, name, stars, text, createdAt: Date.now()
-    });
+    const id = db.ref("reviews").push().key, authorUid = currentUser ? currentUser.uid : (localStorage.getItem("sakhrCustomerUid") || "");
+    await db.ref("reviews/"+id).set({ uid: authorUid, name, stars, text, createdAt: Date.now() });
     showCustomAlert("تم إرسال تقييمك وملاحظتك بنجاح!");
-    $("reviewName").value = "";
-    $("reviewText").value = "";
+    $("reviewName").value = ""; $("reviewText").value = "";
     loadReviews();
-  }catch(e) {
-    showCustomAlert("خطأ: " + e.message);
-  }
+  }catch(e) { showCustomAlert("خطأ: " + e.message); }
 }
 
 async function loadReviews(){
   const el = $("reviewsList");
   if(!el) return;
   try{
-    const s = await db.ref("reviews").once("value");
-    const data = s.val() || {};
+    const s = await db.ref("reviews").once("value"), data = s.val() || {};
     const list = Object.values(data).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
-    if(!list.length){
-      el.innerHTML = '<div class="empty">لا توجد تقييمات أو ملاحظات مضافة بعد. كن أول المشاركين!</div>';
-      return;
-    }
+    if(!list.length){ el.innerHTML = '<div class="empty">لا توجد تقييمات أو ملاحظات مضافة بعد. كن أول المشاركين!</div>'; return; }
     el.innerHTML = list.map(r=>`
     <div class="list-item">
      <div style="display:flex;justify-content:space-between;align-items:center">
@@ -4784,9 +3543,7 @@ async function loadReviews(){
      </div>
      <p style="margin:8px 0 0;font-size:13px;line-height:1.5;color:var(--text-main)">${esc(r.text)}</p>
     </div>`).join("");
-  }catch(e){
-    el.innerHTML = '<div class="empty">تعذر تحميل التقييمات حالياً.</div>';
-  }
+  }catch(e){ el.innerHTML = '<div class="empty">تعذر تحميل التقييمات حالياً.</div>'; }
 }
 
 setupLocations();
