@@ -706,7 +706,7 @@ header {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 6px;
   text-decoration: none;
 }
 .whatsapp-btn:hover { filter: brightness(1.06); }
@@ -956,7 +956,7 @@ header {
   gap: 8px;
 }
 .chat-bubble {
-  max-width: 82%;
+  max-width: 84%;
   padding: 8px 12px;
   border-radius: 12px;
   font-size: 12.5px;
@@ -975,13 +975,39 @@ header {
   align-self: flex-end;
   border: 1.5px solid var(--border-gold);
 }
+.chat-bubble.wa-card {
+  max-width: 92%;
+  background: #f0fdf4;
+  color: #14532d;
+  border: 1.5px solid #22c55e;
+  align-self: center;
+  text-align: center;
+}
+.chat-bubble audio {
+  width: 100%;
+  max-width: 230px;
+  height: 34px;
+  margin-top: 4px;
+  display: block;
+}
 .chat-bubble small {
   display: block;
   font-size: 10px;
-  opacity: 0.75;
+  opacity: 0.78;
   margin-top: 3px;
 }
-.chat-send-row { display: flex; gap: 8px; }
+.chat-toolbar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+  justify-content: space-between;
+  align-items: center;
+}
+.chat-send-row {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
 .chat-send-row input {
   flex: 1;
   padding: 9px 11px;
@@ -991,6 +1017,45 @@ header {
   color: var(--text-main);
   font-weight: 700;
   outline: none;
+  min-width: 0;
+}
+.mic-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: linear-gradient(155deg, #f7d265 0%, #d4a024 100%);
+  color: var(--navy-deep);
+  border: 1.5px solid var(--navy);
+  font-size: 17px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 3px 0 #92670c;
+}
+.mic-btn.recording {
+  background: linear-gradient(155deg, #dc2626 0%, #991b1b 100%);
+  color: #ffffff;
+  border-color: #fecaca;
+  animation: pulseRec 1s infinite;
+}
+@keyframes pulseRec {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}
+.voice-rec-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  background: var(--danger-tint);
+  border: 1.5px solid #fca5a5;
+  border-radius: 10px;
+  padding: 7px 10px;
+  margin-bottom: 8px;
+  color: var(--danger-calm);
+  font-size: 12px;
+  font-weight: 800;
 }
 
 footer {
@@ -1164,7 +1229,7 @@ footer {
 <section id="join" class="container hidden">
  <h2 class="section-title">انضم إلى شبكة فنيي صخر</h2>
  <form class="card" style="max-width:650px;margin:0 auto" onsubmit="event.preventDefault(); registerTechFlexible();">
-  <div class="notice">تسجيل سريع ومبسط للفني (3 أعمال مجاناً بالكامل). يمكنك التسجيل بحساب جوجل فوراً أو برقم الهاتف وكلمة المرور، واستكمال ملفك الشخصي من لوحتك.</div>
+  <div class="notice">تسجيل سريع ومبسط للفني (3 أعمال مجاناً بالكامل). يمكنك التسجيل بحساب جوجل أو البريد الإلكتروني أو رقم الهاتف، وإضافة رقم الهاتف اختيارية إلا عند طلب واتساب.</div>
   <button type="button" class="btn google-btn" style="width:100%; margin-bottom:10px; padding:10px;" onclick="signInWithGoogleRole('technician')">
    <span>🌐</span> التسجيل السريع بحساب جوجل (Google)
   </button>
@@ -1176,13 +1241,10 @@ footer {
 
   <div class="row">
    <div class="field"><label>الاسم الكامل</label><input id="regName" placeholder="الاسم الكامل"></div>
-   <div class="field"><label>رقم الهاتف (للتواصل والواتساب)</label><input id="regPhone" inputmode="tel" placeholder="07XXXXXXXXX"></div>
+   <div class="field" id="regPhoneField"><label>رقم الهاتف (07XXXXXXXXX)</label><input id="regPhone" inputmode="tel" placeholder="07XXXXXXXXX"></div>
+   <div class="field hidden" id="regEmailField"><label>البريد الإلكتروني</label><input id="regEmail" type="email" inputmode="email" placeholder="example@gmail.com"></div>
   </div>
   <div class="row">
-   <div class="field hidden" id="regEmailField">
-    <label>البريد الإلكتروني (لتسجيل الدخول واسترجاع الرمز)</label>
-    <input id="regEmail" type="email" inputmode="email" placeholder="example@gmail.com">
-   </div>
    <div class="field">
     <label>كلمة المرور الخاصة بالحساب</label>
     <div class="password-wrapper">
@@ -1248,9 +1310,14 @@ footer {
 
   <div id="custProfileListBox" class="profile-list-card"></div>
 
-  <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:center;">
+  <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-bottom:16px;">
    <button class="btn gold-3d" style="flex:1; min-width:180px;" onclick="openCustomerEditModal()">⚙️ استكمال وتعديل الملف الشخصي</button>
    <button class="btn danger" style="flex:1; min-width:150px;" onclick="logoutCustomer()">🚪 تسجيل الخروج</button>
+  </div>
+
+  <div id="custMyOrdersArea">
+   <h3 class="section-title" style="font-size:15.5px; margin-top:10px;">📋 طلباتي ومحادثاتي مع الفنيين</h3>
+   <div id="custMyOrdersList"><div class="empty">لا توجد طلبات مرسلة حالياً.</div></div>
   </div>
  </div>
 </section>
@@ -1372,7 +1439,7 @@ footer {
 <div class="modal hidden" id="customerAccountModal">
  <div class="modal-box">
   <div class="modal-head"><h3>تسجيل حساب الزبون وتحديد الموقع</h3><div class="close" onclick="closeModal('customerAccountModal')">✕</div></div>
-  <div class="notice">سجّل بسرعة عبر حساب جوجل (Google) بضغطة واحدة، أو أدخل بياناتك مع رقم الهاتف وكلمة المرور:</div>
+  <div class="notice">سجّل بسرعة عبر حساب جوجل (Google) بضغطة واحدة، أو بالبريد الإلكتروني أو رقم الهاتف:</div>
   <button type="button" class="btn google-btn" style="width:100%; margin-bottom:10px; padding:10px;" onclick="signInWithGoogleRole('customer')">
    <span>🌐</span> الدخول السريع بحساب جوجل (Google)
   </button>
@@ -1405,9 +1472,9 @@ footer {
 <div class="modal hidden" id="phoneRequiredModal">
  <div class="modal-box">
   <div class="modal-head"><h3 id="reqPhoneModalTitle">استكمال البيانات الأساسية</h3><div class="close" onclick="closeModal('phoneRequiredModal')">✕</div></div>
-  <div class="notice">تأكد من كتابة اسمك الحقيقي وأكمل رقم الهاتف والمحافظة والقضاء حتى يتفعّل حسابك وتتمكن من المتابعة.</div>
+  <div class="notice">تأكد من كتابة اسمك الحقيقي وتحديد المحافظة والقضاء (رقم الهاتف اختياري ويُطلب فقط عند التواصل عبر واتساب).</div>
   <div class="field"><label>الاسم الكامل (يمكنك تعديله لاسمك الحقيقي)</label><input id="reqPhoneName" placeholder="الاسم الكامل"></div>
-  <div class="field"><label>رقم الهاتف (07XXXXXXXXX)</label><input id="reqPhoneNumber" inputmode="tel" placeholder="07XXXXXXXXX"></div>
+  <div class="field"><label>رقم الهاتف (اختياري - 07XXXXXXXXX)</label><input id="reqPhoneNumber" inputmode="tel" placeholder="07XXXXXXXXX (اختياري)"></div>
   <div class="row">
    <div class="field"><label>المحافظة</label><select id="reqPhoneCity" onchange="setDistricts('reqPhoneArea', this.value)"></select></div>
    <div class="field"><label>القضاء</label><select id="reqPhoneArea"><option value="">اختر القضاء</option></select></div>
@@ -1420,11 +1487,24 @@ footer {
  </div>
 </div>
 
+<!-- نافذة إضافة رقم الهاتف السري داخل الملف الشخصي لربط الواتساب -->
+<div class="modal hidden" id="whatsappPhoneOnlyModal">
+ <div class="modal-box">
+  <div class="modal-head"><h3>📱 إضافة رقم الهاتف للربط عبر واتساب</h3><div class="close" onclick="closeModal('whatsappPhoneOnlyModal')">✕</div></div>
+  <div class="notice">لإتمام الربط عبر واتساب، أضف رقم هاتفك هنا. سيُحفظ في ملفك الشخصي بشكل سري <b>ولا يظهر لأي شخص آخر</b> إلا بعد موافقتك على فتح الواتساب.</div>
+  <div class="field">
+   <label>رقم الهاتف العراقي (07XXXXXXXXX)</label>
+   <input id="waPrivatePhoneInput" inputmode="tel" placeholder="07XXXXXXXXX">
+  </div>
+  <button type="button" class="btn whatsapp-btn" style="width:100%; margin-top:10px; padding:10px;" onclick="savePrivateWhatsappPhone()">💾 حفظ الرقم في ملفي وإكمال الربط</button>
+ </div>
+</div>
+
 <div class="modal hidden" id="customerEditModal">
  <div class="modal-box">
   <div class="modal-head"><h3>استكمال وتعديل الملف الشخصي</h3><div class="close" onclick="closeModal('customerEditModal')">✕</div></div>
   <div class="field"><label>الاسم الكامل</label><input id="editCustName" placeholder="الاسم الكامل"></div>
-  <div class="field"><label>رقم الهاتف</label><input id="editCustPhone" inputmode="tel" placeholder="07XXXXXXXXX"></div>
+  <div class="field"><label>رقم الهاتف (اختياري - سري في ملفك ولا يظهر للعلن)</label><input id="editCustPhone" inputmode="tel" placeholder="07XXXXXXXXX"></div>
   <div class="field"><label>البريد الإلكتروني (اختياري لاسترجاع الرمز)</label><input id="editCustEmail" type="email" inputmode="email" placeholder="example@gmail.com"></div>
   <div class="row">
    <div class="field"><label>المحافظة</label><select id="editCustCity" onchange="setDistricts('editCustArea', this.value)"></select></div>
@@ -1439,7 +1519,7 @@ footer {
 <div class="modal hidden" id="customerOrderModal">
  <div class="modal-box">
   <div class="modal-head"><h3 id="orderModalTitle">طلب الفني المعتمد</h3><div class="close" onclick="closeModal('customerOrderModal')">✕</div></div>
-  <div class="notice">اكتب تفاصيل العطل أو المشكلة لإرسال الطلب إلى الفني، وستتم المحادثة داخل التطبيق حصراً.</div>
+  <div class="notice">اكتب تفاصيل العطل أو المشكلة لإرسال الطلب إلى الفني، وستتم المحادثة (نص وبصمة صوتية وطلب واتساب) داخل التطبيق.</div>
   <div class="field"><label>الملاحظة أو تفاصيل المشكلة</label><textarea id="custOrderProblem" placeholder="اكتب تفاصيل العطل هنا..."></textarea></div>
   <button class="btn primary" style="width:100%; margin-top:10px;" onclick="submitCustomerOrder()">إرسال الطلب إلى الفني</button>
   <div id="custOrderMessage"></div>
@@ -1449,10 +1529,25 @@ footer {
 <div class="modal hidden" id="orderChatModal">
  <div class="modal-box">
   <div class="modal-head"><h3 id="orderChatTitle">💬 محادثة الطلب داخل التطبيق</h3><div class="close" onclick="closeOrderChatModal()">✕</div></div>
-  <div class="notice">المحادثة بين الزبون والفني متاحة داخل التطبيق حصراً لتنسيق تفاصيل العمل.</div>
+  <div class="chat-toolbar">
+   <span class="muted" style="font-weight:800;">رقمك محمي حتى توافق على واتساب</span>
+   <button type="button" class="btn whatsapp-btn" style="padding:6px 10px; font-size:11.5px;" onclick="requestWhatsappInChat()">
+    <span>🟢</span> طلب واتساب
+   </button>
+  </div>
   <div id="orderChatMessages" class="chat-box"></div>
+
+  <div id="voiceRecordingBar" class="voice-rec-bar hidden">
+   <span>🔴 جاري تسجيل البصمة الصوتية... <b id="voiceRecTimer">00:00</b></span>
+   <div style="display:flex; gap:6px;">
+    <button type="button" class="btn danger" style="padding:4px 9px; font-size:11px;" onclick="cancelVoiceRecording()">إلغاء</button>
+    <button type="button" class="btn primary" style="padding:4px 9px; font-size:11px;" onclick="stopAndSendVoiceRecording()">إرسال البصمة</button>
+   </div>
+  </div>
+
   <div class="chat-send-row">
-   <input id="orderChatInput" placeholder="اكتب رسالتك هنا..." onkeydown="if(event.key==='Enter'){event.preventDefault();sendOrderChatMessage();}">
+   <button type="button" id="voiceMicBtn" class="mic-btn" onclick="toggleVoiceRecording()" title="تسجيل بصمة صوتية">🎤</button>
+   <input id="orderChatInput" placeholder="اكتب رسالتك أو اضغط المايك للبصمة..." onkeydown="if(event.key==='Enter'){event.preventDefault();sendOrderChatMessage();}">
    <button type="button" class="btn primary" onclick="sendOrderChatMessage()">إرسال</button>
   </div>
  </div>
@@ -1487,7 +1582,7 @@ footer {
   </div>
   <div class="row">
    <div class="field"><label>المنطقة أو الحي</label><input id="editTechNeighborhood" placeholder="اسم الحي أو المنطقة"></div>
-   <div class="field"><label>رقم الهاتف</label><input id="editTechPhone" inputmode="tel" placeholder="07XXXXXXXXX"></div>
+   <div class="field"><label>رقم الهاتف (اختياري - سري في ملفك ولا يظهر للعلن)</label><input id="editTechPhone" inputmode="tel" placeholder="07XXXXXXXXX"></div>
   </div>
   <div class="field"><label>البريد الإلكتروني (اختياري لاسترجاع الرمز)</label><input id="editTechEmail" type="email" inputmode="email" placeholder="example@gmail.com"></div>
   <div class="field"><label>الاختصاص الرئيسي</label><select id="editTechService" onchange="onTechServiceChange('editTechService', 'editTechSubservicesBox', 'editTechOtherAppliancesField')"></select></div>
@@ -1648,12 +1743,20 @@ let orderChatListener=null;
 let activeOrderChatId=null;
 let preferredGoogleRole="auto";
 let pendingAfterPhoneCheck=null;
+let pendingAfterWhatsappPhone=null;
 let announcementTimer=null;
 let pendingAfterGate=null;
 let custRegAuthMode="phone";
 let techRegAuthMode="phone";
 let isSigningOutFlag=false;
 let isGoogleAuthInProgress=false;
+
+// متغيرات تسجيل البصمة الصوتية
+let mediaRecorder=null;
+let audioChunks=[];
+let voiceRecordTimer=null;
+let voiceRecordSeconds=0;
+let isVoiceCancelled=false;
 
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -1691,6 +1794,12 @@ function formatAuthErrorMessage(err) {
   if (code === "auth/network-request-failed" || msg.includes("network-request-failed")) {
     return "تعذر الاتصال بخدمة الدخول بسبب ضعف أو انقطاع الإنترنت. تحقق من اتصالك بالشبكة وحاول مرة أخرى.";
   }
+  if (code === "auth/unauthorized-domain") {
+    return "تنبيه إعدادات Firebase: هذا الرابط غير مضاف ضمن Authorized domains في لوحة مصادقة Firebase.";
+  }
+  if (code === "auth/operation-not-allowed") {
+    return "تنبيه إعدادات Firebase: تسجيل الدخول عبر Google غير مفعّل في Sign-in method.";
+  }
   if (code === "auth/wrong-password" || code === "auth/invalid-credential" || code === "auth/user-not-found") {
     return "رقم الهاتف / البريد الإلكتروني أو كلمة المرور غير صحيحة.";
   }
@@ -1700,7 +1809,7 @@ function formatAuthErrorMessage(err) {
   if (code === "auth/email-already-in-use") {
     return "هذا الرقم أو البريد الإلكتروني مسجل مسبقاً. يرجى تسجيل الدخول.";
   }
-  return "خطأ في بيانات الدخول: " + msg;
+  return "خطأ في بيانات الدخول (" + code + "): " + msg;
 }
 
 const formatWhatsApp=phone=>{
@@ -1728,8 +1837,10 @@ function switchTechRegAuthMode(mode) {
   $("techRegModePhoneBtn")?.classList.toggle("active", techRegAuthMode === "phone");
   $("techRegModeEmailBtn")?.classList.toggle("active", techRegAuthMode === "email");
   if (techRegAuthMode === "phone") {
+    $("regPhoneField")?.classList.remove("hidden");
     $("regEmailField")?.classList.add("hidden");
   } else {
+    $("regPhoneField")?.classList.add("hidden");
     $("regEmailField")?.classList.remove("hidden");
   }
 }
@@ -1776,11 +1887,11 @@ function canTechAcceptMoreJobs(tech) {
   return freeUsed < 3;
 }
 
+// رقم الهاتف أصبح اختيارياً لاكتمال الملف الشخصي (يُطلب فقط عند طلب واتساب)
 function isTechProfileComplete(tech) {
   if (!tech) return false;
   return Boolean(
     String(tech.name || "").trim() &&
-    isValidIraqiPhone(tech.phone || "") &&
     String(tech.city || "").trim() &&
     String(tech.area || "").trim() &&
     String(tech.service || "").trim()
@@ -1865,18 +1976,9 @@ function isUserEntered() {
 
 function hasCustomerCoreProfileConfigured() {
   if(currentRole === "admin") return true;
-  const phone = localStorage.getItem("sakhrCustomerPhone") || "";
   const city = localStorage.getItem("sakhrCustomerCity") || chosenCustomerCity || "";
   const area = localStorage.getItem("sakhrCustomerArea") || chosenCustomerArea || "";
-  return Boolean(isValidIraqiPhone(phone) && city && area);
-}
-
-function hasValidPhoneConfigured() {
-  if(currentRole === "admin") return true;
-  if(["technician", "suspended"].includes(currentRole)) {
-    return isTechProfileComplete(currentTech);
-  }
-  return hasCustomerCoreProfileConfigured();
+  return Boolean(city && area);
 }
 
 function openPhoneRequiredModal(afterCallback) {
@@ -1898,7 +2000,7 @@ function openPhoneRequiredModal(afterCallback) {
     $("reqPhoneServiceField")?.classList.remove("hidden");
     if(currentTech.service) $("reqPhoneService").value = currentTech.service;
   } else {
-    $("reqPhoneModalTitle").innerText = "استكمال بيانات الزبون";
+    $("reqPhoneModalTitle").innerText = "تحديد المحافظة والقضاء";
     const savedCity = localStorage.getItem("sakhrCustomerCity") || "";
     const savedArea = localStorage.getItem("sakhrCustomerArea") || "";
     $("reqPhoneName").value = localStorage.getItem("sakhrCustomerName") || "";
@@ -1913,15 +2015,16 @@ function openPhoneRequiredModal(afterCallback) {
 
 async function saveRequiredPhoneProfile() {
   const name = $("reqPhoneName").value.trim();
-  const phone = normalizeIraqiPhone($("reqPhoneNumber").value);
+  const rawPhone = $("reqPhoneNumber").value.trim();
+  const phone = rawPhone ? normalizeIraqiPhone(rawPhone) : "";
   const city = $("reqPhoneCity").value;
   const area = $("reqPhoneArea").value;
 
-  if(!name || !phone || !city || !area) {
-    return showCustomAlert("يرجى إدخال الاسم ورقم الهاتف والمحافظة والقضاء لإتمام التفعيل.");
+  if(!name || !city || !area) {
+    return showCustomAlert("يرجى إدخال الاسم وتحديد المحافظة والقضاء لإتمام التفعيل.");
   }
-  if(!isValidIraqiPhone(phone)) {
-    return showCustomAlert("يرجى إدخال رقم هاتف عراقي صحيح مكون من 11 رقماً يبدأ بـ 07.");
+  if(phone && !isValidIraqiPhone(phone)) {
+    return showCustomAlert("إذا أدخلت رقم هاتف، يجب أن يكون رقماً عراقياً صحيحاً من 11 رقماً يبدأ بـ 07.");
   }
 
   try {
@@ -1936,7 +2039,7 @@ async function saveRequiredPhoneProfile() {
       loadPublicTechs();
     } else {
       localStorage.setItem("sakhrCustomerName", name);
-      localStorage.setItem("sakhrCustomerPhone", phone);
+      if(phone) localStorage.setItem("sakhrCustomerPhone", phone);
       localStorage.setItem("sakhrCustomerCity", city);
       localStorage.setItem("sakhrCustomerArea", area);
       chosenCustomerCity = city;
@@ -1973,7 +2076,7 @@ function requireGate(actionCallback) {
       if(!isTechProfileComplete(currentTech)) {
         navigateToSection("techAccount");
         renderTechAccount();
-        showCustomAlert("يرجى إكمال بيانات ملفك الشخصي من القائمة أدناه أولاً.");
+        showCustomAlert("يرجى إكمال بيانات ملفك الشخصي (الاسم، المحافظة، القضاء، والاختصاص) من القائمة أدناه أولاً.");
         return;
       }
       actionCallback();
@@ -2577,9 +2680,9 @@ async function submitCustomerRegistration(){
   }
 }
 
-function renderCustomerAccount() {
+async function renderCustomerAccount() {
   const name = localStorage.getItem("sakhrCustomerName") || "زبون صخر";
-  const phone = localStorage.getItem("sakhrCustomerPhone") || "غير محدد (يُضاف عند الطلب)";
+  const phone = localStorage.getItem("sakhrCustomerPhone") || "غير مضاف (يُضاف عند طلب واتساب)";
   const email = localStorage.getItem("sakhrCustomerEmail") || "غير مضاف";
   const city = localStorage.getItem("sakhrCustomerCity") || "غير محدد";
   const area = localStorage.getItem("sakhrCustomerArea") || "غير محدد";
@@ -2590,13 +2693,37 @@ function renderCustomerAccount() {
   if($("custProfileListBox")) {
     $("custProfileListBox").innerHTML = `
       <div class="profile-list-row"><span class="profile-list-label">الاسم الكامل</span><span class="profile-list-value">${esc(name)}</span></div>
-      <div class="profile-list-row"><span class="profile-list-label">رقم الهاتف</span><span class="profile-list-value">${esc(phone)}</span></div>
+      <div class="profile-list-row"><span class="profile-list-label">رقم الهاتف (سري)</span><span class="profile-list-value">${esc(phone)}</span></div>
       <div class="profile-list-row"><span class="profile-list-label">البريد الإلكتروني</span><span class="profile-list-value">${esc(email)}</span></div>
       <div class="profile-list-row"><span class="profile-list-label">المحافظة</span><span class="profile-list-value">${esc(city)}</span></div>
       <div class="profile-list-row"><span class="profile-list-label">القضاء</span><span class="profile-list-value">${esc(area)}</span></div>
       <div class="profile-list-row"><span class="profile-list-label">الحي / المنطقة</span><span class="profile-list-value">${esc(neighborhood)}</span></div>
       <div class="profile-list-row"><span class="profile-list-label">إضافات وملاحظات</span><span class="profile-list-value">${esc(notes)}</span></div>
     `;
+  }
+
+  const custUid = (currentUser && !currentUser.isAnonymous) ? currentUser.uid : localStorage.getItem("sakhrCustomerUid");
+  const ordersBox = $("custMyOrdersList");
+  if(ordersBox && custUid && db) {
+    try {
+      const snap = await db.ref("requests/" + custUid).once("value");
+      const list = [];
+      snap.forEach(c => list.push({ ...c.val(), id: c.key }));
+      if(!list.length) {
+        ordersBox.innerHTML = '<div class="empty">لا توجد طلبات مرسلة حالياً.</div>';
+      } else {
+        ordersBox.innerHTML = list.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0)).map(o => `
+          <div class="list-item">
+            <h4>${esc(o.service)} — ${esc(o.status)}</h4>
+            <div class="muted">الفني: <b>${esc(o.assignedTechName || 'فني معتمد')}</b></div>
+            <p style="margin:6px 0; font-size:12.5px;">${esc(o.problem)}</p>
+            <div class="actions">
+              <button type="button" class="btn secondary" onclick="openOrderChatModal('${esc(o.id)}','${esc(o.service)}')">💬 محادثة وبصمة وطلب واتساب</button>
+            </div>
+          </div>
+        `).join("");
+      }
+    } catch(_) {}
   }
 }
 
@@ -2623,17 +2750,18 @@ function openCustomerEditModal() {
 
 async function saveCustomerAccountProfile() {
   const name = $("editCustName").value.trim();
-  const phone = normalizeIraqiPhone($("editCustPhone").value);
+  const rawPhone = $("editCustPhone").value.trim();
+  const phone = rawPhone ? normalizeIraqiPhone(rawPhone) : "";
   const email = ($("editCustEmail")?.value || "").trim().toLowerCase();
   const city = $("editCustCity").value;
   const area = $("editCustArea").value;
   const neighborhood = $("editCustNeighborhood").value.trim();
   const notes = $("editCustNotes").value.trim();
 
-  if(!name || !phone || !city || !area) {
-    return showCustomAlert("يرجى إكمال الحقول الأساسية (الاسم، رقم الهاتف، المحافظة والقضاء).");
+  if(!name || !city || !area) {
+    return showCustomAlert("يرجى إكمال الحقول الأساسية (الاسم، المحافظة والقضاء).");
   }
-  if(!isValidIraqiPhone(phone)) {
+  if(phone && !isValidIraqiPhone(phone)) {
     return showCustomAlert("يرجى إدخال رقم هاتف عراقي صحيح مكون من 11 رقماً يبدأ بـ 07.");
   }
   if(email && !isValidEmailAddress(email)) {
@@ -2641,7 +2769,8 @@ async function saveCustomerAccountProfile() {
   }
 
   localStorage.setItem("sakhrCustomerName", name);
-  localStorage.setItem("sakhrCustomerPhone", phone);
+  if(phone) localStorage.setItem("sakhrCustomerPhone", phone);
+  else localStorage.removeItem("sakhrCustomerPhone");
   if(email) localStorage.setItem("sakhrCustomerEmail", email);
   localStorage.setItem("sakhrCustomerCity", city);
   localStorage.setItem("sakhrCustomerArea", area);
@@ -2927,31 +3056,42 @@ async function syncPublicTechnician(uid, p){
 
 async function registerTechFlexible(){
   const name = $("regName").value.trim();
-  const phone = normalizeIraqiPhone($("regPhone").value);
-  const realEmail = techRegAuthMode === "email" ? ($("regEmail").value.trim().toLowerCase()) : "";
   const password = $("regPassword").value;
   const city = $("regCity").value;
   const area = $("regArea").value;
   const service = $("regService").value;
 
-  if(!name || !phone || !password || !city || !area || !service) {
-    return showCustomAlert("أكمل الحقول الأساسية للفني (الاسم، الهاتف، كلمة المرور، المحافظة، القضاء والاختصاص).");
-  }
-  if(!isValidIraqiPhone(phone)) {
-    return showCustomAlert("يرجى إدخال رقم هاتف عراقي صحيح مكون من 11 رقماً يبدأ بـ 07.");
-  }
-  if(techRegAuthMode === "email" && !isValidEmailAddress(realEmail)) {
-    return showCustomAlert("يرجى إدخال بريد إلكتروني صحيح للتسجيل.");
+  let cleanPhone = "";
+  let realEmail = "";
+  let authEmail = "";
+
+  if (techRegAuthMode === "phone") {
+    cleanPhone = normalizeIraqiPhone($("regPhone").value);
+    if(!name || !cleanPhone || !password || !city || !area || !service) {
+      return showCustomAlert("أكمل الحقول الأساسية للفني (الاسم، الهاتف، كلمة المرور، المحافظة، القضاء والاختصاص).");
+    }
+    if(!isValidIraqiPhone(cleanPhone)) {
+      return showCustomAlert("يرجى إدخال رقم هاتف عراقي صحيح مكون من 11 رقماً يبدأ بـ 07.");
+    }
+    authEmail = cleanPhone + "@sakhr.app";
+  } else {
+    realEmail = $("regEmail").value.trim().toLowerCase();
+    if(!name || !realEmail || !password || !city || !area || !service) {
+      return showCustomAlert("أكمل الحقول الأساسية للفني (الاسم، البريد الإلكتروني، كلمة المرور، المحافظة، القضاء والاختصاص).");
+    }
+    if(!isValidEmailAddress(realEmail)) {
+      return showCustomAlert("يرجى إدخال بريد إلكتروني صحيح للتسجيل.");
+    }
+    authEmail = realEmail;
   }
 
   let createdUser = null, profileSaved = false;
   try{
-    const authEmail = techRegAuthMode === "email" ? realEmail : (phone + "@sakhr.app");
     const c = await auth.createUserWithEmailAndPassword(authEmail, password);
     createdUser = c.user;
 
     const profile = {
-      name, phone, email: realEmail || "", city, area, neighborhood: "", service, subservices: [], otherAppliances: "", bio: "", extraInfo: "", photoURL: "",
+      name, phone: cleanPhone, email: realEmail || "", city, area, neighborhood: "", service, subservices: [], otherAppliances: "", bio: "", extraInfo: "", photoURL: "",
       approved: true, available: true, subscriptionStatus: "غير فعال", subscriptionType: "none",
       subscriptionExpiresAt: 0, freeJobsUsed: 0, completedJobs: 0,
       ratingSum: 0, ratingCount: 0, ratingAverage: 0, createdAt: Date.now()
@@ -2962,7 +3102,7 @@ async function registerTechFlexible(){
     await syncPublicTechnician(createdUser.uid, profile);
 
     await logUserAccount(createdUser.uid, {
-      name, phone, email: realEmail || authEmail, role: "فني", service, city, area, registeredAt: Date.now()
+      name, phone: cleanPhone, email: realEmail || authEmail, role: "فني", service, city, area, registeredAt: Date.now()
     });
 
     currentUser = createdUser; currentRole = "technician"; currentTech = profile;
@@ -3206,6 +3346,9 @@ function renderPublicTechs(){
   }).join("");
 }
 
+// ==========================================
+// منطق المحادثة، طلب الواتساب بالموافقة، والبصمة الصوتية
+// ==========================================
 function getOrderChatSenderInfo() {
   if(["technician", "suspended"].includes(currentRole) && currentUser) {
     return {
@@ -3223,11 +3366,116 @@ function getOrderChatSenderInfo() {
   };
 }
 
+function getCurrentUserPrivatePhone() {
+  if(["technician", "suspended"].includes(currentRole)) {
+    return normalizeIraqiPhone(currentTech?.phone || "");
+  }
+  return normalizeIraqiPhone(localStorage.getItem("sakhrCustomerPhone") || "");
+}
+
+function ensurePrivatePhoneBeforeWhatsapp(callback) {
+  const existingPhone = getCurrentUserPrivatePhone();
+  if(isValidIraqiPhone(existingPhone)) {
+    callback(existingPhone);
+    return;
+  }
+  pendingAfterWhatsappPhone = callback;
+  $("waPrivatePhoneInput").value = "";
+  $("whatsappPhoneOnlyModal").classList.remove("hidden");
+}
+
+async function savePrivateWhatsappPhone() {
+  const phone = normalizeIraqiPhone($("waPrivatePhoneInput").value);
+  if(!isValidIraqiPhone(phone)) {
+    return showCustomAlert("يرجى إدخال رقم هاتف عراقي صحيح مكون من 11 رقماً يبدأ بـ 07.");
+  }
+
+  try {
+    if(["technician", "suspended"].includes(currentRole) && currentUser && currentTech) {
+      await db.ref("technicians/" + currentUser.uid).update({ phone });
+      await db.ref("publicTechnicians/" + currentUser.uid).update({ phone });
+      await logUserAccount(currentUser.uid, { phone });
+      currentTech.phone = phone;
+      renderTechAccount();
+    } else {
+      localStorage.setItem("sakhrCustomerPhone", phone);
+      const uid = (currentUser && !currentUser.isAnonymous) ? currentUser.uid : localStorage.getItem("sakhrCustomerUid");
+      if(uid && db) {
+        await logUserAccount(uid, { phone });
+      }
+    }
+
+    closeModal("whatsappPhoneOnlyModal");
+    showCustomAlert("تم حفظ رقم هاتفك في ملفك الشخصي بشكل سري بنجاح.");
+
+    if(typeof pendingAfterWhatsappPhone === "function") {
+      const fn = pendingAfterWhatsappPhone;
+      pendingAfterWhatsappPhone = null;
+      fn(phone);
+    }
+  } catch(e) {
+    showCustomAlert("خطأ أثناء حفظ الرقم: " + e.message);
+  }
+}
+
+function requestWhatsappInChat() {
+  if(!activeOrderChatId || !db) return;
+  ensurePrivatePhoneBeforeWhatsapp(async (myPhone) => {
+    const sender = getOrderChatSenderInfo();
+    try {
+      const msgId = db.ref("orderChats/" + activeOrderChatId + "/messages").push().key;
+      await db.ref("orderChats/" + activeOrderChatId + "/messages/" + msgId).set({
+        type: "whatsapp_request",
+        waStatus: "pending",
+        requesterId: sender.senderId,
+        requesterName: sender.senderName,
+        requesterPhone: myPhone,
+        responderPhone: "",
+        senderId: sender.senderId,
+        senderName: sender.senderName,
+        senderRole: sender.senderRole,
+        createdAt: Date.now()
+      });
+    } catch(e) {
+      showCustomAlert("تعذر إرسال طلب الواتساب: " + e.message);
+    }
+  });
+}
+
+function respondWhatsappRequest(msgKey, decision) {
+  if(!activeOrderChatId || !db || !msgKey) return;
+  if(decision === "rejected") {
+    db.ref("orderChats/" + activeOrderChatId + "/messages/" + msgKey).update({
+      waStatus: "rejected",
+      respondedAt: Date.now()
+    }).catch(()=>{});
+    return;
+  }
+
+  ensurePrivatePhoneBeforeWhatsapp(async (myPhone) => {
+    try {
+      const msgRef = db.ref("orderChats/" + activeOrderChatId + "/messages/" + msgKey);
+      const snap = await msgRef.once("value");
+      const msgData = snap.val() || {};
+      await msgRef.update({
+        waStatus: "accepted",
+        responderPhone: myPhone,
+        respondedAt: Date.now()
+      });
+      if(msgData.requesterPhone) {
+        window.open(`https://wa.me/${formatWhatsApp(msgData.requesterPhone)}`, "_blank");
+      }
+    } catch(e) {
+      showCustomAlert("تعذر إتمام الموافقة: " + e.message);
+    }
+  });
+}
+
 function openOrderChatModal(orderId, labelText = "") {
   if(!orderId || !db) return;
   if(orderChatListener) { orderChatListener.off(); orderChatListener = null; }
   activeOrderChatId = orderId;
-  $("orderChatTitle").innerText = labelText ? `💬 محادثة الطلب: ${labelText}` : "💬 محادثة الطلب داخل التطبيق";
+  $("orderChatTitle").innerText = labelText ? `💬 محادثة: ${labelText}` : "💬 محادثة الطلب داخل التطبيق";
   $("orderChatInput").value = "";
   $("orderChatModal").classList.remove("hidden");
 
@@ -3238,14 +3486,69 @@ function openOrderChatModal(orderId, labelText = "") {
   orderChatListener = db.ref("orderChats/" + orderId + "/messages").limitToLast(80);
   orderChatListener.on("value", snap => {
     const msgs = [];
-    snap.forEach(c => msgs.push(c.val()));
+    snap.forEach(c => msgs.push({ ...c.val(), _key: c.key }));
     if(!msgs.length) {
-      box.innerHTML = '<div class="muted" style="text-align:center;margin-top:85px;">ابدأ المحادثة مع الطرف الآخر داخل التطبيق...</div>';
+      box.innerHTML = '<div class="muted" style="text-align:center;margin-top:85px;">ابدأ المحادثة بالكتابة أو البصمة الصوتية أو اطلب التواصل عبر واتساب...</div>';
       return;
     }
     box.innerHTML = msgs.map(m => {
       const isMine = m.senderId === sender.senderId;
       const tStr = m.createdAt ? new Date(m.createdAt).toLocaleTimeString('ar-IQ', { hour: '2-digit', minute: '2-digit' }) : '';
+
+      // رسالة طلب واتساب التفاعلية
+      if(m.type === "whatsapp_request") {
+        if(m.waStatus === "pending") {
+          if(isMine) {
+            return `
+              <div class="chat-bubble wa-card">
+                <div>🟢 أرسلت طلباً للانتقال إلى واتساب — بانتظار موافقة الطرف الآخر...</div>
+                <small>${tStr}</small>
+              </div>
+            `;
+          } else {
+            return `
+              <div class="chat-bubble wa-card">
+                <div style="margin-bottom:8px;">🟢 يطلب <b>${esc(m.senderName || 'الطرف الآخر')}</b> فتح محادثة واتساب بينكما. هل توافق؟</div>
+                <div style="display:flex; gap:8px; justify-content:center;">
+                  <button type="button" class="btn whatsapp-btn" style="padding:6px 12px; font-size:11.5px;" onclick="respondWhatsappRequest('${esc(m._key)}','accepted')">✅ موافقة وفتح واتساب</button>
+                  <button type="button" class="btn danger" style="padding:6px 12px; font-size:11.5px;" onclick="respondWhatsappRequest('${esc(m._key)}','rejected')">❌ رفض</button>
+                </div>
+                <small>${tStr}</small>
+              </div>
+            `;
+          }
+        } else if(m.waStatus === "accepted") {
+          const targetPhone = isMine ? m.responderPhone : m.requesterPhone;
+          const waHref = targetPhone ? `https://wa.me/${formatWhatsApp(targetPhone)}` : "#";
+          return `
+            <div class="chat-bubble wa-card">
+              <div style="margin-bottom:6px;">✅ تمت الموافقة على التواصل عبر واتساب</div>
+              ${targetPhone ? `<a class="btn whatsapp-btn" style="padding:6px 14px; font-size:12px;" href="${waHref}" target="_blank">📲 فتح محادثة الواتساب الآن</a>` : ''}
+              <small>${tStr}</small>
+            </div>
+          `;
+        } else {
+          return `
+            <div class="chat-bubble wa-card" style="background:var(--danger-tint); border-color:#fca5a5; color:var(--danger-calm);">
+              <div>❌ تم رفض طلب الواتساب — يستمر التواصل داخل التطبيق</div>
+              <small>${tStr}</small>
+            </div>
+          `;
+        }
+      }
+
+      // رسالة بصمة صوتية
+      if(m.type === "audio" && m.audioURL) {
+        return `
+          <div class="chat-bubble ${isMine ? 'mine' : 'other'}">
+            <div>🎙️ بصمة صوتية ${m.duration ? '(' + esc(m.duration) + ')' : ''}</div>
+            <audio controls preload="metadata" src="${esc(m.audioURL)}"></audio>
+            <small>${esc(m.senderName || '')} ${tStr ? '• ' + tStr : ''}</small>
+          </div>
+        `;
+      }
+
+      // رسالة نصية اعتيادية
       return `
         <div class="chat-bubble ${isMine ? 'mine' : 'other'}">
           <div>${esc(m.text)}</div>
@@ -3266,6 +3569,7 @@ async function sendOrderChatMessage() {
   try {
     const msgId = db.ref("orderChats/" + activeOrderChatId + "/messages").push().key;
     await db.ref("orderChats/" + activeOrderChatId + "/messages/" + msgId).set({
+      type: "text",
       text,
       senderId: sender.senderId,
       senderName: sender.senderName,
@@ -3277,7 +3581,115 @@ async function sendOrderChatMessage() {
   }
 }
 
+function formatVoiceTimer(sec) {
+  const m = String(Math.floor(sec / 60)).padStart(2, "0");
+  const s = String(sec % 60).padStart(2, "0");
+  return `${m}:${s}`;
+}
+
+async function toggleVoiceRecording() {
+  if(mediaRecorder && mediaRecorder.state === "recording") {
+    stopAndSendVoiceRecording();
+    return;
+  }
+
+  if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    return showCustomAlert("متصفحك الحالي لا يدعم تسجيل البصمة الصوتية.");
+  }
+
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    audioChunks = [];
+    isVoiceCancelled = false;
+    voiceRecordSeconds = 0;
+    mediaRecorder = new MediaRecorder(stream);
+
+    mediaRecorder.ondataavailable = (ev) => {
+      if(ev.data && ev.data.size > 0) audioChunks.push(ev.data);
+    };
+
+    mediaRecorder.onstop = async () => {
+      stream.getTracks().forEach(t => t.stop());
+      clearInterval(voiceRecordTimer);
+      $("voiceRecordingBar")?.classList.add("hidden");
+      $("voiceMicBtn")?.classList.remove("recording");
+
+      if(isVoiceCancelled || !audioChunks.length || !activeOrderChatId) return;
+      const durationStr = formatVoiceTimer(voiceRecordSeconds);
+      const blob = new Blob(audioChunks, { type: mediaRecorder.mimeType || "audio/webm" });
+      await uploadAndSendVoiceBlob(blob, durationStr);
+    };
+
+    mediaRecorder.start();
+    $("voiceRecordingBar")?.classList.remove("hidden");
+    $("voiceMicBtn")?.classList.add("recording");
+    $("voiceRecTimer").innerText = "00:00";
+
+    voiceRecordTimer = setInterval(() => {
+      voiceRecordSeconds++;
+      $("voiceRecTimer").innerText = formatVoiceTimer(voiceRecordSeconds);
+      if(voiceRecordSeconds >= 120) {
+        stopAndSendVoiceRecording();
+      }
+    }, 1000);
+  } catch(e) {
+    showCustomAlert("يرجى السماح بصلاحية المايكروفون لتسجيل البصمة الصوتية.");
+  }
+}
+
+function stopAndSendVoiceRecording() {
+  if(mediaRecorder && mediaRecorder.state === "recording") {
+    isVoiceCancelled = false;
+    mediaRecorder.stop();
+  }
+}
+
+function cancelVoiceRecording() {
+  if(mediaRecorder && mediaRecorder.state === "recording") {
+    isVoiceCancelled = true;
+    mediaRecorder.stop();
+  } else {
+    $("voiceRecordingBar")?.classList.add("hidden");
+    $("voiceMicBtn")?.classList.remove("recording");
+  }
+}
+
+async function uploadAndSendVoiceBlob(blob, durationStr) {
+  if(!activeOrderChatId || !db) return;
+  const sender = getOrderChatSenderInfo();
+  const chatId = activeOrderChatId;
+
+  try {
+    let audioURL = "";
+    if(storage) {
+      const ref = storage.ref(`orderVoiceNotes/${chatId}/voice_${Date.now()}.webm`);
+      const snap = await ref.put(blob);
+      audioURL = await snap.ref.getDownloadURL();
+    } else {
+      audioURL = await new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result);
+        reader.readAsDataURL(blob);
+      });
+    }
+
+    const msgId = db.ref("orderChats/" + chatId + "/messages").push().key;
+    await db.ref("orderChats/" + chatId + "/messages/" + msgId).set({
+      type: "audio",
+      audioURL,
+      duration: durationStr,
+      senderId: sender.senderId,
+      senderName: sender.senderName,
+      senderRole: sender.senderRole,
+      createdAt: Date.now()
+    });
+  } catch(e) {
+    showCustomAlert("تعذر إرسال البصمة الصوتية: " + e.message);
+  }
+}
+
 function closeOrderChatModal() {
+  cancelVoiceRecording();
   if(orderChatListener) { orderChatListener.off(); orderChatListener = null; }
   activeOrderChatId = null;
   closeModal("orderChatModal");
@@ -3471,7 +3883,7 @@ async function submitCustomerOrder() {
   }
 
   try {
-    let custId = (currentUser && !currentUser.isAnonymous) ? currentUser.uid : (localStorage.getItem("sakhrCustomerUid") || ("cust_" + normalizeIraqiPhone(custPhone)));
+    let custId = (currentUser && !currentUser.isAnonymous) ? currentUser.uid : (localStorage.getItem("sakhrCustomerUid") || ("cust_" + Date.now()));
     localStorage.setItem("sakhrCustomerUid", custId);
 
     const techUid = selectedTargetTech.uid;
@@ -3494,7 +3906,7 @@ async function submitCustomerOrder() {
     await db.ref().update(u);
 
     closeModal("customerOrderModal");
-    showCustomAlert("تم إرسال طلبك بنجاح إلى الفني (" + selectedTargetTech.name + ")! يمكنك متابعة المحادثة داخل التطبيق.");
+    openOrderChatModal(id, fullServiceLabel);
   } catch(e) {
     showCustomAlert("خطأ في إرسال الطلب: " + e.message);
   }
@@ -3527,17 +3939,15 @@ function renderTechIncompleteChecklist(tech) {
   }
 
   const hasName = Boolean(String(tech.name || "").trim());
-  const hasPhone = isValidIraqiPhone(tech.phone || "");
   const hasCityArea = Boolean(String(tech.city || "").trim() && String(tech.area || "").trim());
   const hasService = Boolean(String(tech.service || "").trim());
 
   box.classList.remove("hidden");
   box.innerHTML = `
     <h3>⚠️ استكمل ملفك الشخصي لتفعيل حسابك في البرنامج</h3>
-    <div style="font-size:12.5px; color:#7c2d12; font-weight:700;">حسابك غير ظاهر للزبائن حالياً حتى تكمل البيانات التالية (وتتأكد من اسمك الحقيقي):</div>
+    <div style="font-size:12.5px; color:#7c2d12; font-weight:700;">حسابك غير ظاهر للزبائن حالياً حتى تكمل البيانات التالية (رقم الهاتف اختياري ويُضاف عند طلب واتساب):</div>
     <div class="checklist-items">
       <div>${hasName ? '✅' : '⬜'} الاسم الكامل: <b>${esc(tech.name || 'غير مكتمل')}</b></div>
-      <div>${hasPhone ? '✅' : '⬜'} رقم الهاتف: <b>${hasPhone ? esc(tech.phone) : 'مطلوب إدخال رقم 07XXXXXXXXX'}</b></div>
       <div>${hasCityArea ? '✅' : '⬜'} المحافظة والقضاء: <b>${hasCityArea ? esc(tech.city + ' / ' + tech.area) : 'مطلوب تحديد المحافظة والقضاء'}</b></div>
       <div>${hasService ? '✅' : '⬜'} الاختصاص الرئيسي: <b>${hasService ? esc(tech.service) : 'مطلوب اختيار الاختصاص'}</b></div>
     </div>
@@ -3577,7 +3987,7 @@ async function renderTechAccount(){
       <div class="profile-list-card" style="margin-bottom:0;">
         <div class="profile-list-row"><span class="profile-list-label">الاختصاص الرئيسي</span><span class="profile-list-value">${esc(currentTech.service || "غير محدد")}</span></div>
         <div class="profile-list-row"><span class="profile-list-label">التخصصات الفرعية</span><span class="profile-list-value">${esc(subsText)}</span></div>
-        <div class="profile-list-row"><span class="profile-list-label">رقم الهاتف</span><span class="profile-list-value">${esc(currentTech.phone || "غير مضاف (مطلوب لاستلام الطلبات)")}</span></div>
+        <div class="profile-list-row"><span class="profile-list-label">رقم الهاتف (سري)</span><span class="profile-list-value">${esc(currentTech.phone || "غير مضاف (يُضاف عند طلب واتساب)")}</span></div>
         <div class="profile-list-row"><span class="profile-list-label">البريد الإلكتروني</span><span class="profile-list-value">${esc(currentTech.email || "غير مضاف")}</span></div>
         <div class="profile-list-row"><span class="profile-list-label">المحافظة والقضاء</span><span class="profile-list-value">${esc(currentTech.city || "---")} / ${esc(currentTech.area || "---")}</span></div>
         <div class="profile-list-row"><span class="profile-list-label">المنطقة / الحي</span><span class="profile-list-value">${esc(currentTech.neighborhood || "غير محدد")}</span></div>
@@ -3656,14 +4066,14 @@ async function renderTechAccount(){
         } else {
           let jobsHtml = "";
           jobs.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0)).forEach(x => {
-            let actionsHtml = `<div class="actions"><button type="button" class="btn secondary" onclick="openOrderChatModal('${esc(x.id)}','${esc(x.service)}')">💬 محادثة داخل التطبيق</button>`;
+            let actionsHtml = `<div class="actions"><button type="button" class="btn secondary" onclick="openOrderChatModal('${esc(x.id)}','${esc(x.service)}')">💬 محادثة وبصمة وطلب واتساب</button>`;
             if(x.status === "بانتظار رد الفني") {
               actionsHtml += `<button type="button" class="btn primary" onclick="technicianDecision('${esc(x.id)}','مقبول')">قبول الطلب</button><button type="button" class="btn danger" onclick="technicianDecision('${esc(x.id)}','مرفوض')">رفض</button>`;
             } else if(x.status === "مقبول من الفني") {
               actionsHtml += `<button type="button" class="btn gold-3d" onclick="completeTechnicianJob('${esc(x.id)}')">✅ تأكيد إتمام العمل</button>`;
             }
             actionsHtml += `</div>`;
-            jobsHtml += '<div class="list-item"><h4>' + esc(x.service) + ' — ' + esc(x.status) + '</h4><div class="muted">الزبون: <b>' + esc(x.customerName || 'زبون معتمد') + '</b> | التواصل: <b style="color:var(--teal-calm)">داخل التطبيق حصراً</b></div><p style="margin:6px 0">' + esc(x.problem) + '</p>' + actionsHtml + '</div>';
+            jobsHtml += '<div class="list-item"><h4>' + esc(x.service) + ' — ' + esc(x.status) + '</h4><div class="muted">الزبون: <b>' + esc(x.customerName || 'زبون معتمد') + '</b> | التواصل: <b style="color:var(--teal-calm)">داخل التطبيق (واتساب بالموافقة)</b></div><p style="margin:6px 0">' + esc(x.problem) + '</p>' + actionsHtml + '</div>';
           });
           $("techJobs").innerHTML = jobsHtml;
         }
@@ -3731,17 +4141,18 @@ async function saveTechAccountProfile() {
   const city = $("editTechCity").value;
   const area = $("editTechArea").value;
   const neighborhood = $("editTechNeighborhood").value.trim();
-  const phone = normalizeIraqiPhone($("editTechPhone").value);
+  const rawPhone = $("editTechPhone").value.trim();
+  const phone = rawPhone ? normalizeIraqiPhone(rawPhone) : "";
   const email = ($("editTechEmail")?.value || "").trim().toLowerCase();
   const bio = $("editTechBio").value.trim();
   const extraInfo = $("editTechExtra").value.trim();
   const file = $("editTechPhotoFile").files[0];
 
-  if(!name || !phone || !city || !area || !service) {
-    showCustomAlert("أكمل الحقول الأساسية (الاسم، الهاتف، المحافظة، القضاء، الاختصاص).");
+  if(!name || !city || !area || !service) {
+    showCustomAlert("أكمل الحقول الأساسية (الاسم، المحافظة، القضاء، الاختصاص).");
     return;
   }
-  if(!isValidIraqiPhone(phone)) {
+  if(phone && !isValidIraqiPhone(phone)) {
     showCustomAlert("يرجى إدخال رقم هاتف عراقي صحيح مكون من 11 رقماً يبدأ بـ 07.");
     return;
   }
@@ -4027,7 +4438,6 @@ function listenToAnnouncements() {
 function getAccountIssueReasons(acc, isTechContext = false) {
   const missing = [];
   if(!acc.name || !String(acc.name).trim()) missing.push("الاسم");
-  if(!acc.phone || !String(acc.phone).trim()) missing.push("رقم الهاتف");
   if(!acc.city || !String(acc.city).trim()) missing.push("المحافظة");
   if(!acc.area || !String(acc.area).trim()) missing.push("القضاء");
   if(isTechContext && (!acc.service || !String(acc.service).trim())) missing.push("الاختصاص الرئيسي");
@@ -4202,7 +4612,7 @@ function renderAdminTechsFullList() {
           </div>
 
           <div class="profile-list-card" style="margin-bottom:10px; padding:10px 12px;">
-            <div class="profile-list-row"><span class="profile-list-label">رقم الهاتف</span><span class="profile-list-value">${esc(t.phone || '---')}</span></div>
+            <div class="profile-list-row"><span class="profile-list-label">رقم الهاتف</span><span class="profile-list-value">${esc(t.phone || 'غير مضاف')}</span></div>
             ${t.email ? `<div class="profile-list-row"><span class="profile-list-label">البريد الإلكتروني</span><span class="profile-list-value">${esc(t.email)}</span></div>` : ''}
             <div class="profile-list-row"><span class="profile-list-label">المحافظة والقضاء</span><span class="profile-list-value">${esc(t.city || '---')} / ${esc(t.area || '---')}</span></div>
             <div class="profile-list-row"><span class="profile-list-label">المنطقة / الحي</span><span class="profile-list-value">${esc(t.neighborhood || 'غير محدد')}</span></div>
@@ -4223,7 +4633,7 @@ function renderAdminTechsFullList() {
             </button>
             <button type="button" class="btn light" onclick="resetTechFreeJobs('${esc(t.uid)}')">تصفير المجانية</button>
             <button type="button" class="btn primary" onclick="chooseServiceDirect('${esc(t.service)}','${esc(t.uid)}')">إرسال طلب مباشر</button>
-            ${currentRole === 'admin' ? `<a class="btn whatsapp-btn" href="https://wa.me/${formatWhatsApp(t.phone)}" target="_blank">واتساب الفني</a>` : ''}
+            ${currentRole === 'admin' && t.phone ? `<a class="btn whatsapp-btn" href="https://wa.me/${formatWhatsApp(t.phone)}" target="_blank">واتساب الفني</a>` : ''}
             <button type="button" class="btn danger" onclick="adminDeleteTechnician('${esc(t.uid)}','${esc(t.name)}')">حذف نهائي</button>
           </div>
         </div>`;
@@ -4259,7 +4669,7 @@ function renderAdminTechsFullList() {
           <div class="profile-list-card" style="margin-bottom:10px; padding:10px 12px; background:var(--gold-tint);">
             <div class="profile-list-row"><span class="profile-list-label">المعرف (UID)</span><span class="profile-list-value">${esc(item.uid || '---')}</span></div>
             <div class="profile-list-row"><span class="profile-list-label">الاسم</span><span class="profile-list-value">${esc(item.name || 'غير مكتمل')}</span></div>
-            <div class="profile-list-row"><span class="profile-list-label">رقم الهاتف</span><span class="profile-list-value">${esc(item.phone || 'غير مكتمل')}</span></div>
+            <div class="profile-list-row"><span class="profile-list-label">رقم الهاتف</span><span class="profile-list-value">${esc(item.phone || 'اختياري / غير مضاف')}</span></div>
             <div class="profile-list-row"><span class="profile-list-label">المحافظة / القضاء</span><span class="profile-list-value">${esc(item.city || '---')} / ${esc(item.area || '---')}</span></div>
             ${item.isTechRecord ? `<div class="profile-list-row"><span class="profile-list-label">الاختصاص</span><span class="profile-list-value">${esc(item.service || 'غير مكتمل')}</span></div>` : ''}
           </div>
@@ -4303,7 +4713,7 @@ function renderAdmin(){
     $("adminRequests").innerHTML = requests.length ? requests.map(r=>`
     <div class="list-item">
       <h4>${esc(r.service)} — الحالة: ${esc(r.status)}</h4>
-      <div class="muted">الزبون: <b>${esc(r.name)}</b> | الهاتف الشخصي: <b style="color:var(--navy); font-size:13.5px;">${esc(r.phone)}</b></div>
+      <div class="muted">الزبون: <b>${esc(r.name)}</b> | الهاتف الشخصي: <b style="color:var(--navy); font-size:13.5px;">${esc(r.phone || 'غير مضاف')}</b></div>
       <div class="muted">الموقع: ${esc(r.city)} / ${esc(r.area)} (${esc(r.neighborhood||"")})</div>
       <p style="margin:5px 0; font-size:13px;">المشكلة: ${esc(r.problem)}</p>
       <div class="actions">
