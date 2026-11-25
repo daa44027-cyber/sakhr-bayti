@@ -52,6 +52,7 @@ body {
   color: var(--text-main);
   position: relative;
   min-height: 100vh;
+  padding-bottom: 84px;
 }
 
 body::before {
@@ -71,7 +72,7 @@ body::before {
   z-index: 0;
 }
 
-header, main, footer, .modal, .drawer-backdrop, .side-drawer {
+header, main, footer, .modal, .drawer-backdrop, .side-drawer, .bottom-nav {
   position: relative;
   z-index: 1;
 }
@@ -206,6 +207,64 @@ header {
   box-shadow: var(--btn-3d-gold);
   margin-top: 6px;
   font-weight: 900;
+}
+
+/* شريط التنقل السفلي الثابت */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 66px;
+  background: linear-gradient(180deg, var(--teal-deep) 0%, var(--navy-deep) 100%);
+  border-top: 2px solid var(--gold-bright);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-items: center;
+  z-index: 800;
+  box-shadow: 0 -6px 20px rgba(5, 35, 52, 0.22);
+}
+
+.bottom-nav-btn {
+  position: relative;
+  height: 100%;
+  background: transparent;
+  color: #cbd5e1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  font-size: 11px;
+  font-weight: 800;
+  transition: color 0.15s, background 0.15s;
+}
+.bottom-nav-btn.active {
+  color: var(--gold-bright);
+  background: rgba(255, 255, 255, 0.06);
+}
+.bottom-nav-btn .b-icon {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.red-badge {
+  position: absolute;
+  top: 7px;
+  right: calc(50% - 22px);
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: #dc2626;
+  color: #ffffff;
+  border: 1.5px solid #ffffff;
+  font-size: 10.5px;
+  font-weight: 900;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(220, 38, 38, 0.6);
 }
 
 .announcement-container {
@@ -477,25 +536,52 @@ header {
 
 .stars { color: #d99b07; font-size: 13.5px; letter-spacing: 1px; }
 
+/* صفحة الدردشة الكاملة على طول الشاشة */
+.full-chat-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 175px);
+  background: var(--gold-tint);
+  border: 1.5px solid var(--border-gold);
+  border-radius: 16px;
+  padding: 14px;
+  box-shadow: var(--shadow-soft);
+}
+
 .chat-status-banner {
   background: var(--bg-soft);
   border: 1.5px solid var(--border-gold);
-  border-radius: 10px;
-  padding: 8px 10px;
-  margin-bottom: 8px;
-  font-size: 11.5px;
+  border-radius: 12px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  font-size: 12px;
   font-weight: 800;
   color: var(--navy);
-  line-height: 1.5;
+  line-height: 1.6;
 }
 .chat-decision-row {
   display: flex;
   gap: 8px;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   flex-wrap: wrap;
 }
 
-.chat-box {
+.full-chat-messages {
+  flex: 1;
+  min-height: 280px;
+  max-height: 52vh;
+  overflow-y: auto;
+  border: 1.5px solid var(--border-gold);
+  border-radius: 12px;
+  padding: 12px;
+  background: var(--bg-soft);
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.modal-chat-box {
   height: 230px;
   overflow-y: auto;
   border: 1.5px solid var(--border-gold);
@@ -507,22 +593,25 @@ header {
   flex-direction: column;
   gap: 8px;
 }
+
 .chat-bubble { max-width: 84%; padding: 8px 12px; border-radius: 12px; font-size: 12.5px; font-weight: 700; line-height: 1.5; }
 .chat-bubble.mine { background: linear-gradient(155deg, var(--navy-mid) 0%, var(--teal-calm) 45%, var(--teal-deep) 100%); color: #ffffff; align-self: flex-start; border: 1px solid var(--gold-bright); }
 .chat-bubble.other { background: var(--gold-tint); color: var(--text-main); align-self: flex-end; border: 1.5px solid var(--border-gold); }
 .chat-bubble.wa-card { max-width: 92%; background: #f0fdf4; color: #14532d; border: 1.5px solid #22c55e; align-self: center; text-align: center; }
 .chat-bubble.sys-card { max-width: 94%; background: #fffbeb; color: #78350f; border: 1.5px solid #f59e0b; align-self: center; text-align: center; font-size: 11.5px; }
-.chat-bubble audio { width: 100%; max-width: 230px; height: 34px; margin-top: 4px; display: block; }
 .chat-bubble small { display: block; font-size: 10px; opacity: 0.78; margin-top: 3px; }
 .chat-toolbar { display: flex; gap: 8px; margin-bottom: 8px; justify-content: space-between; align-items: center; }
 .chat-send-row { display: flex; gap: 6px; align-items: center; }
 .chat-send-row input { flex: 1; padding: 9px 11px; border: 1.5px solid var(--border-gold); border-radius: 10px; background: var(--bg-soft); color: var(--text-main); font-weight: 700; outline: none; min-width: 0; }
 
-.mic-btn { width: 40px; height: 40px; border-radius: 10px; background: linear-gradient(155deg, #f7d265 0%, #d4a024 100%); color: var(--navy-deep); border: 1.5px solid var(--navy); font-size: 17px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 3px 0 #92670c; }
-.mic-btn.recording { background: linear-gradient(155deg, #dc2626 0%, #991b1b 100%); color: #ffffff; border-color: #fecaca; animation: pulseRec 1s infinite; }
-@keyframes pulseRec { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); } }
-
-.voice-rec-bar { display: flex; align-items: center; justify-content: space-between; gap: 8px; background: var(--danger-tint); border: 1.5px solid #fca5a5; border-radius: 10px; padding: 7px 10px; margin-bottom: 8px; color: var(--danger-calm); font-size: 12px; font-weight: 800; }
+.pending-job-card {
+  background: #fffbeb;
+  border: 2px solid #f59e0b;
+  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 12px;
+  box-shadow: var(--shadow-soft);
+}
 
 footer { background: linear-gradient(180deg, var(--teal-deep) 0%, var(--navy-deep) 100%); color: #e2e8f0; text-align: center; padding: 22px; margin-top: 30px; font-size: 12px; line-height: 1.8; border-top: 3px solid var(--gold-bright); }
 .footer-links { margin-top: 8px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
@@ -571,9 +660,10 @@ footer { background: linear-gradient(180deg, var(--teal-deep) 0%, var(--navy-dee
  </div>
  <button type="button" class="drawer-nav-btn" onclick="closeNavDrawer(); navigateToSection('home')">🏠 الرئيسية</button>
  <button type="button" class="drawer-nav-btn" onclick="closeNavDrawer(); requireGate(() => navigateToSection('services'))">🧰 خدماتنا</button>
+ <button type="button" class="drawer-nav-btn" onclick="closeNavDrawer(); requireGate(() => openChatHub())">💬 الدردشة والطلبات</button>
  <button type="button" class="drawer-nav-btn hidden" id="techsNavBtn" onclick="closeNavDrawer(); openAdminTechsView()">🛠️ الفنيون</button>
- <button type="button" class="drawer-nav-btn" onclick="closeNavDrawer(); requireGate(() => openSupportChatModal())">💬 فريق الدعم</button>
- <button type="button" class="drawer-nav-btn" onclick="closeNavDrawer(); navigateToSection('reviewsChat')">⭐ دردشة تقييم الخدمات</button>
+ <button type="button" class="drawer-nav-btn" onclick="closeNavDrawer(); requireGate(() => openSupportChatModal())">🎧 فريق الدعم</button>
+ <button type="button" class="drawer-nav-btn" onclick="closeNavDrawer(); navigateToSection('reviewsChat')">⭐ التقييم والملاحظات</button>
  <button type="button" class="drawer-nav-btn hidden" id="adminNavBtn" onclick="closeNavDrawer(); navigateToSection('admin')">⚙️ الإدارة</button>
  <button type="button" class="drawer-nav-btn primary-drawer" id="authNavBtn" onclick="closeNavDrawer(); handleAuthNav()">🔐 تسجيل الدخول</button>
 </aside>
@@ -610,8 +700,66 @@ footer { background: linear-gradient(180deg, var(--teal-deep) 0%, var(--navy-dee
 </section>
 
 <section id="technicians" class="container hidden">
- <h2 class="section-title" id="techsSectionTitle">الفنيون المعتمدون والمتاحون في قضائك</h2>
+ <h2 class="section-title" id="techsSectionTitle">الفنيون المعتمدون والمتاحون</h2>
  <div class="techs-grid" id="publicTechList"><div class="empty">جارٍ تحميل الفنيين المتاحين...</div></div>
+</section>
+
+<!-- قسم الدردشة والطلبات (بطاقات الطلبات الجديدة + المحادثات النشطة) -->
+<section id="chatHubSection" class="container hidden">
+ <h2 class="section-title">💬 الدردشة والطلبات</h2>
+ <div id="chatHubPendingRequests"></div>
+ <div id="chatHubThreadsList"><div class="empty">جارٍ تحميل المحادثات والطلبات...</div></div>
+</section>
+
+<!-- صفحة المحادثة الكاملة على طول الشاشة بعد الموافقة -->
+<section id="fullOrderChatSection" class="container hidden">
+ <div class="full-chat-shell">
+  <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:10px; border-bottom:1px solid var(--border-soft); padding-bottom:8px;">
+   <h3 id="fullChatTitle" style="margin:0; font-size:16px; font-weight:900; color:var(--navy);">💬 محادثة الطلب</h3>
+   <button type="button" class="btn light" style="padding:6px 12px;" onclick="closeFullOrderChat()">← رجوع للدردشة</button>
+  </div>
+
+  <div id="fullChatStatusBanner" class="chat-status-banner">جارٍ تحميل حالة الطلب...</div>
+
+  <div id="fullChatDecisionRow" class="chat-decision-row hidden">
+   <button type="button" class="btn gold-3d" style="flex:1; padding:8px; font-size:12px;" onclick="setOrderContinuationDecision('ended')">✅ إنهاء الطلب</button>
+   <button type="button" class="btn secondary" style="flex:1; padding:8px; font-size:12px;" onclick="setOrderContinuationDecision('continued')">🔄 الاستمرار بالطلب</button>
+  </div>
+
+  <div id="fullChatReviewBox" class="card hidden" style="margin-bottom:10px; background:#fffbeb; border-color:#f59e0b;">
+   <h4 style="margin:0 0 8px; color:var(--navy); font-size:14px; font-weight:900;">⭐ التقييم والملاحظات بعد إنهاء الطلب</h4>
+   <div class="field" style="margin:6px 0;">
+    <label>التقييم بالنجوم</label>
+    <select id="orderReviewStars">
+     <option value="5">⭐⭐⭐⭐⭐ (ممتاز جداً)</option>
+     <option value="4">⭐⭐⭐⭐ (جيد جداً)</option>
+     <option value="3">⭐⭐⭐ (جيد)</option>
+     <option value="2">⭐⭐ (مقبول)</option>
+     <option value="1">⭐ (ضعيف)</option>
+    </select>
+   </div>
+   <div class="field" style="margin:6px 0;">
+    <label>ملاحظتك حول العمل</label>
+    <textarea id="orderReviewNote" placeholder="اكتب ملاحظتك أو تقييمك للخدمة..."></textarea>
+   </div>
+   <button type="button" class="btn primary" style="width:100%;" onclick="submitOrderReviewAndNote()">إرسال التقييم والملاحظة</button>
+   <div id="orderReviewMsg"></div>
+  </div>
+
+  <div class="chat-toolbar">
+   <span class="muted" style="font-weight:800;">محادثة كتابية مستمرة طوال فترة العمل</span>
+   <button type="button" class="btn whatsapp-btn" style="padding:6px 10px; font-size:11.5px;" onclick="requestWhatsappInChat()">
+    <span>🟢</span> طلب واتساب
+   </button>
+  </div>
+
+  <div id="fullChatMessages" class="full-chat-messages"></div>
+
+  <div class="chat-send-row">
+   <input id="fullChatInput" placeholder="اكتب رسالتك هنا..." onkeydown="if(event.key==='Enter'){event.preventDefault();sendOrderChatMessage();}">
+   <button type="button" class="btn primary" onclick="sendOrderChatMessage()">إرسال</button>
+  </div>
+ </div>
 </section>
 
 <section id="adminTechsSection" class="container hidden">
@@ -641,7 +789,7 @@ footer { background: linear-gradient(180deg, var(--teal-deep) 0%, var(--navy-dee
 </section>
 
 <section id="reviewsChat" class="container hidden">
- <h2 class="section-title">دردشة تقييم الخدمات</h2>
+ <h2 class="section-title">التقييم والملاحظات</h2>
  
  <div id="adminAnnouncementBox" class="card hidden" style="margin-bottom:22px;">
   <h3 style="color:var(--navy); margin-top:0; font-size:15px; font-weight:900;">📢 تعديل الأشرطة الإعلانية العامة (تظهر تباعاً)</h3>
@@ -667,7 +815,7 @@ footer { background: linear-gradient(180deg, var(--teal-deep) 0%, var(--navy-dee
     <option value="1">⭐ (ضعيف)</option>
    </select>
   </div>
-  <div class="field"><label>رأيك أو ملاحظتك (مثل الدردشة)</label><textarea id="reviewText" placeholder="اكتب ملاحظتك أو تعليقك هنا..."></textarea></div>
+  <div class="field"><label>رأيك أو ملاحظتك</label><textarea id="reviewText" placeholder="اكتب ملاحظتك أو تعليقك هنا..."></textarea></div>
   <button class="btn primary" style="width:100%" onclick="submitReview()">إرسال التقييم والملاحظة</button>
   <div id="reviewMessage"></div>
  </div>
@@ -812,6 +960,27 @@ footer { background: linear-gradient(180deg, var(--teal-deep) 0%, var(--navy-dee
  <button class="btn danger" style="margin-top:22px; width:100%;" onclick="logout()">🚪 تسجيل الخروج من لوحة الإدارة</button>
 </section>
 </main>
+
+<!-- شريط التنقل السفلي الثابت -->
+<nav class="bottom-nav" id="bottomNav">
+ <button type="button" class="bottom-nav-btn active" id="bNavHome" onclick="navigateToSection('home')">
+  <span class="b-icon">🏠</span>
+  <span>الرئيسية</span>
+ </button>
+ <button type="button" class="bottom-nav-btn" id="bNavServices" onclick="requireGate(() => navigateToSection('services'))">
+  <span class="b-icon">🧰</span>
+  <span>الخدمات</span>
+ </button>
+ <button type="button" class="bottom-nav-btn" id="bNavChat" onclick="requireGate(() => openChatHub())">
+  <span class="red-badge hidden" id="chatUnreadBadge">0</span>
+  <span class="b-icon">💬</span>
+  <span>الدردشة</span>
+ </button>
+ <button type="button" class="bottom-nav-btn" id="bNavAccount" onclick="handleAuthNav()">
+  <span class="b-icon">👤</span>
+  <span id="bNavAccountLabel">حسابي</span>
+ </button>
+</nav>
 
 <footer>
  <strong>صخر | منصة الصيانة المنزلية المعتمدة</strong><br>بيتك يستاهل الأفضل دائماً
@@ -965,55 +1134,16 @@ footer { background: linear-gradient(180deg, var(--teal-deep) 0%, var(--navy-dee
 <div class="modal hidden" id="customerOrderModal">
  <div class="modal-box">
   <div class="modal-head"><h3 id="orderModalTitle">طلب الفني المعتمد</h3><div class="close" onclick="closeModal('customerOrderModal')">✕</div></div>
-  <div class="notice">اكتب تفاصيل العطل أو المشكلة لإرسال الطلب إلى الفني، وبعد موافقته تبقى المحادثة مفتوحة حتى انتهاء العمل.</div>
+  <div class="notice">اكتب تفاصيل العطل أو المشكلة لإرسال الطلب إلى الفني، وبعد موافقته تنفتح المحادثة الدائمة بينكما.</div>
   <div class="field"><label>الملاحظة أو تفاصيل المشكلة</label><textarea id="custOrderProblem" placeholder="اكتب تفاصيل العطل هنا..."></textarea></div>
   <button class="btn primary" style="width:100%; margin-top:10px;" onclick="submitCustomerOrder()">إرسال الطلب إلى الفني</button>
   <div id="custOrderMessage"></div>
  </div>
 </div>
 
-<!-- نافذة محادثة الطلب الدائمة بعد الموافقة + إنهاء / استمرار -->
-<div class="modal hidden" id="orderChatModal">
- <div class="modal-box">
-  <div class="modal-head"><h3 id="orderChatTitle">💬 محادثة الطلب الدائمة</h3><div class="close" onclick="closeOrderChatModal()">✕</div></div>
-
-  <div id="orderChatStatusBanner" class="chat-status-banner">
-   جارٍ تحميل حالة الطلب والمحادثة...
-  </div>
-
-  <div id="orderChatDecisionRow" class="chat-decision-row hidden">
-   <button type="button" class="btn gold-3d" style="flex:1; padding:8px; font-size:12px;" onclick="setOrderContinuationDecision('ended')">✅ إنهاء الطلب</button>
-   <button type="button" class="btn secondary" style="flex:1; padding:8px; font-size:12px;" onclick="setOrderContinuationDecision('continued')">🔄 الاستمرار بالطلب</button>
-  </div>
-
-  <div class="chat-toolbar">
-   <span class="muted" style="font-weight:800;">تبقى مفتوحة طوال فترة العمل</span>
-   <button type="button" class="btn whatsapp-btn" style="padding:6px 10px; font-size:11.5px;" onclick="requestWhatsappInChat()">
-    <span>🟢</span> طلب واتساب
-   </button>
-  </div>
-
-  <div id="orderChatMessages" class="chat-box"></div>
-
-  <div id="voiceRecordingBar" class="voice-rec-bar hidden">
-   <span>🔴 جاري تسجيل البصمة الصوتية... <b id="voiceRecTimer">00:00</b></span>
-   <div style="display:flex; gap:6px;">
-    <button type="button" class="btn danger" style="padding:4px 9px; font-size:11px;" onclick="cancelVoiceRecording()">إلغاء</button>
-    <button type="button" class="btn primary" style="padding:4px 9px; font-size:11px;" onclick="stopAndSendVoiceRecording()">إرسال البصمة</button>
-   </div>
-  </div>
-
-  <div class="chat-send-row">
-   <button type="button" id="voiceMicBtn" class="mic-btn" onclick="toggleVoiceRecording()" title="تسجيل بصمة صوتية">🎤</button>
-   <input id="orderChatInput" placeholder="اكتب رسالتك أو اضغط المايك للبصمة..." onkeydown="if(event.key==='Enter'){event.preventDefault();sendOrderChatMessage();}">
-   <button type="button" class="btn primary" onclick="sendOrderChatMessage()">إرسال</button>
-  </div>
- </div>
-</div>
-
 <div class="modal hidden" id="supportChatModal">
  <div class="modal-box">
-  <div class="modal-head"><h3>💬 فريق الدعم</h3><div class="close" onclick="closeSupportChatModal()">✕</div></div>
+  <div class="modal-head"><h3>🎧 فريق الدعم</h3><div class="close" onclick="closeSupportChatModal()">✕</div></div>
   <div class="notice">تواصل مباشرة مع إدارة منصة صخر لأي استفسار أو مساعدة.</div>
 
   <div id="adminSupportThreadPicker" class="field hidden">
@@ -1021,7 +1151,7 @@ footer { background: linear-gradient(180deg, var(--teal-deep) 0%, var(--navy-dee
    <select id="adminSupportThreadSelect" onchange="switchAdminSupportThread()"></select>
   </div>
 
-  <div id="supportChatMessages" class="chat-box"></div>
+  <div id="supportChatMessages" class="modal-chat-box"></div>
 
   <div class="chat-send-row">
    <input id="supportChatInput" placeholder="اكتب رسالتك هنا..." onkeydown="if(event.key==='Enter'){event.preventDefault();sendSupportMessage();}">
@@ -1179,18 +1309,16 @@ let publicTechs=[],requests=[],technicians=[],passwordRequests=[],allAccountsLis
 let chosenCustomerCity="",chosenCustomerArea="",selectedTargetTech=null;
 let currentSelectedService="",currentSelectedSubservice="",currentAdminTechsSubTab="registered";
 let currentSectionId="home",navigationHistory=["home"];
-let techJobsListener=null,supportChatListener=null,orderChatListener=null,orderMetaListener=null;
+let techJobsListener=null,supportChatListener=null,orderChatListener=null,orderMetaListener=null,badgeListener=null;
 let activeOrderChatId=null,activeOrderMeta=null;
 let preferredGoogleRole="auto",pendingAfterPhoneCheck=null,pendingAfterWhatsappPhone=null,announcementTimer=null,pendingAfterGate=null;
 let custRegAuthMode="phone",techRegAuthMode="phone",isSigningOutFlag=false,isGoogleAuthInProgress=false;
-
-let mediaRecorder=null,audioChunks=[],voiceRecordTimer=null,voiceRecordSeconds=0,isVoiceCancelled=false;
 
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 
 function formatOpenDuration(startedAt, endedAt = null) {
-  if (!startedAt) return "غير محدد";
+  if (!startedAt) return "لم تبدأ بعد";
   const endTs = endedAt || Date.now();
   const diffMs = Math.max(0, endTs - Number(startedAt));
   const totalMinutes = Math.floor(diffMs / 60000);
@@ -1236,6 +1364,33 @@ const formatWhatsApp=phone=>{
   else if(!clean.startsWith('964')&&clean.length===10) clean='964'+clean;
   return clean;
 };
+
+function updateChatUnreadBadge(count) {
+  const badge = $("chatUnreadBadge");
+  if(!badge) return;
+  const n = Number(count || 0);
+  if(n > 0) {
+    badge.innerText = n > 99 ? "99+" : String(n);
+    badge.classList.remove("hidden");
+  } else {
+    badge.classList.add("hidden");
+  }
+}
+
+function startChatBadgeWatcher() {
+  if(badgeListener) { badgeListener.off(); badgeListener = null; }
+  if(!db) return;
+  if(["technician", "suspended"].includes(currentRole) && currentUser) {
+    badgeListener = db.ref("technicianJobs/" + currentUser.uid);
+    badgeListener.on("value", snap => {
+      let pendingCount = 0;
+      snap.forEach(c => { if((c.val() || {}).status === "بانتظار رد الفني") pendingCount++; });
+      updateChatUnreadBadge(pendingCount);
+    });
+  } else {
+    updateChatUnreadBadge(0);
+  }
+}
 
 function switchCustRegAuthMode(mode) {
   custRegAuthMode = mode === "email" ? "email" : "phone";
@@ -1315,8 +1470,11 @@ function goBackSmart() {
   const openModal = Array.from(document.querySelectorAll(".modal")).find(m => !m.classList.contains("hidden"));
   if(openModal) {
     if(openModal.id === "supportChatModal") closeSupportChatModal();
-    else if(openModal.id === "orderChatModal") closeOrderChatModal();
     else openModal.classList.add("hidden");
+    return;
+  }
+  if(currentSectionId === "fullOrderChatSection") {
+    closeFullOrderChat();
     return;
   }
   if(navigationHistory.length > 1) {
@@ -1508,15 +1666,24 @@ function playAlertBeep() {
   } catch(e) {}
 }
 
+function updateBottomNavActive(sectionId) {
+  $("bNavHome")?.classList.toggle("active", sectionId === "home");
+  $("bNavServices")?.classList.toggle("active", sectionId === "services" || sectionId === "technicians");
+  $("bNavChat")?.classList.toggle("active", sectionId === "chatHubSection" || sectionId === "fullOrderChatSection");
+  $("bNavAccount")?.classList.toggle("active", ["customerAccountView", "techAccount", "adminProfile", "admin", "join"].includes(sectionId));
+}
+
 function showSection(id, pushHistory = true) {
   document.querySelectorAll("main section").forEach(s => s.classList.add("hidden"));
   const section = $(id);
   if (section) section.classList.remove("hidden");
   currentSectionId = id;
   if(pushHistory && navigationHistory[navigationHistory.length - 1] !== id) navigationHistory.push(id);
+  updateBottomNavActive(id);
   window.scrollTo({ top: 0, behavior: "smooth" });
 
   if (id === "technicians") loadPublicTechs();
+  if (id === "chatHubSection") renderChatHub();
   if (id === "adminTechsSection" && currentRole === "admin") loadAdminData();
   if (id === "reviewsChat") {
     loadReviews();
@@ -1660,7 +1827,7 @@ function handleAuthNav() {
 }
 
 function updateNavAuthButton() {
-  const btn = $("authNavBtn"), adminBtn = $("adminNavBtn"), techsBtn = $("techsNavBtn");
+  const btn = $("authNavBtn"), adminBtn = $("adminNavBtn"), techsBtn = $("techsNavBtn"), bLbl = $("bNavAccountLabel");
   if(!btn) return;
   const customerName = localStorage.getItem("sakhrCustomerName");
   const isAdmin = currentRole === "admin";
@@ -1669,10 +1836,13 @@ function updateNavAuthButton() {
 
   if(isAdmin || ["technician", "suspended"].includes(currentRole)) {
     btn.innerText = "👤 الملف الشخصي";
+    if(bLbl) bLbl.innerText = "حسابي";
   } else if(customerName) {
     btn.innerText = "👤 " + customerName;
+    if(bLbl) bLbl.innerText = customerName.split(" ")[0] || "حسابي";
   } else {
     btn.innerText = "🔐 تسجيل الدخول";
+    if(bLbl) bLbl.innerText = "دخول";
   }
   btn.className = "drawer-nav-btn primary-drawer";
 }
@@ -1727,6 +1897,7 @@ async function finalizeGoogleUserSession(gUser, roleHint = "auto") {
     currentRole = "admin";
     ["loginModal","customerAccountModal"].forEach(closeModal);
     updateNavAuthButton();
+    startChatBadgeWatcher();
     navigateToSection("adminProfile");
     loadAdminData();
     runPendingGateAction();
@@ -1752,6 +1923,7 @@ async function finalizeGoogleUserSession(gUser, roleHint = "auto") {
     });
     ["loginModal","customerAccountModal"].forEach(closeModal);
     updateNavAuthButton();
+    startChatBadgeWatcher();
     navigateToSection("techAccount");
     renderTechAccount();
     return;
@@ -1774,6 +1946,7 @@ async function finalizeGoogleUserSession(gUser, roleHint = "auto") {
   await logUserAccount(gUser.uid, { name: custName, email: gUser.email || "", phone: custPhone, role: "زبون", city: custCity, area: custArea });
   ["loginModal","customerAccountModal"].forEach(closeModal);
   updateNavAuthButton();
+  startChatBadgeWatcher();
 
   if(typeof pendingAfterGate === "function") runPendingGateAction();
   else { showCustomAlert(`أهلاً بك ${custName}! تم تسجيل دخولك بنجاح.`); navigateToSection("home"); }
@@ -1886,14 +2059,17 @@ async function renderCustomerAccount() {
         ordersBox.innerHTML = '<div class="empty">لا توجد طلبات مرسلة حالياً.</div>';
       } else {
         ordersBox.innerHTML = list.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0)).map(o => {
-          const durationStr = o.chatStartedAt ? formatOpenDuration(o.chatStartedAt, o.chatEndedAt || null) : "لم تبدأ بعد";
+          const durationStr = o.chatStartedAt ? formatOpenDuration(o.chatStartedAt, o.chatEndedAt || null) : "تبدأ بعد الموافقة";
+          const canOpenChat = ["مقبول من الفني", "مستمر", "منتهي", "مكتمل"].includes(o.status);
           return `
           <div class="list-item">
             <h4>${esc(o.service)} — ${esc(o.status)}</h4>
             <div class="muted">الفني: <b>${esc(o.assignedTechName || 'فني معتمد')}</b> | مدة المحادثة: <b>${esc(durationStr)}</b></div>
             <p style="margin:6px 0; font-size:12.5px;">${esc(o.problem)}</p>
             <div class="actions">
-              <button type="button" class="btn secondary" onclick="openOrderChatModal('${esc(o.id)}','${esc(o.service)}')">💬 محادثة وبصمة وطلب واتساب</button>
+              ${canOpenChat
+                ? `<button type="button" class="btn secondary" onclick="openFullOrderChat('${esc(o.id)}','${esc(o.assignedTechName || o.service)}')">💬 فتح المحادثة</button>`
+                : `<span class="muted">بانتظار موافقة الفني لفتح المحادثة...</span>`}
             </div>
           </div>`;
         }).join("");
@@ -1951,6 +2127,7 @@ function logoutCustomer() {
     if(auth && currentUser && !currentUser.isAnonymous) { try { await auth.signOut(); } catch(_) {} }
     setTimeout(() => { isSigningOutFlag = false; }, 1200);
     updateNavAuthButton();
+    startChatBadgeWatcher();
     showCustomAlert("تم تسجيل الخروج بنجاح.");
     navigateToSection("home");
   });
@@ -2066,6 +2243,7 @@ async function onAuthChanged(user){
   if(techJobsListener) { techJobsListener.off(); techJobsListener = null; }
   if(!user){
     updateNavAuthButton();
+    startChatBadgeWatcher();
     if (!isSigningOutFlag && !isGoogleAuthInProgress && !localStorage.getItem("sakhrPendingGoogleRole")) {
       setTimeout(async () => {
         if (!auth.currentUser && !isSigningOutFlag && !isGoogleAuthInProgress) {
@@ -2081,6 +2259,7 @@ async function onAuthChanged(user){
     const result = await resolveRole(user);
     currentRole = result.role; currentTech = result.tech;
     updateNavAuthButton();
+    startChatBadgeWatcher();
 
     if(user.email !== ADMIN_EMAIL && !user.isAnonymous) {
       await logUserAccount(user.uid, { email: user.email || "", role: ["technician", "suspended"].includes(currentRole) ? "فني" : "زبون" });
@@ -2173,6 +2352,7 @@ async function registerTechFlexible(){
 
     currentUser = createdUser; currentRole = "technician"; currentTech = profile;
     updateNavAuthButton();
+    startChatBadgeWatcher();
     navigateToSection("techAccount");
     await renderTechAccount();
     showCustomAlert("تم إنشاء حسابك كفني بنجاح! يمكنك استكمال باقي تفاصيل ملفك الشخصي من زر التعديل بالأسفل.");
@@ -2191,7 +2371,7 @@ async function loginWithPhonePassword(){
       const c = await auth.signInWithEmailAndPassword(ADMIN_EMAIL, password);
       currentUser = c.user; currentRole = "admin";
       ["loginModal","termsModal","roleSelectionModal","customerAccountModal"].forEach(closeModal);
-      updateNavAuthButton(); navigateToSection("adminProfile"); loadAdminData(); runPendingGateAction();
+      updateNavAuthButton(); startChatBadgeWatcher(); navigateToSection("adminProfile"); loadAdminData(); runPendingGateAction();
       return;
     }
 
@@ -2216,7 +2396,7 @@ async function loginWithPhonePassword(){
 
       await logUserAccount(c.user.uid, { name: cName, phone: cPhone, email: cEmail || emailPseudo, role: "زبون", loginTime: Date.now() });
       ["loginModal","termsModal","roleSelectionModal","customerAccountModal"].forEach(closeModal);
-      updateNavAuthButton(); showCustomAlert("أهلاً بك مجدداً في منصة صخر!"); navigateToSection("home"); runPendingGateAction();
+      updateNavAuthButton(); startChatBadgeWatcher(); showCustomAlert("أهلاً بك مجدداً في منصة صخر!"); navigateToSection("home"); runPendingGateAction();
       return;
     }
 
@@ -2226,6 +2406,7 @@ async function loginWithPhonePassword(){
     await logUserAccount(c.user.uid, { name: checkedTech.name || "", phone: checkedTech.phone || "", email: checkedTech.email || emailPseudo, role: "فني", loginTime: Date.now() });
 
     updateNavAuthButton();
+    startChatBadgeWatcher();
     ["loginModal","termsModal","roleSelectionModal","customerAccountModal"].forEach(closeModal);
     navigateToSection("techAccount"); renderTechAccount(); runPendingGateAction();
   }catch(e){ showCustomAlert(formatAuthErrorMessage(e)); }
@@ -2263,6 +2444,7 @@ async function logout(){
     await auth.signOut();
     setTimeout(() => { isSigningOutFlag = false; }, 1200);
     updateNavAuthButton();
+    startChatBadgeWatcher();
     showCustomAlert("تم تسجيل الخروج بنجاح.");
     navigateToSection("home");
   }catch(e){ isSigningOutFlag = false; showCustomAlert(formatAuthErrorMessage(e)); }
@@ -2289,7 +2471,6 @@ function techPhoto(t, small=false){
   return `<img class="${cls}" src="${esc(pUrl)}" alt="صورة الفني" onclick="event.stopPropagation(); openPhotoModal('${esc(pUrl)}')" onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2250%22 fill=%22%23fdf5e4%22/%3E%3Ctext x=%2250%22 y=%2264%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22%230a3d58%22%3E👤%3C/text%3E%3C/svg%3E'">`;
 }
 
-// معالجة البحث: إظهار كل فنيي الاختصاص بمرونة وعدم حجبهم إذا لم يحددوا فروعاً فرعية
 function renderPublicTechs(){
   const el = $("publicTechList");
   if(!el) return;
@@ -2365,8 +2546,103 @@ function renderPublicTechs(){
 }
 
 // ==========================================
-// منطق المحادثة الدائمة، طلب الواتساب، والبصمة الصوتية، وإنهاء / استمرار
+// مركز الدردشة والطلبات + المحادثة الكاملة على طول الشاشة + التقييم
 // ==========================================
+async function openChatHub() {
+  navigateToSection("chatHubSection");
+  await renderChatHub();
+}
+
+async function renderChatHub() {
+  const pendingBox = $("chatHubPendingRequests");
+  const threadsBox = $("chatHubThreadsList");
+  if(!pendingBox || !threadsBox || !db) return;
+
+  pendingBox.innerHTML = "";
+  threadsBox.innerHTML = '<div class="empty">جارٍ تحميل المحادثات والطلبات...</div>';
+
+  try {
+    if(["technician", "suspended"].includes(currentRole) && currentUser) {
+      const snap = await db.ref("technicianJobs/" + currentUser.uid).once("value");
+      const allJobs = [];
+      snap.forEach(c => allJobs.push({ ...c.val(), id: c.key }));
+      allJobs.sort((a,b) => (b.createdAt||0) - (a.createdAt||0));
+
+      const pendingJobs = allJobs.filter(j => j.status === "بانتظار رد الفني");
+      const activeOrPastJobs = allJobs.filter(j => j.status !== "بانتظار رد الفني");
+
+      updateChatUnreadBadge(pendingJobs.length);
+
+      if(pendingJobs.length > 0) {
+        pendingBox.innerHTML = `<h3 class="section-title" style="font-size:15.5px; margin-top:4px;">🔴 طلبات جديدة بانتظار ردك (${pendingJobs.length})</h3>` + pendingJobs.map(job => `
+          <div class="pending-job-card">
+            <h4 style="margin:0 0 4px; color:var(--navy); font-size:14.5px; font-weight:900;">${esc(job.service)} — <span class="badge">طلب جديد</span></h4>
+            <div class="muted">الزبون: <b>${esc(job.customerName || 'زبون')}</b> | الموقع: <b>${esc(job.city || '')} ${job.area ? '— ' + esc(job.area) : ''}</b></div>
+            <p style="margin:8px 0; font-size:13px; font-weight:700; color:var(--text-main);">المشكلة: ${esc(job.problem)}</p>
+            <div class="actions">
+              <button type="button" class="btn primary" onclick="technicianDecision('${esc(job.id)}','مقبول')">✅ موافقة على الطلب</button>
+              <button type="button" class="btn danger" onclick="technicianDecision('${esc(job.id)}','مرفوض')">❌ رفض الطلب</button>
+            </div>
+          </div>
+        `).join("");
+      }
+
+      if(!activeOrPastJobs.length) {
+        threadsBox.innerHTML = '<div class="empty">لا توجد محادثات نشطة حالياً.</div>';
+      } else {
+        threadsBox.innerHTML = `<h3 class="section-title" style="font-size:15.5px;">المحادثات والطلبات</h3>` + activeOrPastJobs.map(j => {
+          const dur = j.chatStartedAt ? formatOpenDuration(j.chatStartedAt, j.chatEndedAt || null) : "—";
+          return `
+          <div class="list-item">
+            <h4>${esc(j.customerName || 'زبون')} — ${esc(j.service)}</h4>
+            <div class="muted">الحالة: <b>${esc(j.status)}</b> | مدة الفتح: <b>${esc(dur)}</b></div>
+            <div class="actions">
+              <button type="button" class="btn secondary" onclick="openFullOrderChat('${esc(j.id)}','${esc(j.customerName || j.service)}')">💬 فتح المحادثة</button>
+            </div>
+          </div>`;
+        }).join("");
+      }
+      return;
+    }
+
+    const custUid = (currentUser && !currentUser.isAnonymous && currentRole !== "admin")
+      ? currentUser.uid
+      : localStorage.getItem("sakhrCustomerUid");
+
+    if(!custUid) {
+      threadsBox.innerHTML = '<div class="empty">لا توجد طلبات أو محادثات مرسلة حالياً.</div>';
+      return;
+    }
+
+    const snap = await db.ref("requests/" + custUid).once("value");
+    const orders = [];
+    snap.forEach(c => orders.push({ ...c.val(), id: c.key }));
+    orders.sort((a,b) => (b.createdAt||0) - (a.createdAt||0));
+
+    if(!orders.length) {
+      threadsBox.innerHTML = '<div class="empty">لا توجد طلبات أو محادثات مرسلة حالياً.</div>';
+      return;
+    }
+
+    threadsBox.innerHTML = orders.map(o => {
+      const canOpen = ["مقبول من الفني", "مستمر", "منتهي", "مكتمل"].includes(o.status);
+      return `
+      <div class="list-item">
+        <h4>${esc(o.assignedTechName || 'فني معتمد')} — ${esc(o.service)}</h4>
+        <div class="muted">الحالة: <b>${esc(o.status)}</b></div>
+        <p style="margin:6px 0; font-size:12.5px;">${esc(o.problem)}</p>
+        <div class="actions">
+          ${canOpen
+            ? `<button type="button" class="btn secondary" onclick="openFullOrderChat('${esc(o.id)}','${esc(o.assignedTechName || o.service)}')">💬 فتح المحادثة</button>`
+            : `<span class="muted">بانتظار موافقة الفني لفتح المحادثة...</span>`}
+        </div>
+      </div>`;
+    }).join("");
+  } catch(e) {
+    threadsBox.innerHTML = '<div class="empty">تعذر تحميل المحادثات حالياً.</div>';
+  }
+}
+
 function getActorMeta() {
   if(currentRole === "admin") {
     return { actorId: currentUser?.uid || "admin", actorName: "الإدارة", actorRole: "admin", labelAr: "الإدارة" };
@@ -2458,21 +2734,6 @@ async function setOrderContinuationDecision(decision) {
   const newStatus = isEnding ? "منتهي" : "مستمر";
   const decisionLabelAr = isEnding ? "إنهاء الطلب" : "الاستمرار بالطلب";
 
-  const metaPatch = {
-    status: newStatus,
-    continuationState: decision,
-    lastDecisionBy: actor.labelAr,
-    lastDecisionRole: actor.actorRole,
-    lastDecisionAt: now
-  };
-  if(isEnding) {
-    metaPatch.chatEndedAt = now;
-    metaPatch.countedAsCompleted = true;
-  } else {
-    metaPatch.chatEndedAt = null;
-    metaPatch.chatStartedAt = activeOrderMeta.chatStartedAt || now;
-  }
-
   try {
     const updates = {};
     updates[`orderChats/${activeOrderChatId}/meta/status`] = newStatus;
@@ -2514,21 +2775,22 @@ async function setOrderContinuationDecision(decision) {
   }
 }
 
-function renderOrderChatHeaderBanner() {
-  const banner = $("orderChatStatusBanner");
-  const decRow = $("orderChatDecisionRow");
+function renderFullChatBannerAndControls() {
+  const banner = $("fullChatStatusBanner");
+  const decRow = $("fullChatDecisionRow");
+  const revBox = $("fullChatReviewBox");
   if(!banner) return;
 
   const meta = activeOrderMeta || {};
-  const status = meta.status || "بانتظار رد الفني";
-  const isApprovedOrActive = ["مقبول من الفني", "مستمر", "منتهي", "مكتمل"].includes(status);
-  const startedAt = meta.chatStartedAt || (isApprovedOrActive ? meta.createdAt : null);
-  const openDuration = startedAt ? formatOpenDuration(startedAt, meta.chatEndedAt || null) : "تبدأ بعد موافقة الفني";
+  const status = meta.status || "مقبول من الفني";
+  const isEnded = status === "منتهي" || status === "مكتمل" || meta.continuationState === "ended";
+  const startedAt = meta.chatStartedAt || meta.createdAt;
+  const openDuration = startedAt ? formatOpenDuration(startedAt, meta.chatEndedAt || null) : "غير محدد";
 
   let decisionLine = "";
   if(meta.lastDecisionBy) {
-    const actText = meta.continuationState === "ended" ? "إنهاء الطلب" : "الاستمرار بالطلب";
-    decisionLine = `<br>آخر قرار: <b>${esc(actText)}</b> — قام به: <b>${esc(meta.lastDecisionBy)}</b>`;
+    const actText = isEnded ? "إنهاء الطلب" : "الاستمرار بالطلب";
+    decisionLine = `<br>آخر قرار: <b>${esc(actText)}</b> — بواسطة: <b>${esc(meta.lastDecisionBy)}</b>`;
   }
 
   let adminDurationLine = "";
@@ -2536,15 +2798,62 @@ function renderOrderChatHeaderBanner() {
     adminDurationLine = `<br><span style="color:var(--teal-calm);">📊 للإدارة — مدة بقاء المحادثة مفتوحة: <b>${esc(openDuration)}</b></span>`;
   }
 
-  banner.innerHTML = `حالة الطلب: <b>${esc(status)}</b> • المحادثة: <b>${isApprovedOrActive ? 'مفتوحة ومستمرة' : 'جاهزة'}</b>${decisionLine}${adminDurationLine}`;
+  banner.innerHTML = `حالة الطلب: <b>${esc(status)}</b>${decisionLine}${adminDurationLine}`;
+  decRow?.classList.remove("hidden");
 
-  if(decRow) {
-    decRow.classList.toggle("hidden", !isApprovedOrActive);
+  if(revBox) {
+    const isCustomerView = !["technician", "suspended", "admin"].includes(currentRole);
+    revBox.classList.toggle("hidden", !(isEnded && isCustomerView && !meta.rated));
+  }
+}
+
+async function submitOrderReviewAndNote() {
+  if(!activeOrderChatId || !activeOrderMeta || !db) return;
+  const stars = Number($("orderReviewStars")?.value || 5);
+  const note = ($("orderReviewNote")?.value || "").trim();
+  if(!note) return showCustomAlert("يرجى كتابة ملاحظتك أو تقييمك للخدمة.");
+
+  const actor = getActorMeta();
+  const techUid = activeOrderMeta.assignedTech;
+  const custUid = activeOrderMeta.customerUid || localStorage.getItem("sakhrCustomerUid");
+
+  try {
+    const revId = db.ref("reviews").push().key;
+    await db.ref("reviews/" + revId).set({
+      uid: actor.actorId,
+      techUid: techUid || "",
+      orderId: activeOrderChatId,
+      name: actor.actorName,
+      stars,
+      text: note,
+      createdAt: Date.now()
+    });
+
+    if(techUid) {
+      const tSnap = await db.ref("technicians/" + techUid).once("value");
+      if(tSnap.exists()) {
+        const tVal = tSnap.val();
+        const nextCount = Number(tVal.ratingCount || 0) + 1;
+        const nextSum = Number(tVal.ratingSum || 0) + stars;
+        const nextAvg = nextSum / nextCount;
+        await db.ref("technicians/" + techUid).update({ ratingCount: nextCount, ratingSum: nextSum, ratingAverage: nextAvg });
+        await db.ref("publicTechnicians/" + techUid).update({ ratingCount: nextCount, ratingSum: nextSum, ratingAverage: nextAvg }).catch(()=>{});
+      }
+    }
+
+    if(custUid) await db.ref(`requests/${custUid}/${activeOrderChatId}`).update({ rated: true }).catch(()=>{});
+    await db.ref(`orderChats/${activeOrderChatId}/meta`).update({ rated: true }).catch(()=>{});
+
+    activeOrderMeta.rated = true;
+    renderFullChatBannerAndControls();
+    showCustomAlert("تم إرسال تقييمك وملاحظتك بنجاح!");
+  } catch(e) {
+    showCustomAlert("تعذر إرسال التقييم: " + e.message);
   }
 }
 
 async function resolveOrderMeta(orderId) {
-  let meta = { id: orderId, status: "بانتظار رد الفني", createdAt: Date.now() };
+  let meta = { id: orderId, status: "مقبول من الفني", createdAt: Date.now() };
   try {
     const chatMetaSnap = await db.ref(`orderChats/${orderId}/meta`).once("value");
     if(chatMetaSnap.exists()) meta = { ...meta, ...chatMetaSnap.val() };
@@ -2564,36 +2873,36 @@ async function resolveOrderMeta(orderId) {
   return meta;
 }
 
-async function openOrderChatModal(orderId, labelText = "") {
+async function openFullOrderChat(orderId, titleLabel = "") {
   if(!orderId || !db) return;
   if(orderChatListener) { orderChatListener.off(); orderChatListener = null; }
   if(orderMetaListener) { orderMetaListener.off(); orderMetaListener = null; }
 
   activeOrderChatId = orderId;
   activeOrderMeta = await resolveOrderMeta(orderId);
-  $("orderChatTitle").innerText = labelText ? `💬 محادثة: ${labelText}` : "💬 محادثة الطلب الدائمة";
-  $("orderChatInput").value = "";
-  renderOrderChatHeaderBanner();
-  $("orderChatModal").classList.remove("hidden");
+  $("fullChatTitle").innerText = titleLabel ? `💬 ${titleLabel}` : "💬 محادثة الطلب";
+  $("fullChatInput").value = "";
+  renderFullChatBannerAndControls();
+  navigateToSection("fullOrderChatSection");
 
   orderMetaListener = db.ref(`orderChats/${orderId}/meta`);
   orderMetaListener.on("value", snap => {
     if(snap.exists()) {
       activeOrderMeta = { ...(activeOrderMeta || {}), ...snap.val() };
-      renderOrderChatHeaderBanner();
+      renderFullChatBannerAndControls();
     }
   });
 
-  const box = $("orderChatMessages");
-  box.innerHTML = '<div class="muted" style="text-align:center;margin-top:85px;">جارٍ تحميل رسائل الطلب...</div>';
+  const box = $("fullChatMessages");
+  box.innerHTML = '<div class="muted" style="text-align:center;margin-top:95px;">جارٍ تحميل رسائل الطلب...</div>';
 
   const sender = getActorMeta();
-  orderChatListener = db.ref("orderChats/" + orderId + "/messages").limitToLast(100);
+  orderChatListener = db.ref("orderChats/" + orderId + "/messages").limitToLast(120);
   orderChatListener.on("value", snap => {
     const msgs = [];
     snap.forEach(c => msgs.push({ ...c.val(), _key: c.key }));
     if(!msgs.length) {
-      box.innerHTML = '<div class="muted" style="text-align:center;margin-top:85px;">المحادثة مفتوحة — ابدأ بالتواصل بالكتابة أو البصمة الصوتية...</div>';
+      box.innerHTML = '<div class="muted" style="text-align:center;margin-top:95px;">المحادثة مفتوحة — ابدأ بالتواصل بالكتابة...</div>';
       return;
     }
     box.innerHTML = msgs.map(m => {
@@ -2632,15 +2941,6 @@ async function openOrderChatModal(orderId, labelText = "") {
         }
       }
 
-      if(m.type === "audio" && m.audioURL) {
-        return `
-          <div class="chat-bubble ${isMine ? 'mine' : 'other'}">
-            <div>🎙️ بصمة صوتية ${m.duration ? '(' + esc(m.duration) + ')' : ''}</div>
-            <audio controls preload="metadata" src="${esc(m.audioURL)}"></audio>
-            <small>${esc(m.senderName || '')} ${tStr ? '• ' + tStr : ''}</small>
-          </div>`;
-      }
-
       return `
         <div class="chat-bubble ${isMine ? 'mine' : 'other'}">
           <div>${esc(m.text)}</div>
@@ -2652,7 +2952,7 @@ async function openOrderChatModal(orderId, labelText = "") {
 }
 
 async function sendOrderChatMessage() {
-  const input = $("orderChatInput");
+  const input = $("fullChatInput");
   const text = input.value.trim();
   if(!text || !activeOrderChatId || !db) return;
   const sender = getActorMeta();
@@ -2665,91 +2965,12 @@ async function sendOrderChatMessage() {
   } catch(e) { showCustomAlert("تعذر إرسال الرسالة: " + e.message); }
 }
 
-function formatVoiceTimer(sec) {
-  return `${String(Math.floor(sec / 60)).padStart(2, "0")}:${String(sec % 60).padStart(2, "0")}`;
-}
-
-async function toggleVoiceRecording() {
-  if(mediaRecorder && mediaRecorder.state === "recording") { stopAndSendVoiceRecording(); return; }
-  if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) return showCustomAlert("متصفحك الحالي لا يدعم تسجيل البصمة الصوتية.");
-
-  try {
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    audioChunks = []; isVoiceCancelled = false; voiceRecordSeconds = 0;
-    const mimeCandidates = ["audio/webm;codecs=opus", "audio/webm", "audio/mp4", "audio/ogg"];
-    const chosenMime = mimeCandidates.find(m => typeof MediaRecorder !== "undefined" && MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(m)) || "";
-    mediaRecorder = chosenMime ? new MediaRecorder(stream, { mimeType: chosenMime }) : new MediaRecorder(stream);
-
-    mediaRecorder.ondataavailable = (ev) => { if(ev.data && ev.data.size > 0) audioChunks.push(ev.data); };
-    mediaRecorder.onstop = async () => {
-      stream.getTracks().forEach(t => t.stop());
-      clearInterval(voiceRecordTimer);
-      $("voiceRecordingBar")?.classList.add("hidden");
-      $("voiceMicBtn")?.classList.remove("recording");
-      if(isVoiceCancelled || !audioChunks.length || !activeOrderChatId) return;
-      const durationStr = formatVoiceTimer(voiceRecordSeconds);
-      const blobType = mediaRecorder.mimeType || "audio/webm";
-      const blob = new Blob(audioChunks, { type: blobType });
-      await uploadAndSendVoiceBlob(blob, durationStr, blobType);
-    };
-
-    mediaRecorder.start();
-    $("voiceRecordingBar")?.classList.remove("hidden");
-    $("voiceMicBtn")?.classList.add("recording");
-    $("voiceRecTimer").innerText = "00:00";
-
-    voiceRecordTimer = setInterval(() => {
-      voiceRecordSeconds++;
-      $("voiceRecTimer").innerText = formatVoiceTimer(voiceRecordSeconds);
-      if(voiceRecordSeconds >= 120) stopAndSendVoiceRecording();
-    }, 1000);
-  } catch(e) { showCustomAlert("يرجى السماح بصلاحية المايكروفون لتسجيل البصمة الصوتية."); }
-}
-
-function stopAndSendVoiceRecording() {
-  if(mediaRecorder && mediaRecorder.state === "recording") { isVoiceCancelled = false; mediaRecorder.stop(); }
-}
-
-function cancelVoiceRecording() {
-  if(mediaRecorder && mediaRecorder.state === "recording") { isVoiceCancelled = true; mediaRecorder.stop(); }
-  else { $("voiceRecordingBar")?.classList.add("hidden"); $("voiceMicBtn")?.classList.remove("recording"); }
-}
-
-async function uploadAndSendVoiceBlob(blob, durationStr, mimeType = "audio/webm") {
-  if(!activeOrderChatId || !db) return;
-  const sender = getActorMeta();
-  const chatId = activeOrderChatId;
-  const ext = mimeType.includes("mp4") ? "mp4" : (mimeType.includes("ogg") ? "ogg" : "webm");
-
-  try {
-    let audioURL = "";
-    if(storage) {
-      const ref = storage.ref(`orderVoiceNotes/${chatId}/voice_${Date.now()}.${ext}`);
-      const snap = await ref.put(blob, { contentType: mimeType });
-      audioURL = await snap.ref.getDownloadURL();
-    } else {
-      audioURL = await new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.onloadend = () => resolve(reader.result);
-        reader.readAsDataURL(blob);
-      });
-    }
-
-    const msgId = db.ref("orderChats/" + chatId + "/messages").push().key;
-    await db.ref("orderChats/" + chatId + "/messages/" + msgId).set({
-      type: "audio", audioURL, duration: durationStr,
-      senderId: sender.actorId, senderName: sender.actorName, senderRole: sender.actorRole, createdAt: Date.now()
-    });
-  } catch(e) { showCustomAlert("تعذر إرسال البصمة الصوتية: " + e.message); }
-}
-
-function closeOrderChatModal() {
-  cancelVoiceRecording();
+function closeFullOrderChat() {
   if(orderChatListener) { orderChatListener.off(); orderChatListener = null; }
   if(orderMetaListener) { orderMetaListener.off(); orderMetaListener = null; }
   activeOrderChatId = null;
   activeOrderMeta = null;
-  closeModal("orderChatModal");
+  navigateToSection("chatHubSection");
 }
 
 function getCurrentSupportActor() {
@@ -2897,7 +3118,8 @@ async function submitCustomerOrder() {
     await db.ref().update(u);
 
     closeModal("customerOrderModal");
-    openOrderChatModal(id, fullServiceLabel);
+    showCustomAlert("تم إرسال الطلب إلى الفني! ستُفتح المحادثة مباشرة بعد موافقة الفني.");
+    navigateToSection("chatHubSection");
   } catch(e) { showCustomAlert("خطأ في إرسال الطلب: " + e.message); }
 }
 
@@ -3016,9 +3238,12 @@ async function renderTechAccount(){
     techJobsListener.on("value", snapshot => {
       const jobs = [];
       snapshot.forEach(x => jobs.push({...x.val(), id: x.key}));
-      if(!isInitialLoad && jobs.some(x => x.status === "بانتظار رد الفني")) {
+      const pendingCnt = jobs.filter(x => x.status === "بانتظار رد الفني").length;
+      updateChatUnreadBadge(pendingCnt);
+
+      if(!isInitialLoad && pendingCnt > 0) {
         playAlertBeep();
-        if($("techAlertBox")) $("techAlertBox").innerHTML = '<div class="notice success" style="font-weight:900">🔔 وصلك طلب صيانة جديد!</div>';
+        if($("techAlertBox")) $("techAlertBox").innerHTML = '<div class="notice success" style="font-weight:900">🔔 وصلك طلب صيانة جديد! راجع خانة الدردشة.</div>';
       }
       isInitialLoad = false;
 
@@ -3028,9 +3253,13 @@ async function renderTechAccount(){
         } else {
           let jobsHtml = "";
           jobs.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0)).forEach(x => {
-            let actionsHtml = `<div class="actions"><button type="button" class="btn secondary" onclick="openOrderChatModal('${esc(x.id)}','${esc(x.service)}')">💬 محادثة وبصمة وطلب واتساب</button>`;
+            const canChat = x.status !== "بانتظار رد الفني" && x.status !== "مرفوض من الفني";
+            let actionsHtml = `<div class="actions">`;
+            if(canChat) {
+              actionsHtml += `<button type="button" class="btn secondary" onclick="openFullOrderChat('${esc(x.id)}','${esc(x.customerName || x.service)}')">💬 فتح المحادثة</button>`;
+            }
             if(x.status === "بانتظار رد الفني") {
-              actionsHtml += `<button type="button" class="btn primary" onclick="technicianDecision('${esc(x.id)}','مقبول')">قبول الطلب</button><button type="button" class="btn danger" onclick="technicianDecision('${esc(x.id)}','مرفوض')">رفض</button>`;
+              actionsHtml += `<button type="button" class="btn primary" onclick="technicianDecision('${esc(x.id)}','مقبول')">موافقة</button><button type="button" class="btn danger" onclick="technicianDecision('${esc(x.id)}','مرفوض')">رفض</button>`;
             } else if(x.status === "مقبول من الفني" || x.status === "مستمر") {
               actionsHtml += `<button type="button" class="btn gold-3d" onclick="completeTechnicianJob('${esc(x.id)}')">✅ إنهاء الطلب</button>`;
             }
@@ -3040,6 +3269,7 @@ async function renderTechAccount(){
           $("techJobs").innerHTML = jobsHtml;
         }
       }
+      if(currentSectionId === "chatHubSection") renderChatHub();
     });
   }catch(e){}
 }
@@ -3086,10 +3316,12 @@ async function technicianDecision(jobId, decision) {
         senderRole: "technician",
         createdAt: now
       });
+      openFullOrderChat(jobId, job?.customerName || job?.service || "محادثة الطلب");
+    } else {
+      showCustomAlert("تم رفض الطلب بنجاح.");
+      renderTechAccount();
+      if(currentSectionId === "chatHubSection") renderChatHub();
     }
-
-    showCustomAlert(isAccepted ? "تم قبول الطلب وفتح المحادثة الدائمة بنجاح!" : "تم رفض الطلب بنجاح.");
-    renderTechAccount();
   } catch(e) {
     showCustomAlert("خطأ: " + e.message);
   }
@@ -3491,7 +3723,7 @@ function renderAdmin(){
         <div class="muted" style="margin-top:3px;">⏱️ مدة بقاء المحادثة مفتوحة: <b style="color:var(--teal-calm);">${esc(openDur)}</b>${decInfo}</div>
         <p style="margin:5px 0; font-size:13px;">المشكلة: ${esc(r.problem)}</p>
         <div class="actions">
-         <button type="button" class="btn secondary" onclick="openOrderChatModal('${esc(r.id)}','${esc(r.service)}')">💬 محادثة الطلب</button>
+         <button type="button" class="btn secondary" onclick="openFullOrderChat('${esc(r.id)}','${esc(r.service)}')">💬 محادثة الطلب</button>
          <button type="button" class="btn danger" onclick="adminDeleteRequest('${esc(r.uid)}','${esc(r.id)}')">حذف الطلب</button>
         </div>
       </div>`;
@@ -3550,6 +3782,7 @@ setupLocations();
 renderServices();
 initFirebase();
 updateNavAuthButton();
+updateBottomNavActive("home");
 </script>
 </body>
 </html>
