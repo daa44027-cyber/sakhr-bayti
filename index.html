@@ -794,7 +794,7 @@ footer { background: linear-gradient(180deg, var(--teal-deep) 0%, var(--navy-dee
 
 <section id="reviewsChat" class="container hidden">
  <h2 class="section-title">التقييم والملاحظات</h2>
- 
+
  <div id="adminAnnouncementBox" class="card hidden" style="margin-bottom:22px;">
   <h3 style="color:var(--navy); margin-top:0; font-size:15px; font-weight:900;">📢 تعديل الأشرطة الإعلانية العامة (تظهر تباعاً)</h3>
   <div class="field"><label>الإعلان الأول</label><input id="annInput1" placeholder="اكتب الإعلان الأول هنا..."></div>
@@ -859,7 +859,7 @@ footer { background: linear-gradient(180deg, var(--teal-deep) 0%, var(--navy-dee
    <div class="field"><label>المحافظة</label><select id="regCity" onchange="setDistricts('regArea', this.value)"></select></div>
    <div class="field"><label>القضاء</label><select id="regArea" disabled><option value="">اختر المحافظة أولاً</option></select></div>
   </div>
-  
+
   <button type="submit" class="btn gold-3d" style="width:100%;margin-top:10px;padding:11px;">🛠️ إنشاء حساب فني والدخول</button>
   <button type="button" class="btn light" style="width:100%;margin-top:8px;" onclick="openLogin()">لدي حساب فني مسبقاً (تسجيل الدخول)</button>
   <div id="regMessage"></div>
@@ -882,7 +882,7 @@ footer { background: linear-gradient(180deg, var(--teal-deep) 0%, var(--navy-dee
   </div>
   <div id="availabilityMsg" style="margin-top:6px; font-size:12px; font-weight:700;"></div>
  </div>
- 
+
  <div id="techSubscriptionCard" class="card" style="margin-bottom:15px;">
   <h3 style="color:var(--navy); margin-top:0; font-weight:900; font-size:15px;">💳 حالة الاشتراك والأعمال المجانية</h3>
   <div id="techSubDetails" style="font-size:13px; color:var(--text-main); line-height:1.7;"></div>
@@ -941,7 +941,7 @@ footer { background: linear-gradient(180deg, var(--teal-deep) 0%, var(--navy-dee
   <div class="muted" style="margin-bottom:8px;">اضغط على أي محافظة لتفعيلها أو إيقافها للزبائن:</div>
   <div id="adminActiveCitiesBox" class="cities-toggle-grid"></div>
  </div>
- 
+
  <div class="admin-tabs-nav">
   <button class="admin-tab-btn active" id="btnTabAccounts" onclick="switchAdminTab('accounts')">👥 حسابات الزبائن</button>
   <button class="admin-tab-btn" id="btnTabRequests" onclick="switchAdminTab('requests')">📋 طلبات الزبائن</button>
@@ -1292,7 +1292,6 @@ const DISTRICTS={
 "واسط":["الكوت","النعمانية","الحي","الصويرة","العزيزية"]
 };
 
-// مساعدات تخزين بهوية "جبل" مع توافق مؤقت للمفاتيح القديمة
 function jabalGet(key) {
   const v = localStorage.getItem("jabal" + key);
   if (v !== null) return v;
@@ -1321,6 +1320,11 @@ let lastNotifiedJobIds = new Set();
 
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+function isPendingTechJob(status) {
+  const st = String(status || "").trim();
+  return st === "بانتظار رد الفني" || st.includes("بانتظار رد الفني");
+}
 
 function formatOpenDuration(startedAt, endedAt = null) {
   if (!startedAt) return "تبدأ بعد الموافقة";
@@ -1402,7 +1406,7 @@ function startChatBadgeWatcher() {
       const newJobIds = [];
       snap.forEach(c => {
         const val = c.val() || {};
-        if(val.status === "بانتظار رد الفني") {
+        if(isPendingTechJob(val.status)) {
           pendingCount++;
           newJobIds.push(c.key);
         }
@@ -1413,8 +1417,8 @@ function startChatBadgeWatcher() {
       if(hasBrandNew && pendingCount > 0) {
         playAlertBeep();
         if($("techAlertBox")) $("techAlertBox").innerHTML = '<div class="notice success" style="font-weight:900">🔔 وصلك طلب صيانة جديد! راجع خانة الدردشة.</div>';
-        if(currentSectionId === "chatHubSection") renderChatHub();
       }
+      if(currentSectionId === "chatHubSection") renderChatHub();
     });
   } else if(currentRole !== "admin") {
     const custUid = (currentUser && !currentUser.isAnonymous) ? currentUser.uid : jabalGet("CustomerUid");
@@ -1547,7 +1551,7 @@ function getCityExpansionMessage(city) {
 
 function isUserEntered() {
   if(currentRole === "admin" || ["technician", "suspended"].includes(currentRole)) return true;
-  return Boolean(jabalGet("CustomerName"));
+  return Boolean(jabalGet("CustomerName") || (currentUser && !currentUser.isAnonymous));
 }
 
 function hasCustomerCoreProfileConfigured() {
@@ -1575,7 +1579,7 @@ function openPhoneRequiredModal(afterCallback) {
     $("reqPhoneModalTitle").innerText = "تحديد المحافظة والقضاء";
     const savedCity = jabalGet("CustomerCity") || "";
     const savedArea = jabalGet("CustomerArea") || "";
-    $("reqPhoneName").value = jabalGet("CustomerName") || "";
+    $("reqPhoneName").value = jabalGet("CustomerName") || (currentUser?.displayName || "");
     $("reqPhoneNumber").value = jabalGet("CustomerPhone") || "";
     $("reqPhoneCity").value = savedCity;
     setDistricts("reqPhoneArea", savedCity);
@@ -1839,13 +1843,14 @@ function selectSubserviceAndShowTechs(serviceName, subserviceName) {
 }
 
 function handleCustomerRoleEntry() {
-  const savedName = jabalGet("CustomerName");
+  const savedName = jabalGet("CustomerName") || (currentUser && !currentUser.isAnonymous && currentRole === "customer_auth" ? (currentUser.displayName || "زبون جبل") : "");
   if(!savedName) {
     $("custRegName").value = ""; $("custRegPhone").value = ""; $("custRegEmail").value = "";
     $("custRegPassword").value = ""; $("custRegMessage").innerHTML = "";
     switchCustRegAuthMode("phone");
     $("customerAccountModal").classList.remove("hidden");
   } else {
+    if(!jabalGet("CustomerName") && savedName) jabalSet("CustomerName", savedName);
     const savedCity = jabalGet("CustomerCity") || "";
     if(savedCity && !isCityActive(savedCity)) return showCustomAlert(getCityExpansionMessage(savedCity));
     runPendingGateAction();
@@ -1866,7 +1871,7 @@ function handleAuthNav() {
   const customerName = jabalGet("CustomerName");
   if(currentRole === "admin") navigateToSection("adminProfile");
   else if(["technician", "suspended"].includes(currentRole)) navigateToSection("techAccount");
-  else if(customerName) navigateToSection("customerAccountView");
+  else if(customerName || (currentUser && !currentUser.isAnonymous)) navigateToSection("customerAccountView");
   else openLogin();
 }
 
@@ -1925,7 +1930,50 @@ function acceptTermsWithCheck() {
 
 async function logUserAccount(uid, info) {
   if(!db || !uid) return;
-  try { await db.ref("allAccounts/" + uid).update({ uid, lastLogin: Date.now(), ...info }); } catch(e) {}
+  const cleanPayload = {};
+  Object.entries(info || {}).forEach(([k, v]) => {
+    if (v !== undefined) cleanPayload[k] = v;
+  });
+  try {
+    await db.ref("allAccounts/" + uid).update({ uid, lastLogin: Date.now(), ...cleanPayload });
+  } catch(e) {}
+}
+
+async function ensureCustomerAccountDocument(user, extraInfo = {}) {
+  if(!user || user.isAnonymous || !db || user.email === ADMIN_EMAIL) return null;
+  let existing = {};
+  try {
+    const snap = await db.ref("allAccounts/" + user.uid).once("value");
+    if(snap.exists()) existing = snap.val() || {};
+  } catch(_) {}
+
+  const resolvedName = existing.name || extraInfo.name || user.displayName || jabalGet("CustomerName") || "زبون جبل";
+  const resolvedEmail = existing.email || extraInfo.email || user.email || jabalGet("CustomerEmail") || "";
+  const resolvedPhone = existing.phone || extraInfo.phone || jabalGet("CustomerPhone") || "";
+  const resolvedCity = existing.city || extraInfo.city || jabalGet("CustomerCity") || "";
+  const resolvedArea = existing.area || extraInfo.area || jabalGet("CustomerArea") || "";
+  const resolvedRole = existing.role || extraInfo.role || "زبون";
+  const registeredAt = existing.registeredAt || extraInfo.registeredAt || Date.now();
+
+  jabalSet("CustomerName", resolvedName);
+  jabalSet("CustomerUid", user.uid);
+  if(resolvedEmail) jabalSet("CustomerEmail", resolvedEmail);
+  if(resolvedPhone) jabalSet("CustomerPhone", resolvedPhone);
+  if(resolvedCity) { jabalSet("CustomerCity", resolvedCity); chosenCustomerCity = resolvedCity; }
+  if(resolvedArea) { jabalSet("CustomerArea", resolvedArea); chosenCustomerArea = resolvedArea; }
+
+  await logUserAccount(user.uid, {
+    name: resolvedName,
+    email: resolvedEmail,
+    phone: resolvedPhone,
+    city: resolvedCity,
+    area: resolvedArea,
+    role: resolvedRole,
+    registeredAt,
+    ...extraInfo
+  });
+
+  return { name: resolvedName, email: resolvedEmail, phone: resolvedPhone, city: resolvedCity, area: resolvedArea, role: resolvedRole };
 }
 
 async function finalizeGoogleUserSession(gUser, roleHint = "auto") {
@@ -1966,27 +2014,22 @@ async function finalizeGoogleUserSession(gUser, roleHint = "auto") {
     return;
   }
 
-  const accSnap = await db.ref("allAccounts/" + gUser.uid).once("value");
-  const existingAcc = accSnap.exists() ? accSnap.val() : {};
-  const custName = existingAcc.name || gUser.displayName || "زبون جبل";
-  const custPhone = existingAcc.phone || "";
-  const custCity = existingAcc.city || "";
-  const custArea = existingAcc.area || "";
+  currentRole = "customer_auth";
+  const custProfile = await ensureCustomerAccountDocument(gUser, {
+    name: gUser.displayName || "زبون جبل",
+    email: gUser.email || "",
+    role: "زبون"
+  });
 
-  jabalSet("CustomerName", custName);
-  jabalSet("CustomerUid", gUser.uid);
-  if(gUser.email) jabalSet("CustomerEmail", gUser.email);
-  if(custPhone) jabalSet("CustomerPhone", custPhone);
-  if(custCity) { jabalSet("CustomerCity", custCity); chosenCustomerCity = custCity; }
-  if(custArea) { jabalSet("CustomerArea", custArea); chosenCustomerArea = custArea; }
-
-  await logUserAccount(gUser.uid, { name: custName, email: gUser.email || "", phone: custPhone, role: "زبون", city: custCity, area: custArea });
   ["loginModal","customerAccountModal"].forEach(closeModal);
   updateNavAuthButton();
   startChatBadgeWatcher();
 
   if(typeof pendingAfterGate === "function") runPendingGateAction();
-  else { showCustomAlert(`أهلاً بك ${custName}! تم تسجيل دخولك بنجاح.`); navigateToSection("home"); }
+  else {
+    showCustomAlert(`أهلاً بك ${custProfile?.name || "زبون جبل"}! تم تسجيل دخولك بنجاح.`);
+    navigateToSection("home");
+  }
 }
 
 async function signInWithGoogleRole(roleHint = "auto") {
@@ -2065,9 +2108,9 @@ async function submitCustomerRegistration(){
 }
 
 function renderCustomerAccount() {
-  const name = jabalGet("CustomerName") || "زبون جبل";
+  const name = jabalGet("CustomerName") || currentUser?.displayName || "زبون جبل";
   const phone = jabalGet("CustomerPhone") || "غير مضاف (يُضاف عند طلب واتساب)";
-  const email = jabalGet("CustomerEmail") || "غير مضاف";
+  const email = jabalGet("CustomerEmail") || currentUser?.email || "غير مضاف";
   const city = jabalGet("CustomerCity") || "غير محدد";
   const area = jabalGet("CustomerArea") || "غير محدد";
   const neighborhood = jabalGet("CustomerNeighborhood") || "غير مضاف";
@@ -2088,9 +2131,9 @@ function renderCustomerAccount() {
 }
 
 function openCustomerEditModal() {
-  $("editCustName").value = jabalGet("CustomerName") || "";
+  $("editCustName").value = jabalGet("CustomerName") || currentUser?.displayName || "";
   $("editCustPhone").value = jabalGet("CustomerPhone") || "";
-  if($("editCustEmail")) $("editCustEmail").value = jabalGet("CustomerEmail") || "";
+  if($("editCustEmail")) $("editCustEmail").value = jabalGet("CustomerEmail") || currentUser?.email || "";
   const city = jabalGet("CustomerCity") || "";
   $("editCustCity").value = city;
   setDistricts("editCustArea", city);
@@ -2271,7 +2314,16 @@ async function onAuthChanged(user){
     startChatBadgeWatcher();
 
     if(user.email !== ADMIN_EMAIL && !user.isAnonymous) {
-      await logUserAccount(user.uid, { email: user.email || "", role: ["technician", "suspended"].includes(currentRole) ? "فني" : "زبون" });
+      if(["technician", "suspended"].includes(currentRole)) {
+        await logUserAccount(user.uid, {
+          name: currentTech?.name || user.displayName || "",
+          email: currentTech?.email || user.email || "",
+          phone: currentTech?.phone || "",
+          role: "فني"
+        });
+      } else {
+        await ensureCustomerAccountDocument(user, { role: "زبون" });
+      }
     }
 
     if(currentRole === "admin"){
@@ -2284,18 +2336,8 @@ async function onAuthChanged(user){
       renderTechAccount();
       runPendingGateAction();
     } else if(currentRole === "customer_auth") {
-      const accSnap = await db.ref("allAccounts/" + user.uid).once("value");
-      if(accSnap.exists()) {
-        const acc = accSnap.val();
-        if(acc.name) jabalSet("CustomerName", acc.name);
-        if(acc.phone) jabalSet("CustomerPhone", acc.phone);
-        if(acc.email) jabalSet("CustomerEmail", acc.email);
-        if(acc.city) { jabalSet("CustomerCity", acc.city); chosenCustomerCity = acc.city; }
-        if(acc.area) { jabalSet("CustomerArea", acc.area); chosenCustomerArea = acc.area; }
-        jabalSet("CustomerUid", user.uid);
-        updateNavAuthButton();
-        startChatBadgeWatcher();
-      }
+      updateNavAuthButton();
+      startChatBadgeWatcher();
       checkInitialStartupModals();
     } else checkInitialStartupModals();
   }catch(e){
@@ -2401,21 +2443,14 @@ async function loginWithPhonePassword(){
     const s = await db.ref("technicians/"+c.user.uid).once("value");
     if(!s.exists()){
       currentRole = "customer_auth";
-      const accSnap = await db.ref("allAccounts/"+c.user.uid).once("value");
-      const acc = accSnap.exists() ? accSnap.val() : {};
-      const cName = acc.name || "زبون جبل";
-      const cPhone = acc.phone || (!inputVal.includes("@") ? normalizeIraqiPhone(inputVal) : "");
-      const cEmail = acc.email || (inputVal.includes("@") ? inputVal.toLowerCase() : "");
-      const cCity = acc.city || "";
-      const cArea = acc.area || "";
+      const typedPhone = !inputVal.includes("@") ? normalizeIraqiPhone(inputVal) : "";
+      const typedEmail = inputVal.includes("@") ? inputVal.toLowerCase() : "";
+      await ensureCustomerAccountDocument(c.user, {
+        phone: typedPhone || undefined,
+        email: typedEmail || c.user.email || undefined,
+        role: "زبون"
+      });
 
-      jabalSet("CustomerName", cName); jabalSet("CustomerUid", c.user.uid);
-      if(cPhone) jabalSet("CustomerPhone", cPhone);
-      if(cEmail) jabalSet("CustomerEmail", cEmail);
-      if(cCity) { jabalSet("CustomerCity", cCity); chosenCustomerCity = cCity; }
-      if(cArea) { jabalSet("CustomerArea", cArea); chosenCustomerArea = cArea; }
-
-      await logUserAccount(c.user.uid, { name: cName, phone: cPhone, email: cEmail || emailPrimary, role: "زبون", loginTime: Date.now() });
       ["loginModal","termsModal","roleSelectionModal","customerAccountModal"].forEach(closeModal);
       updateNavAuthButton(); startChatBadgeWatcher(); showCustomAlert("أهلاً بك مجدداً في تطبيق جبل!"); navigateToSection("home"); runPendingGateAction();
       return;
@@ -2596,9 +2631,9 @@ async function renderChatHub() {
       snap.forEach(c => allJobs.push({ ...c.val(), id: c.key }));
       allJobs.sort((a,b) => (b.createdAt||0) - (a.createdAt||0));
 
-      const pendingJobs = allJobs.filter(j => j.status === "بانتظار رد الفني");
+      const pendingJobs = allJobs.filter(j => isPendingTechJob(j.status));
       const filteredJobs = allJobs.filter(j => {
-        if(j.status === "بانتظار رد الفني") return false;
+        if(isPendingTechJob(j.status)) return false;
         const ended = isOrderEndedOrCompleted(j.status, j.continuationState);
         return showEndedChatHistory ? ended : !ended;
       });
@@ -2620,7 +2655,9 @@ async function renderChatHub() {
       }
 
       if(!filteredJobs.length) {
-        threadsBox.innerHTML = `<div class="empty">${showEndedChatHistory ? 'لا توجد طلبات منتهية في السجل.' : 'لا توجد محادثات نشطة حالياً.'}</div>`;
+        threadsBox.innerHTML = pendingJobs.length > 0 && !showEndedChatHistory
+          ? ''
+          : `<div class="empty">${showEndedChatHistory ? 'لا توجد طلبات منتهية في السجل.' : 'لا توجد محادثات نشطة حالياً.'}</div>`;
       } else {
         threadsBox.innerHTML = `<h3 class="section-title" style="font-size:15.5px;">${showEndedChatHistory ? 'سجل الطلبات المنتهية' : 'المحادثات الجارية'}</h3>` + filteredJobs.map(j => {
           const dur = j.chatStartedAt ? formatOpenDuration(j.chatStartedAt, j.chatEndedAt || null) : "—";
@@ -3121,7 +3158,7 @@ async function chooseServiceDirect(service, techUid){
 async function submitCustomerOrder() {
   const problem = $("custOrderProblem").value.trim();
   const isAdminSender = currentRole === "admin";
-  const custName = isAdminSender ? "إدارة جبل" : (jabalGet("CustomerName") || "زبون جبل");
+  const custName = isAdminSender ? "إدارة جبل" : (jabalGet("CustomerName") || currentUser?.displayName || "زبون جبل");
   const custPhone = isAdminSender ? "" : (jabalGet("CustomerPhone") || "");
 
   if(!isAdminSender && !hasCustomerCoreProfileConfigured()) {
