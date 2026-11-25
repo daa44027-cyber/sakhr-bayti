@@ -1399,8 +1399,9 @@ function startChatBadgeWatcher() {
   if(customerOrdersBadgeListener) { customerOrdersBadgeListener.off(); customerOrdersBadgeListener = null; }
   if(!db) return;
 
-  if(["technician", "suspended"].includes(currentRole) && currentUser) {
-    badgeListener = db.ref("technicianJobs/" + currentUser.uid);
+  const activeUid = auth?.currentUser?.uid || currentUser?.uid || "";
+  if(["technician", "suspended"].includes(currentRole) && activeUid) {
+    badgeListener = db.ref("technicianJobs/" + activeUid);
     badgeListener.on("value", snap => {
       let pendingCount = 0;
       const newJobIds = [];
@@ -2329,15 +2330,25 @@ async function onAuthChanged(user){
     if(currentRole === "admin"){
       ["termsModal","roleSelectionModal","customerAccountModal","loginModal"].forEach(closeModal);
       updateNavAuthButton();
+      if(currentSectionId === "chatHubSection") renderChatHub();
       runPendingGateAction();
     } else if(["technician", "suspended"].includes(currentRole)){
       ["termsModal","roleSelectionModal","customerAccountModal","loginModal"].forEach(closeModal);
-      navigateToSection("techAccount");
-      renderTechAccount();
+      if(currentSectionId === "chatHubSection") {
+        renderChatHub();
+      } else if(currentSectionId === "fullOrderChatSection") {
+        renderFullChatBannerAndControls();
+      } else if(currentSectionId === "home") {
+        navigateToSection("techAccount");
+        renderTechAccount();
+      } else if(currentSectionId === "techAccount") {
+        renderTechAccount();
+      }
       runPendingGateAction();
     } else if(currentRole === "customer_auth") {
       updateNavAuthButton();
       startChatBadgeWatcher();
+      if(currentSectionId === "chatHubSection") renderChatHub();
       checkInitialStartupModals();
     } else checkInitialStartupModals();
   }catch(e){
@@ -2625,8 +2636,21 @@ async function renderChatHub() {
   threadsBox.innerHTML = '<div class="empty">جارٍ تحميل المحادثات والطلبات...</div>';
 
   try {
-    if(["technician", "suspended"].includes(currentRole) && currentUser) {
-      const snap = await db.ref("technicianJobs/" + currentUser.uid).once("value");
+    const activeUid = auth?.currentUser?.uid || currentUser?.uid || "";
+    let effectiveRole = currentRole;
+
+    if(activeUid && activeUid !== (jabalGet("CustomerUid") || "") && !["technician", "suspended", "admin"].includes(effectiveRole)) {
+      const tSnap = await db.ref("technicians/" + activeUid).once("value");
+      if(tSnap.exists()) {
+        const tVal = tSnap.val();
+        effectiveRole = tVal.approved === false ? "suspended" : "technician";
+        currentRole = effectiveRole;
+        currentTech = tVal;
+      }
+    }
+
+    if(["technician", "suspended"].includes(effectiveRole) && activeUid) {
+      const snap = await db.ref("technicianJobs/" + activeUid).once("value");
       const allJobs = [];
       snap.forEach(c => allJobs.push({ ...c.val(), id: c.key }));
       allJobs.sort((a,b) => (b.createdAt||0) - (a.createdAt||0));
@@ -2674,7 +2698,7 @@ async function renderChatHub() {
       return;
     }
 
-    const custUid = (currentUser && !currentUser.isAnonymous && currentRole !== "admin")
+    const custUid = (currentUser && !currentUser.isAnonymous && effectiveRole !== "admin")
       ? currentUser.uid
       : jabalGet("CustomerUid");
 
