@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#083852">
-<title>صخر | بيتي للصيانة</title>
+<title>جبل | لصيانة المنازل</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap');
 
@@ -21,11 +21,9 @@
   --teal-calm: #0c5f82;
   --teal-deep: #063850;
   --teal-shadow: #031e2c;
-  --teal-border: #eab308;
   --teal-tint: #e0f2fe;
   --text-main: #082f44;
   --text-muted: #475569;
-  --card-bg: #fdf5e4;
   --border-soft: #e2bc6b;
   --border-gold: #eab308;
   --green-calm: #15803d;
@@ -117,7 +115,7 @@ header {
   align-items: center;
   justify-content: center;
   box-shadow: 0 3px 0 var(--teal-shadow), 0 5px 10px rgba(6, 56, 80, 0.28);
-  transition: transform 0.12s, filter 0.2s;
+  transition: transform 0.12s;
 }
 .back-icon-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--teal-shadow); }
 
@@ -125,10 +123,6 @@ header {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0;
-  border: none;
-  background: transparent;
-  box-shadow: none;
   cursor: pointer;
 }
 .brand img { height: 46px; width: auto; object-fit: contain; display: block; }
@@ -200,14 +194,6 @@ header {
 }
 .drawer-nav-btn:hover { filter: brightness(1.06); }
 .drawer-nav-btn:active { transform: translateY(2px); }
-.drawer-nav-btn.primary-drawer {
-  background: linear-gradient(155deg, #f7d265 0%, #d4a024 100%);
-  color: var(--navy-deep);
-  border-color: var(--navy);
-  box-shadow: var(--btn-3d-gold);
-  margin-top: 6px;
-  font-weight: 900;
-}
 
 /* شريط التنقل السفلي الثابت */
 .bottom-nav {
@@ -243,10 +229,7 @@ header {
   color: var(--gold-bright);
   background: rgba(255, 255, 255, 0.06);
 }
-.bottom-nav-btn .b-icon {
-  font-size: 18px;
-  line-height: 1;
-}
+.bottom-nav-btn .b-icon { font-size: 18px; line-height: 1; }
 
 .red-badge {
   position: absolute;
@@ -566,10 +549,29 @@ header {
   flex-wrap: wrap;
 }
 
+.quick-replies-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+.quick-reply-chip {
+  background: var(--bg-soft);
+  color: var(--navy);
+  border: 1px solid var(--border-gold);
+  border-radius: 999px;
+  padding: 5px 10px;
+  font-size: 11px;
+  font-weight: 800;
+}
+.quick-reply-chip:hover {
+  background: var(--gold-soft);
+}
+
 .full-chat-messages {
   flex: 1;
-  min-height: 280px;
-  max-height: 52vh;
+  min-height: 270px;
+  max-height: 50vh;
   overflow-y: auto;
   border: 1.5px solid var(--border-gold);
   border-radius: 12px;
@@ -636,7 +638,7 @@ footer { background: linear-gradient(180deg, var(--teal-deep) 0%, var(--navy-dee
 
   <div class="header-center-slot">
    <div class="brand" onclick="navigateToSection('home')">
-    <img src="logo.png" alt="لوغو صخر الرسمي">
+    <img src="logo.png" alt="لوغو جبل الرسمي">
    </div>
   </div>
 
@@ -647,7 +649,7 @@ footer { background: linear-gradient(180deg, var(--teal-deep) 0%, var(--navy-dee
 
  <div class="announcement-container">
   <div id="globalAnnouncementBar" class="announcement-bar">
-   📢 أهلاً بكم في منصة صخر للصيانة المنزلية - تواصل مع أفضل الفنيين المعتمدين في منطقتك بكل سهولة.
+   📢 أهلاً بكم في تطبيق جبل لصيانة المنازل - تواصل مع أفضل الفنيين المعتمدين في منطقتك بكل سهولة.
   </div>
  </div>
 </header>
@@ -655,17 +657,13 @@ footer { background: linear-gradient(180deg, var(--teal-deep) 0%, var(--navy-dee
 <div class="drawer-backdrop hidden" id="navDrawerBackdrop" onclick="closeNavDrawer()"></div>
 <aside class="side-drawer hidden" id="navDrawer">
  <div class="drawer-head">
-  <strong>قائمة منصة صخر</strong>
+  <strong>خيارات إضافية — جبل</strong>
   <div class="close" onclick="closeNavDrawer()">✕</div>
  </div>
- <button type="button" class="drawer-nav-btn" onclick="closeNavDrawer(); navigateToSection('home')">🏠 الرئيسية</button>
- <button type="button" class="drawer-nav-btn" onclick="closeNavDrawer(); requireGate(() => navigateToSection('services'))">🧰 خدماتنا</button>
- <button type="button" class="drawer-nav-btn" onclick="closeNavDrawer(); requireGate(() => openChatHub())">💬 الدردشة والطلبات</button>
- <button type="button" class="drawer-nav-btn hidden" id="techsNavBtn" onclick="closeNavDrawer(); openAdminTechsView()">🛠️ الفنيون</button>
  <button type="button" class="drawer-nav-btn" onclick="closeNavDrawer(); requireGate(() => openSupportChatModal())">🎧 فريق الدعم</button>
  <button type="button" class="drawer-nav-btn" onclick="closeNavDrawer(); navigateToSection('reviewsChat')">⭐ التقييم والملاحظات</button>
+ <button type="button" class="drawer-nav-btn hidden" id="techsNavBtn" onclick="closeNavDrawer(); openAdminTechsView()">🛠️ الفنيون</button>
  <button type="button" class="drawer-nav-btn hidden" id="adminNavBtn" onclick="closeNavDrawer(); navigateToSection('admin')">⚙️ الإدارة</button>
- <button type="button" class="drawer-nav-btn primary-drawer" id="authNavBtn" onclick="closeNavDrawer(); handleAuthNav()">🔐 تسجيل الدخول</button>
 </aside>
 
 <main>
@@ -673,7 +671,7 @@ footer { background: linear-gradient(180deg, var(--teal-deep) 0%, var(--navy-dee
  <div class="hero-banner">
   <h2>خدمات صيانة منزلية بمستوى احترافي</h2>
   <div class="slogan">بيتك يستاهل الأفضل</div>
-  <p>أسرع منصة لربط أصحاب المنازل بأفضل الفنيين المحليين في قضائك</p>
+  <p>تطبيق جبل يربط أصحاب المنازل بأفضل الفنيين المحليين في قضائك</p>
  </div>
 
  <div class="container" id="homeServicesSection">
@@ -704,9 +702,13 @@ footer { background: linear-gradient(180deg, var(--teal-deep) 0%, var(--navy-dee
  <div class="techs-grid" id="publicTechList"><div class="empty">جارٍ تحميل الفنيين المتاحين...</div></div>
 </section>
 
-<!-- قسم الدردشة والطلبات (بطاقات الطلبات الجديدة + المحادثات النشطة) -->
+<!-- قسم الدردشة والطلبات (الطلبات الجديدة + المحادثات النشطة + سجل المنتهية منفصل) -->
 <section id="chatHubSection" class="container hidden">
  <h2 class="section-title">💬 الدردشة والطلبات</h2>
+ <div style="display:flex; justify-content:center; gap:8px; margin-bottom:14px;">
+  <button type="button" class="btn primary" id="btnChatActiveTab" onclick="switchChatHistoryTab(false)">🟢 النشطة والجديدة</button>
+  <button type="button" class="btn light" id="btnChatHistoryTab" onclick="switchChatHistoryTab(true)">📁 سجل الطلبات المنتهية</button>
+ </div>
  <div id="chatHubPendingRequests"></div>
  <div id="chatHubThreadsList"><div class="empty">جارٍ تحميل المحادثات والطلبات...</div></div>
 </section>
@@ -747,10 +749,16 @@ footer { background: linear-gradient(180deg, var(--teal-deep) 0%, var(--navy-dee
   </div>
 
   <div class="chat-toolbar">
-   <span class="muted" style="font-weight:800;">محادثة كتابية مستمرة طوال فترة العمل</span>
+   <span class="muted" style="font-weight:800;">محادثة كتابية مستمرة</span>
    <button type="button" class="btn whatsapp-btn" style="padding:6px 10px; font-size:11.5px;" onclick="requestWhatsappInChat()">
     <span>🟢</span> طلب واتساب
    </button>
+  </div>
+
+  <div class="quick-replies-row">
+   <button type="button" class="quick-reply-chip" onclick="insertQuickReply('دزلي الموقع (GPS) لو سمحت')">📍 دزلي الموقع</button>
+   <button type="button" class="quick-reply-chip" onclick="insertQuickReply('أني بالطريق وجاييك')">🚗 أني بالطريق</button>
+   <button type="button" class="quick-reply-chip" onclick="insertQuickReply('تم الاتفاق على السعر والوقت')">🤝 تم الاتفاق</button>
   </div>
 
   <div id="fullChatMessages" class="full-chat-messages"></div>
@@ -803,7 +811,7 @@ footer { background: linear-gradient(180deg, var(--teal-deep) 0%, var(--navy-dee
  </div>
 
  <div class="card" style="max-width:700px;margin:0 auto 22px">
-  <div class="notice">شاركنا رأيك وملاحظتك حول الخدمات، وتقييمك يهمنا لتطوير أداء المنصة.</div>
+  <div class="notice">شاركنا رأيك وملاحظتك حول الخدمات، وتقييمك يهمنا لتطوير أداء تطبيق جبل.</div>
   <div class="field"><label>اسمك الكريم</label><input id="reviewName" placeholder="اسمك الكامل"></div>
   <div class="field">
    <label>التقييم بالنجوم</label>
@@ -824,9 +832,9 @@ footer { background: linear-gradient(180deg, var(--teal-deep) 0%, var(--navy-dee
 </section>
 
 <section id="join" class="container hidden">
- <h2 class="section-title">انضم إلى شبكة فنيي صخر</h2>
+ <h2 class="section-title">انضم إلى شبكة فنيي جبل</h2>
  <form class="card" style="max-width:650px;margin:0 auto" onsubmit="event.preventDefault(); registerTechFlexible();">
-  <div class="notice">تسجيل سريع ومبسط للفني (3 أعمال مجاناً بالكامل). يمكنك التسجيل بحساب جوجل أو البريد الإلكتروني أو رقم الهاتف.</div>
+  <div class="notice">تسجيل سريع ومبسط للفني في تطبيق جبل (3 أعمال مجاناً بالكامل). يمكنك التسجيل بحساب جوجل أو البريد الإلكتروني أو رقم الهاتف.</div>
   <button type="button" class="btn google-btn" style="width:100%; margin-bottom:10px; padding:10px;" onclick="signInWithGoogleRole('technician')">
    <span>🌐</span> التسجيل السريع بحساب جوجل (Google)
   </button>
@@ -863,7 +871,7 @@ footer { background: linear-gradient(180deg, var(--teal-deep) 0%, var(--navy-dee
 </section>
 
 <section id="techAccount" class="container hidden">
- <h2 class="section-title">الملف الشخصي - لوحة تحكم الفني</h2>
+ <h2 class="section-title">حسابي — فني جبل</h2>
 
  <div id="techIncompleteChecklist" class="incomplete-checklist-card hidden"></div>
  <div id="techAlertBox"></div>
@@ -872,7 +880,7 @@ footer { background: linear-gradient(180deg, var(--teal-deep) 0%, var(--navy-dee
 
  <div class="card" style="margin-bottom:15px;">
   <h3 style="color:var(--navy); margin-top:0; font-size:15px; font-weight:900;">🟢 حالة التواجد (متاح لاستقبال الطلبات)</h3>
-  <div style="font-size:13px; color:var(--text-main); margin-bottom:10px;">يمكنك تفعيل حالتك لتكون ظاهراً للزبائن أو إيقافها عندما تكون مشغولاً أو نائماً:</div>
+  <div style="font-size:13px; color:var(--text-main); margin-bottom:10px;">يمكنك تفعيل حالتك لتكون ظاهراً للزبائن أو إيقافها عندما تكون مشغولاً أو مرتاحاً:</div>
   <div style="display:flex; gap:10px; align-items:center;">
    <button type="button" id="toggleAvailableBtn" class="btn primary" onclick="toggleTechAvailability()"></button>
   </div>
@@ -888,15 +896,11 @@ footer { background: linear-gradient(180deg, var(--teal-deep) 0%, var(--navy-dee
   <button class="btn gold-3d" style="padding: 10px 20px; font-size: 13.5px;" onclick="openTechEditModal()">⚙️ استكمال وتعديل الملف الشخصي</button>
  </div>
 
- <div id="techJobsArea">
-  <h3 class="section-title" style="font-size:16px;">طلبات الزبائن الواردة إليك</h3>
-  <div id="techJobs"></div>
- </div>
- <button class="btn danger" style="margin-top:18px; width:100%;" onclick="logout()">🚪 تسجيل الخروج</button>
+ <button class="btn danger" style="margin-top:8px; width:100%;" onclick="logout()">🚪 تسجيل الخروج</button>
 </section>
 
 <section id="customerAccountView" class="container hidden">
- <h2 class="section-title">الملف الشخصي للزبون</h2>
+ <h2 class="section-title">حسابي — الزبون</h2>
  <div class="card" style="max-width:620px; margin:0 auto;">
   <div style="text-align:center; margin-bottom:12px;">
    <div style="font-size:44px;">👤</div>
@@ -905,24 +909,19 @@ footer { background: linear-gradient(180deg, var(--teal-deep) 0%, var(--navy-dee
 
   <div id="custProfileListBox" class="profile-list-card"></div>
 
-  <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-bottom:16px;">
+  <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:center;">
    <button class="btn gold-3d" style="flex:1; min-width:180px;" onclick="openCustomerEditModal()">⚙️ استكمال وتعديل الملف الشخصي</button>
    <button class="btn danger" style="flex:1; min-width:150px;" onclick="logoutCustomer()">🚪 تسجيل الخروج</button>
-  </div>
-
-  <div id="custMyOrdersArea">
-   <h3 class="section-title" style="font-size:15.5px; margin-top:10px;">📋 طلباتي ومحادثاتي مع الفنيين</h3>
-   <div id="custMyOrdersList"><div class="empty">لا توجد طلبات مرسلة حالياً.</div></div>
   </div>
  </div>
 </section>
 
 <section id="adminProfile" class="container hidden">
- <h2 class="section-title">الملف الشخصي - مدير المنصة</h2>
+ <h2 class="section-title">الملف الشخصي - مدير جبل</h2>
  <div class="card" style="margin-bottom:18px;">
   <h3 style="color:var(--navy); margin-top:0; font-size:15.5px; font-weight:900;">👤 معلومات المدير</h3>
   <div class="muted">البريد الإداري المعتمد: <b style="color:var(--navy);">daa44027@gmail.com</b></div>
-  <div class="muted" style="margin-top:4px;">الصلاحية: مدير عام المنصة</div>
+  <div class="muted" style="margin-top:4px;">الصلاحية: مدير عام تطبيق جبل</div>
  </div>
 
  <hr style="border-color:var(--border-soft)">
@@ -933,12 +932,17 @@ footer { background: linear-gradient(180deg, var(--teal-deep) 0%, var(--navy-dee
 </section>
 
 <section id="admin" class="container hidden">
- <h2 class="section-title">لوحة إدارة منصة صخر</h2>
+ <h2 class="section-title">لوحة إدارة تطبيق جبل</h2>
  <div class="admin-stats-grid" id="adminStats" style="margin-bottom:18px"></div>
+
+ <div class="card" style="margin-bottom:18px; text-align:center;">
+  <h3 style="color:var(--navy); margin-top:0; font-size:15px; font-weight:900;">🧹 أدوات الفحص والتنظيف</h3>
+  <button type="button" class="btn danger" onclick="adminClearTestOrders()">تنظيف الطلبات التجريبية القديمة</button>
+ </div>
 
  <div class="card" style="margin-bottom:18px;">
   <h3 style="color:var(--navy); margin-top:0; font-size:15px; font-weight:900;">🗺️ التحكم بالمحافظات الفعّالة (التوسع التدريجي)</h3>
-  <div class="muted" style="margin-bottom:8px;">اضغط على أي محافظة لتفعيلها أو إيقافها للزبائن (المحافظات غير المفعّلة يظهر لها تنبيه التوسع القريب):</div>
+  <div class="muted" style="margin-bottom:8px;">اضغط على أي محافظة لتفعيلها أو إيقافها للزبائن:</div>
   <div id="adminActiveCitiesBox" class="cities-toggle-grid"></div>
  </div>
  
@@ -948,7 +952,7 @@ footer { background: linear-gradient(180deg, var(--teal-deep) 0%, var(--navy-dee
  </div>
 
  <div id="adminAccountsTab" class="admin-tab-content">
-  <h3 class="section-title" style="font-size:16px;">إجمالي حسابات الزبائن المسجلة في المنصة</h3>
+  <h3 class="section-title" style="font-size:16px;">إجمالي حسابات الزبائن المسجلة</h3>
   <div id="adminAllAccounts"><div class="empty">جارٍ تحميل الحسابات...</div></div>
  </div>
 
@@ -983,7 +987,7 @@ footer { background: linear-gradient(180deg, var(--teal-deep) 0%, var(--navy-dee
 </nav>
 
 <footer>
- <strong>صخر | منصة الصيانة المنزلية المعتمدة</strong><br>بيتك يستاهل الأفضل دائماً
+ <strong>جبل | لصيانة المنازل</strong><br>بيتك يستاهل الأفضل دائماً
  <div class="footer-links">
   <button onclick="openDisclaimer()">إخلاء المسؤولية وشروط الاستخدام</button>
  </div>
@@ -991,7 +995,7 @@ footer { background: linear-gradient(180deg, var(--teal-deep) 0%, var(--navy-dee
 
 <div class="modal hidden" id="customAlertModal">
  <div class="modal-box" style="text-align: center;">
-  <div class="modal-head"><h3>تنبيه منصة صخر</h3><div class="close" onclick="closeModal('customAlertModal')">✕</div></div>
+  <div class="modal-head"><h3>تنبيه تطبيق جبل</h3><div class="close" onclick="closeModal('customAlertModal')">✕</div></div>
   <div style="font-size: 14.5px; font-weight: 800; color: var(--navy); margin: 18px 0;" id="customAlertText"></div>
   <button class="btn primary" onclick="closeModal('customAlertModal')" style="width: 100%;">حسناً</button>
  </div>
@@ -1019,8 +1023,8 @@ footer { background: linear-gradient(180deg, var(--teal-deep) 0%, var(--navy-dee
 
 <div class="modal hidden" id="roleSelectionModal">
  <div class="modal-box" style="text-align: center;">
-  <div class="modal-head"><h3>اختر طريقة الدخول</h3><div class="close" onclick="closeModal('roleSelectionModal')">✕</div></div>
-  <div style="font-size: 13.5px; font-weight: 800; color: var(--navy); margin: 14px 0;">يرجى اختيار طريقة الدخول للاستفادة من المنصة:</div>
+  <div class="modal-head"><h3>اختر طريقة الدخول إلى جبل</h3><div class="close" onclick="closeModal('roleSelectionModal')">✕</div></div>
+  <div style="font-size: 13.5px; font-weight: 800; color: var(--navy); margin: 14px 0;">يرجى اختيار طريقة الدخول للاستفادة من التطبيق:</div>
   <div class="role-btns" style="margin-bottom: 10px;">
    <button class="role-btn customer" onclick="closeModal('roleSelectionModal'); handleCustomerRoleEntry()">👤 الدخول كزبون</button>
    <button class="role-btn technician" onclick="closeModal('roleSelectionModal'); handleTechnicianRoleEntry()">🛠️ الدخول كفني</button>
@@ -1038,16 +1042,16 @@ footer { background: linear-gradient(180deg, var(--teal-deep) 0%, var(--navy-dee
 
 <div class="modal hidden" id="termsModal">
  <div class="modal-box">
-  <div class="modal-head"><h3>شروط الاستخدام وأحكام المنصة</h3></div>
+  <div class="modal-head"><h3>شروط الاستخدام وأحكام تطبيق جبل</h3></div>
   <div style="font-size:13px; line-height:1.7; color:var(--text-main); max-height: 200px; overflow-y: auto; background: var(--bg-soft); padding: 10px; border-radius: 8px; border: 1.5px solid var(--border-gold);">
-   أهلاً بك في منصة <b>صخر</b> للصيانة المنزلية. باستخدامك لهذه المنصة، فإنك توافق على الالتزام بشروط الاستخدام، وأن المنصة هي وسيط تقني يربط الزبون بالفني المستقل ولا تتحمل مسؤولية النزاعات الشخصية. يرجى التعامل باحترام ومهنية.
+   أهلاً بك في تطبيق <b>جبل</b> لصيانة المنازل. باستخدامك لهذا التطبيق، فإنك توافق على الالتزام بشروط الاستخدام، وأن التطبيق وسيط تقني يربط الزبون بالفني المستقل ولا يتحمل مسؤولية النزاعات الشخصية. يرجى التعامل باحترام ومهنية.
   </div>
   <div style="margin-top: 14px; display: flex; align-items: center; gap: 10px; background: var(--bg-soft); padding: 10px; border-radius: 8px; border: 1.5px solid var(--border-gold);">
    <input type="checkbox" id="termsCheckbox" style="width: 20px; height: 20px; accent-color: var(--teal-calm); cursor: pointer;">
-   <label for="termsCheckbox" style="font-size: 13px; font-weight: 800; color: var(--navy); cursor: pointer;">أوافق على شروط الاستخدام وأحكام المنصة</label>
+   <label for="termsCheckbox" style="font-size: 13px; font-weight: 800; color: var(--navy); cursor: pointer;">أوافق على شروط الاستخدام وأحكام التطبيق</label>
   </div>
   <div style="margin-top: 14px;">
-   <button class="btn primary" style="width:100%;" onclick="acceptTermsWithCheck()">متابعة والدخول للمنصة</button>
+   <button class="btn primary" style="width:100%;" onclick="acceptTermsWithCheck()">متابعة والدخول للتطبيق</button>
   </div>
  </div>
 </div>
@@ -1089,7 +1093,7 @@ footer { background: linear-gradient(180deg, var(--teal-deep) 0%, var(--navy-dee
  <div class="modal-box">
   <div class="modal-head"><h3 id="reqPhoneModalTitle">استكمال البيانات الأساسية</h3><div class="close" onclick="closeModal('phoneRequiredModal')">✕</div></div>
   <div class="notice">تأكد من كتابة اسمك الحقيقي وتحديد المحافظة والقضاء (رقم الهاتف اختياري ويُطلب فقط عند التواصل عبر واتساب).</div>
-  <div class="field"><label>الاسم الكامل (يمكنك تعديله لاسمك الحقيقي)</label><input id="reqPhoneName" placeholder="الاسم الكامل"></div>
+  <div class="field"><label>الاسم الكامل</label><input id="reqPhoneName" placeholder="الاسم الكامل"></div>
   <div class="field"><label>رقم الهاتف (اختياري - 07XXXXXXXXX)</label><input id="reqPhoneNumber" inputmode="tel" placeholder="07XXXXXXXXX (اختياري)"></div>
   <div class="row">
    <div class="field"><label>المحافظة</label><select id="reqPhoneCity" onchange="setDistricts('reqPhoneArea', this.value)"></select></div>
@@ -1143,8 +1147,8 @@ footer { background: linear-gradient(180deg, var(--teal-deep) 0%, var(--navy-dee
 
 <div class="modal hidden" id="supportChatModal">
  <div class="modal-box">
-  <div class="modal-head"><h3>🎧 فريق الدعم</h3><div class="close" onclick="closeSupportChatModal()">✕</div></div>
-  <div class="notice">تواصل مباشرة مع إدارة منصة صخر لأي استفسار أو مساعدة.</div>
+  <div class="modal-head"><h3>🎧 فريق الدعم — جبل</h3><div class="close" onclick="closeSupportChatModal()">✕</div></div>
+  <div class="notice">تواصل مباشرة مع إدارة تطبيق جبل لأي استفسار أو مساعدة.</div>
 
   <div id="adminSupportThreadPicker" class="field hidden">
    <label>اختر محادثة المستخدم:</label>
@@ -1163,7 +1167,7 @@ footer { background: linear-gradient(180deg, var(--teal-deep) 0%, var(--navy-dee
 <div class="modal hidden" id="techEditModal">
  <div class="modal-box">
   <div class="modal-head"><h3>استكمال وتعديل الملف الشخصي</h3><div class="close" onclick="closeModal('techEditModal')">✕</div></div>
-  <div class="field"><label>الاسم الكامل (تأكد من كتابة اسمك الحقيقي)</label><input id="editTechName" placeholder="الاسم الكامل"></div>
+  <div class="field"><label>الاسم الكامل</label><input id="editTechName" placeholder="الاسم الكامل"></div>
   <div class="row">
    <div class="field"><label>المحافظة</label><select id="editTechCity" onchange="setDistricts('editTechArea', this.value)"></select></div>
    <div class="field"><label>القضاء</label><select id="editTechArea"><option value="">اختر القضاء</option></select></div>
@@ -1190,20 +1194,10 @@ footer { background: linear-gradient(180deg, var(--teal-deep) 0%, var(--navy-dee
  </div>
 </div>
 
-<div class="modal hidden" id="adminDirectRequestModal">
- <div class="modal-box" style="text-align: center;">
-  <div class="modal-head"><h3>إرسال طلب صيانة</h3><div class="close" onclick="closeModal('adminDirectRequestModal')">✕</div></div>
-  <div style="font-size: 15px; font-weight: 800; color: var(--navy); margin: 18px 0;" id="adminDirectRequestText">
-   الطلب قيد التنفيذ، بانتظار موافقة الفني...
-  </div>
-  <button class="btn primary" style="width: 100%;" onclick="closeModal('adminDirectRequestModal')">حسناً</button>
- </div>
-</div>
-
 <div class="modal hidden" id="loginModal">
  <div class="modal-box">
   <form onsubmit="event.preventDefault(); loginWithPhonePassword();">
-   <div class="modal-head"><h3>تسجيل الدخول الآمن</h3><div class="close" onclick="closeModal('loginModal')">✕</div></div>
+   <div class="modal-head"><h3>تسجيل الدخول — جبل</h3><div class="close" onclick="closeModal('loginModal')">✕</div></div>
    <div class="notice">أدخل رقم هاتفك أو بريدك الإلكتروني وكلمة المرور للمتابعة.</div>
    <button type="button" class="btn google-btn" style="width:100%; margin-bottom:10px; padding:10px;" onclick="signInWithGoogleRole('auto')">
     <span>🌐</span> الدخول بحساب جوجل (Google)
@@ -1235,9 +1229,9 @@ footer { background: linear-gradient(180deg, var(--teal-deep) 0%, var(--navy-dee
 
 <div class="modal hidden" id="disclaimerModal">
  <div class="modal-box">
-  <div class="modal-head"><h3>إخلاء المسؤولية القانونية</h3><div class="close" onclick="closeModal('disclaimerModal')">✕</div></div>
+  <div class="modal-head"><h3>إخلاء المسؤولية القانونية — جبل</h3><div class="close" onclick="closeModal('disclaimerModal')">✕</div></div>
   <p style="line-height:1.7;font-size:13px;color:var(--text-main)">
-   منصة <b>"صخر"</b> هي أداة تقنية ووسيط إعلاني رقمي فقط تربط بين الزبون والفني المستقل. لا تتحمل إدارة المنصة أي مسؤولية قانونية أو مالية أو أخلاقية عن جودة الأداء أو الخلافات بين الطرفين.
+   تطبيق <b>"جبل"</b> هو أداة تقنية ووسيط إعلاني رقمي فقط تربط بين الزبون والفني المستقل. لا تتحمل إدارة التطبيق أي مسؤولية قانونية أو مالية أو أخلاقية عن جودة الأداء أو الخلافات بين الطرفين.
   </p>
   <button class="btn primary" style="width:100%;margin-top:12px" onclick="closeModal('disclaimerModal')">فهمت وقبلت الشروط</button>
  </div>
@@ -1310,7 +1304,7 @@ let chosenCustomerCity="",chosenCustomerArea="",selectedTargetTech=null;
 let currentSelectedService="",currentSelectedSubservice="",currentAdminTechsSubTab="registered";
 let currentSectionId="home",navigationHistory=["home"];
 let techJobsListener=null,supportChatListener=null,orderChatListener=null,orderMetaListener=null,badgeListener=null;
-let activeOrderChatId=null,activeOrderMeta=null;
+let activeOrderChatId=null,activeOrderMeta=null,showEndedChatHistory=false;
 let preferredGoogleRole="auto",pendingAfterPhoneCheck=null,pendingAfterWhatsappPhone=null,announcementTimer=null,pendingAfterGate=null;
 let custRegAuthMode="phone",techRegAuthMode="phone",isSigningOutFlag=false,isGoogleAuthInProgress=false;
 
@@ -1318,7 +1312,7 @@ const $=id=>document.getElementById(id);
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 
 function formatOpenDuration(startedAt, endedAt = null) {
-  if (!startedAt) return "لم تبدأ بعد";
+  if (!startedAt) return "تبدأ بعد الموافقة";
   const endTs = endedAt || Date.now();
   const diffMs = Math.max(0, endTs - Number(startedAt));
   const totalMinutes = Math.floor(diffMs / 60000);
@@ -1328,6 +1322,10 @@ function formatOpenDuration(startedAt, endedAt = null) {
   if (days > 0) return `${days} يوم و ${hours} ساعة`;
   if (hours > 0) return `${hours} ساعة و ${mins} دقيقة`;
   return `${mins} دقيقة`;
+}
+
+function isOrderEndedOrCompleted(status, continuationState = "") {
+  return ["منتهي", "مكتمل", "مرفوض من الفني"].includes(status) || continuationState === "ended";
 }
 
 function normalizeIraqiPhone(raw) {
@@ -1498,7 +1496,7 @@ function isCityActive(city) {
 
 function getCityExpansionMessage(city) {
   const activeNames = activeCities.length ? activeCities.join(" و ") : "المناطق المعتمدة";
-  return `محافظة (${city}) ضمن خطة التوسع القريبة لمنصة صخر. الخدمة الفعّالة حالياً في: ${activeNames}.`;
+  return `محافظة (${city}) ضمن خطة التوسع القريبة لتطبيق جبل. الخدمة الفعّالة حالياً في: ${activeNames}.`;
 }
 
 function isUserEntered() {
@@ -1827,24 +1825,17 @@ function handleAuthNav() {
 }
 
 function updateNavAuthButton() {
-  const btn = $("authNavBtn"), adminBtn = $("adminNavBtn"), techsBtn = $("techsNavBtn"), bLbl = $("bNavAccountLabel");
-  if(!btn) return;
+  const adminBtn = $("adminNavBtn"), techsBtn = $("techsNavBtn"), bLbl = $("bNavAccountLabel");
   const customerName = localStorage.getItem("sakhrCustomerName");
   const isAdmin = currentRole === "admin";
   adminBtn?.classList.toggle("hidden", !isAdmin);
   techsBtn?.classList.toggle("hidden", !isAdmin);
 
-  if(isAdmin || ["technician", "suspended"].includes(currentRole)) {
-    btn.innerText = "👤 الملف الشخصي";
-    if(bLbl) bLbl.innerText = "حسابي";
-  } else if(customerName) {
-    btn.innerText = "👤 " + customerName;
-    if(bLbl) bLbl.innerText = customerName.split(" ")[0] || "حسابي";
-  } else {
-    btn.innerText = "🔐 تسجيل الدخول";
-    if(bLbl) bLbl.innerText = "دخول";
+  if(bLbl) {
+    if(isAdmin || ["technician", "suspended"].includes(currentRole)) bLbl.innerText = "حسابي";
+    else if(customerName) bLbl.innerText = customerName.split(" ")[0] || "حسابي";
+    else bLbl.innerText = "حسابي";
   }
-  btn.className = "drawer-nav-btn primary-drawer";
 }
 
 function setupLocations(){
@@ -1907,7 +1898,7 @@ async function finalizeGoogleUserSession(gUser, roleHint = "auto") {
   const techSnap = await db.ref("technicians/" + gUser.uid).once("value");
   if(techSnap.exists() || roleHint === "technician") {
     let techData = techSnap.exists() ? techSnap.val() : {
-      name: gUser.displayName || "فني صخر", email: gUser.email || "", phone: "", city: "", area: "",
+      name: gUser.displayName || "فني جبل", email: gUser.email || "", phone: "", city: "", area: "",
       neighborhood: "", service: "", subservices: [], otherAppliances: "", bio: "", extraInfo: "",
       photoURL: gUser.photoURL || "", approved: true, available: true, subscriptionStatus: "غير فعال",
       subscriptionType: "none", subscriptionExpiresAt: 0, freeJobsUsed: 0, completedJobs: 0,
@@ -1931,7 +1922,7 @@ async function finalizeGoogleUserSession(gUser, roleHint = "auto") {
 
   const accSnap = await db.ref("allAccounts/" + gUser.uid).once("value");
   const existingAcc = accSnap.exists() ? accSnap.val() : {};
-  const custName = existingAcc.name || gUser.displayName || "زبون صخر";
+  const custName = existingAcc.name || gUser.displayName || "زبون جبل";
   const custPhone = existingAcc.phone || "";
   const custCity = existingAcc.city || "";
   const custArea = existingAcc.area || "";
@@ -2026,8 +2017,8 @@ async function submitCustomerRegistration(){
   }
 }
 
-async function renderCustomerAccount() {
-  const name = localStorage.getItem("sakhrCustomerName") || "زبون صخر";
+function renderCustomerAccount() {
+  const name = localStorage.getItem("sakhrCustomerName") || "زبون جبل";
   const phone = localStorage.getItem("sakhrCustomerPhone") || "غير مضاف (يُضاف عند طلب واتساب)";
   const email = localStorage.getItem("sakhrCustomerEmail") || "غير مضاف";
   const city = localStorage.getItem("sakhrCustomerCity") || "غير محدد";
@@ -2046,35 +2037,6 @@ async function renderCustomerAccount() {
       <div class="profile-list-row"><span class="profile-list-label">الحي / المنطقة</span><span class="profile-list-value">${esc(neighborhood)}</span></div>
       <div class="profile-list-row"><span class="profile-list-label">إضافات وملاحظات</span><span class="profile-list-value">${esc(notes)}</span></div>
     `;
-  }
-
-  const custUid = (currentUser && !currentUser.isAnonymous) ? currentUser.uid : localStorage.getItem("sakhrCustomerUid");
-  const ordersBox = $("custMyOrdersList");
-  if(ordersBox && custUid && db) {
-    try {
-      const snap = await db.ref("requests/" + custUid).once("value");
-      const list = [];
-      snap.forEach(c => list.push({ ...c.val(), id: c.key }));
-      if(!list.length) {
-        ordersBox.innerHTML = '<div class="empty">لا توجد طلبات مرسلة حالياً.</div>';
-      } else {
-        ordersBox.innerHTML = list.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0)).map(o => {
-          const durationStr = o.chatStartedAt ? formatOpenDuration(o.chatStartedAt, o.chatEndedAt || null) : "تبدأ بعد الموافقة";
-          const canOpenChat = ["مقبول من الفني", "مستمر", "منتهي", "مكتمل"].includes(o.status);
-          return `
-          <div class="list-item">
-            <h4>${esc(o.service)} — ${esc(o.status)}</h4>
-            <div class="muted">الفني: <b>${esc(o.assignedTechName || 'فني معتمد')}</b> | مدة المحادثة: <b>${esc(durationStr)}</b></div>
-            <p style="margin:6px 0; font-size:12.5px;">${esc(o.problem)}</p>
-            <div class="actions">
-              ${canOpenChat
-                ? `<button type="button" class="btn secondary" onclick="openFullOrderChat('${esc(o.id)}','${esc(o.assignedTechName || o.service)}')">💬 فتح المحادثة</button>`
-                : `<span class="muted">بانتظار موافقة الفني لفتح المحادثة...</span>`}
-            </div>
-          </div>`;
-        }).join("");
-      }
-    } catch(_) {}
   }
 }
 
@@ -2355,7 +2317,7 @@ async function registerTechFlexible(){
     startChatBadgeWatcher();
     navigateToSection("techAccount");
     await renderTechAccount();
-    showCustomAlert("تم إنشاء حسابك كفني بنجاح! يمكنك استكمال باقي تفاصيل ملفك الشخصي من زر التعديل بالأسفل.");
+    showCustomAlert("تم إنشاء حسابك في جبل بنجاح! يمكنك استكمال باقي تفاصيل ملفك الشخصي من زر التعديل بالأسفل.");
   }catch(e){
     showCustomAlert(formatAuthErrorMessage(e));
     if(createdUser && !profileSaved){ try{await createdUser.delete()}catch(_){} }
@@ -2382,7 +2344,7 @@ async function loginWithPhonePassword(){
       currentRole = "customer_auth";
       const accSnap = await db.ref("allAccounts/"+c.user.uid).once("value");
       const acc = accSnap.exists() ? accSnap.val() : {};
-      const cName = acc.name || "زبون صخر";
+      const cName = acc.name || "زبون جبل";
       const cPhone = acc.phone || (!inputVal.includes("@") ? normalizeIraqiPhone(inputVal) : "");
       const cEmail = acc.email || (inputVal.includes("@") ? inputVal.toLowerCase() : "");
       const cCity = acc.city || "";
@@ -2396,7 +2358,7 @@ async function loginWithPhonePassword(){
 
       await logUserAccount(c.user.uid, { name: cName, phone: cPhone, email: cEmail || emailPseudo, role: "زبون", loginTime: Date.now() });
       ["loginModal","termsModal","roleSelectionModal","customerAccountModal"].forEach(closeModal);
-      updateNavAuthButton(); startChatBadgeWatcher(); showCustomAlert("أهلاً بك مجدداً في منصة صخر!"); navigateToSection("home"); runPendingGateAction();
+      updateNavAuthButton(); startChatBadgeWatcher(); showCustomAlert("أهلاً بك مجدداً في تطبيق جبل!"); navigateToSection("home"); runPendingGateAction();
       return;
     }
 
@@ -2546,8 +2508,17 @@ function renderPublicTechs(){
 }
 
 // ==========================================
-// مركز الدردشة والطلبات + المحادثة الكاملة على طول الشاشة + التقييم
+// مركز الدردشة والطلبات + المحادثة الكاملة + التقييم
 // ==========================================
+function switchChatHistoryTab(showEnded) {
+  showEndedChatHistory = Boolean(showEnded);
+  $("btnChatActiveTab")?.classList.toggle("primary", !showEndedChatHistory);
+  $("btnChatActiveTab")?.classList.toggle("light", showEndedChatHistory);
+  $("btnChatHistoryTab")?.classList.toggle("primary", showEndedChatHistory);
+  $("btnChatHistoryTab")?.classList.toggle("light", !showEndedChatHistory);
+  renderChatHub();
+}
+
 async function openChatHub() {
   navigateToSection("chatHubSection");
   await renderChatHub();
@@ -2569,11 +2540,15 @@ async function renderChatHub() {
       allJobs.sort((a,b) => (b.createdAt||0) - (a.createdAt||0));
 
       const pendingJobs = allJobs.filter(j => j.status === "بانتظار رد الفني");
-      const activeOrPastJobs = allJobs.filter(j => j.status !== "بانتظار رد الفني");
+      const filteredJobs = allJobs.filter(j => {
+        if(j.status === "بانتظار رد الفني") return false;
+        const ended = isOrderEndedOrCompleted(j.status, j.continuationState);
+        return showEndedChatHistory ? ended : !ended;
+      });
 
       updateChatUnreadBadge(pendingJobs.length);
 
-      if(pendingJobs.length > 0) {
+      if(!showEndedChatHistory && pendingJobs.length > 0) {
         pendingBox.innerHTML = `<h3 class="section-title" style="font-size:15.5px; margin-top:4px;">🔴 طلبات جديدة بانتظار ردك (${pendingJobs.length})</h3>` + pendingJobs.map(job => `
           <div class="pending-job-card">
             <h4 style="margin:0 0 4px; color:var(--navy); font-size:14.5px; font-weight:900;">${esc(job.service)} — <span class="badge">طلب جديد</span></h4>
@@ -2587,10 +2562,10 @@ async function renderChatHub() {
         `).join("");
       }
 
-      if(!activeOrPastJobs.length) {
-        threadsBox.innerHTML = '<div class="empty">لا توجد محادثات نشطة حالياً.</div>';
+      if(!filteredJobs.length) {
+        threadsBox.innerHTML = `<div class="empty">${showEndedChatHistory ? 'لا توجد طلبات منتهية في السجل.' : 'لا توجد محادثات نشطة حالياً.'}</div>`;
       } else {
-        threadsBox.innerHTML = `<h3 class="section-title" style="font-size:15.5px;">المحادثات والطلبات</h3>` + activeOrPastJobs.map(j => {
+        threadsBox.innerHTML = `<h3 class="section-title" style="font-size:15.5px;">${showEndedChatHistory ? 'سجل الطلبات المنتهية' : 'المحادثات الجارية'}</h3>` + filteredJobs.map(j => {
           const dur = j.chatStartedAt ? formatOpenDuration(j.chatStartedAt, j.chatEndedAt || null) : "—";
           return `
           <div class="list-item">
@@ -2619,12 +2594,17 @@ async function renderChatHub() {
     snap.forEach(c => orders.push({ ...c.val(), id: c.key }));
     orders.sort((a,b) => (b.createdAt||0) - (a.createdAt||0));
 
-    if(!orders.length) {
-      threadsBox.innerHTML = '<div class="empty">لا توجد طلبات أو محادثات مرسلة حالياً.</div>';
+    const visibleOrders = orders.filter(o => {
+      const ended = isOrderEndedOrCompleted(o.status, o.continuationState);
+      return showEndedChatHistory ? ended : !ended;
+    });
+
+    if(!visibleOrders.length) {
+      threadsBox.innerHTML = `<div class="empty">${showEndedChatHistory ? 'لا توجد طلبات منتهية في السجل.' : 'لا توجد طلبات أو محادثات نشطة حالياً.'}</div>`;
       return;
     }
 
-    threadsBox.innerHTML = orders.map(o => {
+    threadsBox.innerHTML = visibleOrders.map(o => {
       const canOpen = ["مقبول من الفني", "مستمر", "منتهي", "مكتمل"].includes(o.status);
       return `
       <div class="list-item">
@@ -2641,6 +2621,13 @@ async function renderChatHub() {
   } catch(e) {
     threadsBox.innerHTML = '<div class="empty">تعذر تحميل المحادثات حالياً.</div>';
   }
+}
+
+function insertQuickReply(phrase) {
+  const input = $("fullChatInput");
+  if(!input) return;
+  input.value = phrase;
+  input.focus();
 }
 
 function getActorMeta() {
@@ -2783,7 +2770,7 @@ function renderFullChatBannerAndControls() {
 
   const meta = activeOrderMeta || {};
   const status = meta.status || "مقبول من الفني";
-  const isEnded = status === "منتهي" || status === "مكتمل" || meta.continuationState === "ended";
+  const isEnded = isOrderEndedOrCompleted(status, meta.continuationState);
   const startedAt = meta.chatStartedAt || meta.createdAt;
   const openDuration = startedAt ? formatOpenDuration(startedAt, meta.chatEndedAt || null) : "غير محدد";
 
@@ -3055,61 +3042,59 @@ function closeSupportChatModal() {
 }
 
 async function chooseServiceDirect(service, techUid){
-  if(currentRole === "admin") {
-    try {
-      const tech = publicTechs.find(t => t.uid === techUid) || technicians.find(t => t.uid === techUid);
-      if(!tech) throw new Error("الفني غير موجود.");
-      const custId = "admin_manager", id = db.ref("requests/"+custId).push().key, now = Date.now();
-      const subLabel = currentSelectedSubservice ? ` (${currentSelectedSubservice})` : "";
-      const record = {
-        id, uid: custId, name: "إدارة المنصة (المدير)", phone: "محجوب (خاص بالإدارة)", city: "كل المحافظات",
-        area: "كل الأقضية", neighborhood: "", service: service + subLabel, problem: "طلب مباشر من إدارة المنصة",
-        preferredTech: techUid, assignedTech: techUid, assignedTechName: tech.name,
-        status: "بانتظار رد الفني", createdAt: now, countedAsCompleted: false, rated: false
-      };
-      const job = { id, customerUid: custId, customerName: "إدارة المنصة", customerPhone: "محجوب (خاص بالإدارة)", service: service + subLabel, city: "كل المحافظات", area: "كل الأقضية", neighborhood: "", problem: "طلب مباشر من إدارة المنصة", status: "بانتظار رد الفني", createdAt: now };
-      const u = {};
-      u["requests/"+custId+"/"+id] = record;
-      u["technicianJobs/"+techUid+"/"+id] = job;
-      u["orderChats/"+id+"/meta"] = { orderId: id, customerUid: custId, assignedTech: techUid, service: service + subLabel, status: "بانتظار رد الفني", createdAt: now };
-      await db.ref().update(u);
-      $("adminDirectRequestText").innerHTML = "تم إرسال الطلب إلى الفني (" + esc(tech.name) + ") بنجاح.<br>الطلب قيد التنفيذ، بانتظار موافقة الفني.";
-      $("adminDirectRequestModal").classList.remove("hidden");
-    } catch(e) { showCustomAlert("خطأ: " + e.message); }
-  } else {
-    if(!hasCustomerCoreProfileConfigured()) return openPhoneRequiredModal(() => chooseServiceDirect(service, techUid));
-    selectedTargetTech = publicTechs.find(t => t.uid === techUid);
-    if(!selectedTargetTech) return showCustomAlert("الفني غير موجود.");
-    if(!canTechAcceptMoreJobs(selectedTargetTech)) return showCustomAlert("عذراً، هذا الفني استنفذ رصيده المجاني ولم يجدد اشتراكه بعد.");
-    const subTitle = currentSelectedSubservice ? ` - ${currentSelectedSubservice}` : "";
-    $("orderModalTitle").innerText = "طلب الفني: " + selectedTargetTech.name + subTitle;
-    $("custOrderProblem").value = ""; $("custOrderMessage").innerHTML = "";
-    $("customerOrderModal").classList.remove("hidden");
+  if(!hasCustomerCoreProfileConfigured() && currentRole !== "admin") {
+    return openPhoneRequiredModal(() => chooseServiceDirect(service, techUid));
   }
+  const techList = [...publicTechs, ...technicians];
+  selectedTargetTech = techList.find(t => t.uid === techUid);
+  if(!selectedTargetTech) return showCustomAlert("الفني غير موجود.");
+  if(currentRole !== "admin" && !canTechAcceptMoreJobs(selectedTargetTech)) {
+    return showCustomAlert("عذراً، هذا الفني استنفذ رصيده المجاني ولم يجدد اشتراكه بعد.");
+  }
+  const subTitle = currentSelectedSubservice ? ` - ${currentSelectedSubservice}` : "";
+  $("orderModalTitle").innerText = "طلب الفني: " + selectedTargetTech.name + subTitle;
+  $("custOrderProblem").value = currentRole === "admin" ? "طلب مباشر من إدارة جبل" : "";
+  $("custOrderMessage").innerHTML = "";
+  $("customerOrderModal").classList.remove("hidden");
 }
 
 async function submitCustomerOrder() {
   const problem = $("custOrderProblem").value.trim();
-  const custName = localStorage.getItem("sakhrCustomerName") || "زبون صخر";
-  const custPhone = localStorage.getItem("sakhrCustomerPhone") || "";
+  const isAdminSender = currentRole === "admin";
+  const custName = isAdminSender ? "إدارة جبل" : (localStorage.getItem("sakhrCustomerName") || "زبون جبل");
+  const custPhone = isAdminSender ? "" : (localStorage.getItem("sakhrCustomerPhone") || "");
 
-  if(!hasCustomerCoreProfileConfigured()) { closeModal("customerOrderModal"); return openPhoneRequiredModal(submitCustomerOrder); }
+  if(!isAdminSender && !hasCustomerCoreProfileConfigured()) {
+    closeModal("customerOrderModal");
+    return openPhoneRequiredModal(submitCustomerOrder);
+  }
   if(!problem) return showCustomAlert("يرجى كتابة تفاصيل العطل أو المشكلة.");
+  if(!selectedTargetTech) return showCustomAlert("يرجى اختيار فني أولاً.");
 
   try {
-    let custId = (currentUser && !currentUser.isAnonymous) ? currentUser.uid : (localStorage.getItem("sakhrCustomerUid") || ("cust_" + Date.now()));
-    localStorage.setItem("sakhrCustomerUid", custId);
+    let custId = isAdminSender
+      ? "admin_manager"
+      : ((currentUser && !currentUser.isAnonymous) ? currentUser.uid : (localStorage.getItem("sakhrCustomerUid") || ("cust_" + Date.now())));
+    if(!isAdminSender) localStorage.setItem("sakhrCustomerUid", custId);
 
-    const techUid = selectedTargetTech.uid, id = db.ref("requests/"+custId).push().key, now = Date.now();
+    const techUid = selectedTargetTech.uid;
+    const id = db.ref("requests/"+custId).push().key;
+    const now = Date.now();
     const fullServiceLabel = currentSelectedSubservice ? `${selectedTargetTech.service} (${currentSelectedSubservice})` : selectedTargetTech.service;
 
     const record = {
-      id, uid: custId, name: custName, phone: custPhone, city: chosenCustomerCity || localStorage.getItem("sakhrCustomerCity") || "محافظتي",
-      area: chosenCustomerArea || localStorage.getItem("sakhrCustomerArea") || "القضاء", neighborhood: "", service: fullServiceLabel, problem,
+      id, uid: custId, name: custName, phone: custPhone,
+      city: isAdminSender ? "كل المحافظات" : (chosenCustomerCity || localStorage.getItem("sakhrCustomerCity") || "محافظتي"),
+      area: isAdminSender ? "كل الأقضية" : (chosenCustomerArea || localStorage.getItem("sakhrCustomerArea") || "القضاء"),
+      neighborhood: "", service: fullServiceLabel, problem,
       preferredTech: techUid, assignedTech: techUid, assignedTechName: selectedTargetTech.name,
       status: "بانتظار رد الفني", createdAt: now, countedAsCompleted: false, rated: false
     };
-    const job = { id, customerUid: custId, customerName: custName, customerPhone: "محجوب (للإدارة فقط)", service: fullServiceLabel, city: chosenCustomerCity || "", area: chosenCustomerArea || "", neighborhood: "", problem, status: "بانتظار رد الفني", createdAt: now };
+    const job = {
+      id, customerUid: custId, customerName: custName, customerPhone: "محجوب (للإدارة فقط)",
+      service: fullServiceLabel, city: record.city, area: record.area, neighborhood: "",
+      problem, status: "بانتظار رد الفني", createdAt: now
+    };
 
     const u = {};
     u["requests/"+custId+"/"+id] = record;
@@ -3118,8 +3103,9 @@ async function submitCustomerOrder() {
     await db.ref().update(u);
 
     closeModal("customerOrderModal");
+    showEndedChatHistory = false;
     showCustomAlert("تم إرسال الطلب إلى الفني! ستُفتح المحادثة مباشرة بعد موافقة الفني.");
-    navigateToSection("chatHubSection");
+    openChatHub();
   } catch(e) { showCustomAlert("خطأ في إرسال الطلب: " + e.message); }
 }
 
@@ -3144,7 +3130,7 @@ function renderTechIncompleteChecklist(tech) {
   const hasService = Boolean(String(tech.service || "").trim());
   box.classList.remove("hidden");
   box.innerHTML = `
-    <h3>⚠️ استكمل ملفك الشخصي لتفعيل حسابك في البرنامج</h3>
+    <h3>⚠️ استكمل ملفك الشخصي لتفعيل حسابك في جبل</h3>
     <div style="font-size:12.5px; color:#7c2d12; font-weight:700;">حسابك غير ظاهر للزبائن حالياً حتى تكمل البيانات التالية:</div>
     <div class="checklist-items">
       <div>${hasName ? '✅' : '⬜'} الاسم الكامل: <b>${esc(tech.name || 'غير مكتمل')}</b></div>
@@ -3194,7 +3180,7 @@ async function renderTechAccount(){
 
     const isAvailBtn = currentTech.available !== false, availBtn = $("toggleAvailableBtn");
     if(availBtn) {
-      availBtn.innerText = isAvailBtn ? "🔴 إيقاف التواجد (تحويل إلى غير متاح / للنوم)" : "🟢 تفعيل التواجد (تحويل إلى متاح)";
+      availBtn.innerText = isAvailBtn ? "🔴 إيقاف التواجد (تحويل إلى غير متاح)" : "🟢 تفعيل التواجد (تحويل إلى متاح)";
       availBtn.className = isAvailBtn ? "btn danger" : "btn primary";
       $("availabilityMsg").innerHTML = isAvailBtn ? "حالتك الحالية: <b>متاح</b> وتظهر للزبائن." : "حالتك الحالية: <b>غير متاح</b> ومخفي عن قوائم البحث.";
     }
@@ -3204,7 +3190,7 @@ async function renderTechAccount(){
       $("techFreeJobsHighlight").innerHTML = `
         <div style="font-size:13px; font-weight:800; color:var(--navy);">🎁 رصيد الأعمال المجانية الخاصة بك</div>
         <div class="free-jobs-counter">متبقي لديك <span style="color:var(--teal-calm);">${freeRemaining}</span> من أصل 3 أعمال مجانية</div>
-        <div style="font-size:11px; color:var(--text-muted); font-weight:700;">تم إنجاز واستخدام ${freeUsed} أعمال مجاناً عبر المنصة.</div>`;
+        <div style="font-size:11px; color:var(--text-muted); font-weight:700;">تم إنجاز واستخدام ${freeUsed} أعمال مجاناً عبر التطبيق.</div>`;
     }
 
     if($("techSubDetails")) {
@@ -3246,29 +3232,6 @@ async function renderTechAccount(){
         if($("techAlertBox")) $("techAlertBox").innerHTML = '<div class="notice success" style="font-weight:900">🔔 وصلك طلب صيانة جديد! راجع خانة الدردشة.</div>';
       }
       isInitialLoad = false;
-
-      if($("techJobs")) {
-        if (!jobs.length) {
-          $("techJobs").innerHTML = '<div class="empty">لا توجد طلبات جديدة.</div>';
-        } else {
-          let jobsHtml = "";
-          jobs.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0)).forEach(x => {
-            const canChat = x.status !== "بانتظار رد الفني" && x.status !== "مرفوض من الفني";
-            let actionsHtml = `<div class="actions">`;
-            if(canChat) {
-              actionsHtml += `<button type="button" class="btn secondary" onclick="openFullOrderChat('${esc(x.id)}','${esc(x.customerName || x.service)}')">💬 فتح المحادثة</button>`;
-            }
-            if(x.status === "بانتظار رد الفني") {
-              actionsHtml += `<button type="button" class="btn primary" onclick="technicianDecision('${esc(x.id)}','مقبول')">موافقة</button><button type="button" class="btn danger" onclick="technicianDecision('${esc(x.id)}','مرفوض')">رفض</button>`;
-            } else if(x.status === "مقبول من الفني" || x.status === "مستمر") {
-              actionsHtml += `<button type="button" class="btn gold-3d" onclick="completeTechnicianJob('${esc(x.id)}')">✅ إنهاء الطلب</button>`;
-            }
-            actionsHtml += `</div>`;
-            jobsHtml += '<div class="list-item"><h4>' + esc(x.service) + ' — ' + esc(x.status) + '</h4><div class="muted">الزبون: <b>' + esc(x.customerName || 'زبون معتمد') + '</b> | التواصل: <b style="color:var(--teal-calm)">داخل التطبيق (واتساب بالموافقة)</b></div><p style="margin:6px 0">' + esc(x.problem) + '</p>' + actionsHtml + '</div>';
-          });
-          $("techJobs").innerHTML = jobsHtml;
-        }
-      }
       if(currentSectionId === "chatHubSection") renderChatHub();
     });
   }catch(e){}
@@ -3327,49 +3290,6 @@ async function technicianDecision(jobId, decision) {
   }
 }
 
-async function completeTechnicianJob(jobId) {
-  if(!currentUser || !currentTech) return;
-  const uid = currentUser.uid;
-  try {
-    const snap = await db.ref("technicianJobs/"+uid+"/"+jobId).once("value");
-    if(!snap.exists()) return;
-    const job = snap.val();
-    const now = Date.now();
-    const updates = {};
-    updates[`technicianJobs/${uid}/${jobId}/status`] = "منتهي";
-    updates[`technicianJobs/${uid}/${jobId}/continuationState`] = "ended";
-    updates[`technicianJobs/${uid}/${jobId}/lastDecisionBy`] = "الفني (" + (currentTech.name || "") + ")";
-    updates[`technicianJobs/${uid}/${jobId}/chatEndedAt`] = now;
-    updates[`requests/${job.customerUid}/${jobId}/status`] = "منتهي";
-    updates[`requests/${job.customerUid}/${jobId}/continuationState`] = "ended";
-    updates[`requests/${job.customerUid}/${jobId}/lastDecisionBy`] = "الفني (" + (currentTech.name || "") + ")";
-    updates[`requests/${job.customerUid}/${jobId}/chatEndedAt`] = now;
-    updates[`orderChats/${jobId}/meta/status`] = "منتهي";
-    updates[`orderChats/${jobId}/meta/continuationState`] = "ended";
-    updates[`orderChats/${jobId}/meta/lastDecisionBy`] = "الفني (" + (currentTech.name || "") + ")";
-    updates[`orderChats/${jobId}/meta/chatEndedAt`] = now;
-
-    if(!job.countedAsCompleted) {
-      const subInfo = getEffectiveSubscriptionInfo(currentTech);
-      const nextCompleted = Number(currentTech.completedJobs || 0) + 1;
-      const nextFreeUsed = subInfo.isActive ? Number(currentTech.freeJobsUsed || 0) : Math.min(3, Number(currentTech.freeJobsUsed || 0) + 1);
-      updates[`technicians/${uid}/completedJobs`] = nextCompleted;
-      updates[`technicians/${uid}/freeJobsUsed`] = nextFreeUsed;
-      updates[`publicTechnicians/${uid}/completedJobs`] = nextCompleted;
-      updates[`publicTechnicians/${uid}/freeJobsUsed`] = nextFreeUsed;
-      updates[`technicianJobs/${uid}/${jobId}/countedAsCompleted`] = true;
-      updates[`requests/${job.customerUid}/${jobId}/countedAsCompleted`] = true;
-      currentTech.completedJobs = nextCompleted;
-      currentTech.freeJobsUsed = nextFreeUsed;
-    }
-
-    await db.ref().update(updates);
-    showCustomAlert("تم إنهاء الطلب وتحديث رصيدك بنجاح!");
-    renderTechAccount();
-    loadPublicTechs();
-  } catch(e) { showCustomAlert("خطأ: " + e.message); }
-}
-
 async function saveTechAccountProfile() {
   if(!currentUser || !["technician","suspended"].includes(currentRole)) return;
   const uid = currentUser.uid;
@@ -3397,6 +3317,23 @@ async function saveTechAccountProfile() {
     closeModal('techEditModal');
     renderTechAccount(); loadPublicTechs();
   } catch(e) { showCustomAlert("خطأ في الحفظ: "+e.message); }
+}
+
+async function adminClearTestOrders() {
+  if(currentRole !== "admin" || !db) return;
+  showCustomConfirm("هل أنت متأكد من مسح جميع الطلبات ومحادثات الطلبات التجريبية القديمة؟", async () => {
+    try {
+      await Promise.all([
+        db.ref("requests").remove().catch(()=>{}),
+        db.ref("technicianJobs").remove().catch(()=>{}),
+        db.ref("orderChats").remove().catch(()=>{})
+      ]);
+      showCustomAlert("تم تنظيف الطلبات التجريبية بنجاح!");
+      loadAdminData();
+    } catch(e) {
+      showCustomAlert("تعذر تنظيف الطلبات: " + e.message);
+    }
+  });
 }
 
 async function activateTechSubscriptionPlan(techUid, planType) {
@@ -3507,7 +3444,7 @@ function sendWhatsAppPassword(phone, inputId) {
   if(currentRole !== "admin") return;
   const pass = $(inputId)?.value?.trim() || "";
   if(!pass) return showCustomAlert("يرجى إدخال الرمز المؤقت الجديد أولاً.");
-  window.open(`https://wa.me/${formatWhatsApp(phone)}?text=${encodeURIComponent(`مرحباً بك، رمزك الجديد المؤقت في منصة صخر هو: ${pass}`)}`, '_blank');
+  window.open(`https://wa.me/${formatWhatsApp(phone)}?text=${encodeURIComponent(`مرحباً بك، رمزك الجديد المؤقت في تطبيق جبل هو: ${pass}`)}`, '_blank');
 }
 
 async function saveAdminAnnouncements() {
@@ -3531,7 +3468,7 @@ function listenToAnnouncements() {
     const bar = $("globalAnnouncementBar"), container = bar?.parentElement;
     if(!bar || !container) return;
     if(announcementTimer) { clearTimeout(announcementTimer); announcementTimer = null; }
-    if(!list.length) list = ["📢 أهلاً بكم في منصة صخر للصيانة المنزلية - تواصل مع أفضل الفنيين المعتمدين في منطقتك بكل سهولة."];
+    if(!list.length) list = ["📢 أهلاً بكم في تطبيق جبل لصيانة المنازل - تواصل مع أفضل الفنيين المعتمدين في منطقتك بكل سهولة."];
 
     let index = 0;
     function playNextAnnouncement() {
