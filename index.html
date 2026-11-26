@@ -525,51 +525,36 @@ header {
   background: var(--gold-tint);
   border: 1.5px solid var(--border-gold);
   border-radius: 16px;
-  padding: 14px;
+  padding: 12px;
   box-shadow: var(--shadow-soft);
+}
+
+.chat-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--border-soft);
 }
 
 .chat-status-banner {
   background: var(--bg-soft);
-  border: 1.5px solid var(--border-gold);
-  border-radius: 12px;
-  padding: 10px 12px;
-  margin-bottom: 10px;
-  font-size: 12px;
-  font-weight: 800;
-  color: var(--navy);
-  line-height: 1.6;
-}
-.chat-decision-row {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 10px;
-  flex-wrap: wrap;
-}
-
-.quick-replies-row {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
+  border: 1px solid var(--border-soft);
+  border-radius: 10px;
+  padding: 7px 10px;
   margin-bottom: 8px;
-}
-.quick-reply-chip {
-  background: var(--bg-soft);
-  color: var(--navy);
-  border: 1px solid var(--border-gold);
-  border-radius: 999px;
-  padding: 5px 10px;
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 800;
-}
-.quick-reply-chip:hover {
-  background: var(--gold-soft);
+  color: var(--navy);
+  line-height: 1.5;
 }
 
 .full-chat-messages {
   flex: 1;
-  min-height: 270px;
-  max-height: 50vh;
+  min-height: 300px;
+  max-height: 55vh;
   overflow-y: auto;
   border: 1.5px solid var(--border-gold);
   border-radius: 12px;
@@ -600,7 +585,6 @@ header {
 .chat-bubble.wa-card { max-width: 92%; background: #f0fdf4; color: #14532d; border: 1.5px solid #22c55e; align-self: center; text-align: center; }
 .chat-bubble.sys-card { max-width: 94%; background: #fffbeb; color: #78350f; border: 1.5px solid #f59e0b; align-self: center; text-align: center; font-size: 11.5px; }
 .chat-bubble small { display: block; font-size: 10px; opacity: 0.78; margin-top: 3px; }
-.chat-toolbar { display: flex; gap: 8px; margin-bottom: 8px; justify-content: space-between; align-items: center; }
 .chat-send-row { display: flex; gap: 6px; align-items: center; }
 .chat-send-row input { flex: 1; padding: 9px 11px; border: 1.5px solid var(--border-gold); border-radius: 10px; background: var(--bg-soft); color: var(--text-main); font-weight: 700; outline: none; min-width: 0; }
 
@@ -708,16 +692,16 @@ footer { background: linear-gradient(180deg, var(--teal-deep) 0%, var(--navy-dee
 
 <section id="fullOrderChatSection" class="container hidden">
  <div class="full-chat-shell">
-  <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:10px; border-bottom:1px solid var(--border-soft); padding-bottom:8px;">
-   <h3 id="fullChatTitle" style="margin:0; font-size:16px; font-weight:900; color:var(--navy);">💬 محادثة الطلب</h3>
-   <button type="button" class="btn light" style="padding:6px 12px;" onclick="closeFullOrderChat()">← رجوع</button>
+  <div class="chat-topbar">
+   <h3 id="fullChatTitle" style="margin:0; font-size:15px; font-weight:900; color:var(--navy);">💬 محادثة الطلب</h3>
+   <div style="display:flex; gap:6px; align-items:center;">
+    <button type="button" id="btnWhatsappInChat" class="btn whatsapp-btn" style="padding:5px 9px; font-size:11px;" onclick="requestWhatsappInChat()">🟢 واتساب</button>
+    <button type="button" id="btnEndOrderChat" class="btn danger" style="padding:5px 9px; font-size:11px;" onclick="endOrderChatByActor()">🔒 إنهاء</button>
+    <button type="button" class="btn light" style="padding:5px 10px; font-size:11px;" onclick="closeFullOrderChat()">←</button>
+   </div>
   </div>
 
   <div id="fullChatStatusBanner" class="chat-status-banner">جارٍ تحميل حالة الطلب...</div>
-
-  <div id="fullChatDecisionRow" class="chat-decision-row">
-   <button type="button" id="btnEndOrderChat" class="btn danger" style="width:100%; padding:9px; font-size:12.5px;" onclick="endOrderChatByActor()">🔒 إنهاء الدردشة</button>
-  </div>
 
   <div id="fullChatReviewBox" class="card hidden" style="margin-bottom:10px; background:#fffbeb; border-color:#f59e0b;">
    <h4 style="margin:0 0 8px; color:var(--navy); font-size:14px; font-weight:900;">⭐ التقييم والملاحظات بعد إنهاء الدردشة</h4>
@@ -737,21 +721,6 @@ footer { background: linear-gradient(180deg, var(--teal-deep) 0%, var(--navy-dee
    </div>
    <button type="button" class="btn primary" style="width:100%;" onclick="submitOrderReviewAndNote()">إرسال التقييم والملاحظة</button>
    <div id="orderReviewMsg"></div>
-  </div>
-
-  <div id="fullChatActiveControls">
-   <div class="chat-toolbar">
-    <span class="muted" style="font-weight:800;">محادثة كتابية مستمرة</span>
-    <button type="button" class="btn whatsapp-btn" style="padding:6px 10px; font-size:11.5px;" onclick="requestWhatsappInChat()">
-     <span>🟢</span> طلب واتساب
-    </button>
-   </div>
-
-   <div class="quick-replies-row">
-    <button type="button" class="quick-reply-chip" onclick="insertQuickReply('دزلي الموقع (GPS) لو سمحت')">📍 دزلي الموقع</button>
-    <button type="button" class="quick-reply-chip" onclick="insertQuickReply('أني بالطريق وجاييك')">🚗 أني بالطريق</button>
-    <button type="button" class="quick-reply-chip" onclick="insertQuickReply('تم الاتفاق على السعر والوقت')">🤝 تم الاتفاق</button>
-   </div>
   </div>
 
   <div id="fullChatMessages" class="full-chat-messages"></div>
@@ -2175,6 +2144,7 @@ function logoutCustomer() {
     isSigningOutFlag = true;
     ["CustomerName","CustomerPhone","CustomerEmail","CustomerCity","CustomerArea","CustomerNeighborhood","CustomerNotes","CustomerUid"].forEach(k => jabalRemove(k));
     chosenCustomerCity = ""; chosenCustomerArea = ""; currentRole = "guest"; currentTech = null;
+    if(chatHubLiveRef) { chatHubLiveRef.off(); chatHubLiveRef = null; }
     if(auth && currentUser && !currentUser.isAnonymous) { try { await auth.signOut(); } catch(_) {} }
     setTimeout(() => { isSigningOutFlag = false; }, 1200);
     updateNavAuthButton();
@@ -2655,11 +2625,11 @@ async function renderChatHub() {
 
         if(pendingJobs.length > 0) {
           pendingBox.innerHTML = `<h3 class="section-title" style="font-size:15.5px; margin-top:4px;">🔔 طلبات واردة بانتظار موافقتك (${pendingJobs.length})</h3>` + pendingJobs.map(job => {
-            const pDateStr = job.createdAt ? new Date(job.createdAt).toLocaleString('ar-IQ', { dateStyle: 'short', timeStyle: 'short' }) : '';
+            const jDateStr = job.createdAt ? new Date(job.createdAt).toLocaleString('ar-IQ', { dateStyle: 'short', timeStyle: 'short' }) : '';
             return `
             <div class="pending-job-card">
               <h4 style="margin:0 0 4px; color:var(--navy); font-size:14.5px; font-weight:900;">${esc(job.service)} — <span class="badge">طلب جديد</span></h4>
-              <div class="muted">الزبون: <b>${esc(job.customerName || 'زبون')}</b> | الموقع: <b>${esc(job.city || '')} ${job.area ? '— ' + esc(job.area) : ''}</b>${pDateStr ? ` | 📅 ${esc(pDateStr)}` : ''}</div>
+              <div class="muted">الزبون: <b>${esc(job.customerName || 'زبون')}</b> | الموقع: <b>${esc(job.city || '')} ${job.area ? '— ' + esc(job.area) : ''}</b>${jDateStr ? ` | 📅 ${esc(jDateStr)}` : ''}</div>
               <p style="margin:8px 0; font-size:13px; font-weight:700; color:var(--text-main);">المشكلة: ${esc(job.problem)}</p>
               <div class="actions">
                 <button type="button" class="btn primary" onclick="technicianDecision('${esc(job.id)}','مقبول')">✅ موافقة وفتح الدردشة</button>
@@ -2750,13 +2720,6 @@ async function renderChatHub() {
   } catch(e) {
     threadsBox.innerHTML = '<div class="empty">تعذر تحميل المحادثات حالياً.</div>';
   }
-}
-
-function insertQuickReply(phrase) {
-  const input = $("fullChatInput");
-  if(!input) return;
-  input.value = phrase;
-  input.focus();
 }
 
 function getActorMeta() {
@@ -2877,6 +2840,16 @@ function endOrderChatByActor() {
       }
 
       await db.ref().update(updates);
+      activeOrderMeta = {
+        ...activeOrderMeta,
+        status: "منتهي",
+        continuationState: "ended",
+        lastDecisionBy: actor.labelAr,
+        lastDecisionRole: actor.actorRole,
+        lastDecisionAt: now,
+        chatEndedAt: now
+      };
+      renderFullChatBannerAndControls();
 
       const sysMsgId = db.ref(`orderChats/${activeOrderChatId}/messages`).push().key;
       await db.ref(`orderChats/${activeOrderChatId}/messages/${sysMsgId}`).set({
@@ -2895,9 +2868,9 @@ function endOrderChatByActor() {
 
 function renderFullChatBannerAndControls() {
   const banner = $("fullChatStatusBanner");
-  const decRow = $("fullChatDecisionRow");
+  const endBtn = $("btnEndOrderChat");
+  const waBtn = $("btnWhatsappInChat");
   const revBox = $("fullChatReviewBox");
-  const activeControls = $("fullChatActiveControls");
   const sendRow = $("fullChatSendRow");
   const endedNotice = $("fullChatEndedNotice");
   if(!banner) return;
@@ -2917,10 +2890,10 @@ function renderFullChatBannerAndControls() {
     adminDurationLine = `<br><span style="color:var(--teal-calm);">📊 للإدارة — مدة بقاء المحادثة مفتوحة: <b>${esc(openDuration)}</b></span>`;
   }
 
-  banner.innerHTML = `حالة الطلب: <b>${esc(isEnded ? "منتهية (سجل محفوظ)" : "دردشة مفتوحة")}</b>${decisionLine}${adminDurationLine}`;
+  banner.innerHTML = `الحالة: <b>${esc(isEnded ? "منتهية (سجل محفوظ)" : "دردشة مفتوحة")}</b>${decisionLine}${adminDurationLine}`;
 
-  decRow?.classList.toggle("hidden", isEnded);
-  activeControls?.classList.toggle("hidden", isEnded);
+  endBtn?.classList.toggle("hidden", isEnded);
+  waBtn?.classList.toggle("hidden", isEnded);
   sendRow?.classList.toggle("hidden", isEnded);
   endedNotice?.classList.toggle("hidden", !isEnded);
 
