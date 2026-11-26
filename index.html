@@ -2982,18 +2982,18 @@ async function resolveOrderMeta(orderId) {
 }
 
 async function openFullOrderChat(orderId, titleLabel = "") {
-  if(!orderId || !db) return;
+  if(!orderId || !db) return showCustomAlert("معرّف المحادثة غير متوفر.");
   if(orderChatListener) { orderChatListener.off(); orderChatListener = null; }
   if(orderMetaListener) { orderMetaListener.off(); orderMetaListener = null; }
 
-  activeOrderChatId = orderId;
-  activeOrderMeta = await resolveOrderMeta(orderId);
-  $("fullChatTitle").innerText = titleLabel ? `💬 ${titleLabel}` : "💬 محادثة الطلب";
-  $("fullChatInput").value = "";
+  activeOrderChatId = String(orderId);
+  activeOrderMeta = await resolveOrderMeta(activeOrderChatId);
+  if($("fullChatTitle")) $("fullChatTitle").innerText = titleLabel ? `💬 ${titleLabel}` : "💬 محادثة الطلب";
+  if($("fullChatInput")) $("fullChatInput").value = "";
   renderFullChatBannerAndControls();
   navigateToSection("fullOrderChatSection");
 
-  orderMetaListener = db.ref(`orderChats/${orderId}/meta`);
+  orderMetaListener = db.ref(`orderChats/${activeOrderChatId}/meta`);
   orderMetaListener.on("value", snap => {
     if(snap.exists()) {
       activeOrderMeta = { ...(activeOrderMeta || {}), ...snap.val() };
@@ -3002,13 +3002,11 @@ async function openFullOrderChat(orderId, titleLabel = "") {
   });
 
   const box = $("fullChatMessages");
+  if(!box) return;
   box.innerHTML = '<div class="muted" style="text-align:center;margin-top:95px;">جارٍ تحميل رسائل الطلب...</div>';
 
-  const sender = getActorMeta();
-  orderChatListener = db.ref("orderChats/" + orderId + "/messages").limitToLast(120);
-  orderChatListener.on("value", snap => {
-    const msgs = [];
-    snap.forEach(c => msgs.push({ ...c.val(), _key: c.key }));
+  const renderMessagesList = (msgs) => {
+    const sender = getActorMeta();
     if(!msgs.length) {
       box.innerHTML = '<div class="muted" style="text-align:center;margin-top:95px;">المحادثة مفتوحة — ابدأ بالتواصل بالكتابة...</div>';
       return;
@@ -3051,26 +3049,70 @@ async function openFullOrderChat(orderId, titleLabel = "") {
 
       return `
         <div class="chat-bubble ${isMine ? 'mine' : 'other'}">
-          <div>${esc(m.text)}</div>
+          <div>${esc(m.text ?? '')}</div>
           <small>${esc(m.senderName || '')} ${tStr ? '• ' + tStr : ''}</small>
         </div>`;
     }).join("");
     box.scrollTop = box.scrollHeight;
+  };
+
+  orderChatListener = db.ref("orderChats/" + activeOrderChatId + "/messages").limitToLast(120);
+  orderChatListener.on("value", snap => {
+    const msgs = [];
+    snap.forEach(c => msgs.push({ ...c.val(), _key: c.key }));
+    renderMessagesList(msgs);
+  }, err => {
+    box.innerHTML = `<div class="notice error">تعذر قراءة الرسائل من قاعدة البيانات: ${esc(err.message || err.code || '')}</div>`;
   });
 }
 
 async function sendOrderChatMessage() {
   const input = $("fullChatInput");
+  if(!input) return;
   const text = input.value.trim();
-  if(!text || !activeOrderChatId || !db) return;
+  if(!text) return;
+  if(!activeOrderChatId || !db) {
+    return showCustomAlert("المحادثة غير مرتبطة برقم طلب حالياً. ارجع وافتح المحادثة مرة ثانية.");
+  }
+
   const sender = getActorMeta();
+  const payload = {
+    type: "text",
+    text,
+    senderId: sender.actorId,
+    senderName: sender.actorName,
+    senderRole: sender.actorRole,
+    createdAt: Date.now()
+  };
+
   input.value = "";
   try {
-    const msgId = db.ref("orderChats/" + activeOrderChatId + "/messages").push().key;
-    await db.ref("orderChats/" + activeOrderChatId + "/messages/" + msgId).set({
-      type: "text", text, senderId: sender.actorId, senderName: sender.actorName, senderRole: sender.actorRole, createdAt: Date.now()
-    });
-  } catch(e) { showCustomAlert("تعذر إرسال الرسالة: " + e.message); }
+    const msgRef = db.ref("orderChats/" + activeOrderChatId + "/messages").push();
+    await msgRef.set(payload);
+
+    const checkSnap = await db.ref("orderChats/" + activeOrderChatId + "/messages").limitToLast(120).once("value");
+    const msgs = [];
+    checkSnap.forEach(c => msgs.push({ ...c.val(), _key: c.key }));
+    if(msgs.length > 0 && $("fullChatMessages")) {
+      const box = $("fullChatMessages");
+      box.innerHTML = msgs.map(m => {
+        const isMine = m.senderId === sender.actorId;
+        const tStr = m.createdAt ? new Date(m.createdAt).toLocaleTimeString('ar-IQ', { hour: '2-digit', minute: '2-digit' }) : '';
+        if(m.type === "system_decision") {
+          return `<div class="chat-bubble sys-card"><div>📌 ${esc(m.text)}</div><small>${tStr}</small></div>`;
+        }
+        return `
+          <div class="chat-bubble ${isMine ? 'mine' : 'other'}">
+            <div>${esc(m.text ?? '')}</div>
+            <small>${esc(m.senderName || '')} ${tStr ? '• ' + tStr : ''}</small>
+          </div>`;
+      }).join("");
+      box.scrollTop = box.scrollHeight;
+    }
+  } catch(e) {
+    input.value = text;
+    showCustomAlert("تعذر إرسال الرسالة: " + (e.message || e.code || "خطأ غير معروف"));
+  }
 }
 
 function closeFullOrderChat() {
