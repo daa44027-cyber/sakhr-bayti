@@ -1338,7 +1338,7 @@ function formatOpenDuration(startedAt, endedAt = null) {
 }
 
 function isOrderEndedOrCompleted(status, continuationState = "") {
-  return ["منتهي", "مكتمل", "مرفوض من الفني"].includes(status) || continuationState === "ended";
+  return String(status || "").trim() === "منتهي" && String(continuationState || "").trim() === "ended";
 }
 
 function normalizeIraqiPhone(raw) {
@@ -2903,8 +2903,7 @@ function renderFullChatBannerAndControls() {
   if(!banner) return;
 
   const meta = activeOrderMeta || {};
-  const status = meta.status || "مقبول من الفني";
-  const isEnded = isOrderEndedOrCompleted(status, meta.continuationState);
+  const isEnded = isOrderEndedOrCompleted(meta.status, meta.continuationState);
   const startedAt = meta.chatStartedAt || meta.createdAt;
   const openDuration = startedAt ? formatOpenDuration(startedAt, meta.chatEndedAt || null) : "غير محدد";
 
