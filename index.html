@@ -1,0 +1,3841 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#083852">
+<title>جبل | لصيانة المنازل</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap');
+
+:root {
+  --bg-page: #fdf5e4;
+  --bg-soft: #f5e6c4;
+  --navy: #0a3d58;
+  --navy-deep: #052334;
+  --navy-mid: #0d5478;
+  --gold-calm: #d4a024;
+  --gold-bright: #f2c448;
+  --gold-soft: #f7d265;
+  --gold-tint: #fdf5e4;
+  --teal-calm: #0c5f82;
+  --teal-deep: #063850;
+  --teal-shadow: #031e2c;
+  --teal-tint: #e0f2fe;
+  --text-main: #082f44;
+  --text-muted: #475569;
+  --border-soft: #e2bc6b;
+  --border-gold: #eab308;
+  --green-calm: #15803d;
+  --online-dot: #16a34a;
+  --offline-dot: #94a3b8;
+  --danger-calm: #b91c1c;
+  --danger-deep: #7f1d1d;
+  --danger-shadow: #450a0a;
+  --danger-tint: #fef2f2;
+  --shadow-soft: 0 6px 20px rgba(5, 35, 52, 0.1);
+  --btn-3d-teal: 0 5px 0 #031e2c, 0 8px 16px rgba(6, 56, 80, 0.34);
+  --btn-3d-card: 0 6px 0 #031e2c, 0 10px 20px rgba(6, 56, 80, 0.28);
+  --btn-3d-danger: 0 4px 0 #450a0a, 0 7px 14px rgba(127, 29, 29, 0.3);
+  --btn-3d-gold: 0 4px 0 #92670c, 0 7px 14px rgba(180, 128, 16, 0.3);
+}
+
+html { scroll-behavior: smooth; }
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: 'Cairo', sans-serif;
+  background: var(--gold-tint);
+  color: var(--text-main);
+  position: relative;
+  min-height: 100vh;
+  padding-bottom: 84px;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(440px, 80vw);
+  height: min(440px, 80vw);
+  background-image: url('logo.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 0;
+}
+
+header, main, footer, .modal, .drawer-backdrop, .side-drawer, .bottom-nav {
+  position: relative;
+  z-index: 1;
+}
+
+button, input, select, textarea { font: inherit; }
+button { cursor: pointer; border: 0; }
+
+header {
+  background: var(--gold-tint);
+  padding: 10px 0 0 0;
+  display: flex;
+  flex-direction: column;
+  border-bottom: 2px solid var(--gold-bright);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 3px 12px rgba(5, 35, 52, 0.08);
+}
+
+.header-top-row {
+  padding: 0 4% 10px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-right-slot { display: flex; align-items: center; justify-content: flex-start; }
+.header-center-slot { display: flex; align-items: center; justify-content: center; }
+.header-left-slot { display: flex; align-items: center; justify-content: flex-end; }
+
+.back-icon-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: linear-gradient(155deg, var(--navy-mid) 0%, var(--teal-calm) 45%, var(--teal-deep) 100%);
+  color: #ffffff;
+  border: 1.5px solid var(--gold-bright);
+  font-size: 18px;
+  font-weight: 900;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 3px 0 var(--teal-shadow), 0 5px 10px rgba(6, 56, 80, 0.28);
+  transition: transform 0.12s;
+}
+.back-icon-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--teal-shadow); }
+
+.brand { display: inline-flex; align-items: center; justify-content: center; cursor: pointer; }
+.brand img { height: 46px; width: auto; object-fit: contain; display: block; }
+
+.hamburger-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: linear-gradient(155deg, var(--navy-mid) 0%, var(--teal-calm) 45%, var(--teal-deep) 100%);
+  color: #ffffff;
+  border: 1.5px solid var(--gold-bright);
+  font-size: 19px;
+  font-weight: 900;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--btn-3d-teal);
+  transition: transform 0.12s;
+}
+.hamburger-btn:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--teal-shadow); }
+
+.drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 35, 52, 0.5);
+  backdrop-filter: blur(2px);
+  z-index: 900;
+}
+
+.side-drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: min(300px, 84vw);
+  height: 100vh;
+  background: var(--gold-tint);
+  border-right: 2px solid var(--gold-bright);
+  box-shadow: 8px 0 28px rgba(5, 35, 52, 0.2);
+  z-index: 950;
+  padding: 18px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow-y: auto;
+}
+
+.drawer-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 12px;
+  margin-bottom: 6px;
+  border-bottom: 1px solid var(--border-soft);
+}
+.drawer-head strong { color: var(--navy); font-size: 15px; font-weight: 900; }
+
+.drawer-nav-btn {
+  width: 100%;
+  text-align: right;
+  padding: 11px 14px;
+  border-radius: 12px;
+  background: linear-gradient(155deg, var(--navy-mid) 0%, var(--teal-calm) 45%, var(--teal-deep) 100%);
+  color: #ffffff;
+  border: 1.5px solid var(--gold-bright);
+  font-size: 13px;
+  font-weight: 800;
+  box-shadow: 0 3px 0 var(--teal-shadow);
+  transition: transform 0.12s, filter 0.2s;
+}
+.drawer-nav-btn:hover { filter: brightness(1.06); }
+.drawer-nav-btn:active { transform: translateY(2px); }
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 66px;
+  background: linear-gradient(180deg, var(--teal-deep) 0%, var(--navy-deep) 100%);
+  border-top: 2px solid var(--gold-bright);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-items: center;
+  z-index: 800;
+  box-shadow: 0 -6px 20px rgba(5, 35, 52, 0.22);
+}
+
+.bottom-nav-btn {
+  position: relative;
+  height: 100%;
+  background: transparent;
+  color: #cbd5e1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  font-size: 11px;
+  font-weight: 800;
+  transition: color 0.15s, background 0.15s;
+}
+.bottom-nav-btn.active { color: var(--gold-bright); background: rgba(255, 255, 255, 0.06); }
+.bottom-nav-btn .b-icon { font-size: 18px; line-height: 1; }
+
+.red-badge {
+  position: absolute;
+  top: 7px;
+  right: calc(50% - 22px);
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: #dc2626;
+  color: #ffffff;
+  border: 1.5px solid #ffffff;
+  font-size: 10.5px;
+  font-weight: 900;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(220, 38, 38, 0.6);
+}
+
+.announcement-container {
+  background: linear-gradient(90deg, var(--navy-deep) 0%, var(--teal-deep) 50%, var(--navy-deep) 100%);
+  border-top: 1.5px solid var(--gold-bright);
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+  height: 36px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+.announcement-bar {
+  display: inline-block;
+  color: var(--gold-bright);
+  font-weight: 800;
+  font-size: 13px;
+  position: absolute;
+  left: 0;
+  will-change: transform;
+  padding: 0 16px;
+}
+
+.hero-banner {
+  position: relative;
+  background: linear-gradient(165deg, #0d5478 0%, #09415c 48%, #042130 100%);
+  padding: 28px 4% 28px;
+  text-align: center;
+  border-bottom: 3px solid var(--gold-bright);
+  color: #ffffff;
+  overflow: hidden;
+}
+.hero-banner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, transparent 55%),
+    radial-gradient(circle at 85% 65%, rgba(242, 196, 72, 0.14) 0%, transparent 45%);
+  pointer-events: none;
+}
+.hero-banner > * { position: relative; z-index: 1; }
+.hero-banner h2 { font-size: 19px; margin: 0 0 6px; font-weight: 800; color: #ffffff; }
+.hero-banner .slogan { font-size: 27px; font-weight: 900; color: var(--gold-bright); margin: 4px 0 8px; text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35); }
+.hero-banner p { font-size: 13.5px; color: #e2e8f0; margin: 0; font-weight: 600; }
+
+.role-btns { display: flex; gap: 10px; justify-content: center; }
+.role-btn { flex: 1; padding: 12px 14px; border-radius: 13px; font-weight: 900; font-size: 13.5px; transition: transform 0.12s, filter 0.15s; }
+.role-btn.customer { background: linear-gradient(155deg, var(--navy-mid) 0%, var(--teal-calm) 45%, var(--teal-deep) 100%); color: #ffffff; border: 1.5px solid var(--gold-bright); box-shadow: var(--btn-3d-teal); }
+.role-btn.technician { background: linear-gradient(155deg, #f7d265 0%, #d4a024 100%); color: var(--navy-deep); border: 1.5px solid var(--navy); box-shadow: var(--btn-3d-gold); }
+.role-btn:hover { filter: brightness(1.06); }
+.role-btn:active { transform: translateY(3px); }
+
+.auth-method-switch { display: flex; gap: 8px; margin-bottom: 10px; }
+.auth-method-btn { flex: 1; padding: 8px 10px; border-radius: 10px; font-size: 12px; font-weight: 800; border: 1.5px solid var(--border-gold); background: var(--bg-soft); color: var(--navy); transition: all 0.15s; }
+.auth-method-btn.active { background: linear-gradient(155deg, var(--navy-mid) 0%, var(--teal-calm) 45%, var(--teal-deep) 100%); color: #ffffff; border-color: var(--gold-bright); box-shadow: 0 3px 0 var(--teal-shadow); }
+
+.container { width: min(1060px, 92%); margin: 0 auto 36px; }
+
+.section-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  font-size: 20px;
+  color: var(--navy);
+  margin: 24px auto 16px;
+  font-weight: 900;
+  text-align: center;
+  max-width: 560px;
+}
+.section-title::before,
+.section-title::after {
+  content: "";
+  flex: 1;
+  height: 2.5px;
+  background: linear-gradient(90deg, transparent, var(--gold-bright), var(--gold-calm));
+  border-radius: 2px;
+}
+.section-title::after { background: linear-gradient(90deg, var(--gold-calm), var(--gold-bright), transparent); }
+
+.services-grid, .techs-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; max-width: 560px; margin: 0 auto; }
+.admin-stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 18px; }
+.admin-tabs-nav { display: flex; gap: 8px; margin-bottom: 18px; flex-wrap: wrap; justify-content: center; }
+
+.admin-tab-btn {
+  background: var(--bg-soft);
+  color: var(--navy);
+  border: 1.5px solid var(--border-gold);
+  padding: 8px 15px;
+  border-radius: 11px;
+  font-weight: 800;
+  font-size: 12.5px;
+  box-shadow: 0 3px 0 #c99d3b;
+}
+.admin-tab-btn.active, .admin-tab-btn:hover {
+  background: linear-gradient(155deg, var(--navy-mid) 0%, var(--teal-calm) 45%, var(--teal-deep) 100%);
+  color: #ffffff;
+  border-color: var(--gold-bright);
+  box-shadow: 0 3px 0 var(--teal-shadow);
+}
+
+.service-card {
+  background: linear-gradient(165deg, #0d557a 0%, #093f5a 52%, #042434 100%);
+  border: 2px solid var(--gold-bright);
+  border-bottom: 4px solid var(--gold-calm);
+  border-radius: 18px;
+  padding: 18px 12px 16px;
+  text-align: center;
+  cursor: pointer;
+  color: #ffffff;
+  box-shadow: var(--btn-3d-card);
+  transition: transform 0.14s, filter 0.18s;
+}
+.service-card:hover { transform: translateY(-2px); filter: brightness(1.06); }
+.service-card:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--teal-shadow); }
+
+.service-icon {
+  width: 54px;
+  height: 54px;
+  margin: 0 auto 10px;
+  border-radius: 16px;
+  background: linear-gradient(160deg, #0f5f87 0%, #05283a 100%);
+  border: 2px solid var(--gold-bright);
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.25), 0 4px 0 #021722;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 25px;
+  color: #ffffff;
+}
+.service-card h3 { font-size: 15.5px; margin: 4px 0 10px; color: #ffffff; font-weight: 900; }
+.service-card .arrow-badge {
+  background: linear-gradient(160deg, #0e587d 0%, #052536 100%);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 900;
+  border: 1.8px solid var(--gold-bright);
+  box-shadow: 0 2px 0 #021722;
+}
+
+.subservice-btn {
+  background: linear-gradient(155deg, var(--navy-mid) 0%, var(--teal-calm) 45%, var(--teal-deep) 100%);
+  color: #ffffff;
+  border: 1.5px solid var(--gold-bright);
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-weight: 800;
+  font-size: 13px;
+  text-align: center;
+  width: 100%;
+  box-shadow: 0 4px 0 var(--teal-shadow);
+}
+.subservice-btn:active { transform: translateY(2px); }
+.subservice-btn.all-btn {
+  background: linear-gradient(155deg, #f7d265 0%, #d4a024 100%);
+  color: var(--navy-deep);
+  border-color: var(--navy);
+  box-shadow: var(--btn-3d-gold);
+  font-weight: 900;
+}
+.subservice-list { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+
+.sub-checks-box { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px; background: var(--gold-tint); border: 1px solid var(--border-soft); border-radius: 10px; padding: 10px; }
+.sub-check-item { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; color: var(--navy); cursor: pointer; }
+.sub-check-item input { width: auto; margin: 0; accent-color: var(--teal-calm); }
+
+.cities-toggle-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(125px, 1fr)); gap: 8px; margin-top: 10px; }
+.city-toggle-btn { padding: 8px 10px; border-radius: 10px; font-size: 12px; font-weight: 800; border: 1.5px solid var(--gold-bright); box-shadow: 0 3px 0 var(--teal-shadow); background: linear-gradient(155deg, var(--navy-mid) 0%, var(--teal-calm) 45%, var(--teal-deep) 100%); color: #ffffff; }
+.city-toggle-btn.active-city { background: linear-gradient(155deg, #16a34a 0%, #15803d 100%); color: #ffffff; border-color: #bbf7d0; box-shadow: 0 3px 0 #052e16; }
+.city-toggle-btn.inactive-city { background: var(--bg-soft); color: var(--text-muted); border-color: var(--border-soft); box-shadow: 0 2px 0 #cbd5e1; }
+
+.profile-list-card { background: var(--gold-tint); border: 1.5px solid var(--border-gold); border-radius: 14px; padding: 14px; margin-bottom: 14px; text-align: right; }
+.profile-list-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 9px 4px; border-bottom: 1px solid var(--border-soft); font-size: 12.5px; }
+.profile-list-row:last-child { border-bottom: none; }
+.profile-list-label { color: var(--text-muted); font-weight: 700; white-space: nowrap; }
+.profile-list-value { color: var(--navy); font-weight: 800; text-align: left; word-break: break-word; }
+
+.incomplete-checklist-card { background: #fff7ed; border: 2px solid #f59e0b; border-radius: 16px; padding: 16px; margin-bottom: 16px; box-shadow: var(--shadow-soft); }
+.incomplete-checklist-card h3 { margin: 0 0 8px; color: #9a3412; font-size: 15.5px; font-weight: 900; }
+.checklist-items { display: flex; flex-direction: column; gap: 6px; margin: 10px 0 12px; font-size: 13px; font-weight: 800; }
+
+.admin-tech-full-card { background: var(--gold-tint); border: 1.5px solid var(--border-gold); border-radius: 14px; padding: 15px; color: var(--text-main); box-shadow: var(--shadow-soft); }
+.admin-tech-header { display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--border-soft); padding-bottom: 10px; margin-bottom: 10px; }
+
+.trust-bar { background: var(--gold-tint); border-top: 2px solid var(--border-gold); border-bottom: 2px solid var(--border-gold); padding: 12px 5%; display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap; gap: 12px; margin-top: 22px; text-align: center; }
+.trust-item { display: flex; align-items: center; gap: 6px; font-weight: 800; font-size: 12.5px; color: var(--navy); }
+.trust-item span { font-size: 17px; }
+
+.card { background: var(--gold-tint); color: var(--text-main); border: 1.5px solid var(--border-gold); border-radius: 16px; padding: 18px; box-shadow: var(--shadow-soft); }
+
+.btn { padding: 9px 15px; border-radius: 11px; font-weight: 800; display: inline-block; text-decoration: none; text-align: center; font-size: 12.5px; transition: transform 0.12s, filter 0.15s; }
+.btn:active { transform: translateY(2px); }
+
+.primary { background: linear-gradient(155deg, var(--navy-mid) 0%, var(--teal-calm) 45%, var(--teal-deep) 100%); color: #ffffff; border: 1.5px solid var(--gold-bright); box-shadow: 0 4px 0 var(--teal-shadow); }
+.primary:hover { filter: brightness(1.07); }
+
+.gold-3d { background: linear-gradient(155deg, #f7d265 0%, #d4a024 100%); color: var(--navy-deep); border: 1.5px solid var(--navy); box-shadow: var(--btn-3d-gold); font-weight: 900; }
+.gold-3d:hover { filter: brightness(1.05); }
+
+.google-btn { background: #ffffff; color: var(--navy-deep); border: 1.5px solid var(--gold-calm); box-shadow: 0 4px 0 #cbd5e1; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; font-weight: 900; }
+.google-btn:hover { background: #f8fafc; }
+
+.whatsapp-btn { background: linear-gradient(155deg, #22c55e 0%, #15803d 100%); color: #ffffff; border: 1.5px solid #bbf7d0; box-shadow: 0 4px 0 #052e16; display: inline-flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none; }
+.whatsapp-btn:hover { filter: brightness(1.06); }
+
+.secondary { background: linear-gradient(155deg, #1e6b92 0%, #0a4664 100%); color: #ffffff; border: 1.5px solid var(--gold-soft); box-shadow: 0 4px 0 var(--teal-shadow); }
+.secondary:hover { filter: brightness(1.06); }
+
+.danger { background: linear-gradient(155deg, #dc2626 0%, var(--danger-calm) 50%, var(--danger-deep) 100%); color: #ffffff; border: 1.5px solid #fecaca; box-shadow: var(--btn-3d-danger); }
+.danger:hover { filter: brightness(1.07); }
+
+.light { background: var(--bg-soft); color: var(--navy); border: 1.5px solid var(--border-gold); box-shadow: 0 3px 0 #c99d3b; }
+.light:hover { background: #edd9ad; }
+
+.field { margin: 11px 0; }
+.field label { display: block; font-weight: 800; font-size: 12px; margin-bottom: 5px; color: var(--navy); }
+.field input, .field select, .field textarea { width: 100%; padding: 9px 11px; border: 1.5px solid var(--border-gold); border-radius: 10px; background: var(--bg-soft); outline: none; color: var(--text-main); font-size: 13px; font-weight: 600; }
+.field textarea { min-height: 76px; resize: vertical; }
+
+.password-wrapper { position: relative; }
+.password-wrapper input { padding-left: 38px; }
+.toggle-password { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: transparent; font-size: 15px; }
+
+.row { display: flex; gap: 10px; flex-wrap: wrap; }
+.row > * { flex: 1; min-width: 130px; }
+.hidden { display: none !important; }
+
+.notice { padding: 11px 12px; border-radius: 10px; background: var(--bg-soft); color: var(--teal-deep); margin: 10px 0; font-size: 12px; line-height: 1.5; border: 1.5px solid var(--border-gold); font-weight: 700; }
+.success { background: #f0fdf4; color: var(--green-calm); border-color: #bbf7d0; }
+.error { background: var(--danger-tint); color: var(--danger-calm); border-color: #fecaca; }
+
+.free-jobs-highlight-card { background: var(--gold-tint); border: 1.5px solid var(--border-gold); border-radius: 14px; padding: 15px; text-align: center; margin-bottom: 14px; }
+.free-jobs-counter { font-size: 22px; font-weight: 900; color: var(--navy); margin: 6px 0; }
+
+.badge { display: inline-block; padding: 2px 9px; border-radius: 12px; background: var(--teal-tint); color: var(--teal-deep); font-size: 10.5px; font-weight: 800; border: 1px solid var(--border-gold); }
+.sub-badge { display: block; margin-top: 4px; font-size: 10.5px; color: var(--navy); font-weight: 700; background: var(--bg-soft); padding: 3px 6px; border-radius: 7px; border: 1px solid var(--border-soft); }
+
+.online-dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--online-dot); box-shadow: 0 0 6px var(--online-dot); vertical-align: middle; margin-left: 4px; }
+.offline-dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--offline-dot); vertical-align: middle; margin-left: 4px; }
+
+.list { display: flex; flex-direction: column; gap: 11px; }
+.list-item { border: 1.5px solid var(--border-gold); border-radius: 14px; padding: 14px; background: var(--gold-tint); color: var(--text-main); }
+.list-item h4 { margin: 0 0 5px; font-size: 14.5px; color: var(--navy); font-weight: 900; }
+
+.pending-job-card { border: 2px solid #f59e0b; border-radius: 15px; padding: 14px; background: #fffbeb; box-shadow: var(--shadow-soft); }
+
+.muted { color: var(--text-muted); font-size: 11.5px; font-weight: 600; }
+.actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 9px; }
+
+.tech-card {
+  position: relative;
+  border: 2px solid var(--border-gold);
+  border-radius: 18px;
+  padding: 16px 12px;
+  background: var(--gold-tint);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  box-shadow: var(--shadow-soft);
+}
+.tech-card .btn { width: 100%; }
+
+.avatar { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; border: 2.5px solid var(--gold-bright); background: var(--bg-soft); cursor: zoom-in; }
+.avatar.small { width: 46px; height: 46px; border-width: 2px; }
+
+.stars { color: var(--gold-calm); font-size: 15px; letter-spacing: 1.5px; font-weight: 900; }
+
+.stat { font-size: 24px; font-weight: 900; color: var(--navy); }
+.empty { text-align: center; color: var(--text-muted); padding: 20px; border: 1.5px dashed var(--border-gold); border-radius: 14px; background: var(--gold-tint); font-weight: 700; font-size: 13px; }
+
+footer { text-align: center; padding: 20px 14px; color: var(--text-muted); font-size: 12px; border-top: 2px solid var(--border-gold); margin-top: 32px; background: var(--gold-tint); font-weight: 700; }
+
+.modal { position: fixed; inset: 0; background: rgba(5, 35, 52, 0.72); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; padding: 14px; z-index: 1000; }
+.modal-card { background: var(--gold-tint); color: var(--text-main); border-radius: 20px; padding: 22px; width: min(500px, 100%); max-height: 90vh; overflow: auto; border: 2px solid var(--gold-bright); box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35); }
+.modal-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-bottom: 1px solid var(--border-soft); padding-bottom: 9px; }
+
+.terms-box { background: var(--bg-soft); border: 1.5px solid var(--border-gold); border-radius: 12px; padding: 12px; max-height: 220px; overflow-y: auto; font-size: 12px; line-height: 1.75; color: var(--text-main); margin-bottom: 12px; font-weight: 600; }
+.terms-box ul { padding-right: 18px; margin: 6px 0; }
+.terms-box li { margin-bottom: 7px; }
+.terms-check-row { display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 800; color: var(--navy); margin-bottom: 12px; cursor: pointer; }
+.terms-check-row input { width: 17px; height: 17px; accent-color: var(--teal-calm); }
+
+.chat-messages-box {
+  background: var(--bg-soft);
+  border: 1.5px solid var(--border-gold);
+  border-radius: 12px;
+  padding: 12px;
+  height: 270px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.full-chat-messages-box {
+  background: var(--bg-soft);
+  border: 1.5px solid var(--border-gold);
+  border-radius: 14px;
+  padding: 14px;
+  height: calc(100vh - 320px);
+  min-height: 300px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.chat-bubble {
+  max-width: 82%;
+  padding: 8px 12px;
+  border-radius: 12px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  font-weight: 700;
+  word-wrap: break-word;
+}
+.chat-bubble.mine { align-self: flex-start; background: linear-gradient(155deg, var(--navy-mid) 0%, var(--teal-deep) 100%); color: #ffffff; border: 1px solid var(--gold-bright); }
+.chat-bubble.other { align-self: flex-end; background: var(--gold-tint); color: var(--navy); border: 1px solid var(--border-gold); }
+.chat-bubble.wa-card { align-self: center; max-width: 94%; background: #ecfdf5; border: 1.5px solid #16a34a; color: #064e3b; text-align: center; }
+.chat-bubble.sys-card { align-self: center; max-width: 94%; background: var(--teal-tint); border: 1.5px solid var(--teal-calm); color: var(--navy-deep); text-align: center; }
+.chat-bubble small { display: block; font-size: 10px; opacity: 0.78; margin-top: 3px; }
+.chat-send-row { display: flex; gap: 8px; }
+.chat-send-row input { flex: 1; padding: 9px 11px; border: 1.5px solid var(--border-gold); border-radius: 10px; background: var(--bg-soft); color: var(--text-main); font-size: 13px; font-weight: 600; outline: none; }
+
+.photo-viewer-card { background: transparent; border: none; box-shadow: none; text-align: center; padding: 0; max-width: 92vw; }
+.photo-viewer-card img { max-width: 100%; max-height: 78vh; border-radius: 16px; border: 3px solid var(--gold-bright); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7); background: var(--bg-soft); }
+
+@media(max-width:900px) {
+  .services-grid, .techs-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .admin-stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .hero-banner .slogan { font-size: 22px; }
+}
+@media(max-width:480px) {
+  .services-grid, .techs-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .service-card { padding: 14px 8px; }
+  .service-card h3 { font-size: 13.5px; }
+  .service-icon { width: 46px; height: 46px; font-size: 22px; }
+  .brand img { height: 40px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-top-row">
+    <div class="header-right-slot">
+      <button type="button" class="back-icon-btn" onclick="goBackSmart()" title="رجوع">➔</button>
+    </div>
+    <div class="header-center-slot">
+      <div class="brand" onclick="navigateToSection('home')" title="العودة للرئيسية">
+        <img src="logo.png" alt="شعار جبل" onerror="this.style.display='none'">
+      </div>
+    </div>
+    <div class="header-left-slot">
+      <button type="button" class="hamburger-btn" id="hamburgerMenuBtn" onclick="toggleNavDrawer()" title="القائمة الرئيسية">☰</button>
+    </div>
+  </div>
+  <div class="announcement-container">
+    <div id="globalAnnouncementBar" class="announcement-bar">📢 أهلاً بكم في تطبيق جبل لصيانة المنازل - تواصل مع أفضل الفنيين المعتمدين في منطقتك بكل سهولة.</div>
+  </div>
+</header>
+
+<div id="navDrawerBackdrop" class="drawer-backdrop hidden" onclick="closeNavDrawer()"></div>
+<aside id="navDrawer" class="side-drawer hidden">
+  <div class="drawer-head">
+    <strong>🏔️ قائمة تطبيق جبل</strong>
+    <button type="button" class="btn light" style="padding:5px 10px" onclick="closeNavDrawer()">✕</button>
+  </div>
+  <button type="button" class="drawer-nav-btn" onclick="closeNavDrawer(); navigateToSection('home')">🏠 الرئيسية</button>
+  <button type="button" class="drawer-nav-btn" onclick="closeNavDrawer(); navigateToSection('services')">🛠️ الخدمات</button>
+  <button type="button" class="drawer-nav-btn" onclick="closeNavDrawer(); openChatHub()">💬 الدردشة</button>
+  <button type="button" class="drawer-nav-btn" onclick="closeNavDrawer(); requireGate(() => navigateToSection('technicians'))">👷 الفنيون</button>
+  <button type="button" class="drawer-nav-btn" onclick="closeNavDrawer(); requireGate(() => navigateToSection('reviewsChat'))">⭐ التقييمات والملاحظات</button>
+  <button type="button" class="drawer-nav-btn" onclick="closeNavDrawer(); openSupportChatModal()">🎧 تواصل مع الدعم</button>
+  <button type="button" class="drawer-nav-btn" id="drawerInstallBtn" onclick="closeNavDrawer(); installApp()">📲 تثبيت التطبيق</button>
+  <button type="button" class="drawer-nav-btn hidden" id="techsNavBtn" onclick="closeNavDrawer(); openAdminTechsView()">📋 الفنيين (إدارة)</button>
+  <button type="button" class="drawer-nav-btn hidden" id="adminNavBtn" onclick="closeNavDrawer(); navigateToSection('admin')">⚙️ الإدارة</button>
+  <button type="button" class="drawer-nav-btn" id="authNavBtn" onclick="closeNavDrawer(); handleAuthNav()">👤 حسابي / دخول</button>
+</aside>
+
+<main>
+<section id="home">
+  <div class="hero-banner">
+    <h2>احجز فني متخصص لصيانة منزلك بسهولة وسرعة</h2>
+    <div class="slogan">الثقة والأمان في كل مكان</div>
+    <p>منصة تربط الزبائن بأفضل الفنيين المعتمدين في منطقتك بدون عمولة وسطاء.</p>
+  </div>
+
+  <div class="container">
+    <h2 class="section-title">الخدمات الرئيسية</h2>
+    <div class="services-grid" id="homeServicesGrid"></div>
+
+    <h2 class="section-title">الخدمات الأخرى</h2>
+    <div class="services-grid" id="homeOtherServicesGrid"></div>
+  </div>
+
+  <div class="trust-bar">
+    <div class="trust-item"><span>✅</span> فنيون معتمدون وموثوقون</div>
+    <div class="trust-item"><span>⚡</span> استجابة سريعة لطلباتك</div>
+    <div class="trust-item"><span>📍</span> تغطية شاملة لكافة الأقضية</div>
+    <div class="trust-item"><span>🛡️</span> بدون عمولة إضافية</div>
+  </div>
+</section>
+
+<section id="services" class="container hidden">
+  <h2 class="section-title">الخدمات الرئيسية</h2>
+  <div class="services-grid" id="allServicesPage"></div>
+  <h2 class="section-title">الخدمات الأخرى</h2>
+  <div class="services-grid" id="allOtherServicesPage"></div>
+</section>
+
+<section id="technicians" class="container hidden">
+  <h2 class="section-title" id="techsSectionTitle">الفنيون المعتمدون والمتاحون</h2>
+  <div class="techs-grid" id="publicTechList"></div>
+</section>
+
+<section id="chatHubSection" class="container hidden">
+  <h2 class="section-title">💬 الدردشة والطلبات</h2>
+  <div class="card" style="max-width:660px; margin:0 auto;">
+    <div id="chatHubPendingRequests" class="list" style="margin-bottom:14px;"></div>
+    <div id="chatHubThreadsList" class="list"></div>
+  </div>
+</section>
+
+<section id="fullOrderChatSection" class="container hidden">
+  <div class="card" style="max-width:680px; margin:16px auto;">
+    <div class="modal-head" style="flex-wrap:wrap; gap:8px;">
+      <strong id="fullChatTitle" style="color:var(--navy); font-size:15px; font-weight:900;">💬 محادثة الطلب</strong>
+      <div style="display:flex; gap:6px; flex-wrap:wrap;">
+        <button type="button" id="btnWhatsappInChat" class="btn whatsapp-btn hidden" style="padding:6px 11px; font-size:11.5px;" onclick="requestWhatsappInChat()">📲 طلب انتقال إلى واتساب</button>
+        <button type="button" id="btnEndOrderChat" class="btn danger hidden" style="padding:6px 11px; font-size:11.5px;" onclick="endOrderChatByActor()">🔒 إنهاء الدردشة</button>
+        <button type="button" class="btn light" style="padding:6px 11px; font-size:11.5px;" onclick="closeFullOrderChat()">➔ رجوع</button>
+      </div>
+    </div>
+    <div id="fullChatStatusBanner" class="notice" style="margin:6px 0 10px; font-size:12px;"></div>
+    <div id="fullChatMessages" class="full-chat-messages-box"></div>
+    <div id="fullChatEndedNotice" class="notice hidden" style="text-align:center; font-size:12.5px; margin-bottom:8px;">🔒 تم إنهاء هذه الدردشة — السجل محفوظ للقراءة فقط.</div>
+    <div id="fullChatReviewBox" class="card hidden" style="margin-top:10px; background:var(--bg-soft); border-color:var(--gold-calm);">
+      <h4 style="margin:0 0 8px; color:var(--navy); font-size:14px; font-weight:900;">⭐ قيّم الفني بعد إنهاء الدردشة</h4>
+      <div class="field" style="margin:6px 0;">
+        <label>التقييم بالنجوم</label>
+        <select id="orderReviewStars">
+          <option value="5">⭐⭐⭐⭐⭐ (5 - ممتاز جداً)</option>
+          <option value="4">⭐⭐⭐⭐ (4 - جيد جداً)</option>
+          <option value="3">⭐⭐⭐ (3 - جيد)</option>
+          <option value="2">⭐⭐ (2 - مقبول)</option>
+          <option value="1">⭐ (1 - ضعيف)</option>
+        </select>
+      </div>
+      <div class="field" style="margin:6px 0;">
+        <label>ملاحظتك عن الخدمة والفني</label>
+        <textarea id="orderReviewNote" placeholder="اكتب رأيك وملاحظتك حول إنجاز العمل..." style="min-height:60px;"></textarea>
+      </div>
+      <button type="button" class="btn gold-3d" style="width:100%;" onclick="submitOrderReviewAndNote()">إرسال التقييم والملاحظة</button>
+    </div>
+    <div id="fullChatSendRow" class="chat-send-row" style="margin-top:8px;">
+      <input id="fullChatInput" placeholder="اكتب رسالتك هنا..." onkeydown="if(event.key==='Enter') sendOrderChatMessage()">
+      <button type="button" class="btn primary" onclick="sendOrderChatMessage()">إرسال</button>
+    </div>
+  </div>
+</section>
+
+<section id="customerAccountView" class="container hidden">
+  <h2 class="section-title">حسابي الشخصي (الزبون)</h2>
+  <div class="card" style="max-width:560px; margin:0 auto;">
+    <div style="text-align:center; margin-bottom:14px;">
+      <div style="width:68px; height:68px; border-radius:50%; background:var(--bg-soft); border:2.5px solid var(--gold-bright); display:inline-flex; align-items:center; justify-content:center; font-size:32px; margin-bottom:8px;">👤</div>
+      <h3 id="custProfileName" style="margin:2px 0; color:var(--navy); font-weight:900;">---</h3>
+      <span class="badge">حساب زبون معتمد</span>
+    </div>
+
+    <div class="profile-list-card" id="custProfileListBox"></div>
+
+    <div class="actions" style="flex-direction:column; gap:9px; margin-top:14px;">
+      <button type="button" class="btn primary" style="width:100%;" onclick="openCustomerEditModal()">✏️ تعديل ملفك الشخصي</button>
+      <button type="button" class="btn secondary" style="width:100%;" onclick="openSupportChatModal()">🎧 محادثة فريق الدعم</button>
+      <button type="button" class="btn gold-3d" style="width:100%;" onclick="navigateToSection('home')">🔍 تصفح الخدمات وطلب فني</button>
+      <button type="button" class="btn danger" style="width:100%;" onclick="logoutCustomer()">🚪 تسجيل الخروج</button>
+    </div>
+  </div>
+</section>
+
+<section id="adminProfile" class="container hidden">
+  <h2 class="section-title">ملف المدير الشخصي</h2>
+  <div class="card" style="max-width:560px; margin:0 auto; text-align:center;">
+    <div style="width:70px; height:70px; border-radius:50%; background:var(--bg-soft); border:2.5px solid var(--gold-bright); display:inline-flex; align-items:center; justify-content:center; font-size:32px; margin-bottom:8px;">👑</div>
+    <h3 style="margin:4px 0; color:var(--navy); font-weight:900;">إدارة تطبيق جبل</h3>
+    <p class="muted" style="font-size:13px; margin:4px 0 14px;">البريد الإلكتروني: <b style="color:var(--navy)">jabal1986iq@gmail.com</b></p>
+    <div class="actions" style="justify-content:center; flex-direction:column; gap:10px;">
+      <button type="button" class="btn primary" style="width:100%" onclick="navigateToSection('admin')">⚙️ فتح لوحة تحكم الإدارة</button>
+      <button type="button" class="btn secondary" style="width:100%" onclick="openAdminTechsView()">📋 قائمة الفنيين الكاملة</button>
+      <button type="button" class="btn gold-3d" style="width:100%" onclick="openSupportChatModal()">🎧 رسائل الدعم من المستخدمين</button>
+      <button type="button" class="btn danger" style="width:100%" onclick="logout()">🚪 تسجيل الخروج</button>
+    </div>
+  </div>
+</section>
+
+<section id="reviewsChat" class="container hidden">
+  <h2 class="section-title">التقييمات والملاحظات العامة</h2>
+  <div class="row">
+    <div class="card">
+      <h3 style="margin-top:0;color:var(--navy)">أضف تقييمك وملاحظتك</h3>
+      <div class="field"><label>اسمك الكريم</label><input id="reviewName" placeholder="الاسم"></div>
+      <div class="field">
+        <label>التقييم بالنجوم</label>
+        <select id="reviewStars">
+          <option value="5">⭐⭐⭐⭐⭐ (5 - ممتاز جداً)</option>
+          <option value="4">⭐⭐⭐⭐ (4 - جيد جداً)</option>
+          <option value="3">⭐⭐⭐ (3 - جيد)</option>
+          <option value="2">⭐⭐ (2 - مقبول)</option>
+          <option value="1">⭐ (1 - ضعيف)</option>
+        </select>
+      </div>
+      <div class="field"><label>ملاحظتك أو رأيك بالتطبيق</label><textarea id="reviewText" placeholder="اكتب رأيك أو ملاحظتك هنا ليراها الجميع..."></textarea></div>
+      <button type="button" class="btn primary" style="width:100%" onclick="submitReview()">إرسال التقييم والملاحظة</button>
+
+      <div id="adminAnnouncementBox" class="hidden" style="margin-top:20px; border-top:2px solid var(--border-gold); padding-top:14px;">
+        <h3 style="margin:0 0 8px; color:var(--navy); font-size:15px;">📢 إدارة الشريط الإعلاني (خاص بالمدير)</h3>
+        <div class="field"><label>الإعلان 1</label><input id="annInput1" placeholder="اكتب نص الإعلان الأول..."></div>
+        <div class="field"><label>الإعلان 2</label><input id="annInput2" placeholder="اكتب نص الإعلان الثاني..."></div>
+        <div class="field"><label>الإعلان 3</label><input id="annInput3" placeholder="اكتب نص الإعلان الثالث..."></div>
+        <div class="field"><label>الإعلان 4</label><input id="annInput4" placeholder="اكتب نص الإعلان الرابع..."></div>
+        <div class="field"><label>الإعلان 5</label><input id="annInput5" placeholder="اكتب نص الإعلان الخامس..."></div>
+        <button type="button" class="btn gold-3d" style="width:100%" onclick="saveAdminAnnouncements()">حفظ وتحديث الأشرطة الإعلانية</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-top:0;color:var(--navy)">آراء الزبائن والفنيين</h3>
+      <div id="reviewsList" class="list"></div>
+    </div>
+  </div>
+</section>
+
+<section id="join" class="container hidden">
+  <div class="card" style="max-width:520px; margin:20px auto;">
+    <h2 style="margin-top:0;color:var(--navy);text-align:center;">إنشاء حساب فني</h2>
+    <p class="muted" style="text-align:center;margin-bottom:10px;">أدخل بياناتك الأساسية لفتح حسابك فوراً، ويمكنك إضافة باقي التفاصيل لاحقاً.</p>
+
+    <button type="button" class="btn google-btn" style="width:100%; padding:10px; margin-bottom:10px;" onclick="signInWithGoogleRole('technician')">
+      <span style="font-size:16px;">G</span> المتابعة السريعة عبر حساب Google
+    </button>
+
+    <div class="auth-method-switch">
+      <button type="button" id="techRegModePhoneBtn" class="auth-method-btn active" onclick="switchTechRegAuthMode('phone')">📱 برقم الهاتف</button>
+      <button type="button" id="techRegModeEmailBtn" class="auth-method-btn" onclick="switchTechRegAuthMode('email')">📧 بالبريد الإلكتروني</button>
+    </div>
+
+    <div class="field"><label>الاسم الكامل</label><input id="regName" placeholder="الاسم الكامل"></div>
+    <div class="field" id="regPhoneField"><label>رقم الهاتف (07XXXXXXXXX)</label><input id="regPhone" type="tel" maxlength="11" placeholder="07XXXXXXXXX"></div>
+    <div class="field hidden" id="regEmailField"><label>البريد الإلكتروني</label><input id="regEmail" type="email" placeholder="example@gmail.com"></div>
+    <div class="field">
+      <label>كلمة المرور</label>
+      <div class="password-wrapper">
+        <input id="regPassword" type="password" placeholder="6 أحرف على الأقل">
+        <button type="button" class="toggle-password" onclick="togglePassword('regPassword', this)">👁️</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="field"><label>المحافظة</label><select id="regCity" onchange="setDistricts('regArea',this.value)"></select></div>
+      <div class="field"><label>القضاء</label><select id="regArea" disabled><option value="">اختر المحافظة أولاً</option></select></div>
+    </div>
+    <div class="field"><label>الاختصاص الرئيسي</label><select id="regService"></select></div>
+
+    <button type="button" class="btn primary" style="width:100%; margin-top:6px;" onclick="registerTechFlexible()">إنشاء الحساب والدخول مباشرة</button>
+    <div style="text-align:center;margin-top:12px;">
+      <button type="button" class="btn light" style="width:100%" onclick="openLogin()">لديك حساب بالفعل؟ تسجيل الدخول</button>
+    </div>
+    <div id="regMessage"></div>
+  </div>
+</section>
+
+<section id="techAccount" class="container hidden">
+  <h2 class="section-title">لوحة تحكم الفني</h2>
+
+  <div id="techIncompleteChecklist" class="incomplete-checklist-card hidden"></div>
+
+  <div id="techAlertBox"></div>
+  <div class="row">
+    <div class="card" style="text-align:center">
+      <div id="techSummary"></div>
+
+      <div style="margin:14px 0; padding:12px; border-radius:12px; background:var(--bg-soft); border:1.5px solid var(--border-gold);">
+        <h4 style="margin:0 0 8px; color:var(--navy);">حالة التواجد لاستقبال الطلبات</h4>
+        <button type="button" id="toggleAvailableBtn" class="btn primary" style="width:100%" onclick="toggleTechAvailability()">جارٍ التحميل...</button>
+        <div id="availabilityMsg" class="muted" style="margin-top:6px"></div>
+      </div>
+
+      <div class="actions" style="justify-content:center; flex-direction:column; gap:8px;">
+        <button type="button" class="btn primary" style="width:100%" onclick="openChatHub()">💬 فتح الدردشة والطلبات</button>
+        <button type="button" class="btn secondary" style="width:100%" onclick="openTechEditModal()">✏️ تعديل ملفك الشخصي</button>
+        <button type="button" class="btn gold-3d" style="width:100%" onclick="openSupportChatModal()">🎧 محادثة فريق الدعم</button>
+        <button type="button" class="btn danger" style="width:100%" onclick="logout()">تسجيل خروج</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div id="techFreeJobsHighlight" class="free-jobs-highlight-card"></div>
+
+      <h3 style="margin:4px 0 8px;color:var(--navy)">تفاصيل الاشتراك والرصيد</h3>
+      <div id="techSubDetails" class="notice" style="margin-bottom:14px;">جارٍ تحميل حالة الاشتراك...</div>
+    </div>
+  </div>
+</section>
+
+<section id="admin" class="container hidden">
+  <h2 class="section-title">لوحة تحكم الإدارة</h2>
+  <div id="adminStats" class="admin-stats-grid"></div>
+
+  <div class="card" style="margin-bottom:18px;">
+    <h3 style="margin:0 0 6px; color:var(--navy); font-size:15.5px;">🌍 إدارة المحافظات الفعّالة في التطبيق</h3>
+    <div class="muted">المحافظات المفعّلة تظهر خدماتها وفنيوها للزبائن، بينما تظهر لبقية المحافظات رسالة التوسع القريب.</div>
+    <div id="adminActiveCitiesBox" class="cities-toggle-grid"></div>
+  </div>
+
+  <div class="admin-tabs-nav">
+    <button type="button" id="btnTabAccounts" class="admin-tab-btn active" onclick="switchAdminTab('accounts')">👥 حسابات الزبائن المسجلين</button>
+    <button type="button" id="btnTabRequests" class="admin-tab-btn" onclick="switchAdminTab('requests')">📋 جميع الطلبات الواردة</button>
+    <button type="button" class="admin-tab-btn" onclick="openAdminTechsView()">👷 إدارة الفنيين الكاملة</button>
+    <button type="button" class="admin-tab-btn" onclick="openSupportChatModal()">🎧 محادثات الدعم</button>
+    <button type="button" class="admin-tab-btn" style="background:var(--danger-tint); color:var(--danger-calm); border-color:#fca5a5;" onclick="adminClearTestOrders()">🧹 مسح الطلبات التجريبية</button>
+  </div>
+
+  <div id="adminAccountsTab" class="admin-tab-content">
+    <div class="row">
+      <div class="card"><h3 style="margin-top:0">سجل حسابات الزبائن المسجلين (خاص بالإدارة)</h3><div id="adminAllAccounts" class="list"></div></div>
+      <div class="card"><h3 style="margin-top:0">طلبات استرجاع كلمة المرور</h3><div id="adminPasswordRequests" class="list"></div></div>
+    </div>
+  </div>
+
+  <div id="adminRequestsTab" class="admin-tab-content hidden">
+    <div class="card"><h3 style="margin-top:0">جميع الطلبات الواردة</h3><div id="adminRequests" class="list"></div></div>
+  </div>
+</section>
+
+<section id="adminTechsSection" class="container hidden">
+  <h2 class="section-title">📋 قائمة الفنيين الكاملة (إدارة)</h2>
+  <div class="card">
+    <div class="admin-tabs-nav" style="margin-bottom:12px;">
+      <button type="button" id="btnTechsRegisteredTab" class="admin-tab-btn active" onclick="switchAdminTechsSubTab('registered')">✅ الفنيون المسجلون</button>
+      <button type="button" id="btnTechsIssuesTab" class="admin-tab-btn" onclick="switchAdminTechsSubTab('issues')">⚠️ مشاكل التسجيل</button>
+    </div>
+    <div class="field" style="margin-top:0;">
+      <input id="adminTechSearchInput" placeholder="🔍 ابحث بالاسم أو الهاتف أو المحافظة أو الاختصاص..." oninput="renderAdminTechsFullList()">
+    </div>
+    <div id="adminTechsRegisteredBox" class="list"></div>
+    <div id="adminTechsIssuesBox" class="list hidden"></div>
+  </div>
+</section>
+</main>
+
+<nav class="bottom-nav" aria-label="التنقل السفلي">
+  <button type="button" class="bottom-nav-btn active" id="bNavHome" onclick="navigateToSection('home')">
+    <span class="b-icon">🏠</span>
+    <span>الرئيسية</span>
+  </button>
+  <button type="button" class="bottom-nav-btn" id="bNavServices" onclick="navigateToSection('services')">
+    <span class="b-icon">🛠️</span>
+    <span>الخدمات</span>
+  </button>
+  <button type="button" class="bottom-nav-btn" id="bNavChat" onclick="openChatHub()">
+    <span id="chatUnreadBadge" class="red-badge hidden">0</span>
+    <span class="b-icon">💬</span>
+    <span>الدردشة</span>
+  </button>
+  <button type="button" class="bottom-nav-btn" id="bNavAccount" onclick="handleAuthNav()">
+    <span class="b-icon">👤</span>
+    <span id="bNavAccountLabel">حسابي</span>
+  </button>
+</nav>
+
+<footer>تطبيق جبل لصيانة المنازل — جميع الحقوق محفوظة © 2026</footer>
+
+<!-- MODALS -->
+<div class="modal hidden" id="termsModal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <strong style="color:var(--navy);font-size:15.5px;font-weight:900;">📜 شروط وأحكام استخدام تطبيق جبل</strong>
+    </div>
+    <div class="terms-box">
+      <p style="margin-top:0;color:var(--navy);font-weight:800;">مرحباً بك في تطبيق (جبل) لصيانة المنازل. يرجى قراءة الشروط التالية بعناية قبل البدء:</p>
+      <ul>
+        <li><b>دور المنصة:</b> تطبيق جبل هو منصة وسيطة تربط الزبائن بالفنيين المعتمدين في مختلف الاختصاصات ولا يتقاضى عمولة إضافية على الاتفاقيات المباشرة.</li>
+        <li><b>الخصوصية وحماية البيانات:</b> تُحفظ أرقام الهواتف والبيانات الشخصية بسرية تامة ولا يتم مشاركتها إلا بموافقة الطرفين داخل محادثة الطلب.</li>
+        <li><b>الالتزام والمهنية:</b> يلتزم الفني بإنجاز العمل المتفق عليه بأمانة وإتقان، ويلتزم الزبون بتوفير بيئة عمل آمنة ودفع الأجرة المتفق عليها.</li>
+        <li><b>المسؤولية:</b> الاتفاق على التفاصيل الفنية والتكلفة النهائية يتم مباشرة بين الزبون والفني عبر الدردشة الرسمية داخل التطبيق.</li>
+        <li><b>سياسة الاستخدام:</b> يُمنع إساءة استخدام التطبيق أو إرسال طلبات وهمية، وتحتفظ الإدارة بحق إيقاف أي حساب مخالف.</li>
+      </ul>
+    </div>
+    <label class="terms-check-row">
+      <input type="checkbox" id="termsCheckbox">
+      <span>قرأت كافة الشروط والأحكام وأوافق عليها بالكامل</span>
+    </label>
+    <button type="button" class="btn primary" style="width:100%" onclick="acceptTermsWithCheck()">موافق ومتابعة</button>
+  </div>
+</div>
+
+<div class="modal hidden" id="roleSelectionModal">
+  <div class="modal-card" style="text-align:center;">
+    <div class="modal-head">
+      <strong style="color:var(--navy);font-size:15.5px;font-weight:900;">اختر صفة الدخول إلى تطبيق جبل</strong>
+      <button type="button" class="btn light" style="padding:5px 10px" onclick="closeModal('roleSelectionModal')">✕</button>
+    </div>
+    <p class="muted" style="margin-bottom:14px;">للمتابعة وطلب الخدمة أو تقديمها، حدد صفتك:</p>
+    <div class="role-btns">
+      <button type="button" class="role-btn customer" onclick="closeModal('roleSelectionModal'); handleCustomerRoleEntry()">👤 أنا زبون (أبحث عن فني)</button>
+      <button type="button" class="role-btn technician" onclick="closeModal('roleSelectionModal'); handleTechnicianRoleEntry()">👷 أنا فني (أقدم خدمات)</button>
+    </div>
+    <div style="margin-top:12px;">
+      <button type="button" class="btn light" style="width:100%" onclick="closeModal('roleSelectionModal'); openLogin()">🔑 لدي حساب مسبق (تسجيل الدخول)</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal hidden" id="customerAccountModal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <strong style="color:var(--navy);font-size:15.5px;font-weight:900;">👤 تسجيل حساب زبون</strong>
+      <button type="button" class="btn light" style="padding:5px 10px" onclick="closeModal('customerAccountModal')">✕</button>
+    </div>
+    <button type="button" class="btn google-btn" style="width:100%; padding:10px; margin-bottom:10px;" onclick="signInWithGoogleRole('customer')">
+      <span style="font-size:16px;">G</span> المتابعة السريعة عبر حساب Google
+    </button>
+    <div class="auth-method-switch">
+      <button type="button" id="custRegModePhoneBtn" class="auth-method-btn active" onclick="switchCustRegAuthMode('phone')">📱 برقم الهاتف</button>
+      <button type="button" id="custRegModeEmailBtn" class="auth-method-btn" onclick="switchCustRegAuthMode('email')">📧 بالبريد الإلكتروني</button>
+    </div>
+    <div class="field"><label>الاسم الكامل</label><input id="custRegName" placeholder="اكتب اسمك الكامل"></div>
+    <div class="field" id="custRegPhoneField"><label>رقم الهاتف (07XXXXXXXXX)</label><input id="custRegPhone" type="tel" maxlength="11" placeholder="07XXXXXXXXX"></div>
+    <div class="field hidden" id="custRegEmailField"><label>البريد الإلكتروني</label><input id="custRegEmail" type="email" placeholder="example@gmail.com"></div>
+    <div class="field">
+      <label>كلمة المرور</label>
+      <div class="password-wrapper">
+        <input id="custRegPassword" type="password" placeholder="6 أحرف على الأقل">
+        <button type="button" class="toggle-password" onclick="togglePassword('custRegPassword', this)">👁️</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="field"><label>المحافظة</label><select id="custRegCity" onchange="setDistricts('custRegArea',this.value)"></select></div>
+      <div class="field"><label>القضاء</label><select id="custRegArea" disabled><option value="">اختر المحافظة أولاً</option></select></div>
+    </div>
+    <button type="button" class="btn primary" style="width:100%; margin-top:6px;" onclick="submitCustomerRegistration()">إنشاء الحساب والمتابعة</button>
+    <div style="text-align:center;margin-top:10px;">
+      <button type="button" class="btn light" style="width:100%" onclick="closeModal('customerAccountModal'); openLogin()">لديك حساب؟ تسجيل الدخول</button>
+    </div>
+    <div id="custRegMessage"></div>
+  </div>
+</div>
+
+<div class="modal hidden" id="phoneRequiredModal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <strong id="reqPhoneModalTitle" style="color:var(--navy);font-size:15.5px;font-weight:900;">تحديد المحافظة والقضاء</strong>
+      <button type="button" class="btn light" style="padding:5px 10px" onclick="closeModal('phoneRequiredModal')">✕</button>
+    </div>
+    <div class="field"><label>الاسم الكامل</label><input id="reqPhoneName" placeholder="الاسم الكامل"></div>
+    <div class="field"><label>رقم الهاتف (اختياري الآن - 07XXXXXXXXX)</label><input id="reqPhoneNumber" type="tel" maxlength="11" placeholder="07XXXXXXXXX"></div>
+    <div class="row">
+      <div class="field"><label>المحافظة</label><select id="reqPhoneCity" onchange="setDistricts('reqPhoneArea',this.value)"></select></div>
+      <div class="field"><label>القضاء</label><select id="reqPhoneArea" disabled><option value="">اختر المحافظة أولاً</option></select></div>
+    </div>
+    <div class="field hidden" id="reqPhoneServiceField"><label>الاختصاص الرئيسي</label><select id="reqPhoneService"></select></div>
+    <button type="button" class="btn primary" style="width:100%; margin-top:6px;" onclick="saveRequiredPhoneProfile()">حفظ ومتابعة</button>
+  </div>
+</div>
+
+<div class="modal hidden" id="whatsappPhoneOnlyModal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <strong style="color:var(--navy);font-size:15px;font-weight:900;">📲 إضافة رقم الواتساب الخاص بك</strong>
+      <button type="button" class="btn light" style="padding:5px 10px" onclick="closeModal('whatsappPhoneOnlyModal')">✕</button>
+    </div>
+    <p class="muted">يُحفظ رقمك في ملفك الشخصي بشكل سري ولا يظهر للطرف الآخر إلا عند موافقتك على فتح محادثة واتساب.</p>
+    <div class="field"><label>رقم الهاتف العراقي (07XXXXXXXXX)</label><input id="waPrivatePhoneInput" type="tel" maxlength="11" placeholder="07XXXXXXXXX"></div>
+    <button type="button" class="btn whatsapp-btn" style="width:100%;" onclick="savePrivateWhatsappPhone()">حفظ الرقم وإرسال طلب الواتساب</button>
+  </div>
+</div>
+
+<div class="modal hidden" id="subserviceModal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <strong id="subserviceModalTitle" style="color:var(--navy);font-size:15px;font-weight:900;">اختر نوع الخدمة</strong>
+      <button type="button" class="btn light" style="padding:5px 10px" onclick="closeModal('subserviceModal')">✕</button>
+    </div>
+    <div id="subserviceOptionsList" class="subservice-list"></div>
+  </div>
+</div>
+
+<div class="modal hidden" id="customerOrderModal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <strong id="orderModalTitle" style="color:var(--navy);font-size:15px;font-weight:900;">طلب فني</strong>
+      <button type="button" class="btn light" style="padding:5px 10px" onclick="closeModal('customerOrderModal')">✕</button>
+    </div>
+    <div class="field"><label>اشرح تفاصيل المشكلة أو العطل</label><textarea id="custOrderProblem" placeholder="اكتب تفاصيل العطل وموقعه بدقة ليتمكن الفني من مساعدتك..."></textarea></div>
+    <button type="button" class="btn primary" style="width:100%;" onclick="submitCustomerOrder()">إرسال الطلب إلى الفني</button>
+    <div id="custOrderMessage"></div>
+  </div>
+</div>
+
+<div class="modal hidden" id="customerEditModal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <strong style="color:var(--navy);font-size:15px;font-weight:900;">✏️ تعديل ملف الزبون الشخصي</strong>
+      <button type="button" class="btn light" style="padding:5px 10px" onclick="closeModal('customerEditModal')">✕</button>
+    </div>
+    <div class="field"><label>الاسم الكامل</label><input id="editCustName"></div>
+    <div class="field"><label>رقم الهاتف (سري)</label><input id="editCustPhone" type="tel" maxlength="11" placeholder="07XXXXXXXXX"></div>
+    <div class="field"><label>البريد الإلكتروني</label><input id="editCustEmail" type="email" placeholder="example@gmail.com"></div>
+    <div class="row">
+      <div class="field"><label>المحافظة</label><select id="editCustCity" onchange="setDistricts('editCustArea',this.value)"></select></div>
+      <div class="field"><label>القضاء</label><select id="editCustArea" disabled></select></div>
+    </div>
+    <div class="field"><label>الحي / المنطقة</label><input id="editCustNeighborhood" placeholder="اسم الحي أو الشارع"></div>
+    <div class="field"><label>إضافات وملاحظات</label><textarea id="editCustNotes" placeholder="أي ملاحظات إضافية عن عنوانك..."></textarea></div>
+    <button type="button" class="btn primary" style="width:100%;" onclick="saveCustomerAccountProfile()">حفظ التعديلات</button>
+  </div>
+</div>
+
+<div class="modal hidden" id="techEditModal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <strong style="color:var(--navy);font-size:15px;font-weight:900;">✏️ تعديل الملف الشخصي للفني</strong>
+      <button type="button" class="btn light" style="padding:5px 10px" onclick="closeModal('techEditModal')">✕</button>
+    </div>
+    <div class="field"><label>الاسم الكامل</label><input id="editTechName"></div>
+    <div class="field"><label>الاختصاص الرئيسي</label><select id="editTechService" onchange="onTechServiceChange('editTechService','editTechSubservicesBox','editTechOtherAppliancesField')"></select></div>
+    <div class="field"><label>التخصصات الفرعية</label><div id="editTechSubservicesBox" class="sub-checks-box"></div></div>
+    <div class="field hidden" id="editTechOtherAppliancesField"><label>أجهزة كهربائية أخرى تجيد صيانتها</label><input id="editTechOtherAppliances" placeholder="اكتب أسماء الأجهزة الأخرى..."></div>
+    <div class="row">
+      <div class="field"><label>المحافظة</label><select id="editTechCity" onchange="setDistricts('editTechArea',this.value)"></select></div>
+      <div class="field"><label>القضاء</label><select id="editTechArea" disabled></select></div>
+    </div>
+    <div class="field"><label>المنطقة / الحي</label><input id="editTechNeighborhood" placeholder="اسم الحي أو المنطقة"></div>
+    <div class="field"><label>رقم الهاتف (سري)</label><input id="editTechPhone" type="tel" maxlength="11" placeholder="07XXXXXXXXX"></div>
+    <div class="field"><label>البريد الإلكتروني</label><input id="editTechEmail" type="email" placeholder="example@gmail.com"></div>
+    <div class="field"><label>نبذة عن خبرتك</label><textarea id="editTechBio" placeholder="اذكر سنوات الخبرة وأبرز الأعمال التي تنجزها..."></textarea></div>
+    <div class="field"><label>إضافات وملاحظات</label><textarea id="editTechExtra" placeholder="أوقات العمل أو أي ملاحظات إضافية..."></textarea></div>
+    <div class="field"><label>صورة شخصية (اختياري)</label><input id="editTechPhotoFile" type="file" accept="image/*"></div>
+    <button type="button" class="btn primary" style="width:100%;" onclick="saveTechAccountProfile()">حفظ وتفعيل الملف الشخصي</button>
+    <div id="editProfileMessage"></div>
+  </div>
+</div>
+
+<div class="modal hidden" id="loginModal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <strong style="color:var(--navy);font-size:15.5px;font-weight:900;">🔑 تسجيل الدخول</strong>
+      <button type="button" class="btn light" style="padding:5px 10px" onclick="closeModal('loginModal')">✕</button>
+    </div>
+    <button type="button" class="btn google-btn" style="width:100%; padding:10px; margin-bottom:10px;" onclick="signInWithGoogleRole('auto')">
+      <span style="font-size:16px;">G</span> الدخول السريع عبر حساب Google
+    </button>
+    <div class="field"><label>رقم الهاتف أو البريد الإلكتروني</label><input id="loginPhone" placeholder="07XXXXXXXXX أو example@gmail.com"></div>
+    <div class="field">
+      <label>كلمة المرور</label>
+      <div class="password-wrapper">
+        <input id="loginPassword" type="password" placeholder="أدخل كلمة المرور">
+        <button type="button" class="toggle-password" onclick="togglePassword('loginPassword', this)">👁️</button>
+      </div>
+    </div>
+    <button type="button" class="btn primary" style="width:100%;" onclick="loginWithPhonePassword()">دخول</button>
+    <div style="text-align:center; margin-top:10px;">
+      <button type="button" class="btn light" style="width:100%" onclick="openForgotPasswordModal()">نسيت كلمة المرور؟</button>
+    </div>
+    <div id="loginMessage"></div>
+  </div>
+</div>
+
+<div class="modal hidden" id="forgotPasswordModal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <strong style="color:var(--navy);font-size:15px;font-weight:900;">🔄 استرجاع كلمة المرور</strong>
+      <button type="button" class="btn light" style="padding:5px 10px" onclick="closeModal('forgotPasswordModal')">✕</button>
+    </div>
+    <div class="field"><label>البريد الإلكتروني المسجل</label><input id="forgotEmail" type="email" placeholder="example@gmail.com"></div>
+    <div class="field"><label>رقم الهاتف (اختياري للمساعدة عبر الإدارة)</label><input id="forgotPhone" type="tel" maxlength="11" placeholder="07XXXXXXXXX"></div>
+    <button type="button" class="btn primary" style="width:100%;" onclick="submitForgotPasswordRequest()">إرسال رابط الاسترجاع</button>
+  </div>
+</div>
+
+<div class="modal hidden" id="supportChatModal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <strong style="color:var(--navy);font-size:15px;font-weight:900;">🎧 محادثة فريق الدعم</strong>
+      <button type="button" class="btn light" style="padding:5px 10px" onclick="closeSupportChatModal()">✕</button>
+    </div>
+    <div id="adminSupportThreadPicker" class="field hidden" style="margin-top:0;">
+      <label>اختر محادثة المستخدم:</label>
+      <select id="adminSupportThreadSelect" onchange="switchAdminSupportThread()"></select>
+    </div>
+    <div id="supportChatMessages" class="chat-messages-box"></div>
+    <div class="chat-send-row">
+      <input id="supportChatInput" placeholder="اكتب رسالتك لفريق الدعم..." onkeydown="if(event.key==='Enter') sendSupportMessage()">
+      <button type="button" class="btn primary" onclick="sendSupportMessage()">إرسال</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal hidden" id="customAlertModal">
+  <div class="modal-card" style="text-align:center; max-width:390px;">
+    <p id="customAlertText" style="font-weight:800; color:var(--navy); font-size:14px; line-height:1.7; margin:8px 0 16px;"></p>
+    <button type="button" class="btn primary" style="width:100%;" onclick="closeModal('customAlertModal')">حسناً</button>
+  </div>
+</div>
+
+<div class="modal hidden" id="customConfirmModal">
+  <div class="modal-card" style="text-align:center; max-width:390px;">
+    <p id="customConfirmText" style="font-weight:800; color:var(--navy); font-size:14px; line-height:1.7; margin:8px 0 16px;"></p>
+    <div style="display:flex; gap:10px;">
+      <button type="button" id="confirmYesBtn" class="btn danger" style="flex:1;">نعم، متأكد</button>
+      <button type="button" class="btn light" style="flex:1;" onclick="closeModal('customConfirmModal')">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal hidden" id="photoModal" onclick="closeModal('photoModal')">
+  <div class="modal-card photo-viewer-card" onclick="event.stopPropagation()">
+    <img id="modalEnlargedImg" src="" alt="صورة مكبرة">
+    <div style="margin-top:10px;">
+      <button type="button" class="btn light" onclick="closeModal('photoModal')">إغلاق الصورة</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-functions-compat.js"></script>
+<script src="config.js"></script>
+<script src="data.js"></script>
+<script>
+const ADMIN_EMAIL = "jabal1986iq@gmail.com";
+const MONTHLY_DURATION_MS = 30 * 24 * 60 * 60 * 1000;
+const YEARLY_DURATION_MS = 365 * 24 * 60 * 60 * 1000;
+const memoryStore = {};
+
+function jabalGet(k) { try { return localStorage.getItem("jabal_" + k) || memoryStore[k] || ""; } catch(_) { return memoryStore[k] || ""; } }
+function jabalSet(k, v) { memoryStore[k] = String(v); try { localStorage.setItem("jabal_" + k, String(v)); } catch(_) {} }
+function jabalRemove(k) { delete memoryStore[k]; try { localStorage.removeItem("jabal_" + k); } catch(_) {} }
+
+let activeCities = ["بغداد", "المثنى", "البصرة", "النجف", "كربلاء", "بابل", "ذي قار", "ميسان", "واسط", "الديوانية", "ديالى", "الأنبار", "صلاح الدين", "كركوك", "نينوى", "أربيل", "السليمانية", "دهوك"];
+let deferredPrompt = null;
+window.addEventListener("beforeinstallprompt", e => { e.preventDefault(); deferredPrompt = e; });
+async function installApp() {
+  if(deferredPrompt) { deferredPrompt.prompt(); await deferredPrompt.userChoice; deferredPrompt = null; }
+  else showCustomAlert("لتثبيت التطبيق: اضغط على خيارات المتصفح (⋮) ثم اختر (إضافة إلى الشاشة الرئيسية / Install App).");
+}
+let auth=null,db=null,storage=null,functions=null,currentUser=null,currentRole="guest",currentTech=null;
+let publicTechs=[],requests=[],technicians=[],passwordRequests=[],allAccountsList=[],incompleteAccountsList=[];
+let chosenCustomerCity="",chosenCustomerArea="",selectedTargetTech=null;
+let currentSelectedService="",currentSelectedSubservice="",currentAdminTechsSubTab="registered";
+let currentSectionId="home",navigationHistory=["home"];
+let techJobsListener=null,customerOrdersBadgeListener=null,supportChatListener=null,orderChatListener=null,orderMetaListener=null,badgeListener=null,chatHubLiveRef=null;
+let activeOrderChatId=null,activeOrderMeta=null;
+let preferredGoogleRole="auto",pendingAfterPhoneCheck=null,pendingAfterWhatsappPhone=null,announcementTimer=null,pendingAfterGate=null;
+let custRegAuthMode="phone",techRegAuthMode="phone",isSigningOutFlag=false,isGoogleAuthInProgress=false;
+let lastNotifiedJobIds = new Set();
+
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+function formatOpenDuration(startedAt, endedAt = null) {
+  if (!startedAt) return "تبدأ بعد الموافقة";
+  const endTs = endedAt || Date.now();
+  const diffMs = Math.max(0, endTs - Number(startedAt));
+  const totalMinutes = Math.floor(diffMs / 60000);
+  const days = Math.floor(totalMinutes / (60 * 24));
+  const hours = Math.floor((totalMinutes % (60 * 24)) / 60);
+  const mins = totalMinutes % 60;
+  if (days > 0) return `${days} يوم و ${hours} ساعة`;
+  if (hours > 0) return `${hours} ساعة و ${mins} دقيقة`;
+  return `${mins} دقيقة`;
+}
+
+function isPendingTechJob(status) {
+  const st = String(status || "").trim();
+  return st === "بانتظار رد الفني" || st.includes("بانتظار رد الفني");
+}
+
+function isOrderEndedOrCompleted(status, continuationState = "") {
+  const st = String(status || "").trim();
+  const cs = String(continuationState || "").trim();
+  return st === "منتهي" || st === "مرفوض من الفني" || cs === "ended" || cs === "rejected";
+}
+
+function isChatWritable(meta) {
+  if (!meta) return false;
+  const st = String(meta.status || "").trim();
+  const cs = String(meta.continuationState || "").trim();
+  if (isOrderEndedOrCompleted(st, cs)) return false;
+  return st === "مقبول من الفني" || st === "مفتوحة" || cs === "continued";
+}
+
+function normalizeIraqiPhone(raw) {
+  let d = String(raw || "").trim().replace(/[\s\-().+]/g, "");
+  d = d.replace(/[٠-٩]/g, ch => "٠١٢٣٤٥٦٧٨٩".indexOf(ch));
+  if (d.startsWith("00964")) d = "0" + d.slice(5);
+  else if (d.startsWith("964")) d = "0" + d.slice(3);
+  else if (d.length === 10 && d.startsWith("7")) d = "0" + d;
+  return d;
+}
+
+function isValidIraqiPhone(phone) { return /^07[3-9]\d{8}$/.test(normalizeIraqiPhone(phone)); }
+function isValidEmailAddress(val) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(val || "").trim()); }
+function buildAuthEmailFromInput(rawIdentifier) {
+  const trimmed = String(rawIdentifier || "").trim();
+  return trimmed.includes("@") ? trimmed.toLowerCase() : (normalizeIraqiPhone(trimmed) + "@jabal.app");
+}
+function buildLegacyAuthEmailFromInput(rawIdentifier) {
+  const trimmed = String(rawIdentifier || "").trim();
+  return trimmed.includes("@") ? trimmed.toLowerCase() : (normalizeIraqiPhone(trimmed) + "@sakhr.app");
+}
+
+function formatAuthErrorMessage(err) {
+  const code = err?.code || "";
+  const msg = err?.message || "";
+  if (code === "auth/network-request-failed" || msg.includes("network-request-failed")) return "تعذر الاتصال بخدمة الدخول بسبب ضعف أو انقطاع الإنترنت.";
+  if (code === "auth/unauthorized-domain") return "هذا الرابط غير مضاف ضمن Authorized domains في Firebase.";
+  if (code === "auth/operation-not-allowed") return "طريقة تسجيل الدخول هذه غير مفعّلة في Firebase.";
+  if (code === "auth/wrong-password" || code === "auth/invalid-credential" || code === "auth/user-not-found") return "رقم الهاتف / البريد الإلكتروني أو كلمة المرور غير صحيحة.";
+  if (code === "auth/too-many-requests") return "تم إيقاف المحاولات مؤقتاً لكثرة التكرار.";
+  if (code === "auth/email-already-in-use") return "هذا الرقم أو البريد الإلكتروني مسجل مسبقاً. يرجى تسجيل الدخول.";
+  return "خطأ في بيانات الدخول (" + code + "): " + msg;
+}
+
+const formatWhatsApp=phone=>{
+  let clean = normalizeIraqiPhone(phone).replace(/\D/g,'');
+  if(clean.startsWith('0')) clean='964'+clean.substring(1);
+  else if(!clean.startsWith('964')&&clean.length===10) clean='964'+clean;
+  return clean;
+};
+
+function updateChatUnreadBadge(count) {
+  const badge = $("chatUnreadBadge");
+  if(!badge) return;
+  const n = Number(count || 0);
+  if(n > 0) {
+    badge.innerText = n > 99 ? "99+" : String(n);
+    badge.classList.remove("hidden");
+  } else {
+    badge.classList.add("hidden");
+  }
+}
+
+function startChatBadgeWatcher() {
+  if(badgeListener) { badgeListener.off(); badgeListener = null; }
+  if(customerOrdersBadgeListener) { customerOrdersBadgeListener.off(); customerOrdersBadgeListener = null; }
+  if(!db) return;
+
+  const activeUid = auth?.currentUser?.uid || currentUser?.uid || "";
+  if(["technician", "suspended"].includes(currentRole) && activeUid) {
+    badgeListener = db.ref("technicianJobs/" + activeUid);
+    badgeListener.on("value", snap => {
+      let pendingCount = 0;
+      const newJobIds = [];
+      snap.forEach(c => {
+        const val = c.val() || {};
+        if(isPendingTechJob(val.status)) {
+          pendingCount++;
+          newJobIds.push(c.key);
+        }
+      });
+      updateChatUnreadBadge(pendingCount);
+      const hasBrandNew = newJobIds.some(id => !lastNotifiedJobIds.has(id));
+      lastNotifiedJobIds = new Set(newJobIds);
+      if(hasBrandNew && pendingCount > 0) {
+        playAlertBeep();
+        if($("techAlertBox")) $("techAlertBox").innerHTML = '<div class="notice success" style="font-weight:900">🔔 وصلك طلب صيانة جديد! راجع خانة الدردشة.</div>';
+      }
+      if(currentSectionId === "chatHubSection") renderChatHub();
+    });
+  } else if(currentRole !== "admin") {
+    const custUid = (currentUser && !currentUser.isAnonymous) ? currentUser.uid : jabalGet("CustomerUid");
+    if(!custUid) { updateChatUnreadBadge(0); return; }
+    customerOrdersBadgeListener = db.ref("requests/" + custUid);
+    customerOrdersBadgeListener.on("value", snap => {
+      let alertCount = 0;
+      snap.forEach(c => {
+        const val = c.val() || {};
+        if((val.status === "مقبول من الفني" || val.status === "مفتوحة") && currentSectionId !== "fullOrderChatSection") {
+          alertCount++;
+        }
+      });
+      updateChatUnreadBadge(alertCount);
+      if(currentSectionId === "chatHubSection") renderChatHub();
+    });
+  } else {
+    updateChatUnreadBadge(0);
+  }
+}
+
+function switchCustRegAuthMode(mode) {
+  custRegAuthMode = mode === "email" ? "email" : "phone";
+  $("custRegModePhoneBtn")?.classList.toggle("active", custRegAuthMode === "phone");
+  $("custRegModeEmailBtn")?.classList.toggle("active", custRegAuthMode === "email");
+  $("custRegPhoneField")?.classList.toggle("hidden", custRegAuthMode !== "phone");
+  $("custRegEmailField")?.classList.toggle("hidden", custRegAuthMode === "phone");
+}
+
+function switchTechRegAuthMode(mode) {
+  techRegAuthMode = mode === "email" ? "email" : "phone";
+  $("techRegModePhoneBtn")?.classList.toggle("active", techRegAuthMode === "phone");
+  $("techRegModeEmailBtn")?.classList.toggle("active", techRegAuthMode === "email");
+  $("regPhoneField")?.classList.toggle("hidden", techRegAuthMode !== "phone");
+  $("regEmailField")?.classList.toggle("hidden", techRegAuthMode === "phone");
+}
+
+function getEffectiveSubscriptionInfo(tech) {
+  const planType = tech?.subscriptionType || "none";
+  const expiresAt = Number(tech?.subscriptionExpiresAt || 0);
+  const manualActive = tech?.subscriptionStatus === "فعال";
+  const now = Date.now();
+  if(manualActive && expiresAt > 0 && now >= expiresAt) {
+    return { isActive: false, expired: true, planType, expiresAt, label: planType === "yearly" ? "منتهي (سنوي)" : "منتهي (شهري)" };
+  }
+  if(manualActive) {
+    const typeText = planType === "yearly" ? "سنوي" : (planType === "monthly" ? "شهري" : "فعال");
+    return { isActive: true, expired: false, planType, expiresAt, label: `فعال (${typeText})` };
+  }
+  return { isActive: false, expired: false, planType, expiresAt: 0, label: "غير فعال" };
+}
+
+function canTechAcceptMoreJobs(tech) {
+  if (!tech) return false;
+  const subInfo = getEffectiveSubscriptionInfo(tech);
+  if (subInfo.isActive) return true;
+  return Number(tech.freeJobsUsed || 0) < 3;
+}
+
+function isTechProfileComplete(tech) {
+  if (!tech) return false;
+  return Boolean(
+    String(tech.name || "").trim() &&
+    String(tech.city || "").trim() &&
+    String(tech.area || "").trim() &&
+    String(tech.service || "").trim()
+  );
+}
+
+async function checkAndExpireSubscriptionIfNeeded(uid, tech) {
+  if(!tech || !db) return tech;
+  const info = getEffectiveSubscriptionInfo(tech);
+  if(info.expired) {
+    const updates = { subscriptionStatus: "غير فعال", subscriptionExpiredAt: Date.now() };
+    await db.ref("technicians/" + uid).update(updates).catch(()=>{});
+    await db.ref("publicTechnicians/" + uid).update(updates).catch(()=>{});
+    return { ...tech, ...updates };
+  }
+  return tech;
+}
+
+function toggleNavDrawer() {
+  const drawer = $("navDrawer"), backdrop = $("navDrawerBackdrop");
+  if(!drawer || !backdrop) return;
+  const isClosed = drawer.classList.contains("hidden");
+  drawer.classList.toggle("hidden", !isClosed);
+  backdrop.classList.toggle("hidden", !isClosed);
+}
+
+function closeNavDrawer() {
+  $("navDrawer")?.classList.add("hidden");
+  $("navDrawerBackdrop")?.classList.add("hidden");
+}
+
+function goBackSmart() {
+  closeNavDrawer();
+  const openModal = Array.from(document.querySelectorAll(".modal")).find(m => !m.classList.contains("hidden"));
+  if(openModal) {
+    if(openModal.id === "supportChatModal") closeSupportChatModal();
+    else openModal.classList.add("hidden");
+    return;
+  }
+  if(currentSectionId === "fullOrderChatSection") {
+    closeFullOrderChat();
+    return;
+  }
+  if(navigationHistory.length > 1) {
+    navigationHistory.pop();
+    showSection(navigationHistory[navigationHistory.length - 1] || "home", false);
+  } else if(currentSectionId !== "home") {
+    showSection("home", false);
+  }
+}
+
+function navigateToSection(id) {
+  if (id === "home" || id === "services") currentSelectedSubservice = "";
+  showSection(id, true);
+}
+
+function isCityActive(city) {
+  if(!city) return true;
+  if(currentRole === "admin") return true;
+  return activeCities.includes(city);
+}
+
+function getCityExpansionMessage(city) {
+  const activeNames = activeCities.length ? activeCities.join(" و ") : "المناطق المعتمدة";
+  return `محافظة (${city}) ضمن خطة التوسع القريبة لتطبيق جبل. الخدمة الفعّالة حالياً في: ${activeNames}.`;
+}
+
+function isUserEntered() {
+  if(currentRole === "admin" || ["technician", "suspended"].includes(currentRole)) return true;
+  return Boolean(jabalGet("CustomerName") || (currentUser && !currentUser.isAnonymous));
+}
+
+function hasCustomerCoreProfileConfigured() {
+  if(currentRole === "admin") return true;
+  const city = jabalGet("CustomerCity") || chosenCustomerCity || "";
+  const area = jabalGet("CustomerArea") || chosenCustomerArea || "";
+  return Boolean(city && area);
+}
+
+function openPhoneRequiredModal(afterCallback) {
+  pendingAfterPhoneCheck = typeof afterCallback === "function" ? afterCallback : null;
+  if($("reqPhoneCity")) $("reqPhoneCity").innerHTML = '<option value="">اختر المحافظة</option>' + Object.keys(DISTRICTS).map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("");
+  if($("reqPhoneService")) $("reqPhoneService").innerHTML = SERVICES.map(s=>`<option value="${esc(s)}">${esc(s)}</option>`).join("");
+
+  if(["technician", "suspended"].includes(currentRole) && currentTech) {
+    $("reqPhoneModalTitle").innerText = "استكمال الملف الشخصي للفني";
+    $("reqPhoneName").value = currentTech.name || "";
+    $("reqPhoneNumber").value = currentTech.phone || "";
+    $("reqPhoneCity").value = currentTech.city || "";
+    setDistricts("reqPhoneArea", currentTech.city || "");
+    if(currentTech.area) $("reqPhoneArea").value = currentTech.area;
+    $("reqPhoneServiceField")?.classList.remove("hidden");
+    if(currentTech.service) $("reqPhoneService").value = currentTech.service;
+  } else {
+    $("reqPhoneModalTitle").innerText = "تحديد المحافظة والقضاء";
+    const savedCity = jabalGet("CustomerCity") || "";
+    const savedArea = jabalGet("CustomerArea") || "";
+    $("reqPhoneName").value = jabalGet("CustomerName") || (currentUser?.displayName || "");
+    $("reqPhoneNumber").value = jabalGet("CustomerPhone") || "";
+    $("reqPhoneCity").value = savedCity;
+    setDistricts("reqPhoneArea", savedCity);
+    if(savedArea) $("reqPhoneArea").value = savedArea;
+    $("reqPhoneServiceField")?.classList.add("hidden");
+  }
+  $("phoneRequiredModal").classList.remove("hidden");
+}
+
+async function saveRequiredPhoneProfile() {
+  const name = $("reqPhoneName").value.trim();
+  const rawPhone = $("reqPhoneNumber").value.trim();
+  const phone = rawPhone ? normalizeIraqiPhone(rawPhone) : "";
+  const city = $("reqPhoneCity").value;
+  const area = $("reqPhoneArea").value;
+
+  if(!name || !city || !area) return showCustomAlert("يرجى إدخال الاسم وتحديد المحافظة والقضاء.");
+  if(phone && !isValidIraqiPhone(phone)) return showCustomAlert("رقم الهاتف العراقي يجب أن يتكون من 11 رقماً ويبدأ بـ 07.");
+
+  try {
+    if(["technician", "suspended"].includes(currentRole) && currentUser && currentTech) {
+      const service = $("reqPhoneService")?.value || currentTech.service || SERVICES[0];
+      const updated = { ...currentTech, name, phone, city, area, service };
+      await db.ref("technicians/" + currentUser.uid).update({ name, phone, city, area, service });
+      await syncPublicTechnician(currentUser.uid, updated);
+      await logUserAccount(currentUser.uid, { name, phone, role: "فني", service, city, area });
+      currentTech = updated;
+      renderTechAccount();
+      loadPublicTechs();
+    } else {
+      jabalSet("CustomerName", name);
+      if(phone) jabalSet("CustomerPhone", phone);
+      jabalSet("CustomerCity", city);
+      jabalSet("CustomerArea", area);
+      chosenCustomerCity = city;
+      chosenCustomerArea = area;
+      const uid = (currentUser && !currentUser.isAnonymous) ? currentUser.uid : jabalGet("CustomerUid");
+      if(uid) await logUserAccount(uid, { name, phone, role: "زبون", city, area });
+      updateNavAuthButton();
+    }
+    closeModal("phoneRequiredModal");
+    if(!isCityActive(city)) {
+      pendingAfterPhoneCheck = null;
+      return showCustomAlert(getCityExpansionMessage(city));
+    }
+    if(typeof pendingAfterPhoneCheck === "function") {
+      const fn = pendingAfterPhoneCheck;
+      pendingAfterPhoneCheck = null;
+      fn();
+    }
+  } catch(e) {
+    showCustomAlert("خطأ أثناء حفظ البيانات: " + e.message);
+  }
+}
+
+function requireGate(actionCallback) {
+  const wrapped = () => {
+    if(["technician", "suspended"].includes(currentRole)) {
+      if(!isTechProfileComplete(currentTech)) {
+        navigateToSection("techAccount");
+        renderTechAccount();
+        return showCustomAlert("يرجى إكمال بيانات ملفك الشخصي (الاسم، المحافظة، القضاء، والاختصاص) أولاً.");
+      }
+      actionCallback();
+      return;
+    }
+    if(!hasCustomerCoreProfileConfigured()) {
+      openPhoneRequiredModal(actionCallback);
+      return;
+    }
+    const userCity = chosenCustomerCity || jabalGet("CustomerCity") || "";
+    if(userCity && !isCityActive(userCity)) {
+      return showCustomAlert(getCityExpansionMessage(userCity));
+    }
+    actionCallback();
+  };
+
+  if(isUserEntered()) wrapped();
+  else {
+    pendingAfterGate = wrapped;
+    $("roleSelectionModal").classList.remove("hidden");
+  }
+}
+
+function runPendingGateAction() {
+  if(typeof pendingAfterGate === "function") {
+    const fn = pendingAfterGate;
+    pendingAfterGate = null;
+    fn();
+  }
+}
+
+function showCustomAlert(text) {
+  $("customAlertText").innerText = text;
+  $("customAlertModal").classList.remove("hidden");
+}
+
+function showCustomConfirm(text, onYes) {
+  $("customConfirmText").innerText = text;
+  const yesBtn = $("confirmYesBtn");
+  const newBtn = yesBtn.cloneNode(true);
+  yesBtn.parentNode.replaceChild(newBtn, yesBtn);
+  newBtn.addEventListener("click", () => {
+    closeModal('customConfirmModal');
+    onYes();
+  });
+  $("customConfirmModal").classList.remove("hidden");
+}
+
+function openPhotoModal(url) {
+  if(!url) return;
+  $("modalEnlargedImg").src = url;
+  $("photoModal").classList.remove("hidden");
+}
+
+function togglePassword(inputId, btn) {
+  const input = $(inputId);
+  if (!input) return;
+  if (input.type === "password") { input.type = "text"; btn.textContent = "🙈"; }
+  else { input.type = "password"; btn.textContent = "👁️"; }
+}
+
+function playAlertBeep() {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'sine'; osc.frequency.setValueAtTime(587.33, ctx.currentTime);
+    gain.gain.setValueAtTime(0.2, ctx.currentTime);
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.start(); osc.stop(ctx.currentTime + 0.3);
+  } catch(e) {}
+}
+
+function updateBottomNavActive(sectionId) {
+  $("bNavHome")?.classList.toggle("active", sectionId === "home");
+  $("bNavServices")?.classList.toggle("active", sectionId === "services" || sectionId === "technicians");
+  $("bNavChat")?.classList.toggle("active", sectionId === "chatHubSection" || sectionId === "fullOrderChatSection");
+  $("bNavAccount")?.classList.toggle("active", ["customerAccountView", "techAccount", "adminProfile", "admin", "join"].includes(sectionId));
+}
+
+function showSection(id, pushHistory = true) {
+  document.querySelectorAll("main section").forEach(s => s.classList.add("hidden"));
+  const section = $(id);
+  if (section) section.classList.remove("hidden");
+  currentSectionId = id;
+  if(pushHistory && navigationHistory[navigationHistory.length - 1] !== id) navigationHistory.push(id);
+  updateBottomNavActive(id);
+  window.scrollTo({ top: 0, behavior: "smooth" });
+
+  if (id === "technicians") loadPublicTechs();
+  if (id === "chatHubSection") renderChatHub();
+  if (id === "adminTechsSection" && currentRole === "admin") loadAdminData();
+  if (id === "reviewsChat") {
+    loadReviews();
+    if(currentRole === "admin") {
+      $("adminAnnouncementBox").classList.remove("hidden");
+      loadAdminAnnouncementsInputs();
+    } else $("adminAnnouncementBox").classList.add("hidden");
+  }
+  if ((id === "admin" || id === "adminProfile") && currentRole === "admin") loadAdminData();
+  if (id === "techAccount" && ["technician", "suspended"].includes(currentRole)) renderTechAccount();
+  if (id === "customerAccountView") renderCustomerAccount();
+}
+
+function closeModal(id) { const m = $(id); if(m) m.classList.add("hidden"); }
+function openLogin() { $("loginMessage").innerHTML = ""; $("loginModal").classList.remove("hidden"); }
+function openForgotPasswordModal() {
+  closeModal('loginModal');
+  const prefill = $("loginPhone")?.value?.trim() || jabalGet("CustomerEmail") || (currentTech?.email) || "";
+  $("forgotEmail").value = prefill.includes("@") ? prefill : "";
+  $("forgotPhone").value = prefill.includes("@") ? "" : prefill;
+  $("forgotPasswordModal").classList.remove("hidden");
+}
+
+function openTechEditModal() {
+  $("editProfileMessage").innerHTML = "";
+  if(currentTech) {
+    renderSubserviceCheckboxes("editTechSubservicesBox", currentTech.service || SERVICES[0], currentTech.subservices || []);
+    toggleOtherAppliancesField(currentTech.service || SERVICES[0], "editTechOtherAppliancesField");
+  }
+  $("techEditModal").classList.remove("hidden");
+}
+
+function openAdminTechsView() { if(currentRole === "admin") navigateToSection("adminTechsSection"); }
+
+function switchAdminTechsSubTab(subTab) {
+  currentAdminTechsSubTab = subTab;
+  $("btnTechsRegisteredTab")?.classList.toggle("active", subTab === "registered");
+  $("btnTechsIssuesTab")?.classList.toggle("active", subTab !== "registered");
+  $("adminTechsRegisteredBox")?.classList.toggle("hidden", subTab !== "registered");
+  $("adminTechsIssuesBox")?.classList.toggle("hidden", subTab === "registered");
+  renderAdminTechsFullList();
+}
+
+function switchAdminTab(tab) {
+  document.querySelectorAll(".admin-tab-content").forEach(el => el.classList.add("hidden"));
+  document.querySelectorAll(".admin-tab-btn").forEach(el => el.classList.remove("active"));
+  if(tab === 'accounts') {
+    $("adminAccountsTab").classList.remove("hidden");
+    $("btnTabAccounts").classList.add("active");
+  } else if(tab === 'requests') {
+    $("adminRequestsTab").classList.remove("hidden");
+    $("btnTabRequests").classList.add("active");
+  }
+}
+
+function toggleOtherAppliancesField(serviceName, fieldId) {
+  const el = $(fieldId);
+  if(el) el.classList.toggle("hidden", serviceName !== "صيانة الأجهزة الكهربائية");
+}
+
+function onTechServiceChange(selectId, boxId, otherFieldId) {
+  const val = $(selectId)?.value || SERVICES[0];
+  renderSubserviceCheckboxes(boxId, val);
+  toggleOtherAppliancesField(val, otherFieldId);
+}
+
+function renderSubserviceCheckboxes(containerId, serviceName, selectedList = []) {
+  const box = $(containerId);
+  if(!box) return;
+  const subs = SUBSERVICES[serviceName] || [];
+  if(!subs.length) {
+    box.innerHTML = '<span class="muted">لا توجد تخصصات فرعية لهذا القسم.</span>';
+    return;
+  }
+  box.innerHTML = subs.map(sub => {
+    const checked = selectedList.includes(sub) ? "checked" : "";
+    return `<label class="sub-check-item"><input type="checkbox" value="${esc(sub)}" ${checked}><span>${esc(sub)}</span></label>`;
+  }).join("");
+}
+
+function getCheckedSubservices(containerId) {
+  const box = $(containerId);
+  return box ? Array.from(box.querySelectorAll('input[type="checkbox"]:checked')).map(el => el.value) : [];
+}
+
+function filterByService(serviceName) {
+  const userCity = chosenCustomerCity || jabalGet("CustomerCity") || "";
+  if(userCity && !isCityActive(userCity)) return showCustomAlert(getCityExpansionMessage(userCity));
+  currentSelectedService = serviceName;
+  currentSelectedSubservice = "";
+  const subs = SUBSERVICES[serviceName] || [];
+  if(subs.length > 0) openSubserviceModal(serviceName, subs);
+  else navigateToSection("technicians");
+}
+
+function openSubserviceModal(serviceName, subs) {
+  $("subserviceModalTitle").innerText = "اختر نوع الخدمة (" + serviceName + ")";
+  let html = `<button type="button" class="subservice-btn all-btn" onclick="selectSubserviceAndShowTechs('${esc(serviceName)}', '')">الكل (جميع فروع ${esc(serviceName)})</button>`;
+  html += subs.map(sub => `<button type="button" class="subservice-btn" onclick="selectSubserviceAndShowTechs('${esc(serviceName)}', '${esc(sub)}')">${esc(sub)}</button>`).join("");
+  $("subserviceOptionsList").innerHTML = html;
+  $("subserviceModal").classList.remove("hidden");
+}
+
+function selectSubserviceAndShowTechs(serviceName, subserviceName) {
+  currentSelectedService = serviceName;
+  currentSelectedSubservice = subserviceName;
+  closeModal("subserviceModal");
+  navigateToSection("technicians");
+}
+
+function handleCustomerRoleEntry() {
+  const savedName = jabalGet("CustomerName") || (currentUser && !currentUser.isAnonymous && currentRole === "customer_auth" ? (currentUser.displayName || "زبون جبل") : "");
+  if(!savedName) {
+    $("custRegName").value = ""; $("custRegPhone").value = ""; $("custRegEmail").value = "";
+    $("custRegPassword").value = ""; $("custRegMessage").innerHTML = "";
+    switchCustRegAuthMode("phone");
+    $("customerAccountModal").classList.remove("hidden");
+  } else {
+    if(!jabalGet("CustomerName") && savedName) jabalSet("CustomerName", savedName);
+    const savedCity = jabalGet("CustomerCity") || "";
+    if(savedCity && !isCityActive(savedCity)) return showCustomAlert(getCityExpansionMessage(savedCity));
+    runPendingGateAction();
+  }
+}
+
+function handleTechnicianRoleEntry() {
+  if(["technician", "suspended"].includes(currentRole)) runPendingGateAction();
+  else {
+    $("regName").value = ""; $("regPhone").value = ""; $("regEmail").value = "";
+    $("regPassword").value = ""; $("regMessage").innerHTML = "";
+    switchTechRegAuthMode("phone");
+    navigateToSection("join");
+  }
+}
+
+function handleAuthNav() {
+  const customerName = jabalGet("CustomerName");
+  if(currentRole === "admin") navigateToSection("adminProfile");
+  else if(["technician", "suspended"].includes(currentRole)) navigateToSection("techAccount");
+  else if(customerName || (currentUser && !currentUser.isAnonymous)) navigateToSection("customerAccountView");
+  else openLogin();
+}
+
+function updateNavAuthButton() {
+  const adminBtn = $("adminNavBtn"), techsBtn = $("techsNavBtn"), bLbl = $("bNavAccountLabel");
+  const customerName = jabalGet("CustomerName");
+  const isAdmin = currentRole === "admin";
+  adminBtn?.classList.toggle("hidden", !isAdmin);
+  techsBtn?.classList.toggle("hidden", !isAdmin);
+
+  if(bLbl) {
+    if(isAdmin || ["technician", "suspended"].includes(currentRole)) bLbl.innerText = "حسابي";
+    else if(customerName) bLbl.innerText = customerName.split(" ")[0] || "حسابي";
+    else bLbl.innerText = "حسابي";
+  }
+}
+
+function setupLocations(){
+  const cityOptions = Object.keys(DISTRICTS).map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("");
+  ["custRegCity","editCustCity","regCity","editTechCity","reqPhoneCity"].forEach(id => {
+    if($(id)) $(id).innerHTML = '<option value="">اختر المحافظة</option>' + cityOptions;
+  });
+  const savedCity = jabalGet("CustomerCity") || "";
+  const savedArea = jabalGet("CustomerArea") || "";
+  if(savedCity) { chosenCustomerCity = savedCity; chosenCustomerArea = savedArea; }
+}
+
+function setDistricts(id, city){
+  const el = $(id);
+  if(!el) return;
+  if(!city){
+    el.disabled = true;
+    el.innerHTML = '<option value="">اختر المحافظة أولاً</option>';
+    return;
+  }
+  const list = DISTRICTS[city] || [];
+  el.disabled = !list.length;
+  el.innerHTML = list.length
+    ? '<option value="">اختر القضاء</option>' + list.map(x=>`<option>${esc(x)}</option>`).join("")
+    : '<option value="">لا توجد أقضية</option>';
+}
+
+function checkInitialStartupModals() {
+  if(currentRole === "admin" || ["technician", "suspended"].includes(currentRole) || (currentUser && !currentUser.isAnonymous)) return;
+  if(!jabalGet("TermsAccepted")) {
+    $("termsCheckbox").checked = false;
+    $("termsModal").classList.remove("hidden");
+  }
+}
+
+function acceptTermsWithCheck() {
+  if(!$("termsCheckbox")?.checked) return showCustomAlert("يرجى الموافقة على شروط الاستخدام أولاً.");
+  jabalSet("TermsAccepted", "true");
+  closeModal("termsModal");
+}
+
+async function logUserAccount(uid, info) {
+  if(!db || !uid) return;
+  const cleanPayload = {};
+  Object.entries(info || {}).forEach(([k, v]) => {
+    if (v !== undefined) cleanPayload[k] = v;
+  });
+  try {
+    await db.ref("allAccounts/" + uid).update({ uid, lastLogin: Date.now(), ...cleanPayload });
+  } catch(e) {}
+}
+
+async function ensureCustomerAccountDocument(user, extraInfo = {}) {
+  if(!user || user.isAnonymous || !db || user.email === ADMIN_EMAIL) return null;
+  let existing = {};
+  try {
+    const snap = await db.ref("allAccounts/" + user.uid).once("value");
+    if(snap.exists()) existing = snap.val() || {};
+  } catch(_) {}
+
+  const resolvedName = existing.name || extraInfo.name || user.displayName || jabalGet("CustomerName") || "زبون جبل";
+  const resolvedEmail = existing.email || extraInfo.email || user.email || jabalGet("CustomerEmail") || "";
+  const resolvedPhone = existing.phone || extraInfo.phone || jabalGet("CustomerPhone") || "";
+  const resolvedCity = existing.city || extraInfo.city || jabalGet("CustomerCity") || "";
+  const resolvedArea = existing.area || extraInfo.area || jabalGet("CustomerArea") || "";
+  const resolvedRole = existing.role || extraInfo.role || "زبون";
+  const registeredAt = existing.registeredAt || extraInfo.registeredAt || Date.now();
+
+  jabalSet("CustomerName", resolvedName);
+  jabalSet("CustomerUid", user.uid);
+  if(resolvedEmail) jabalSet("CustomerEmail", resolvedEmail);
+  if(resolvedPhone) jabalSet("CustomerPhone", resolvedPhone);
+  if(resolvedCity) { jabalSet("CustomerCity", resolvedCity); chosenCustomerCity = resolvedCity; }
+  if(resolvedArea) { jabalSet("CustomerArea", resolvedArea); chosenCustomerArea = resolvedArea; }
+
+  await logUserAccount(user.uid, {
+    name: resolvedName,
+    email: resolvedEmail,
+    phone: resolvedPhone,
+    city: resolvedCity,
+    area: resolvedArea,
+    role: resolvedRole,
+    registeredAt,
+    ...extraInfo
+  });
+
+  return { name: resolvedName, email: resolvedEmail, phone: resolvedPhone, city: resolvedCity, area: resolvedArea, role: resolvedRole };
+}
+
+async function finalizeGoogleUserSession(gUser, roleHint = "auto") {
+  if(!gUser || !db) return;
+  if(gUser.email === ADMIN_EMAIL) {
+    currentRole = "admin";
+    ["loginModal","customerAccountModal"].forEach(closeModal);
+    updateNavAuthButton();
+    startChatBadgeWatcher();
+    navigateToSection("adminProfile");
+    loadAdminData();
+    runPendingGateAction();
+    return;
+  }
+
+  const techSnap = await db.ref("technicians/" + gUser.uid).once("value");
+  if(techSnap.exists() || roleHint === "technician") {
+    let techData = techSnap.exists() ? techSnap.val() : {
+      name: gUser.displayName || "فني جبل", email: gUser.email || "", phone: "", city: "", area: "",
+      neighborhood: "", service: "", subservices: [], otherAppliances: "", bio: "", extraInfo: "",
+      photoURL: gUser.photoURL || "", approved: true, available: true, subscriptionStatus: "غير فعال",
+      subscriptionType: "none", subscriptionExpiresAt: 0, freeJobsUsed: 0, completedJobs: 0,
+      ratingSum: 0, ratingCount: 0, ratingAverage: 0, createdAt: Date.now()
+    };
+    if(!techSnap.exists()) await db.ref("technicians/" + gUser.uid).set(techData);
+    techData = await checkAndExpireSubscriptionIfNeeded(gUser.uid, techData);
+    currentTech = techData;
+    currentRole = techData.approved === false ? "suspended" : "technician";
+    await logUserAccount(gUser.uid, {
+      name: techData.name, email: gUser.email || "", phone: techData.phone || "",
+      role: "فني", service: techData.service || "", city: techData.city || "", area: techData.area || ""
+    });
+    ["loginModal","customerAccountModal"].forEach(closeModal);
+    updateNavAuthButton();
+    startChatBadgeWatcher();
+    navigateToSection("techAccount");
+    renderTechAccount();
+    return;
+  }
+
+  currentRole = "customer_auth";
+  const custProfile = await ensureCustomerAccountDocument(gUser, {
+    name: gUser.displayName || "زبون جبل",
+    email: gUser.email || "",
+    role: "زبون"
+  });
+
+  ["loginModal","customerAccountModal"].forEach(closeModal);
+  updateNavAuthButton();
+  startChatBadgeWatcher();
+
+  if(typeof pendingAfterGate === "function") runPendingGateAction();
+  else {
+    showCustomAlert(`أهلاً بك ${custProfile?.name || "زبون جبل"}! تم تسجيل دخولك بنجاح.`);
+    navigateToSection("home");
+  }
+}
+
+async function signInWithGoogleRole(roleHint = "auto") {
+  if(!auth || !db) return showCustomAlert("تعذر الاتصال بنظام المصادقة حالياً.");
+  preferredGoogleRole = roleHint;
+  isGoogleAuthInProgress = true;
+  try { jabalSet("PendingGoogleRole", roleHint); } catch(_) {}
+  const provider = new firebase.auth.GoogleAuthProvider();
+  provider.setCustomParameters({ prompt: "select_account" });
+  try {
+    const res = await auth.signInWithPopup(provider);
+    isGoogleAuthInProgress = false;
+    try { jabalRemove("PendingGoogleRole"); } catch(_) {}
+    if(res && res.user) await finalizeGoogleUserSession(res.user, roleHint);
+  } catch(e) {
+    if(e.code === "auth/popup-blocked" || e.code === "auth/operation-not-supported-in-this-environment") {
+      try { await auth.signInWithRedirect(provider); } catch(redirErr) {
+        isGoogleAuthInProgress = false;
+        try { jabalRemove("PendingGoogleRole"); } catch(_) {}
+        showCustomAlert(formatAuthErrorMessage(redirErr));
+      }
+    } else {
+      isGoogleAuthInProgress = false;
+      try { jabalRemove("PendingGoogleRole"); } catch(_) {}
+      if(e.code !== "auth/popup-closed-by-user" && e.code !== "auth/cancelled-popup-request") showCustomAlert(formatAuthErrorMessage(e));
+    }
+  }
+}
+
+async function submitCustomerRegistration(){
+  const name = $("custRegName").value.trim();
+  const password = $("custRegPassword").value;
+  const city = $("custRegCity").value;
+  const area = $("custRegArea").value;
+  let authEmail = "", cleanPhone = "", realEmail = "";
+
+  if (custRegAuthMode === "phone") {
+    cleanPhone = normalizeIraqiPhone($("custRegPhone").value);
+    if (!name || !cleanPhone || !password || !city || !area) return showCustomAlert("يرجى إكمال الحقول الأساسية.");
+    if (!isValidIraqiPhone(cleanPhone)) return showCustomAlert("رقم الهاتف العراقي يجب أن يتكون من 11 رقماً ويبدأ بـ 07.");
+    authEmail = cleanPhone + "@jabal.app";
+  } else {
+    realEmail = $("custRegEmail").value.trim().toLowerCase();
+    if (!name || !realEmail || !password || !city || !area) return showCustomAlert("يرجى إكمال الحقول الأساسية.");
+    if (!isValidEmailAddress(realEmail)) return showCustomAlert("يرجى إدخال بريد إلكتروني صحيح.");
+    authEmail = realEmail;
+  }
+
+  try {
+    let userUid = "";
+    try {
+      const res = await auth.createUserWithEmailAndPassword(authEmail, password);
+      userUid = res.user.uid;
+    } catch(e) {
+      if (e.code === "auth/email-already-in-use") {
+        const res = await auth.signInWithEmailAndPassword(authEmail, password);
+        userUid = res.user.uid;
+      } else throw e;
+    }
+
+    chosenCustomerCity = city; chosenCustomerArea = area;
+    jabalSet("CustomerCity", city); jabalSet("CustomerArea", area);
+    jabalSet("CustomerName", name); jabalSet("CustomerUid", userUid);
+    if (cleanPhone) jabalSet("CustomerPhone", cleanPhone); else jabalRemove("CustomerPhone");
+    if (realEmail) jabalSet("CustomerEmail", realEmail); else jabalRemove("CustomerEmail");
+
+    await logUserAccount(userUid, { name, phone: cleanPhone, email: realEmail || authEmail, role: "زبون", city, area, registeredAt: Date.now() });
+    closeModal("customerAccountModal");
+    updateNavAuthButton();
+    startChatBadgeWatcher();
+    if(!isCityActive(city)) { pendingAfterGate = null; return showCustomAlert(getCityExpansionMessage(city)); }
+    runPendingGateAction();
+  } catch(e) {
+    showCustomAlert(formatAuthErrorMessage(e));
+  }
+}
+
+function renderCustomerAccount() {
+  const name = jabalGet("CustomerName") || currentUser?.displayName || "زبون جبل";
+  const phone = jabalGet("CustomerPhone") || "غير مضاف (يُضاف عند طلب واتساب)";
+  const email = jabalGet("CustomerEmail") || currentUser?.email || "غير مضاف";
+  const city = jabalGet("CustomerCity") || "غير محدد";
+  const area = jabalGet("CustomerArea") || "غير محدد";
+  const neighborhood = jabalGet("CustomerNeighborhood") || "غير مضاف";
+  const notes = jabalGet("CustomerNotes") || "لا توجد إضافات بعد";
+
+  $("custProfileName").innerText = name;
+  if($("custProfileListBox")) {
+    $("custProfileListBox").innerHTML = `
+      <div class="profile-list-row"><span class="profile-list-label">الاسم الكامل</span><span class="profile-list-value">${esc(name)}</span></div>
+      <div class="profile-list-row"><span class="profile-list-label">رقم الهاتف (سري)</span><span class="profile-list-value">${esc(phone)}</span></div>
+      <div class="profile-list-row"><span class="profile-list-label">البريد الإلكتروني</span><span class="profile-list-value">${esc(email)}</span></div>
+      <div class="profile-list-row"><span class="profile-list-label">المحافظة</span><span class="profile-list-value">${esc(city)}</span></div>
+      <div class="profile-list-row"><span class="profile-list-label">القضاء</span><span class="profile-list-value">${esc(area)}</span></div>
+      <div class="profile-list-row"><span class="profile-list-label">الحي / المنطقة</span><span class="profile-list-value">${esc(neighborhood)}</span></div>
+      <div class="profile-list-row"><span class="profile-list-label">إضافات وملاحظات</span><span class="profile-list-value">${esc(notes)}</span></div>
+    `;
+  }
+}
+
+function openCustomerEditModal() {
+  $("editCustName").value = jabalGet("CustomerName") || currentUser?.displayName || "";
+  $("editCustPhone").value = jabalGet("CustomerPhone") || "";
+  if($("editCustEmail")) $("editCustEmail").value = jabalGet("CustomerEmail") || currentUser?.email || "";
+  const city = jabalGet("CustomerCity") || "";
+  $("editCustCity").value = city;
+  setDistricts("editCustArea", city);
+  if(jabalGet("CustomerArea")) $("editCustArea").value = jabalGet("CustomerArea");
+  $("editCustNeighborhood").value = jabalGet("CustomerNeighborhood") || "";
+  $("editCustNotes").value = jabalGet("CustomerNotes") || "";
+  $("customerEditModal").classList.remove("hidden");
+}
+
+async function saveCustomerAccountProfile() {
+  const name = $("editCustName").value.trim();
+  const rawPhone = $("editCustPhone").value.trim();
+  const phone = rawPhone ? normalizeIraqiPhone(rawPhone) : "";
+  const email = ($("editCustEmail")?.value || "").trim().toLowerCase();
+  const city = $("editCustCity").value, area = $("editCustArea").value;
+  const neighborhood = $("editCustNeighborhood").value.trim(), notes = $("editCustNotes").value.trim();
+
+  if(!name || !city || !area) return showCustomAlert("يرجى إكمال الحقول الأساسية.");
+  if(phone && !isValidIraqiPhone(phone)) return showCustomAlert("رقم الهاتف العراقي يجب أن يتكون من 11 رقماً ويبدأ بـ 07.");
+  if(email && !isValidEmailAddress(email)) return showCustomAlert("صيغة البريد الإلكتروني غير صحيحة.");
+
+  jabalSet("CustomerName", name);
+  if(phone) jabalSet("CustomerPhone", phone); else jabalRemove("CustomerPhone");
+  if(email) jabalSet("CustomerEmail", email);
+  jabalSet("CustomerCity", city); jabalSet("CustomerArea", area);
+  jabalSet("CustomerNeighborhood", neighborhood); jabalSet("CustomerNotes", notes);
+  chosenCustomerCity = city; chosenCustomerArea = area;
+
+  const uid = (currentUser && !currentUser.isAnonymous) ? currentUser.uid : jabalGet("CustomerUid");
+  if(uid && db) await logUserAccount(uid, { name, phone, email, role: "زبون", city, area, neighborhood, notes });
+
+  closeModal("customerEditModal");
+  updateNavAuthButton();
+  renderCustomerAccount();
+  showCustomAlert(!isCityActive(city) ? "تم حفظ التعديلات. تنبيه: " + getCityExpansionMessage(city) : "تم تحديث ملفك الشخصي بنجاح!");
+}
+
+function logoutCustomer() {
+  showCustomConfirm("هل أنت متأكد من تسجيل الخروج من حساب الزبون؟", async () => {
+    isSigningOutFlag = true;
+    ["CustomerName","CustomerPhone","CustomerEmail","CustomerCity","CustomerArea","CustomerNeighborhood","CustomerNotes","CustomerUid"].forEach(k => jabalRemove(k));
+    chosenCustomerCity = ""; chosenCustomerArea = ""; currentRole = "guest"; currentTech = null;
+    if(chatHubLiveRef) { chatHubLiveRef.off(); chatHubLiveRef = null; }
+    if(auth && currentUser && !currentUser.isAnonymous) { try { await auth.signOut(); } catch(_) {} }
+    setTimeout(() => { isSigningOutFlag = false; }, 1200);
+    updateNavAuthButton();
+    startChatBadgeWatcher();
+    showCustomAlert("تم تسجيل الخروج بنجاح.");
+    navigateToSection("home");
+  });
+}
+
+function fillSelect(id){ if($(id)) $(id).innerHTML = SERVICES.map(s=>`<option>${esc(s)}</option>`).join(""); }
+
+function buildServiceCardsHtml(list, iconMap) {
+  return list.map(s => {
+    const iconContent = s === "سباكة"
+      ? `<svg width="26" height="26" viewBox="0 0 28 28" fill="none" aria-hidden="true"><path d="M14 3C14 3 6.5 11.8 6.5 17.5C6.5 21.6421 9.85786 25 14 25C18.1421 25 21.5 21.6421 21.5 17.5C21.5 11.8 14 3 14 3Z" fill="#e0f2fe" stroke="#f7d265" stroke-width="1.8"/><path d="M10.5 17.5C10.5 19.4 12 21 14 21" stroke="#052334" stroke-width="2" stroke-linecap="round"/></svg>`
+      : (iconMap[s] || "🛠️");
+    return `
+    <div class="service-card" onclick="requireGate(() => filterByService('${esc(s)}'))">
+      <div class="service-icon">${iconContent}</div>
+      <h3>${esc(s)}</h3>
+      <div class="arrow-badge">←</div>
+    </div>`;
+  }).join("");
+}
+
+function renderServices(){
+  const iconMap = {
+    "كهربائيات": "⚡", "سباكة": "💧", "تكييف": "❄️", "صيانة عامة": "🛠️",
+    "بناء وترميم": "🧱", "مطابخ وديكور": "🪚", "ألمنيوم": "🪟", "نجارة": "🪚",
+    "صبغ منازل": "🎨", "صيانة الأجهزة الكهربائية": "🔌", "صيانة الأجهزة الإلكترونية": "💻"
+  };
+  const mainHtml = buildServiceCardsHtml(MAIN_SERVICES, iconMap);
+  const otherHtml = buildServiceCardsHtml(OTHER_SERVICES, iconMap);
+  if($("homeServicesGrid")) $("homeServicesGrid").innerHTML = mainHtml;
+  if($("homeOtherServicesGrid")) $("homeOtherServicesGrid").innerHTML = otherHtml;
+  if($("allServicesPage")) $("allServicesPage").innerHTML = mainHtml;
+  if($("allOtherServicesPage")) $("allOtherServicesPage").innerHTML = otherHtml;
+  fillSelect("regService");
+}
+
+function listenToActiveCities() {
+  if(!db) return;
+  db.ref("settings/activeCities").on("value", snap => {
+    const val = snap.val();
+    if(Array.isArray(val) && val.length > 0) activeCities = val;
+    else if(val && typeof val === "object") {
+      const list = Object.keys(val).filter(k => val[k] === true);
+      if(list.length > 0) activeCities = list;
+    }
+    if(currentRole === "admin") renderAdminActiveCities();
+  });
+}
+
+function renderAdminActiveCities() {
+  const box = $("adminActiveCitiesBox");
+  if(!box) return;
+  box.innerHTML = Object.keys(DISTRICTS).map(city => {
+    const isAct = activeCities.includes(city);
+    return `<button type="button" class="city-toggle-btn ${isAct ? 'active-city' : 'inactive-city'}" onclick="toggleCityActive('${esc(city)}')">${isAct ? '✅' : '⏸️'} ${esc(city)}</button>`;
+  }).join("");
+}
+
+async function toggleCityActive(city) {
+  if(currentRole !== "admin" || !db) return;
+  let nextList = [...activeCities];
+  if(nextList.includes(city)) {
+    if(nextList.length === 1) return showCustomAlert("يجب أن تبقى محافظة واحدة فعّالة على الأقل.");
+    nextList = nextList.filter(c => c !== city);
+  } else nextList.push(city);
+  try {
+    await db.ref("settings/activeCities").set(nextList);
+    activeCities = nextList;
+    renderAdminActiveCities();
+  } catch(e) { showCustomAlert("خطأ: " + e.message); }
+}
+
+function initFirebase(){
+  try{
+    if(!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+    auth = firebase.auth();
+    db = firebase.database();
+    storage = firebase.storage();
+    functions = firebase.functions();
+
+    auth.getRedirectResult().then(async (res) => {
+      const storedRole = jabalGet("PendingGoogleRole") || preferredGoogleRole || "auto";
+      try { jabalRemove("PendingGoogleRole"); } catch(_) {}
+      isGoogleAuthInProgress = false;
+      if(res && res.user) await finalizeGoogleUserSession(res.user, storedRole);
+    }).catch((err) => {
+      try { jabalRemove("PendingGoogleRole"); } catch(_) {}
+      isGoogleAuthInProgress = false;
+      if(err && err.code && err.code !== "auth/no-auth-event") showCustomAlert(formatAuthErrorMessage(err));
+    }).finally(() => {
+      auth.onAuthStateChanged(onAuthChanged);
+    });
+
+    loadPublicTechs();
+    listenToAnnouncements();
+    listenToActiveCities();
+  }catch(e){}
+}
+
+async function resolveRole(user){
+  if(!user || user.isAnonymous) return {role:"guest", tech:null};
+  if(user.email === ADMIN_EMAIL) return {role:"admin", tech:null};
+  const t = await db.ref("technicians/"+user.uid).once("value");
+  if(t.exists()){
+    const checkedTech = await checkAndExpireSubscriptionIfNeeded(user.uid, t.val());
+    return {role: checkedTech.approved === false ? "suspended" : "technician", tech: checkedTech};
+  }
+  return {role:"customer_auth", tech:null};
+}
+
+async function onAuthChanged(user){
+  currentUser = user; currentRole = "guest"; currentTech = null;
+  if(techJobsListener) { techJobsListener.off(); techJobsListener = null; }
+  if(!user){
+    updateNavAuthButton();
+    startChatBadgeWatcher();
+    if (!isSigningOutFlag && !isGoogleAuthInProgress && !jabalGet("PendingGoogleRole")) {
+      setTimeout(async () => {
+        if (!auth.currentUser && !isSigningOutFlag && !isGoogleAuthInProgress) {
+          try { await auth.signInAnonymously(); } catch(e) {}
+        }
+      }, 600);
+    }
+    checkInitialStartupModals();
+    return;
+  }
+
+  try{
+    const result = await resolveRole(user);
+    currentRole = result.role; currentTech = result.tech;
+    updateNavAuthButton();
+    startChatBadgeWatcher();
+
+    if(user.email !== ADMIN_EMAIL && !user.isAnonymous) {
+      if(["technician", "suspended"].includes(currentRole)) {
+        await logUserAccount(user.uid, {
+          name: currentTech?.name || user.displayName || "",
+          email: currentTech?.email || user.email || "",
+          phone: currentTech?.phone || "",
+          role: "فني"
+        });
+      } else {
+        await ensureCustomerAccountDocument(user, { role: "زبون" });
+      }
+    }
+
+    if(currentRole === "admin"){
+      ["termsModal","roleSelectionModal","customerAccountModal","loginModal"].forEach(closeModal);
+      updateNavAuthButton();
+      if(currentSectionId === "chatHubSection") renderChatHub();
+      runPendingGateAction();
+    } else if(["technician", "suspended"].includes(currentRole)){
+      ["termsModal","roleSelectionModal","customerAccountModal","loginModal"].forEach(closeModal);
+      if(currentSectionId === "chatHubSection") {
+        renderChatHub();
+      } else if(currentSectionId === "fullOrderChatSection") {
+        renderFullChatBannerAndControls();
+      } else if(currentSectionId === "home") {
+        navigateToSection("techAccount");
+        renderTechAccount();
+      } else if(currentSectionId === "techAccount") {
+        renderTechAccount();
+      }
+      runPendingGateAction();
+    } else if(currentRole === "customer_auth") {
+      updateNavAuthButton();
+      startChatBadgeWatcher();
+      if(currentSectionId === "chatHubSection") renderChatHub();
+      checkInitialStartupModals();
+    } else checkInitialStartupModals();
+  }catch(e){
+    updateNavAuthButton();
+    checkInitialStartupModals();
+  }
+}
+
+async function uploadTechPhoto(uid, file){
+  if(!file) return "";
+  if(!file.type.startsWith("image/")) throw new Error("اختر ملف صورة فقط.");
+  const ref = storage.ref("technicianPhotos/"+uid+"/profile_"+Date.now());
+  const snap = await ref.put(file);
+  return await snap.ref.getDownloadURL();
+}
+
+async function syncPublicTechnician(uid, p){
+  if (!isTechProfileComplete(p)) return;
+  const subInfo = getEffectiveSubscriptionInfo(p);
+  const data = {
+    uid, name: p.name||"", phone: p.phone||"", email: p.email||"", city: p.city||"", area: p.area||"",
+    neighborhood: p.neighborhood||"", service: p.service||"",
+    subservices: Array.isArray(p.subservices) ? p.subservices : [],
+    otherAppliances: p.otherAppliances||"", bio: p.bio||"", extraInfo: p.extraInfo||"",
+    photoURL: p.photoURL||"", approved: p.approved!==false, available: p.available !== false,
+    subscriptionStatus: subInfo.isActive ? "فعال" : "غير فعال",
+    subscriptionType: p.subscriptionType || "none", subscriptionExpiresAt: Number(p.subscriptionExpiresAt || 0),
+    freeJobsUsed: Number(p.freeJobsUsed)||0, ratingSum: Number(p.ratingSum||0),
+    ratingCount: Number(p.ratingCount||0), ratingAverage: Number(p.ratingAverage||0), createdAt: p.createdAt||Date.now()
+  };
+  await db.ref("publicTechnicians/"+uid).update(data);
+}
+
+async function registerTechFlexible(){
+  const name = $("regName").value.trim(), password = $("regPassword").value, city = $("regCity").value, area = $("regArea").value, service = $("regService").value;
+  let cleanPhone = "", realEmail = "", authEmail = "";
+
+  if (techRegAuthMode === "phone") {
+    cleanPhone = normalizeIraqiPhone($("regPhone").value);
+    if(!name || !cleanPhone || !password || !city || !area || !service) return showCustomAlert("أكمل الحقول الأساسية للفني.");
+    if(!isValidIraqiPhone(cleanPhone)) return showCustomAlert("رقم الهاتف العراقي يجب أن يتكون من 11 رقماً ويبدأ بـ 07.");
+    authEmail = cleanPhone + "@jabal.app";
+  } else {
+    realEmail = $("regEmail").value.trim().toLowerCase();
+    if(!name || !realEmail || !password || !city || !area || !service) return showCustomAlert("أكمل الحقول الأساسية للفني.");
+    if(!isValidEmailAddress(realEmail)) return showCustomAlert("يرجى إدخال بريد إلكتروني صحيح.");
+    authEmail = realEmail;
+  }
+
+  let createdUser = null, profileSaved = false;
+  try{
+    const c = await auth.createUserWithEmailAndPassword(authEmail, password);
+    createdUser = c.user;
+    const profile = {
+      name, phone: cleanPhone, email: realEmail || "", city, area, neighborhood: "", service, subservices: [], otherAppliances: "", bio: "", extraInfo: "", photoURL: "",
+      approved: true, available: true, subscriptionStatus: "غير فعال", subscriptionType: "none",
+      subscriptionExpiresAt: 0, freeJobsUsed: 0, completedJobs: 0,
+      ratingSum: 0, ratingCount: 0, ratingAverage: 0, createdAt: Date.now()
+    };
+    await db.ref("technicians/"+createdUser.uid).set(profile);
+    profileSaved = true;
+    await syncPublicTechnician(createdUser.uid, profile);
+    await logUserAccount(createdUser.uid, { name, phone: cleanPhone, email: realEmail || authEmail, role: "فني", service, city, area, registeredAt: Date.now() });
+
+    currentUser = createdUser; currentRole = "technician"; currentTech = profile;
+    updateNavAuthButton();
+    startChatBadgeWatcher();
+    navigateToSection("techAccount");
+    await renderTechAccount();
+    showCustomAlert("تم إنشاء حسابك في جبل بنجاح! يمكنك استكمال باقي تفاصيل ملفك الشخصي من زر التعديل بالأسفل.");
+  }catch(e){
+    showCustomAlert(formatAuthErrorMessage(e));
+    if(createdUser && !profileSaved){ try{await createdUser.delete()}catch(_){} }
+  }
+}
+
+async function loginWithPhonePassword(){
+  const inputVal = $("loginPhone").value.trim(), password = $("loginPassword").value;
+  if(!inputVal || !password) return showCustomAlert("أدخل رقم الهاتف أو البريد الإلكتروني وكلمة المرور.");
+
+  try{
+    if(inputVal.toLowerCase() === ADMIN_EMAIL){
+      const c = await auth.signInWithEmailAndPassword(ADMIN_EMAIL, password);
+      currentUser = c.user; currentRole = "admin";
+      ["loginModal","termsModal","roleSelectionModal","customerAccountModal"].forEach(closeModal);
+      updateNavAuthButton(); startChatBadgeWatcher(); navigateToSection("adminProfile"); loadAdminData(); runPendingGateAction();
+      return;
+    }
+
+    const emailPrimary = buildAuthEmailFromInput(inputVal);
+    let c;
+    try {
+      c = await auth.signInWithEmailAndPassword(emailPrimary, password);
+    } catch(firstErr) {
+      const emailLegacy = buildLegacyAuthEmailFromInput(inputVal);
+      if (emailLegacy !== emailPrimary && (firstErr.code === "auth/user-not-found" || firstErr.code === "auth/invalid-credential" || firstErr.code === "auth/wrong-password")) {
+        c = await auth.signInWithEmailAndPassword(emailLegacy, password);
+      } else {
+        throw firstErr;
+      }
+    }
+
+    const s = await db.ref("technicians/"+c.user.uid).once("value");
+    if(!s.exists()){
+      currentRole = "customer_auth";
+      const typedPhone = !inputVal.includes("@") ? normalizeIraqiPhone(inputVal) : "";
+      const typedEmail = inputVal.includes("@") ? inputVal.toLowerCase() : "";
+      await ensureCustomerAccountDocument(c.user, {
+        phone: typedPhone || undefined,
+        email: typedEmail || c.user.email || undefined,
+        role: "زبون"
+      });
+
+      ["loginModal","termsModal","roleSelectionModal","customerAccountModal"].forEach(closeModal);
+      updateNavAuthButton(); startChatBadgeWatcher(); showCustomAlert("أهلاً بك مجدداً في تطبيق جبل!"); navigateToSection("home"); runPendingGateAction();
+      return;
+    }
+
+    const checkedTech = await checkAndExpireSubscriptionIfNeeded(c.user.uid, s.val());
+    currentRole = checkedTech.approved === false ? "suspended" : "technician";
+    currentTech = checkedTech;
+    await logUserAccount(c.user.uid, { name: checkedTech.name || "", phone: checkedTech.phone || "", email: checkedTech.email || emailPrimary, role: "فني", loginTime: Date.now() });
+
+    updateNavAuthButton();
+    startChatBadgeWatcher();
+    ["loginModal","termsModal","roleSelectionModal","customerAccountModal"].forEach(closeModal);
+    navigateToSection("techAccount"); renderTechAccount(); runPendingGateAction();
+  }catch(e){ showCustomAlert(formatAuthErrorMessage(e)); }
+}
+
+async function submitForgotPasswordRequest() {
+  const email = $("forgotEmail").value.trim().toLowerCase();
+  const phone = normalizeIraqiPhone($("forgotPhone").value);
+  if(!email || !isValidEmailAddress(email)) return showCustomAlert("يرجى إدخال بريد إلكتروني صحيح.");
+
+  try {
+    await auth.sendPasswordResetEmail(email);
+    closeModal("forgotPasswordModal");
+    showCustomAlert(`تم إرسال رابط استرجاع كلمة المرور بنجاح إلى بريدك (${email}).`);
+  } catch(e) {
+    if (e.code === "auth/user-not-found" || phone) {
+      try {
+        const id = db.ref("passwordRequests").push().key;
+        await db.ref("passwordRequests/"+id).set({ name: "طلب عبر البريد (" + email + ")", email, phone: phone || "غير مضاف", status: "بانتظار الإرسال للبريد", createdAt: Date.now() });
+        closeModal("forgotPasswordModal");
+        showCustomAlert(`تم تسجيل طلب استرجاع كلمة المرور لبريدك (${email}).`);
+      } catch(dbErr) { showCustomAlert("خطأ: " + dbErr.message); }
+    } else showCustomAlert(formatAuthErrorMessage(e));
+  }
+}
+
+async function logout(){
+  try{
+    isSigningOutFlag = true;
+    if(techJobsListener) { techJobsListener.off(); techJobsListener = null; }
+    if(customerOrdersBadgeListener) { customerOrdersBadgeListener.off(); customerOrdersBadgeListener = null; }
+    if(supportChatListener) { supportChatListener.off(); supportChatListener = null; }
+    if(orderChatListener) { orderChatListener.off(); orderChatListener = null; }
+    if(orderMetaListener) { orderMetaListener.off(); orderMetaListener = null; }
+    if(chatHubLiveRef) { chatHubLiveRef.off(); chatHubLiveRef = null; }
+    currentRole = "guest"; currentTech = null; currentUser = null;
+    await auth.signOut();
+    setTimeout(() => { isSigningOutFlag = false; }, 1200);
+    updateNavAuthButton();
+    startChatBadgeWatcher();
+    showCustomAlert("تم تسجيل الخروج بنجاح.");
+    navigateToSection("home");
+  }catch(e){ isSigningOutFlag = false; showCustomAlert(formatAuthErrorMessage(e)); }
+}
+
+async function loadPublicTechs(){
+  if(!db) return;
+  try{
+    const s = await db.ref("publicTechnicians").once("value");
+    const data = s.val() || {};
+    const list = [];
+    for (const [uid, rawTech] of Object.entries(data)) {
+      const checked = await checkAndExpireSubscriptionIfNeeded(uid, rawTech);
+      if (checked.approved !== false && isTechProfileComplete(checked)) list.push({ ...checked, uid });
+    }
+    publicTechs = list;
+    renderPublicTechs();
+  }catch(e){}
+}
+
+function techPhoto(t, small=false){
+  const cls = small ? "avatar small" : "avatar";
+  const pUrl = t.photoURL || "";
+  return `<img class="${cls}" src="${esc(pUrl)}" alt="صورة الفني" onclick="event.stopPropagation(); openPhotoModal('${esc(pUrl)}')" onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2250%22 fill=%22%23fdf5e4%22/%3E%3Ctext x=%2250%22 y=%2264%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22%230a3d58%22%3E👤%3C/text%3E%3C/svg%3E'">`;
+}
+
+function renderPublicTechs(){
+  const el = $("publicTechList");
+  if(!el) return;
+  const userCity = chosenCustomerCity || jabalGet("CustomerCity") || "";
+  const userArea = chosenCustomerArea || jabalGet("CustomerArea") || "";
+  const selectedService = currentSelectedService;
+
+  if($("techsSectionTitle")) {
+    const subLabel = currentSelectedSubservice ? ` (${currentSelectedSubservice})` : "";
+    const svcLabel = selectedService ? ` — ${selectedService}${subLabel}` : "";
+    $("techsSectionTitle").innerText = "الفنيون المعتمدون والمتاحون" + svcLabel;
+  }
+
+  if(currentRole !== "admin" && userCity && !isCityActive(userCity)) {
+    el.innerHTML = `<div class="empty">${esc(getCityExpansionMessage(userCity))}</div>`;
+    return;
+  }
+
+  const byService = publicTechs.filter(t => {
+    if(currentUser && currentUser.uid === t.uid) return false;
+    if(selectedService && t.service !== selectedService) return false;
+    if(currentSelectedSubservice) {
+      const techSubs = Array.isArray(t.subservices) ? t.subservices : [];
+      const hasOther = currentSelectedSubservice === "أجهزة أخرى" && Boolean(String(t.otherAppliances || "").trim());
+      if(techSubs.length > 0 && !techSubs.includes(currentSelectedSubservice) && !hasOther) return false;
+    }
+    if(currentRole === "admin") return true;
+    if(userCity && t.city !== userCity) return false;
+    return true;
+  });
+
+  let finalList = byService.filter(t => !userArea || t.area === userArea);
+  let fallbackCityNotice = "";
+
+  if(!finalList.length && byService.length > 0 && userArea) {
+    finalList = byService;
+    fallbackCityNotice = `<div class="empty" style="padding:12px;">لا يوجد فنيون بنفس القضاء حالياً، فتم عرض فنيي الاختصاص في محافظة <b>${esc(userCity)}</b>:</div>`;
+  }
+
+  if(!finalList.length){
+    const subTxt = currentSelectedSubservice ? ` (${currentSelectedSubservice})` : "";
+    el.innerHTML = '<div class="empty">لا يوجد فنيون مسجلون في اختصاص (' + esc(selectedService || "الكل") + esc(subTxt) + ') حالياً.</div>';
+    return;
+  }
+
+  const cardsHtml = finalList.map(t=>{
+    const isAvail = t.available !== false;
+    const hasQuota = canTechAcceptMoreJobs(t);
+    const dotClass = (isAvail && hasQuota) ? "online-dot" : "offline-dot";
+    const statusText = !hasQuota ? "مكتمل الرصيد" : (isAvail ? "متاح" : "غير متاح");
+    const subsArr = Array.isArray(t.subservices) ? [...t.subservices] : [];
+    if(t.otherAppliances && t.service === "صيانة الأجهزة الكهربائية") subsArr.push(`أجهزة أخرى: ${t.otherAppliances}`);
+    const subsHtml = subsArr.length ? `<div class="sub-badge">${esc(subsArr.join(" • "))}</div>` : "";
+    return `
+    <div class="tech-card">
+      <div style="position:absolute;top:10px;left:10px;" title="${statusText}"><span class="${dotClass}"></span> <span style="font-size:10px;font-weight:700;color:${(isAvail && hasQuota)?'var(--online-dot)':'var(--offline-dot)'}">${statusText}</span></div>
+      ${techPhoto(t)}
+      <div style="text-align:center">
+        <h4 style="margin:2px 0;font-size:13px;font-weight:900;color:var(--navy);">${esc(t.name)}</h4>
+        <span class="badge">${esc(t.service)}</span>
+        ${subsHtml}
+      </div>
+      <div style="text-align:center">
+        <div class="stars">${"★".repeat(Math.round(t.ratingAverage||0))}${"☆".repeat(5-Math.round(t.ratingAverage||0))}</div>
+        <div class="muted">${Number(t.ratingAverage||0).toFixed(1)} من 5 (${Number(t.ratingCount||0)} تقييم)</div>
+      </div>
+      <div class="muted" style="text-align:center">📍 ${esc(t.city)} — ${esc(t.area)}</div>
+      <button class="btn primary" onclick="chooseServiceDirect('${esc(t.service)}','${esc(t.uid)}')">اطلب هذا الفني مباشرة</button>
+    </div>`;
+  }).join("");
+
+  el.innerHTML = fallbackCityNotice + cardsHtml;
+}
+
+async function openChatHub() {
+  navigateToSection("chatHubSection");
+  await renderChatHub();
+}
+
+async function renderChatHub() {
+  const pendingBox = $("chatHubPendingRequests");
+  const threadsBox = $("chatHubThreadsList");
+  if(!pendingBox || !threadsBox || !db) return;
+
+  if(chatHubLiveRef) { chatHubLiveRef.off(); chatHubLiveRef = null; }
+
+  pendingBox.innerHTML = "";
+  threadsBox.innerHTML = '<div class="empty">جارٍ تحميل المحادثات والطلبات...</div>';
+
+  try {
+    const activeUid = auth?.currentUser?.uid || currentUser?.uid || "";
+    let effectiveRole = currentRole;
+
+    if(activeUid && activeUid !== (jabalGet("CustomerUid") || "") && !["technician", "suspended", "admin"].includes(effectiveRole)) {
+      const tSnap = await db.ref("technicians/" + activeUid).once("value");
+      if(tSnap.exists()) {
+        const tVal = tSnap.val();
+        effectiveRole = tVal.approved === false ? "suspended" : "technician";
+        currentRole = effectiveRole;
+        currentTech = tVal;
+      }
+    }
+
+    if(["technician", "suspended"].includes(effectiveRole) && activeUid) {
+      chatHubLiveRef = db.ref("technicianJobs/" + activeUid);
+      chatHubLiveRef.on("value", snap => {
+        const allJobs = [];
+        snap.forEach(c => allJobs.push({ ...c.val(), id: c.key }));
+        allJobs.sort((a,b) => (b.createdAt||0) - (a.createdAt||0));
+
+        const pendingJobs = allJobs.filter(j => isPendingTechJob(j.status));
+        const otherJobs = allJobs.filter(j => !isPendingTechJob(j.status));
+
+        updateChatUnreadBadge(pendingJobs.length);
+
+        if(pendingJobs.length > 0) {
+          pendingBox.innerHTML = `<h3 class="section-title" style="font-size:15.5px; margin-top:4px;">🔔 طلبات واردة بانتظار موافقتك (${pendingJobs.length})</h3>` + pendingJobs.map(job => {
+            const jDateStr = job.createdAt ? new Date(job.createdAt).toLocaleString('ar-IQ', { dateStyle: 'short', timeStyle: 'short' }) : '';
+            return `
+            <div class="pending-job-card">
+              <h4 style="margin:0 0 4px; color:var(--navy); font-size:14.5px; font-weight:900;">${esc(job.service)} — <span class="badge">طلب جديد</span></h4>
+              <div class="muted">الزبون: <b>${esc(job.customerName || 'زبون')}</b> | الموقع: <b>${esc(job.city || '')} ${job.area ? '— ' + esc(job.area) : ''}</b>${jDateStr ? ` | 📅 ${esc(jDateStr)}` : ''}</div>
+              <p style="margin:8px 0; font-size:13px; font-weight:700; color:var(--text-main);">المشكلة: ${esc(job.problem)}</p>
+              <div class="actions">
+                <button type="button" class="btn primary" onclick="technicianDecision('${esc(job.id)}','مقبول')">✅ موافقة وفتح الدردشة</button>
+                <button type="button" class="btn danger" onclick="technicianDecision('${esc(job.id)}','مرفوض')">❌ رفض الطلب</button>
+              </div>
+            </div>`;
+          }).join("");
+        } else {
+          pendingBox.innerHTML = "";
+        }
+
+        if(!otherJobs.length) {
+          threadsBox.innerHTML = pendingJobs.length > 0
+            ? ""
+            : '<div class="empty">لا توجد طلبات أو محادثات حالياً.</div>';
+        } else {
+          threadsBox.innerHTML = otherJobs.map(j => {
+            const isEnded = isOrderEndedOrCompleted(j.status, j.continuationState);
+            const isRejected = j.status === "مرفوض من الفني" || j.continuationState === "rejected";
+            const dateStr = j.createdAt ? new Date(j.createdAt).toLocaleString('ar-IQ', { dateStyle: 'short', timeStyle: 'short' }) : '';
+            const statusBadge = isRejected
+              ? `<span class="badge" style="background:#fee2e2;color:#991b1b;border-color:#fca5a5;">مرفوض</span>`
+              : (isEnded
+                ? `<span class="badge" style="background:#e2e8f0;color:#334155;border-color:#cbd5e1;">منتهية (سجل محفوظ)</span>`
+                : `<span class="badge" style="background:#dcfce7;color:#14532d;border-color:#86efac;">دردشة مفتوحة</span>`);
+            return `
+            <div class="list-item">
+              <h4>${esc(j.customerName || 'زبون')} — ${esc(j.service)} ${statusBadge}</h4>
+              <div class="muted">الحالة: <b>${esc(j.status)}</b>${dateStr ? ` | 📅 ${esc(dateStr)}` : ''}</div>
+              <p style="margin:6px 0; font-size:12.5px;">${esc(j.problem || '')}</p>
+              <div class="actions">
+                <button type="button" class="btn secondary" onclick="openFullOrderChat('${esc(j.id)}','${esc(j.customerName || j.service)}')">${isEnded ? '📜 عرض سجل الدردشة' : '💬 فتح الدردشة'}</button>
+              </div>
+            </div>`;
+          }).join("");
+        }
+      });
+      return;
+    }
+
+    const custUid = (currentUser && !currentUser.isAnonymous && effectiveRole !== "admin")
+      ? currentUser.uid
+      : jabalGet("CustomerUid");
+
+    if(!custUid) {
+      threadsBox.innerHTML = '<div class="empty">لا توجد طلبات أو محادثات مرسلة حالياً.</div>';
+      return;
+    }
+
+    chatHubLiveRef = db.ref("requests/" + custUid);
+    chatHubLiveRef.on("value", snap => {
+      const orders = [];
+      snap.forEach(c => orders.push({ ...c.val(), id: c.key }));
+      orders.sort((a,b) => (b.createdAt||0) - (a.createdAt||0));
+
+      if(!orders.length) {
+        threadsBox.innerHTML = '<div class="empty">لا توجد طلبات أو محادثات حالياً.</div>';
+        return;
+      }
+
+      threadsBox.innerHTML = orders.map(o => {
+        const isPending = isPendingTechJob(o.status);
+        const isRejected = o.status === "مرفوض من الفني" || o.continuationState === "rejected";
+        const isEnded = isOrderEndedOrCompleted(o.status, o.continuationState);
+        const dateStr = o.createdAt ? new Date(o.createdAt).toLocaleString('ar-IQ', { dateStyle: 'short', timeStyle: 'short' }) : '';
+
+        let badgeHtml = "";
+        if(isPending) badgeHtml = `<span class="badge" style="background:#fef3c7;color:#92400e;border-color:#fcd34d;">⏳ بانتظار موافقة الفني</span>`;
+        else if(isRejected) badgeHtml = `<span class="badge" style="background:#fee2e2;color:#991b1b;border-color:#fca5a5;">❌ تم رفض الطلب</span>`;
+        else if(isEnded) badgeHtml = `<span class="badge" style="background:#e2e8f0;color:#334155;border-color:#cbd5e1;">🔒 منتهية (سجل محفوظ)</span>`;
+        else badgeHtml = `<span class="badge" style="background:#dcfce7;color:#14532d;border-color:#86efac;">💬 الدردشة مفتوحة</span>`;
+
+        return `
+        <div class="list-item">
+          <h4>${esc(o.assignedTechName || 'فني معتمد')} — ${esc(o.service)} ${badgeHtml}</h4>
+          <div class="muted">الحالة: <b>${esc(o.status)}</b>${dateStr ? ` | 📅 ${esc(dateStr)}` : ''}</div>
+          <p style="margin:6px 0; font-size:12.5px;">${esc(o.problem || '')}</p>
+          <div class="actions">
+            <button type="button" class="btn secondary" onclick="openFullOrderChat('${esc(o.id)}','${esc(o.assignedTechName || o.service)}')">${isEnded ? '📜 عرض سجل الدردشة' : '💬 فتح الدردشة'}</button>
+          </div>
+        </div>`;
+      }).join("");
+    });
+  } catch(e) {
+    threadsBox.innerHTML = '<div class="empty">تعذر تحميل المحادثات حالياً.</div>';
+  }
+}
+
+async function technicianDecision(jobId, decision) {
+  if(!currentUser || !db) return;
+  const uid = currentUser.uid;
+  const isAccepted = decision === "مقبول";
+
+  if(isAccepted && currentRole !== "admin" && !canTechAcceptMoreJobs(currentTech)) {
+    return showCustomAlert("لقد استنفذت رصيدك المجاني (3 أعمال). يرجى مراسلة فريق الدعم لتفعيل اشتراكك قبل قبول طلبات جديدة.");
+  }
+
+  const status = isAccepted ? "مقبول من الفني" : "مرفوض من الفني";
+  const contState = isAccepted ? "continued" : "rejected";
+  const now = Date.now();
+
+  try {
+    const metaSnap = await db.ref(`orderChats/${jobId}/meta`).once("value");
+    const jobSnap = await db.ref(`technicianJobs/${uid}/${jobId}`).once("value");
+    const job = { ...(jobSnap.val() || {}), ...(metaSnap.val() || {}) };
+
+    const sysId = db.ref(`orderChats/${jobId}/messages`).push().key;
+    const updates = {};
+
+    updates[`orderChats/${jobId}/meta/status`] = status;
+    updates[`orderChats/${jobId}/meta/continuationState`] = contState;
+    updates[`technicianJobs/${uid}/${jobId}/status`] = status;
+    updates[`technicianJobs/${uid}/${jobId}/continuationState`] = contState;
+
+    if(isAccepted) {
+      updates[`orderChats/${jobId}/meta/chatStartedAt`] = now;
+      updates[`technicianJobs/${uid}/${jobId}/chatStartedAt`] = now;
+    } else {
+      updates[`orderChats/${jobId}/meta/chatEndedAt`] = now;
+      updates[`technicianJobs/${uid}/${jobId}/chatEndedAt`] = now;
+    }
+
+    if(job.customerUid) {
+      updates[`requests/${job.customerUid}/${jobId}/status`] = status;
+      updates[`requests/${job.customerUid}/${jobId}/continuationState`] = contState;
+      if(isAccepted) updates[`requests/${job.customerUid}/${jobId}/chatStartedAt`] = now;
+      else updates[`requests/${job.customerUid}/${jobId}/chatEndedAt`] = now;
+    }
+
+    updates[`orderChats/${jobId}/messages/${sysId}`] = {
+      type: "system_decision",
+      text: isAccepted
+        ? `✅ وافق الفني (${currentTech?.name || 'فني'}) على الطلب — المحادثة مفتوحة الآن.`
+        : `❌ اعتذر الفني (${currentTech?.name || 'فني'}) عن قبول الطلب.`,
+      senderId: uid,
+      senderName: currentTech?.name || "فني",
+      senderRole: "technician",
+      createdAt: now
+    };
+
+    await db.ref().update(updates);
+
+    if(isAccepted) {
+      openFullOrderChat(jobId, job.customerName || job.service || "محادثة الطلب");
+    } else {
+      showCustomAlert("تم رفض الطلب بنجاح.");
+      if(currentSectionId === "fullOrderChatSection") closeFullOrderChat();
+      else if(currentSectionId === "chatHubSection") renderChatHub();
+    }
+  } catch(e) {
+    showCustomAlert("خطأ: " + e.message);
+  }
+}
+
+function renderFullChatBannerAndControls() {
+  const banner = $("fullChatStatusBanner");
+  const endBtn = $("btnEndOrderChat");
+  const waBtn = $("btnWhatsappInChat");
+  const revBox = $("fullChatReviewBox");
+  const sendRow = $("fullChatSendRow");
+  const endedNotice = $("fullChatEndedNotice");
+  if(!banner) return;
+
+  const meta = activeOrderMeta || {};
+  const isPending = isPendingTechJob(meta.status);
+  const isRejected = meta.status === "مرفوض من الفني" || meta.continuationState === "rejected";
+  const isFinishedEnded = meta.status === "منتهي" || meta.continuationState === "ended";
+  const isClosed = isRejected || isFinishedEnded;
+  const isOpen = isChatWritable(meta);
+
+  const startedAt = meta.chatStartedAt || meta.createdAt;
+  const openDuration = startedAt ? formatOpenDuration(startedAt, meta.chatEndedAt || null) : "غير محدد";
+
+  let statusLabel = "دردشة مفتوحة";
+  if(isPending) statusLabel = "⏳ بانتظار موافقة الفني";
+  else if(isRejected) statusLabel = "❌ مرفوض من الفني";
+  else if(isFinishedEnded) statusLabel = "🔒 منتهية (سجل محفوظ)";
+
+  let decisionLine = "";
+  if(isClosed && meta.lastDecisionBy) {
+    decisionLine = `<br>أُنهيت الدردشة بواسطة: <b>${esc(meta.lastDecisionBy)}</b>`;
+  }
+
+  let pendingTechActions = "";
+  if(isPending && ["technician", "suspended"].includes(currentRole) && activeOrderChatId) {
+    pendingTechActions = `
+      <div style="display:flex; gap:8px; margin-top:8px;">
+        <button type="button" class="btn primary" style="flex:1;" onclick="technicianDecision('${esc(activeOrderChatId)}','مقبول')">✅ موافقة وفتح الدردشة</button>
+        <button type="button" class="btn danger" style="flex:1;" onclick="technicianDecision('${esc(activeOrderChatId)}','مرفوض')">❌ رفض الطلب</button>
+      </div>`;
+  }
+
+  let adminDurationLine = "";
+  if(currentRole === "admin") {
+    adminDurationLine = `<br><span style="color:var(--teal-calm);">📊 للإدارة — مدة بقاء المحادثة مفتوحة: <b>${esc(openDuration)}</b></span>`;
+  }
+
+  banner.innerHTML = `الحالة: <b>${esc(statusLabel)}</b>${decisionLine}${adminDurationLine}${pendingTechActions}`;
+
+  endBtn?.classList.toggle("hidden", !isOpen);
+  waBtn?.classList.toggle("hidden", !isOpen);
+  sendRow?.classList.toggle("hidden", !isOpen);
+
+  if(endedNotice) {
+    endedNotice.classList.toggle("hidden", isOpen);
+    if(isPending) endedNotice.innerText = "⏳ حقل الكتابة مقفول مؤقتاً — سيُفتح فور موافقة الفني على الطلب.";
+    else if(isRejected) endedNotice.innerText = "❌ تم رفض هذا الطلب — السجل محفوظ للقراءة فقط.";
+    else endedNotice.innerText = "🔒 تم إنهاء هذه الدردشة — السجل محفوظ للقراءة فقط.";
+  }
+
+  if(revBox) {
+    const isCustomerView = !["technician", "suspended", "admin"].includes(currentRole);
+    revBox.classList.toggle("hidden", !(isFinishedEnded && isCustomerView && !meta.rated));
+  }
+}
+
+function getActorMeta() {
+  if(currentRole === "admin") {
+    return { actorId: currentUser?.uid || "admin", actorName: "الإدارة", actorRole: "admin", labelAr: "الإدارة" };
+  }
+  if(["technician", "suspended"].includes(currentRole) && currentUser) {
+    return { actorId: currentUser.uid, actorName: currentTech?.name || "فني", actorRole: "technician", labelAr: "الفني (" + (currentTech?.name || "") + ")" };
+  }
+  const custUid = (currentUser && !currentUser.isAnonymous) ? currentUser.uid : (jabalGet("CustomerUid") || "customer");
+  const custName = jabalGet("CustomerName") || "زبون";
+  return { actorId: custUid, actorName: custName, actorRole: "customer", labelAr: "الزبون (" + custName + ")" };
+}
+
+function getCurrentUserPrivatePhone() {
+  if(["technician", "suspended"].includes(currentRole)) return normalizeIraqiPhone(currentTech?.phone || "");
+  return normalizeIraqiPhone(jabalGet("CustomerPhone") || "");
+}
+
+function ensurePrivatePhoneBeforeWhatsapp(callback) {
+  const existingPhone = getCurrentUserPrivatePhone();
+  if(isValidIraqiPhone(existingPhone)) { callback(existingPhone); return; }
+  pendingAfterWhatsappPhone = callback;
+  $("waPrivatePhoneInput").value = "";
+  $("whatsappPhoneOnlyModal").classList.remove("hidden");
+}
+
+async function savePrivateWhatsappPhone() {
+  const phone = normalizeIraqiPhone($("waPrivatePhoneInput").value);
+  if(!isValidIraqiPhone(phone)) return showCustomAlert("يرجى إدخال رقم هاتف عراقي صحيح من 11 رقماً يبدأ بـ 07.");
+  try {
+    if(["technician", "suspended"].includes(currentRole) && currentUser && currentTech) {
+      await db.ref("technicians/" + currentUser.uid).update({ phone });
+      await db.ref("publicTechnicians/" + currentUser.uid).update({ phone });
+      await logUserAccount(currentUser.uid, { phone });
+      currentTech.phone = phone;
+      renderTechAccount();
+    } else {
+      jabalSet("CustomerPhone", phone);
+      const uid = (currentUser && !currentUser.isAnonymous) ? currentUser.uid : jabalGet("CustomerUid");
+      if(uid && db) await logUserAccount(uid, { phone });
+    }
+    closeModal("whatsappPhoneOnlyModal");
+    showCustomAlert("تم حفظ رقم هاتفك في ملفك الشخصي بشكل سري بنجاح.");
+    if(typeof pendingAfterWhatsappPhone === "function") {
+      const fn = pendingAfterWhatsappPhone;
+      pendingAfterWhatsappPhone = null;
+      fn(phone);
+    }
+  } catch(e) { showCustomAlert("خطأ أثناء حفظ الرقم: " + e.message); }
+}
+
+function requestWhatsappInChat() {
+  if(!activeOrderChatId || !db) return;
+  if(!isChatWritable(activeOrderMeta)) {
+    return showCustomAlert("لا يمكن إرسال طلب واتساب في هذه الحالة.");
+  }
+  ensurePrivatePhoneBeforeWhatsapp(async (myPhone) => {
+    const sender = getActorMeta();
+    try {
+      const msgId = db.ref("orderChats/" + activeOrderChatId + "/messages").push().key;
+      await db.ref("orderChats/" + activeOrderChatId + "/messages/" + msgId).set({
+        type: "whatsapp_request", waStatus: "pending",
+        requesterId: sender.actorId, requesterName: sender.actorName, requesterPhone: myPhone,
+        responderPhone: "", senderId: sender.actorId, senderName: sender.actorName, senderRole: sender.actorRole,
+        createdAt: Date.now()
+      });
+    } catch(e) { showCustomAlert("تعذر إرسال طلب الواتساب: " + e.message); }
+  });
+}
+
+function respondWhatsappRequest(msgKey, decision) {
+  if(!activeOrderChatId || !db || !msgKey) return;
+  if(decision === "rejected") {
+    db.ref("orderChats/" + activeOrderChatId + "/messages/" + msgKey).update({ waStatus: "rejected", respondedAt: Date.now() }).catch(()=>{});
+    return;
+  }
+  ensurePrivatePhoneBeforeWhatsapp(async (myPhone) => {
+    try {
+      const msgRef = db.ref("orderChats/" + activeOrderChatId + "/messages/" + msgKey);
+      const snap = await msgRef.once("value");
+      const msgData = snap.val() || {};
+      await msgRef.update({ waStatus: "accepted", responderPhone: myPhone, respondedAt: Date.now() });
+      if(msgData.requesterPhone) window.open(`https://wa.me/${formatWhatsApp(msgData.requesterPhone)}`, "_blank");
+    } catch(e) { showCustomAlert("تعذر إتمام الموافقة: " + e.message); }
+  });
+}
+
+function endOrderChatByActor() {
+  if(!activeOrderChatId || !db || !activeOrderMeta) return;
+  if(isOrderEndedOrCompleted(activeOrderMeta.status, activeOrderMeta.continuationState)) return;
+
+  showCustomConfirm("هل أنت متأكد من إنهاء الدردشة؟ ستنتهي المحادثة ويبقى السجل محفوظاً للرجوع إليه.", async () => {
+    const actor = getActorMeta();
+    const now = Date.now();
+    try {
+      const updates = {};
+      updates[`orderChats/${activeOrderChatId}/meta/status`] = "منتهي";
+      updates[`orderChats/${activeOrderChatId}/meta/continuationState`] = "ended";
+      updates[`orderChats/${activeOrderChatId}/meta/lastDecisionBy`] = actor.labelAr;
+      updates[`orderChats/${activeOrderChatId}/meta/lastDecisionRole`] = actor.actorRole;
+      updates[`orderChats/${activeOrderChatId}/meta/lastDecisionAt`] = now;
+      updates[`orderChats/${activeOrderChatId}/meta/chatEndedAt`] = now;
+
+      if(activeOrderMeta.customerUid) {
+        updates[`requests/${activeOrderMeta.customerUid}/${activeOrderChatId}/status`] = "منتهي";
+        updates[`requests/${activeOrderMeta.customerUid}/${activeOrderChatId}/continuationState`] = "ended";
+        updates[`requests/${activeOrderMeta.customerUid}/${activeOrderChatId}/lastDecisionBy`] = actor.labelAr;
+        updates[`requests/${activeOrderMeta.customerUid}/${activeOrderChatId}/lastDecisionAt`] = now;
+        updates[`requests/${activeOrderMeta.customerUid}/${activeOrderChatId}/chatEndedAt`] = now;
+      }
+      if(activeOrderMeta.assignedTech) {
+        updates[`technicianJobs/${activeOrderMeta.assignedTech}/${activeOrderChatId}/status`] = "منتهي";
+        updates[`technicianJobs/${activeOrderMeta.assignedTech}/${activeOrderChatId}/continuationState`] = "ended";
+        updates[`technicianJobs/${activeOrderMeta.assignedTech}/${activeOrderChatId}/lastDecisionBy`] = actor.labelAr;
+        updates[`technicianJobs/${activeOrderMeta.assignedTech}/${activeOrderChatId}/lastDecisionAt`] = now;
+        updates[`technicianJobs/${activeOrderMeta.assignedTech}/${activeOrderChatId}/chatEndedAt`] = now;
+      }
+
+      await db.ref().update(updates);
+      activeOrderMeta = {
+        ...activeOrderMeta,
+        status: "منتهي",
+        continuationState: "ended",
+        lastDecisionBy: actor.labelAr,
+        lastDecisionRole: actor.actorRole,
+        lastDecisionAt: now,
+        chatEndedAt: now
+      };
+      renderFullChatBannerAndControls();
+
+      const sysMsgId = db.ref(`orderChats/${activeOrderChatId}/messages`).push().key;
+      await db.ref(`orderChats/${activeOrderChatId}/messages/${sysMsgId}`).set({
+        type: "system_decision",
+        text: `تم إنهاء الدردشة بواسطة: ${actor.labelAr}`,
+        senderId: actor.actorId,
+        senderName: actor.labelAr,
+        senderRole: actor.actorRole,
+        createdAt: now
+      });
+    } catch(e) {
+      showCustomAlert("تعذر إنهاء الدردشة: " + e.message);
+    }
+  });
+}
+
+async function submitOrderReviewAndNote() {
+  if(!activeOrderChatId || !activeOrderMeta || !db) return;
+  const stars = Number($("orderReviewStars")?.value || 5);
+  const note = ($("orderReviewNote")?.value || "").trim();
+  if(!note) return showCustomAlert("يرجى كتابة ملاحظتك أو تقييمك للخدمة.");
+
+  const actor = getActorMeta();
+  const techUid = activeOrderMeta.assignedTech;
+  const techName = activeOrderMeta.assignedTechName || "";
+  const custUid = activeOrderMeta.customerUid || jabalGet("CustomerUid");
+
+  try {
+    const revId = db.ref("reviews").push().key;
+    await db.ref("reviews/" + revId).set({
+      uid: actor.actorId,
+      techUid: techUid || "",
+      techName: techName,
+      orderId: activeOrderChatId,
+      name: actor.actorName,
+      stars,
+      text: note,
+      createdAt: Date.now()
+    });
+
+    if(techUid) {
+      const tSnap = await db.ref("technicians/" + techUid).once("value");
+      if(tSnap.exists()) {
+        const tVal = tSnap.val();
+        const nextCount = Number(tVal.ratingCount || 0) + 1;
+        const nextSum = Number(tVal.ratingSum || 0) + stars;
+        const nextAvg = nextSum / nextCount;
+        await db.ref("technicians/" + techUid).update({ ratingCount: nextCount, ratingSum: nextSum, ratingAverage: nextAvg });
+        await db.ref("publicTechnicians/" + techUid).update({ ratingCount: nextCount, ratingSum: nextSum, ratingAverage: nextAvg }).catch(()=>{});
+      }
+    }
+
+    if(custUid) await db.ref(`requests/${custUid}/${activeOrderChatId}`).update({ rated: true }).catch(()=>{});
+    await db.ref(`orderChats/${activeOrderChatId}/meta`).update({ rated: true }).catch(()=>{});
+
+    activeOrderMeta.rated = true;
+    renderFullChatBannerAndControls();
+    showCustomAlert("تم إرسال تقييمك وملاحظتك بنجاح!");
+  } catch(e) {
+    showCustomAlert("تعذر إرسال التقييم: " + e.message);
+  }
+}
+
+async function resolveOrderMeta(orderId) {
+  let meta = { id: orderId, status: "بانتظار رد الفني", continuationState: "pending", createdAt: Date.now() };
+  try {
+    const chatMetaSnap = await db.ref(`orderChats/${orderId}/meta`).once("value");
+    if(chatMetaSnap.exists()) meta = { ...meta, ...chatMetaSnap.val() };
+
+    if(currentTech && currentUser) {
+      const jobSnap = await db.ref(`technicianJobs/${currentUser.uid}/${orderId}`).once("value");
+      if(jobSnap.exists()) meta = { ...meta, ...jobSnap.val() };
+    }
+    const custUid = (currentUser && !currentUser.isAnonymous && currentRole !== "admin")
+      ? currentUser.uid
+      : (meta.customerUid || jabalGet("CustomerUid"));
+    if(custUid) {
+      const reqSnap = await db.ref(`requests/${custUid}/${orderId}`).once("value");
+      if(reqSnap.exists()) meta = { ...meta, ...reqSnap.val(), customerUid: custUid };
+    }
+  } catch(_) {}
+  return meta;
+}
+
+async function openFullOrderChat(orderId, titleLabel = "") {
+  if(!orderId || !db) return;
+  if(orderChatListener) { orderChatListener.off(); orderChatListener = null; }
+  if(orderMetaListener) { orderMetaListener.off(); orderMetaListener = null; }
+
+  activeOrderChatId = String(orderId);
+  activeOrderMeta = await resolveOrderMeta(activeOrderChatId);
+  $("fullChatTitle").innerText = titleLabel ? `💬 ${titleLabel}` : "💬 محادثة الطلب";
+  $("fullChatInput").value = "";
+  renderFullChatBannerAndControls();
+  navigateToSection("fullOrderChatSection");
+
+  orderMetaListener = db.ref(`orderChats/${activeOrderChatId}/meta`);
+  orderMetaListener.on("value", snap => {
+    if(snap.exists()) {
+      activeOrderMeta = { ...(activeOrderMeta || {}), ...snap.val() };
+      renderFullChatBannerAndControls();
+    }
+  });
+
+  const box = $("fullChatMessages");
+  box.innerHTML = '<div class="muted" style="text-align:center;margin-top:95px;">جارٍ تحميل رسائل الطلب...</div>';
+
+  const sender = getActorMeta();
+  orderChatListener = db.ref("orderChats/" + activeOrderChatId + "/messages").limitToLast(120);
+  orderChatListener.on("value", snap => {
+    const msgs = [];
+    snap.forEach(c => msgs.push({ ...c.val(), _key: c.key }));
+    if(!msgs.length) {
+      box.innerHTML = '<div class="muted" style="text-align:center;margin-top:95px;">لا توجد رسائل بعد...</div>';
+      return;
+    }
+    box.innerHTML = msgs.map(m => {
+      const isMine = m.senderId === sender.actorId;
+      const tStr = m.createdAt ? new Date(m.createdAt).toLocaleTimeString('ar-IQ', { hour: '2-digit', minute: '2-digit' }) : '';
+
+      if(m.type === "system_decision") {
+        return `<div class="chat-bubble sys-card"><div>📌 ${esc(m.text)}</div><small>${tStr}</small></div>`;
+      }
+
+      if(m.type === "whatsapp_request") {
+        if(m.waStatus === "pending") {
+          if(isMine) {
+            return `<div class="chat-bubble wa-card"><div>🟢 أرسلت طلباً للانتقال إلى واتساب — بانتظار موافقة الطرف الآخر...</div><small>${tStr}</small></div>`;
+          }
+          return `
+            <div class="chat-bubble wa-card">
+              <div style="margin-bottom:8px;">🟢 يطلب <b>${esc(m.senderName || 'الطرف الآخر')}</b> فتح محادثة واتساب بينكما. هل توافق؟</div>
+              <div style="display:flex; gap:8px; justify-content:center;">
+                <button type="button" class="btn whatsapp-btn" style="padding:6px 12px; font-size:11.5px;" onclick="respondWhatsappRequest('${esc(m._key)}','accepted')">✅ موافقة وفتح واتساب</button>
+                <button type="button" class="btn danger" style="padding:6px 12px; font-size:11.5px;" onclick="respondWhatsappRequest('${esc(m._key)}','rejected')">❌ رفض</button>
+              </div>
+              <small>${tStr}</small>
+            </div>`;
+        } else if(m.waStatus === "accepted") {
+          const targetPhone = isMine ? m.responderPhone : m.requesterPhone;
+          const waHref = targetPhone ? `https://wa.me/${formatWhatsApp(targetPhone)}` : "#";
+          return `
+            <div class="chat-bubble wa-card">
+              <div style="margin-bottom:6px;">✅ تمت الموافقة على التواصل عبر واتساب</div>
+              ${targetPhone ? `<a class="btn whatsapp-btn" style="padding:6px 14px; font-size:12px;" href="${waHref}" target="_blank">📲 فتح محادثة الواتساب الآن</a>` : ''}
+              <small>${tStr}</small>
+            </div>`;
+        } else {
+          return `<div class="chat-bubble wa-card" style="background:var(--danger-tint); border-color:#fca5a5; color:var(--danger-calm);"><div>❌ تم رفض طلب الواتساب — يستمر التواصل داخل التطبيق</div><small>${tStr}</small></div>`;
+        }
+      }
+
+      return `
+        <div class="chat-bubble ${isMine ? 'mine' : 'other'}">
+          <div>${esc(m.text ?? '')}</div>
+          <small>${esc(m.senderName || '')} ${tStr ? '• ' + tStr : ''}</small>
+        </div>`;
+    }).join("");
+    box.scrollTop = box.scrollHeight;
+  }, err => {
+    box.innerHTML = `<div class="notice error">تعذر قراءة الرسائل: ${esc(err.message || err.code || '')}</div>`;
+  });
+}
+
+async function sendOrderChatMessage() {
+  const input = $("fullChatInput");
+  const text = input.value.trim();
+  if(!text || !activeOrderChatId || !db) return;
+
+  if(activeOrderMeta) {
+    if(isPendingTechJob(activeOrderMeta.status)) {
+      return showCustomAlert("بانتظار موافقة الفني على الطلب أولاً قبل بدء الكتابة.");
+    }
+    if(!isChatWritable(activeOrderMeta)) {
+      return showCustomAlert("هذه المحادثة مغلقة ومحفوظة كسجل فقط.");
+    }
+  }
+
+  const sender = getActorMeta();
+  input.value = "";
+  try {
+    const msgId = db.ref("orderChats/" + activeOrderChatId + "/messages").push().key;
+    await db.ref("orderChats/" + activeOrderChatId + "/messages/" + msgId).set({
+      type: "text", text, senderId: sender.actorId, senderName: sender.actorName, senderRole: sender.actorRole, createdAt: Date.now()
+    });
+  } catch(e) {
+    input.value = text;
+    showCustomAlert("تعذر إرسال الرسالة: " + e.message);
+  }
+}
+
+function closeFullOrderChat() {
+  if(orderChatListener) { orderChatListener.off(); orderChatListener = null; }
+  if(orderMetaListener) { orderMetaListener.off(); orderMetaListener = null; }
+  activeOrderChatId = null;
+  activeOrderMeta = null;
+  navigateToSection("chatHubSection");
+}
+
+function getCurrentSupportActor() {
+  if(currentRole === "admin") return { threadId: null, senderId: currentUser?.uid || "admin", senderName: "فريق الدعم (المدير)", senderRole: "admin" };
+  if(["technician", "suspended"].includes(currentRole) && currentUser) {
+    return { threadId: currentUser.uid, senderId: currentUser.uid, senderName: (currentTech?.name || "فني") + " (فني)", senderRole: "technician" };
+  }
+  const custUid = (currentUser && !currentUser.isAnonymous) ? currentUser.uid : (jabalGet("CustomerUid") || "guest_thread");
+  const custName = jabalGet("CustomerName") || "زبون";
+  return { threadId: custUid, senderId: custUid, senderName: custName + " (زبون)", senderRole: "client" };
+}
+
+async function openSupportChatModal() {
+  if(!db) return showCustomAlert("تعذر الاتصال بقاعدة البيانات حالياً.");
+  const actor = getCurrentSupportActor();
+  $("supportChatInput").value = "";
+  $("supportChatModal").classList.remove("hidden");
+
+  if(currentRole === "admin") {
+    $("adminSupportThreadPicker").classList.remove("hidden");
+    const sel = $("adminSupportThreadSelect");
+    sel.innerHTML = '<option value="">اختر محادثة...</option>';
+    try {
+      const [chatsSnap, accSnap] = await Promise.all([db.ref("supportChats").once("value"), db.ref("allAccounts").once("value")]);
+      const accMap = accSnap.val() || {}, chatsObj = chatsSnap.val() || {}, threadIds = Object.keys(chatsObj);
+      threadIds.forEach(tid => {
+        const opt = document.createElement("option");
+        opt.value = tid;
+        opt.textContent = (accMap[tid]?.name || tid) + (accMap[tid]?.role ? ` (${accMap[tid].role})` : "");
+        sel.appendChild(opt);
+      });
+      if(threadIds.length > 0) { sel.value = threadIds[0]; subscribeSupportThread(threadIds[0]); }
+      else $("supportChatMessages").innerHTML = '<div class="muted" style="text-align:center;margin-top:90px;">لا توجد محادثات دعم واردة حتى الآن.</div>';
+    } catch(e) {}
+  } else {
+    $("adminSupportThreadPicker").classList.add("hidden");
+    subscribeSupportThread(actor.threadId);
+  }
+}
+
+function switchAdminSupportThread() {
+  const tid = $("adminSupportThreadSelect").value;
+  if(tid) subscribeSupportThread(tid);
+}
+
+function subscribeSupportThread(threadId) {
+  if(supportChatListener) { supportChatListener.off(); supportChatListener = null; }
+  const box = $("supportChatMessages");
+  box.innerHTML = '<div class="muted" style="text-align:center;margin-top:90px;">جارٍ تحميل المحادثة...</div>';
+
+  supportChatListener = db.ref("supportChats/" + threadId + "/messages").limitToLast(60);
+  supportChatListener.on("value", snap => {
+    const msgs = [];
+    snap.forEach(child => msgs.push(child.val()));
+    if(!msgs.length) { box.innerHTML = '<div class="muted" style="text-align:center;margin-top:90px;">ابدأ المحادثة مع فريق الدعم الآن...</div>'; return; }
+    const actor = getCurrentSupportActor();
+    box.innerHTML = msgs.map(m => {
+      const isMine = (currentRole === "admin" && m.senderRole === "admin") || (currentRole !== "admin" && m.senderId === actor.senderId);
+      const timeStr = m.createdAt ? new Date(m.createdAt).toLocaleTimeString('ar-IQ', { hour: '2-digit', minute: '2-digit' }) : '';
+      return `<div class="chat-bubble ${isMine ? 'mine' : 'other'}"><div>${esc(m.text)}</div><small>${esc(m.senderName || '')} ${timeStr ? '• ' + timeStr : ''}</small></div>`;
+    }).join("");
+    box.scrollTop = box.scrollHeight;
+  });
+}
+
+async function sendSupportMessage() {
+  const input = $("supportChatInput"), text = input.value.trim();
+  if(!text || !db) return;
+  const actor = getCurrentSupportActor();
+  const targetThread = currentRole === "admin" ? $("adminSupportThreadSelect").value : actor.threadId;
+  if(!targetThread) return showCustomAlert("اختر محادثة أولاً.");
+  input.value = "";
+  try {
+    const msgId = db.ref("supportChats/" + targetThread + "/messages").push().key;
+    await db.ref("supportChats/" + targetThread + "/messages/" + msgId).set({ text, senderId: actor.senderId, senderName: actor.senderName, senderRole: actor.senderRole, createdAt: Date.now() });
+  } catch(e) { showCustomAlert("تعذر إرسال الرسالة: " + e.message); }
+}
+
+function closeSupportChatModal() {
+  if(supportChatListener) { supportChatListener.off(); supportChatListener = null; }
+  closeModal("supportChatModal");
+}
+
+async function chooseServiceDirect(service, techUid){
+  if(!hasCustomerCoreProfileConfigured() && currentRole !== "admin") {
+    return openPhoneRequiredModal(() => chooseServiceDirect(service, techUid));
+  }
+  const techList = [...publicTechs, ...technicians];
+  selectedTargetTech = techList.find(t => t.uid === techUid);
+  if(!selectedTargetTech) return showCustomAlert("الفني غير موجود.");
+  const subTitle = currentSelectedSubservice ? ` - ${currentSelectedSubservice}` : "";
+  $("orderModalTitle").innerText = "طلب الفني: " + selectedTargetTech.name + subTitle;
+  $("custOrderProblem").value = currentRole === "admin" ? "طلب مباشر من إدارة جبل" : "";
+  $("custOrderMessage").innerHTML = "";
+  $("customerOrderModal").classList.remove("hidden");
+}
+
+async function submitCustomerOrder() {
+  const problem = $("custOrderProblem").value.trim();
+  const isAdminSender = currentRole === "admin";
+  const custName = isAdminSender ? "إدارة جبل" : (jabalGet("CustomerName") || currentUser?.displayName || "زبون جبل");
+  const custPhone = isAdminSender ? "" : (jabalGet("CustomerPhone") || "");
+
+  if(!isAdminSender && !hasCustomerCoreProfileConfigured()) {
+    closeModal("customerOrderModal");
+    return openPhoneRequiredModal(submitCustomerOrder);
+  }
+  if(!problem) return showCustomAlert("يرجى كتابة تفاصيل العطل أو المشكلة.");
+  if(!selectedTargetTech) return showCustomAlert("يرجى اختيار فني أولاً.");
+
+  try {
+    const custId = isAdminSender
+      ? "admin_manager"
+      : ((currentUser && !currentUser.isAnonymous) ? currentUser.uid : (jabalGet("CustomerUid") || ("cust_" + Date.now())));
+    if(!isAdminSender) jabalSet("CustomerUid", custId);
+
+    if (!isAdminSender) {
+      const existingSnap = await db.ref("requests/" + custId).once("value");
+      let hasOpenWithSameTech = false;
+      existingSnap.forEach(c => {
+        const val = c.val() || {};
+        if (val.assignedTech === selectedTargetTech.uid && !isOrderEndedOrCompleted(val.status, val.continuationState)) {
+          hasOpenWithSameTech = true;
+        }
+      });
+      if (hasOpenWithSameTech) {
+        closeModal("customerOrderModal");
+        showCustomAlert("لديك طلب سابق مفتوح أو بانتظار الرد مع هذا الفني حالياً. يمكنك متابعته من قسم الدردشة.");
+        openChatHub();
+        return;
+      }
+    }
+
+    const techUid = selectedTargetTech.uid;
+    const id = db.ref("requests/" + custId).push().key;
+    const now = Date.now();
+    const service = currentSelectedSubservice ? `${selectedTargetTech.service} (${currentSelectedSubservice})` : selectedTargetTech.service;
+
+    const unifiedThread = {
+      id,
+      uid: custId,
+      customerUid: custId,
+      name: custName,
+      customerName: custName,
+      phone: custPhone,
+      customerPhone: "محجوب (للإدارة فقط)",
+      city: isAdminSender ? "كل المحافظات" : (chosenCustomerCity || jabalGet("CustomerCity") || "محافظتي"),
+      area: isAdminSender ? "كل الأقضية" : (chosenCustomerArea || jabalGet("CustomerArea") || "القضاء"),
+      neighborhood: "",
+      service,
+      problem,
+      assignedTech: techUid,
+      assignedTechName: selectedTargetTech.name,
+      status: "بانتظار رد الفني",
+      continuationState: "pending",
+      createdAt: now,
+      countedAsCompleted: false,
+      rated: false
+    };
+
+    const firstMsgId = db.ref("orderChats/" + id + "/messages").push().key;
+    const updates = {
+      ["requests/" + custId + "/" + id]: unifiedThread,
+      ["technicianJobs/" + techUid + "/" + id]: unifiedThread,
+      ["orderChats/" + id + "/meta"]: unifiedThread,
+      ["orderChats/" + id + "/messages/" + firstMsgId]: {
+        type: "system_decision",
+        text: `📋 طلب جديد (${service}): ${problem} — بانتظار موافقة الفني لفتح المحادثة.`,
+        senderId: custId,
+        senderName: custName,
+        senderRole: "customer",
+        createdAt: now
+      }
+    };
+
+    await db.ref().update(updates);
+
+    closeModal("customerOrderModal");
+    startChatBadgeWatcher();
+    openFullOrderChat(id, selectedTargetTech.name || service);
+  } catch(e) {
+    showCustomAlert("خطأ في إرسال الطلب: " + e.message);
+  }
+}
+
+async function renderTechAccount(){
+  if(!currentTech || !currentUser) return;
+  currentTech = await checkAndExpireSubscriptionIfNeeded(currentUser.uid, currentTech);
+
+  const isAvail = currentTech.available !== false;
+  const subInfo = getEffectiveSubscriptionInfo(currentTech);
+  const freeUsed = Number(currentTech.freeJobsUsed || 0);
+  const freeRemaining = Math.max(0, 3 - freeUsed);
+  const hasQuota = canTechAcceptMoreJobs(currentTech);
+  const isComplete = isTechProfileComplete(currentTech);
+
+  const checklistCard = $("techIncompleteChecklist");
+  if(checklistCard) {
+    if(!isComplete) {
+      const hasName = Boolean(String(currentTech.name || "").trim());
+      const hasCityArea = Boolean(String(currentTech.city || "").trim() && String(currentTech.area || "").trim());
+      const hasService = Boolean(String(currentTech.service || "").trim());
+      checklistCard.innerHTML = `
+        <h3>⚠️ ملفك الشخصي غير مكتمل</h3>
+        <div class="muted">أكمل البيانات الأساسية حتى يظهر اسمك للزبائن وتستقبل الطلبات:</div>
+        <div class="checklist-items">
+          <div>${hasName ? '✅' : '❌'} الاسم الكامل</div>
+          <div>${hasCityArea ? '✅' : '❌'} المحافظة والقضاء</div>
+          <div>${hasService ? '✅' : '❌'} الاختصاص الرئيسي</div>
+        </div>
+        <button type="button" class="btn primary" style="width:100%" onclick="openTechEditModal()">✏️ استكمال الملف الشخصي الآن</button>
+      `;
+      checklistCard.classList.remove("hidden");
+    } else {
+      checklistCard.classList.add("hidden");
+    }
+  }
+
+  $("techSummary").innerHTML = `
+    ${techPhoto(currentTech)}
+    <h3 style="margin:6px 0 3px;color:var(--navy);font-weight:900;">${esc(currentTech.name)}</h3>
+    <div style="margin-bottom:5px"><span class="badge">${esc(currentTech.service || 'غير محدد')}</span></div>
+    <div class="muted">📍 ${esc(currentTech.city || 'غير محدد')} — ${esc(currentTech.area || 'غير محدد')}${currentTech.neighborhood ? ' ('+esc(currentTech.neighborhood)+')' : ''}</div>
+    <div style="margin:5px 0;">
+      <span class="stars">${"★".repeat(Math.round(currentTech.ratingAverage||0))}${"☆".repeat(5-Math.round(currentTech.ratingAverage||0))}</span>
+      <span class="muted">(${Number(currentTech.ratingAverage||0).toFixed(1)} من ${Number(currentTech.ratingCount||0)} تقييم)</span>
+    </div>
+    <div class="muted">الأعمال المجانية: <b>${freeUsed} من 3</b> | حالة الاشتراك: <b>${esc(subInfo.label)}</b></div>`;
+
+  if($("techFreeJobsHighlight")) {
+    let highlightHtml = `
+      <div style="font-weight:900;color:var(--navy);font-size:13.5px;">🎁 رصيد الأعمال المجانية</div>
+      <div class="free-jobs-counter">المستخدم: ${freeUsed} / 3 | المتبقي: ${freeRemaining}</div>
+    `;
+    if(subInfo.isActive) {
+      const expText = subInfo.expiresAt > 0 ? new Date(subInfo.expiresAt).toLocaleDateString('ar-IQ') : 'مفتوح';
+      highlightHtml += `<div style="font-size:12.5px;font-weight:800;color:var(--green-calm);">✅ اشتراكك (${esc(subInfo.label)}) فعال لغاية: ${esc(expText)}</div>`;
+    } else if(!hasQuota) {
+      highlightHtml += `<div style="font-size:12px;font-weight:800;color:var(--danger-calm);margin-top:4px;">⚠️ انتهى رصيدك المجاني — راسل فريق الدعم لتفعيل اشتراك شهري أو سنوي.</div>`;
+    } else {
+      highlightHtml += `<div class="muted">يتبقى لك <b>${freeRemaining}</b> أعمال مجانية قبل الحاجة لتفعيل الاشتراك.</div>`;
+    }
+    $("techFreeJobsHighlight").innerHTML = highlightHtml;
+  }
+
+  const availBtn = $("toggleAvailableBtn");
+  if(availBtn) {
+    if(!hasQuota) {
+      availBtn.innerText = "🔴 غير متاح (مكتمل الرصيد)";
+      availBtn.className = "btn danger";
+      $("availabilityMsg").innerText = "حالتك تظهر للزبائن (مكتمل الرصيد) لحين تفعيل الاشتراك.";
+    } else if(isAvail) {
+      availBtn.innerText = "🟢 متاح لاستقبال الطلبات (اضغط للتحويل لغير متاح)";
+      availBtn.className = "btn primary";
+      $("availabilityMsg").innerText = "حالتك تظهر للزبائن الآن: متاح.";
+    } else {
+      availBtn.innerText = "⚪ غير متاح حالياً (اضغط للتفعيل)";
+      availBtn.className = "btn light";
+      $("availabilityMsg").innerText = "حالتك تظهر للزبائن الآن: غير متاح.";
+    }
+  }
+
+  let subBoxHtml = `<strong>حالة الاشتراك: ${esc(subInfo.label)}</strong><br>`;
+  if(subInfo.isActive) {
+    const expStr = subInfo.expiresAt > 0 ? new Date(subInfo.expiresAt).toLocaleDateString('ar-IQ', { dateStyle: 'long' }) : 'بدون تاريخ انتهاء محدد';
+    subBoxHtml += `تاريخ انتهاء الاشتراك: <b>${esc(expStr)}</b><br>الطلبات مفتوحة لك بدون قيود.`;
+  } else if(subInfo.expired) {
+    subBoxHtml += `<span style="color:var(--danger-calm);font-weight:800;">انتهت مدة اشتراكك السابق.</span> يرجى مراسلة فريق الدعم لتجديد الاشتراك.`;
+  } else {
+    subBoxHtml += `الأعمال المجانية المتبقية: <b>${freeRemaining} من 3</b>. للتفعيل أو الاستفسار راسل فريق الدعم مباشرة.`;
+  }
+  $("techSubDetails").innerHTML = subBoxHtml;
+
+  fillSelect("editTechService");
+  $("editTechName").value = currentTech.name || "";
+  $("editTechService").value = currentTech.service || SERVICES[0];
+  renderSubserviceCheckboxes("editTechSubservicesBox", $("editTechService").value, currentTech.subservices || []);
+  toggleOtherAppliancesField($("editTechService").value, "editTechOtherAppliancesField");
+  if($("editTechOtherAppliances")) $("editTechOtherAppliances").value = currentTech.otherAppliances || "";
+  $("editTechCity").value = currentTech.city || "";
+  setDistricts("editTechArea", currentTech.city || "");
+  if(currentTech.area) $("editTechArea").value = currentTech.area;
+  $("editTechNeighborhood").value = currentTech.neighborhood || "";
+  if($("editTechPhone")) $("editTechPhone").value = currentTech.phone || "";
+  if($("editTechEmail")) $("editTechEmail").value = currentTech.email || "";
+  $("editTechBio").value = currentTech.bio || "";
+  $("editTechExtra").value = currentTech.extraInfo || "";
+}
+
+async function toggleTechAvailability() {
+  if(!currentUser || !currentTech) return;
+  const nextState = currentTech.available === false ? true : false;
+  try {
+    await db.ref("technicians/" + currentUser.uid).update({ available: nextState });
+    await db.ref("publicTechnicians/" + currentUser.uid).update({ available: nextState }).catch(()=>{});
+    currentTech.available = nextState;
+    renderTechAccount();
+    loadPublicTechs();
+  } catch(e) { showCustomAlert("تعذر تحديث حالة التواجد: " + e.message); }
+}
+
+async function saveTechAccountProfile(){
+  if(!currentUser || !currentTech) return;
+  const name = $("editTechName").value.trim(), service = $("editTechService").value, city = $("editTechCity").value, area = $("editTechArea").value;
+  const neighborhood = $("editTechNeighborhood").value.trim(), bio = $("editTechBio").value.trim(), extraInfo = $("editTechExtra").value.trim();
+  const rawPhone = ($("editTechPhone")?.value || "").trim();
+  const phone = rawPhone ? normalizeIraqiPhone(rawPhone) : "";
+  const email = ($("editTechEmail")?.value || "").trim().toLowerCase();
+  const subservices = getCheckedSubservices("editTechSubservicesBox");
+  const otherAppliances = service === "صيانة الأجهزة الكهربائية" ? ($("editTechOtherAppliances")?.value || "").trim() : "";
+
+  if(!name || !service || !city || !area) return showCustomAlert("يرجى إكمال الحقول الأساسية (الاسم، الاختصاص، المحافظة، والقضاء).");
+  if(phone && !isValidIraqiPhone(phone)) return showCustomAlert("رقم الهاتف العراقي يجب أن يتكون من 11 رقماً ويبدأ بـ 07.");
+  if(email && !isValidEmailAddress(email)) return showCustomAlert("صيغة البريد الإلكتروني غير صحيحة.");
+
+  try{
+    let photoURL = currentTech.photoURL || "";
+    const file = $("editTechPhotoFile").files[0];
+    if(file) photoURL = await uploadTechPhoto(currentUser.uid, file);
+
+    const updated = { ...currentTech, name, service, subservices, otherAppliances, city, area, neighborhood, phone, email, bio, extraInfo, photoURL };
+    await db.ref("technicians/"+currentUser.uid).update({ name, service, subservices, otherAppliances, city, area, neighborhood, phone, email, bio, extraInfo, photoURL });
+    await syncPublicTechnician(currentUser.uid, updated);
+    await logUserAccount(currentUser.uid, { name, phone, email, role: "فني", service, city, area });
+    currentTech = updated;
+    $("editTechPhotoFile").value = "";
+    closeModal("techEditModal");
+    renderTechAccount();
+    loadPublicTechs();
+    showCustomAlert("تم حفظ وتفعيل ملفك الشخصي بنجاح!");
+  }catch(e){ showCustomAlert("خطأ: " + e.message); }
+}
+
+function listenToAnnouncements() {
+  if(!db) return;
+  db.ref("settings").on("value", snap => {
+    const val = snap.val() || {};
+    const list = [];
+    for(let i = 1; i <= 5; i++) {
+      const txt = (val["announcement" + i] || "").trim();
+      if(txt) list.push(txt);
+    }
+    const bar = $("globalAnnouncementBar");
+    if(!bar) return;
+    if(list.length === 0) bar.innerText = "📢 أهلاً بكم في تطبيق جبل لصيانة المنازل - تواصل مع أفضل الفنيين المعتمدين في منطقتك بكل سهولة.";
+    else bar.innerText = list.map(t => "📢 " + t).join("      ★      ");
+    startSeamlessTicker();
+  });
+}
+
+function startSeamlessTicker() {
+  const bar = $("globalAnnouncementBar");
+  const container = bar ? bar.parentElement : null;
+  if(!bar || !container) return;
+  if(announcementTimer) cancelAnimationFrame(announcementTimer);
+
+  let pos = -bar.offsetWidth;
+  const speed = 1.15;
+
+  function step() {
+    pos += speed;
+    if (pos > container.offsetWidth) {
+      pos = -bar.offsetWidth;
+    }
+    bar.style.transform = `translate3d(${pos}px, 0, 0)`;
+    announcementTimer = requestAnimationFrame(step);
+  }
+  announcementTimer = requestAnimationFrame(step);
+}
+
+async function loadAdminAnnouncementsInputs() {
+  if(currentRole !== "admin" || !db) return;
+  try {
+    const snap = await db.ref("settings").once("value");
+    const val = snap.val() || {};
+    for(let i = 1; i <= 5; i++) {
+      if($("annInput" + i)) $("annInput" + i).value = val["announcement" + i] || "";
+    }
+  } catch(e) {}
+}
+
+async function saveAdminAnnouncements() {
+  if(currentRole !== "admin" || !db) return;
+  const updates = {};
+  for(let i = 1; i <= 5; i++) updates["announcement" + i] = ($("annInput" + i)?.value || "").trim();
+  try {
+    await db.ref("settings").update(updates);
+    showCustomAlert("تم تحديث الأشرطة الإعلانية بنجاح وستظهر فوراً لجميع المستخدمين.");
+  } catch(e) { showCustomAlert("خطأ أثناء الحفظ: " + e.message); }
+}
+
+async function loadReviews() {
+  if(!db) return;
+  try {
+    const s = await db.ref("reviews").limitToLast(50).once("value");
+    const list = [];
+    s.forEach(c => list.push({ ...c.val(), id: c.key }));
+    list.reverse();
+    const el = $("reviewsList");
+    if(!list.length) { el.innerHTML = '<div class="empty">لا توجد تقييمات أو ملاحظات بعد. كن أول من يشارك رأيه!</div>'; return; }
+    el.innerHTML = list.map(r => {
+      const dateStr = r.createdAt ? new Date(r.createdAt).toLocaleDateString('ar-IQ') : '';
+      const delBtn = currentRole === "admin" ? `<button class="btn danger" style="padding:3px 8px;font-size:10px;float:left;" onclick="adminDeleteReview('${esc(r.id)}')">حذف</button>` : '';
+      const techLine = r.techName ? `<div class="muted" style="margin-bottom:4px;">الفني المقيّم: <b>${esc(r.techName)}</b></div>` : '';
+      return `
+      <div class="list-item">
+        ${delBtn}
+        <h4 style="margin:0 0 4px;">${esc(r.name)} <span class="stars" style="font-size:13px;">${"★".repeat(r.stars||5)}${"☆".repeat(5-(r.stars||5))}</span></h4>
+        ${techLine}
+        <div class="muted" style="margin-bottom:6px;">${dateStr}</div>
+        <p style="margin:0;font-size:13px;line-height:1.6;">${esc(r.text)}</p>
+      </div>`;
+    }).join("");
+  } catch(e) {}
+}
+
+async function submitReview() {
+  const name = $("reviewName").value.trim(), stars = Number($("reviewStars").value), text = $("reviewText").value.trim();
+  if(!name || !text) return showCustomAlert("يرجى كتابة اسمك وملاحظتك.");
+  try {
+    const id = db.ref("reviews").push().key;
+    await db.ref("reviews/"+id).set({ uid: currentUser?.uid || "guest", name, stars, text, createdAt: Date.now() });
+    $("reviewName").value = ""; $("reviewText").value = "";
+    showCustomAlert("شكراً لك! تم نشر تقييمك وملاحظتك بنجاح.");
+    loadReviews();
+  } catch(e) { showCustomAlert("خطأ: " + e.message); }
+}
+
+async function adminDeleteReview(id) {
+  if(currentRole !== "admin") return;
+  showCustomConfirm("هل تريد حذف هذا التقييم نهائياً؟", async () => {
+    try { await db.ref("reviews/"+id).remove(); loadReviews(); } catch(e) {}
+  });
+}
+
+async function loadAdminData(){
+  if(currentRole !== "admin" || !db) return;
+  try{
+    const [t, r, p, a] = await Promise.all([
+      db.ref("technicians").once("value"),
+      db.ref("requests").once("value"),
+      db.ref("passwordRequests").once("value"),
+      db.ref("allAccounts").once("value")
+    ]);
+
+    const tObj = t.val() || {};
+    const checkedTechs = [];
+    for (const [uid, rawTech] of Object.entries(tObj)) {
+      const checked = await checkAndExpireSubscriptionIfNeeded(uid, rawTech);
+      checkedTechs.push({ ...checked, uid });
+    }
+    technicians = checkedTechs;
+
+    requests = [];
+    r.forEach(u=>{ u.forEach(c=>{ requests.push({...c.val(), uid:u.key, id:c.key}); }); });
+    requests.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+
+    passwordRequests = Object.entries(p.val() || {}).map(([id,x])=>({...x,id})).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+
+    const accObj = a.val() || {};
+    const techIdsSet = new Set(technicians.map(tech => tech.uid));
+    const mergedAccounts = [];
+    const incompleteTechs = [];
+
+    Object.entries(accObj).forEach(([id, x]) => {
+      const roleStr = String(x.role || "").trim();
+      const isTechAccount = techIdsSet.has(id) || roleStr === "فني";
+      if (isTechAccount) {
+        if (!techIdsSet.has(id)) {
+          incompleteTechs.push({ ...x, uid: id, issueReason: "حساب فني غير مكتمل البيانات في سجل الفنيين" });
+        }
+      } else {
+        mergedAccounts.push({ ...x, uid: id, role: "زبون" });
+      }
+    });
+
+    technicians.forEach(tech => {
+      if (!isTechProfileComplete(tech)) {
+        const missingFields = [];
+        if(!String(tech.name || "").trim()) missingFields.push("الاسم");
+        if(!String(tech.city || "").trim()) missingFields.push("المحافظة");
+        if(!String(tech.area || "").trim()) missingFields.push("القضاء");
+        if(!String(tech.service || "").trim()) missingFields.push("الاختصاص");
+        incompleteTechs.push({
+          ...tech,
+          issueReason: "ملف فني غير مكتمل (" + missingFields.join("، ") + ")"
+        });
+      }
+    });
+
+    allAccountsList = mergedAccounts.sort((a,b) => (b.lastLogin || b.registeredAt || 0) - (a.lastLogin || a.registeredAt || 0));
+    incompleteAccountsList = incompleteTechs;
+
+    renderAdmin();
+    renderAdminActiveCities();
+    renderAdminTechsFullList();
+  }catch(e){
+    showCustomAlert("تنبيه أثناء تحميل بيانات الإدارة: " + e.message);
+  }
+}
+
+function renderAdminTechsFullList() {
+  const regBox = $("adminTechsRegisteredBox");
+  const issBox = $("adminTechsIssuesBox");
+  if(!regBox || !issBox) return;
+
+  const q = ($("adminTechSearchInput")?.value || "").trim().toLowerCase();
+
+  const filteredRegistered = technicians.filter(t => {
+    if(!q) return true;
+    return [t.name, t.phone, t.email, t.city, t.area, t.neighborhood, t.service, t.bio].some(v => String(v || "").toLowerCase().includes(q));
+  });
+
+  if(!filteredRegistered.length) {
+    regBox.innerHTML = '<div class="empty">لا يوجد فنيون مسجلون مطابقون للبحث.</div>';
+  } else {
+    regBox.innerHTML = filteredRegistered.map(t => {
+      const subInfo = getEffectiveSubscriptionInfo(t);
+      const isComplete = isTechProfileComplete(t);
+      const expStr = subInfo.isActive && subInfo.expiresAt > 0
+        ? new Date(subInfo.expiresAt).toLocaleDateString('ar-IQ', { dateStyle: 'long' })
+        : (subInfo.isActive ? 'مفتوح' : '---');
+      const freeUsed = Number(t.freeJobsUsed || 0);
+      const isAvail = t.available !== false;
+      const isApproved = t.approved !== false;
+      const subsArr = Array.isArray(t.subservices) ? [...t.subservices] : [];
+      if(t.otherAppliances && t.service === "صيانة الأجهزة الكهربائية") subsArr.push(`أجهزة أخرى: ${t.otherAppliances}`);
+      const subsTxt = subsArr.length ? subsArr.join(" • ") : "الكل / غير محدد";
+      const regDateStr = t.createdAt ? new Date(t.createdAt).toLocaleDateString('ar-IQ') : 'غير مسجل';
+
+      return `
+      <div class="admin-tech-full-card">
+        <div class="admin-tech-header">
+          ${techPhoto(t, true)}
+          <div style="flex:1;">
+            <h4 style="margin:0 0 4px; color:var(--navy); font-size:15px; font-weight:900;">${esc(t.name || 'بدون اسم')} ${!isComplete ? '<span class="badge" style="background:#fef3c7;color:#92400e;border-color:#fcd34d;">⚠️ غير مكتمل</span>' : ''}</h4>
+            <div style="display:flex; gap:6px; flex-wrap:wrap;">
+              <span class="badge">${esc(t.service || 'غير محدد')}</span>
+              <span class="badge" style="background:${isApproved?'#dcfce7':'#fee2e2'};color:${isApproved?'#14532d':'#991b1b'};border-color:${isApproved?'#86efac':'#fca5a5'}">${isApproved ? 'حساب نشط' : 'موقوف'}</span>
+              <span class="badge">${isAvail ? '🟢 متاح' : '⚪ غير متاح'}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="profile-list-card" style="margin-bottom:10px;">
+          <div class="profile-list-row"><span class="profile-list-label">رقم الهاتف</span><span class="profile-list-value">${esc(t.phone || 'غير مضاف')}</span></div>
+          <div class="profile-list-row"><span class="profile-list-label">البريد الإلكتروني</span><span class="profile-list-value">${esc(t.email || 'غير مضاف')}</span></div>
+          <div class="profile-list-row"><span class="profile-list-label">الموقع</span><span class="profile-list-value">${esc(t.city || '---')} — ${esc(t.area || '---')} ${t.neighborhood ? '('+esc(t.neighborhood)+')' : ''}</span></div>
+          <div class="profile-list-row"><span class="profile-list-label">التخصصات الفرعية</span><span class="profile-list-value">${esc(subsTxt)}</span></div>
+          <div class="profile-list-row"><span class="profile-list-label">تاريخ الانضمام</span><span class="profile-list-value">${esc(regDateStr)}</span></div>
+          <div class="profile-list-row"><span class="profile-list-label">الرصيد والاشتراك</span><span class="profile-list-value">المجاني: <b>${freeUsed}/3</b> | الاشتراك: <b>${esc(subInfo.label)}</b> (ينتهي: ${esc(expStr)})</span></div>
+          <div class="profile-list-row"><span class="profile-list-label">التقييم العام</span><span class="profile-list-value">⭐ ${Number(t.ratingAverage||0).toFixed(1)} (${Number(t.ratingCount||0)} تقييم)</span></div>
+          ${t.bio ? `<div class="profile-list-row"><span class="profile-list-label">نبذة الخبرة</span><span class="profile-list-value">${esc(t.bio)}</span></div>` : ''}
+          ${t.extraInfo ? `<div class="profile-list-row"><span class="profile-list-label">إضافات</span><span class="profile-list-value">${esc(t.extraInfo)}</span></div>` : ''}
+        </div>
+
+        <div class="actions">
+          ${t.phone ? `<a class="btn whatsapp-btn" href="https://wa.me/${formatWhatsApp(t.phone)}" target="_blank">📲 واتساب الفني</a>` : ''}
+          <button type="button" class="btn primary" onclick="adminSetTechSubscription('${esc(t.uid)}','monthly')">🗓️ تفعيل شهري (30 يوم)</button>
+          <button type="button" class="btn gold-3d" onclick="adminSetTechSubscription('${esc(t.uid)}','yearly')">👑 تفعيل سنوي (365 يوم)</button>
+          <button type="button" class="btn light" onclick="adminSetTechSubscription('${esc(t.uid)}','none')">⏸️ إيقاف الاشتراك</button>
+          <button type="button" class="btn secondary" onclick="adminSetTechApproval('${esc(t.uid)}',${t.approved===false})">${t.approved===false?'رفع الإيقاف':'إيقاف الحساب'}</button>
+          <button type="button" class="btn danger" onclick="adminDeleteTechnician('${esc(t.uid)}','${esc(t.name)}')">🗑️ حذف</button>
+        </div>
+      </div>`;
+    }).join("");
+  }
+
+  const filteredIssues = incompleteAccountsList.filter(acc => {
+    if(!q) return true;
+    return [acc.name, acc.phone, acc.email, acc.city, acc.area, acc.service, acc.issueReason].some(v => String(v || "").toLowerCase().includes(q));
+  });
+
+  if(!filteredIssues.length) {
+    issBox.innerHTML = '<div class="empty">لا توجد مشاكل تسجيل لفنيين حالياً.</div>';
+  } else {
+    issBox.innerHTML = filteredIssues.map(acc => {
+      const regTime = acc.createdAt || acc.registeredAt ? new Date(acc.createdAt || acc.registeredAt).toLocaleString('ar-IQ') : 'غير مسجل';
+      return `
+      <div class="list-item" style="border-color:#f59e0b; background:#fffbeb;">
+        <h4>⚠️ ${esc(acc.name || 'فني بدون اسم')} <span class="badge" style="background:#fef3c7;color:#92400e;border-color:#fcd34d;">مشكلة تسجيل</span></h4>
+        <div class="muted">السبب: <b style="color:#b45309;">${esc(acc.issueReason || 'بيانات غير مكتملة')}</b></div>
+        <div class="muted">الهاتف: <b>${esc(acc.phone || 'غير مضاف')}</b> | البريد: <b>${esc(acc.email || 'غير مضاف')}</b> | الوقت: <b>${esc(regTime)}</b></div>
+        <div class="actions">
+          ${acc.phone ? `<a class="btn whatsapp-btn" href="https://wa.me/${formatWhatsApp(acc.phone)}" target="_blank">📲 مراسلة واتساب</a>` : ''}
+          <button type="button" class="btn danger" onclick="adminDeleteAccountRecord('${esc(acc.uid)}','${esc(acc.name || acc.uid)}')">🗑️ حذف السجل</button>
+        </div>
+      </div>`;
+    }).join("");
+  }
+}
+
+async function adminSetTechSubscription(uid, planType) {
+  if(currentRole !== "admin" || !db || !uid) return;
+  const now = Date.now();
+  let updates = {};
+  if(planType === "monthly") {
+    updates = { subscriptionStatus: "فعال", subscriptionType: "monthly", subscriptionActivatedAt: now, subscriptionExpiresAt: now + MONTHLY_DURATION_MS };
+  } else if(planType === "yearly") {
+    updates = { subscriptionStatus: "فعال", subscriptionType: "yearly", subscriptionActivatedAt: now, subscriptionExpiresAt: now + YEARLY_DURATION_MS };
+  } else {
+    updates = { subscriptionStatus: "غير فعال", subscriptionType: "none", subscriptionExpiresAt: 0 };
+  }
+
+  try {
+    await db.ref("technicians/" + uid).update(updates);
+    await db.ref("publicTechnicians/" + uid).update(updates).catch(()=>{});
+    await loadAdminData();
+    loadPublicTechs();
+    showCustomAlert(planType === "monthly" ? "تم تفعيل الاشتراك الشهري (30 يوماً) بنجاح!" : (planType === "yearly" ? "تم تفعيل الاشتراك السنوي (365 يوماً) بنجاح!" : "تم إيقاف اشتراك الفني."));
+  } catch(e) { showCustomAlert("خطأ: " + e.message); }
+}
+
+function renderAdmin(){
+  const activeTechsCount = technicians.filter(t => isTechProfileComplete(t)).length;
+  $("adminStats").innerHTML = [
+    ["إجمالي الطلبات", requests.length],
+    ["الفنيون المسجلون", activeTechsCount],
+    ["الزبائن المسجلون", allAccountsList.length],
+    ["مشاكل تسجيل الفنيين", incompleteAccountsList.length]
+  ].map(([a,b])=>`<div class="card" style="text-align:center"><div class="stat">${b}</div><div class="muted">${a}</div></div>`).join("");
+
+  $("adminAllAccounts").innerHTML = !allAccountsList.length ? '<div class="empty">لا توجد حسابات زبائن مسجلة بعد.</div>' : allAccountsList.map(acc => {
+    const loginTime = acc.lastLogin || acc.registeredAt ? new Date(acc.lastLogin || acc.registeredAt).toLocaleString('ar-IQ') : 'غير مسجل';
+    return `
+    <div class="list-item">
+      <h4>${esc(acc.name || 'زبون بدون اسم')} <span class="badge">زبون</span></h4>
+      <div class="muted">الهاتف: <b>${esc(acc.phone || 'غير مضاف')}</b> | البريد: <b>${esc(acc.email || 'غير مضاف')}</b></div>
+      <div class="muted">الموقع: <b>${esc(acc.city || '---')} - ${esc(acc.area || '---')}</b></div>
+      <div class="muted">آخر دخول: <b>${loginTime}</b></div>
+      <div class="actions">
+        ${acc.phone ? `<a class="btn whatsapp-btn" href="https://wa.me/${formatWhatsApp(acc.phone)}" target="_blank">📲 واتساب</a>` : ''}
+        <button class="btn danger" onclick="adminDeleteAccountRecord('${esc(acc.uid)}','${esc(acc.name || acc.uid)}')">🗑️ حذف</button>
+      </div>
+    </div>`;
+  }).join("");
+
+  $("adminPasswordRequests").innerHTML = !passwordRequests.length ? '<div class="empty">لا توجد طلبات استرجاع</div>' : passwordRequests.map(p=>`<div class="list-item"><h4>${esc(p.name)}</h4><div class="muted">الهاتف: ${esc(p.phone || '---')} | البريد: ${esc(p.email || '---')}</div><div class="muted">الحالة: ${esc(p.status)}</div><div class="actions"><button class="btn secondary" onclick="resolvePasswordRequest('${esc(p.id)}')">تم المعالجة</button><button class="btn danger" onclick="deletePasswordRequest('${esc(p.id)}')">حذف</button></div></div>`).join("");
+
+  $("adminRequests").innerHTML = !requests.length ? '<div class="empty">لا توجد طلبات</div>' : requests.map(r=>{
+    const startedAt = r.chatStartedAt || r.createdAt;
+    const isEnded = isOrderEndedOrCompleted(r.status, r.continuationState);
+    const durText = startedAt ? formatOpenDuration(startedAt, isEnded ? (r.chatEndedAt || Date.now()) : null) : "غير محدد";
+    const statusBadge = isEnded ? `<span class="badge" style="background:#e2e8f0;color:#334155;">مغلقة / منتهية</span>` : `<span class="badge" style="background:#dcfce7;color:#14532d;">مفتوحة / جارية</span>`;
+    return `<div class="list-item">
+      <h4>${esc(r.name)} — ${esc(r.service)} ${statusBadge}</h4>
+      <div class="muted">الزبون: <b>${esc(r.name)}</b> | هاتف الزبون: <b>${esc(r.phone || 'غير مضاف')}</b></div>
+      <div class="muted">الفني: <b>${esc(r.assignedTechName || 'غير محدد')}</b> | الموقع: ${esc(r.city)} - ${esc(r.area)}</div>
+      <div class="muted">الحالة: <b>${esc(r.status)}</b> | ⏱️ مدة بقاء المحادثة مفتوحة: <b>${esc(durText)}</b></div>
+      ${r.lastDecisionBy ? `<div class="muted">آخر إنهاء بواسطة: <b>${esc(r.lastDecisionBy)}</b></div>` : ''}
+      <p style="margin:6px 0">${esc(r.problem)}</p>
+      <div class="actions">
+        <button class="btn secondary" onclick="openFullOrderChat('${esc(r.id)}','${esc(r.name)} ↔ ${esc(r.assignedTechName || '')}')">💬 مراقبة الدردشة</button>
+        <button class="btn danger" onclick="adminDeleteOrder('${esc(r.uid)}','${esc(r.id)}','${esc(r.assignedTech || '')}')">🗑️ حذف الطلب</button>
+      </div>
+    </div>`;
+  }).join("");
+}
+
+async function adminDeleteOrder(custUid, orderId, techUid) {
+  if(currentRole !== "admin" || !db || !orderId) return;
+  showCustomConfirm("هل أنت متأكد من حذف هذا الطلب ومحادثته نهائياً؟", async () => {
+    try {
+      const updates = {};
+      if(custUid) updates[`requests/${custUid}/${orderId}`] = null;
+      if(techUid) updates[`technicianJobs/${techUid}/${orderId}`] = null;
+      updates[`orderChats/${orderId}`] = null;
+      await db.ref().update(updates);
+      await loadAdminData();
+      showCustomAlert("تم حذف الطلب ومحادثته بنجاح.");
+    } catch(e) { showCustomAlert("تعذر الحذف: " + e.message); }
+  });
+}
+
+async function adminClearTestOrders() {
+  if(currentRole !== "admin" || !db) return;
+  showCustomConfirm("هل أنت متأكد من مسح كافة الطلبات التجريبية وسجلات دردشاتها بالكامل للبدء بسجل نظيف؟", async () => {
+    try {
+      const updates = {
+        requests: null,
+        technicianJobs: null,
+        orderChats: null
+      };
+      await db.ref().update(updates);
+      await loadAdminData();
+      showCustomAlert("تم مسح جميع الطلبات التجريبية وسجلاتها بنجاح!");
+    } catch(e) { showCustomAlert("حدث خطأ أثناء المسح: " + e.message); }
+  });
+}
+
+async function adminDeleteAccountRecord(uid, name) {
+  if(currentRole !== "admin" || !db || !uid) return;
+  showCustomConfirm(`هل أنت متأكد من حذف سجل الحساب (${name}) من القائمة؟`, async () => {
+    try {
+      await db.ref("allAccounts/" + uid).remove();
+      await db.ref("technicians/" + uid).remove().catch(()=>{});
+      await db.ref("publicTechnicians/" + uid).remove().catch(()=>{});
+      await loadAdminData();
+      showCustomAlert("تم حذف السجل بنجاح.");
+    } catch(e) { showCustomAlert("خطأ أثناء الحذف: " + e.message); }
+  });
+}
+
+async function adminDeleteTechnician(uid, name) {
+  if(currentRole !== "admin" || !db || !uid) return;
+  showCustomConfirm(`هل أنت متأكد من حذف حساب الفني (${name}) نهائياً من قاعدة البيانات؟`, async () => {
+    try {
+      await db.ref("technicians/" + uid).remove();
+      await db.ref("publicTechnicians/" + uid).remove();
+      await db.ref("allAccounts/" + uid).remove().catch(()=>{});
+      await loadAdminData();
+      loadPublicTechs();
+      showCustomAlert("تم حذف الفني من التطبيق بنجاح.");
+    } catch(e) { showCustomAlert("خطأ أثناء الحذف: " + e.message); }
+  });
+}
+
+async function adminSetTechApproval(uid, approved){
+  if(currentRole !== "admin") return;
+  try{
+    await db.ref("technicians/"+uid).update({approved});
+    await db.ref("publicTechnicians/"+uid).update({approved});
+    await loadAdminData(); loadPublicTechs();
+  }catch(e){}
+}
+
+async function resolvePasswordRequest(id){ if(currentRole === "admin") { await db.ref("passwordRequests/"+id).update({status:"تم المعالجة"}); await loadAdminData(); } }
+async function deletePasswordRequest(id){ if(currentRole === "admin") { await db.ref("passwordRequests/"+id).remove(); await loadAdminData(); } }
+
+setupLocations();
+renderServices();
+initFirebase();
+</script>
+</body>
+</html>
