@@ -2695,7 +2695,7 @@ async function renderChatHub() {
         const isPending = isPendingTechJob(o.status);
         const isRejected = o.status === "مرفوض من الفني";
         const isEnded = isOrderEndedOrCompleted(o.status, o.continuationState);
-        const canOpen = !isPending && !isRejected;
+        const canOpen = true;
         const dateStr = o.createdAt ? new Date(o.createdAt).toLocaleString('ar-IQ', { dateStyle: 'short', timeStyle: 'short' }) : '';
 
         let badgeHtml = "";
@@ -2876,13 +2876,33 @@ function renderFullChatBannerAndControls() {
   if(!banner) return;
 
   const meta = activeOrderMeta || {};
+  const isPending = isPendingTechJob(meta.status);
+  const isRejected = meta.status === "مرفوض من الفني" || meta.continuationState === "rejected";
   const isEnded = isOrderEndedOrCompleted(meta.status, meta.continuationState);
+  const isClosed = isEnded || isRejected;
+  const isOpen = !isPending && !isClosed;
+
   const startedAt = meta.chatStartedAt || meta.createdAt;
   const openDuration = startedAt ? formatOpenDuration(startedAt, meta.chatEndedAt || null) : "غير محدد";
+
+  let statusLabel = "دردشة مفتوحة";
+  if(isPending) statusLabel = "⏳ بانتظار موافقة الفني";
+  else if(isRejected) statusLabel = "❌ مرفوض من الفني";
+  else if(isEnded) statusLabel = "🔒 منتهية (سجل محفوظ)";
 
   let decisionLine = "";
   if(isEnded && meta.lastDecisionBy) {
     decisionLine = `<br>أُنهيت الدردشة بواسطة: <b>${esc(meta.lastDecisionBy)}</b>`;
+  }
+
+  // إذا الطلب معلق والفني فاتح الغرفة، تظهر أزرار الموافقة والرفض مباشرة هنا
+  let pendingTechActions = "";
+  if(isPending && ["technician", "suspended"].includes(currentRole) && activeOrderChatId) {
+    pendingTechActions = `
+      <div style="display:flex; gap:8px; margin-top:8px;">
+        <button type="button" class="btn primary" style="flex:1;" onclick="technicianDecision('${esc(activeOrderChatId)}','مقبول')">✅ موافقة وفتح الكتابة</button>
+        <button type="button" class="btn danger" style="flex:1;" onclick="technicianDecision('${esc(activeOrderChatId)}','مرفوض')">❌ رفض الطلب</button>
+      </div>`;
   }
 
   let adminDurationLine = "";
@@ -2890,12 +2910,18 @@ function renderFullChatBannerAndControls() {
     adminDurationLine = `<br><span style="color:var(--teal-calm);">📊 للإدارة — مدة بقاء المحادثة مفتوحة: <b>${esc(openDuration)}</b></span>`;
   }
 
-  banner.innerHTML = `الحالة: <b>${esc(isEnded ? "منتهية (سجل محفوظ)" : "دردشة مفتوحة")}</b>${decisionLine}${adminDurationLine}`;
+  banner.innerHTML = `الحالة: <b>${esc(statusLabel)}</b>${decisionLine}${adminDurationLine}${pendingTechActions}`;
 
-  endBtn?.classList.toggle("hidden", isEnded);
-  waBtn?.classList.toggle("hidden", isEnded);
-  sendRow?.classList.toggle("hidden", isEnded);
-  endedNotice?.classList.toggle("hidden", !isEnded);
+  endBtn?.classList.toggle("hidden", !isOpen);
+  waBtn?.classList.toggle("hidden", !isOpen);
+  sendRow?.classList.toggle("hidden", !isOpen);
+
+  if(endedNotice) {
+    endedNotice.classList.toggle("hidden", isOpen);
+    if(isPending) endedNotice.innerText = "⏳ حقل الكتابة مقفول مؤقتاً — سيُفتح فور موافقة الفني على الطلب.";
+    else if(isRejected) endedNotice.innerText = "❌ تم رفض هذا الطلب — السجل محفوظ للقراءة فقط.";
+    else endedNotice.innerText = "🔒 تم إنهاء هذه الدردشة — السجل محفوظ للقراءة فقط.";
+  }
 
   if(revBox) {
     const isCustomerView = !["technician", "suspended", "admin"].includes(currentRole);
@@ -3055,8 +3081,13 @@ async function sendOrderChatMessage() {
   const input = $("fullChatInput");
   const text = input.value.trim();
   if(!text || !activeOrderChatId || !db) return;
-  if(activeOrderMeta && isOrderEndedOrCompleted(activeOrderMeta.status, activeOrderMeta.continuationState)) {
-    return showCustomAlert("هذه الدردشة منتهية ومحفوظة كسجل فقط.");
+ if(activeOrderMeta) {
+    if(isPendingTechJob(activeOrderMeta.status)) {
+      return showCustomAlert("بانتظار موافقة الفني على الطلب أولاً قبل بدء الكتابة.");
+    }
+    if(activeOrderMeta.status === "مرفوض من الفني" || isOrderEndedOrCompleted(activeOrderMeta.status, activeOrderMeta.continuationState)) {
+      return showCustomAlert("هذه المحادثة مغلقة ومحفوظة كسجل فقط.");
+    }
   }
   const sender = getActorMeta();
   input.value = "";
@@ -3218,48 +3249,57 @@ async function submitCustomerOrder() {
     const now = Date.now();
     const fullServiceLabel = currentSelectedSubservice ? `${selectedTargetTech.service} (${currentSelectedSubservice})` : selectedTargetTech.service;
 
-    const record = {
-      id, uid: custId, name: custName, phone: custPhone,
-      city: isAdminSender ? "كل المحافظات" : (chosenCustomerCity || jabalGet("CustomerCity") || "محافظتي"),
-      area: isAdminSender ? "كل الأقضية" : (chosenCustomerArea || jabalGet("CustomerArea") || "القضاء"),
-      neighborhood: "", service: fullServiceLabel, problem,
-      preferredTech: techUid, assignedTech: techUid, assignedTechName: selectedTargetTech.name,
-      status: "بانتظار رد الفني", createdAt: now, countedAsCompleted: false, rated: false
-    };
-    const job = {
-      id, customerUid: custId, customerName: custName, customerPhone: "محجوب (للإدارة فقط)",
-      service: fullServiceLabel, city: record.city, area: record.area, neighborhood: "",
-      problem, status: "بانتظار رد الفني", createdAt: now
-    };
-    const metaObj = {
-      orderId: id, customerUid: custId, assignedTech: techUid,
-      assignedTechName: selectedTargetTech.name, service: fullServiceLabel,
-      status: "بانتظار رد الفني", createdAt: now
+const cityVal = isAdminSender ? "كل المحافظات" : (chosenCustomerCity || jabalGet("CustomerCity") || "محافظتي");
+    const areaVal = isAdminSender ? "كل الأقضية" : (chosenCustomerArea || jabalGet("CustomerArea") || "القضاء");
+
+    // كائن موحّد يجمع الطلب والدردشة بنفس المعرّف والحالة
+    const unifiedThread = {
+      id,
+      orderId: id,
+      uid: custId,
+      customerUid: custId,
+      name: custName,
+      customerName: custName,
+      phone: custPhone,
+      customerPhone: "محجوب (للإدارة فقط)",
+      city: cityVal,
+      area: areaVal,
+      neighborhood: "",
+      service: fullServiceLabel,
+      problem,
+      preferredTech: techUid,
+      assignedTech: techUid,
+      assignedTechName: selectedTargetTech.name,
+      status: "بانتظار رد الفني",
+      continuationState: "pending",
+      createdAt: now,
+      countedAsCompleted: false,
+      rated: false
     };
 
-    await db.ref("requests/"+custId+"/"+id).set(record);
+    const firstMsgId = db.ref("orderChats/" + id + "/messages").push().key;
+    const atomicUpdates = {};
+    atomicUpdates["requests/" + custId + "/" + id] = unifiedThread;
+    atomicUpdates["technicianJobs/" + techUid + "/" + id] = unifiedThread;
+    atomicUpdates["orderChats/" + id + "/meta"] = unifiedThread;
+    atomicUpdates["orderChats/" + id + "/messages/" + firstMsgId] = {
+      type: "system_decision",
+      text: `📋 طلب جديد (${fullServiceLabel}): ${problem} — بانتظار موافقة الفني لفتح المحادثة.`,
+      senderId: custId,
+      senderName: custName,
+      senderRole: "customer",
+      createdAt: now
+    };
 
-    let techWriteErr = null;
-    try {
-      await db.ref("technicianJobs/"+techUid+"/"+id).set(job);
-    } catch(e) {
-      techWriteErr = e;
-    }
-
-    try {
-      await db.ref("orderChats/"+id+"/meta").set(metaObj);
-    } catch(_) {}
+    await db.ref().update(atomicUpdates);
 
     closeModal("customerOrderModal");
     startChatBadgeWatcher();
-
-    if(techWriteErr) {
-      showCustomAlert("تم تسجيل طلبك في سجلاتك، لكن تعذر إيصاله لصندوق الفني بسبب قيود قاعدة البيانات (" + (techWriteErr.code || techWriteErr.message) + "). راجع قواعد Firebase.");
-    } else {
-      showCustomAlert("تم إرسال الطلب إلى الفني بنجاح! ستُفتح المحادثة مباشرة بعد موافقة الفني.");
-      openChatHub();
-    }
-  } catch(e) { showCustomAlert("خطأ في إرسال الطلب: " + e.message); }
+    // يفتح غرفة الطلب المدمجة مباشرة حتى يتابع الزبون حالتها بنفس المكان
+    openFullOrderChat(id, selectedTargetTech.name || fullServiceLabel);
+  } catch(e) {
+    showCustomAlert("خطأ في إرسال الطلب: " + e.message);
+  }
 }
 
 async function toggleTechAvailability() {
@@ -3382,44 +3422,53 @@ async function technicianDecision(jobId, decision) {
 
   const isAccepted = decision === "مقبول";
   const status = isAccepted ? "مقبول من الفني" : "مرفوض من الفني";
+  const contState = isAccepted ? "continued" : "rejected";
   const now = Date.now();
 
   try {
-    const snap = await db.ref("technicianJobs/"+uid+"/"+jobId).once("value");
-    const job = snap.exists() ? snap.val() : null;
+    const metaSnap = await db.ref(`orderChats/${jobId}/meta`).once("value");
+    const jobSnap = await db.ref(`technicianJobs/${uid}/${jobId}`).once("value");
+    const job = { ...(jobSnap.val() || {}), ...(metaSnap.val() || {}) };
 
+    const sysId = db.ref(`orderChats/${jobId}/messages`).push().key;
     const updates = {};
-    updates[`technicianJobs/${uid}/${jobId}/status`] = status;
-    if(isAccepted) updates[`technicianJobs/${uid}/${jobId}/chatStartedAt`] = now;
 
-    if(job && job.customerUid) {
+    // تحديث موحّد للمسارات الثلاثة بنفس اللحظة
+    updates[`orderChats/${jobId}/meta/status`] = status;
+    updates[`orderChats/${jobId}/meta/continuationState`] = contState;
+    updates[`technicianJobs/${uid}/${jobId}/status`] = status;
+    updates[`technicianJobs/${uid}/${jobId}/continuationState`] = contState;
+
+    if(isAccepted) {
+      updates[`orderChats/${jobId}/meta/chatStartedAt`] = now;
+      updates[`technicianJobs/${uid}/${jobId}/chatStartedAt`] = now;
+    }
+
+    if(job.customerUid) {
       updates[`requests/${job.customerUid}/${jobId}/status`] = status;
+      updates[`requests/${job.customerUid}/${jobId}/continuationState`] = contState;
       if(isAccepted) updates[`requests/${job.customerUid}/${jobId}/chatStartedAt`] = now;
     }
 
-    updates[`orderChats/${jobId}/meta/status`] = status;
-    if(isAccepted) {
-      updates[`orderChats/${jobId}/meta/chatStartedAt`] = now;
-      updates[`orderChats/${jobId}/meta/continuationState`] = "continued";
-    }
+    updates[`orderChats/${jobId}/messages/${sysId}`] = {
+      type: "system_decision",
+      text: isAccepted
+        ? `✅ وافق الفني (${currentTech?.name || 'فني'}) على الطلب — المحادثة مفتوحة الآن.`
+        : `❌ اعتذر الفني (${currentTech?.name || 'فني'}) عن قبول الطلب.`,
+      senderId: uid,
+      senderName: currentTech?.name || "فني",
+      senderRole: "technician",
+      createdAt: now
+    };
 
     await db.ref().update(updates);
 
     if(isAccepted) {
-      const sysId = db.ref(`orderChats/${jobId}/messages`).push().key;
-      await db.ref(`orderChats/${jobId}/messages/${sysId}`).set({
-        type: "system_decision",
-        text: `وافق الفني (${currentTech?.name || 'فني'}) على الطلب — المحادثة مفتوحة حتى انتهاء العمل.`,
-        senderId: uid,
-        senderName: currentTech?.name || "فني",
-        senderRole: "technician",
-        createdAt: now
-      });
-      openFullOrderChat(jobId, job?.customerName || job?.service || "محادثة الطلب");
+      openFullOrderChat(jobId, job.customerName || job.service || "محادثة الطلب");
     } else {
       showCustomAlert("تم رفض الطلب بنجاح.");
-      renderTechAccount();
-      if(currentSectionId === "chatHubSection") renderChatHub();
+      if(currentSectionId === "fullOrderChatSection") closeFullOrderChat();
+      else if(currentSectionId === "chatHubSection") renderChatHub();
     }
   } catch(e) {
     showCustomAlert("خطأ: " + e.message);
