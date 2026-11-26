@@ -585,6 +585,14 @@ header {
 .chat-bubble.wa-card { max-width: 92%; background: #f0fdf4; color: #14532d; border: 1.5px solid #22c55e; align-self: center; text-align: center; }
 .chat-bubble.sys-card { max-width: 94%; background: #fffbeb; color: #78350f; border: 1.5px solid #f59e0b; align-self: center; text-align: center; font-size: 11.5px; }
 .chat-bubble small { display: block; font-size: 10px; opacity: 0.78; margin-top: 3px; }
+.order-review-compact { margin: 0 0 10px; padding: 11px; border: 1px solid #e8c96a; border-radius: 13px; background: #fffaf0; display: grid; gap: 7px; }
+.order-review-compact.hidden { display: none; }
+.order-review-head { display:flex; align-items:center; justify-content:space-between; gap:8px; color:var(--navy); font-size:13px; }
+.order-review-head span { color:#166534; background:#dcfce7; border-radius:20px; padding:3px 8px; font-size:10px; font-weight:800; }
+.order-review-compact label { font-size:11px; font-weight:800; color:var(--text-main); }
+.order-review-compact select, .order-review-compact textarea { width:100%; padding:8px 10px; border:1px solid var(--border-gold); border-radius:9px; background:#fff; color:var(--text-main); font:inherit; font-size:12px; }
+.order-review-compact textarea { resize:vertical; min-height:42px; }
+.order-review-compact .btn { width:100%; padding:8px; font-size:12px; }
 .chat-send-row { display: flex; gap: 6px; align-items: center; }
 .chat-send-row input { flex: 1; padding: 9px 11px; border: 1.5px solid var(--border-gold); border-radius: 10px; background: var(--bg-soft); color: var(--text-main); font-weight: 700; outline: none; min-width: 0; }
 
@@ -685,42 +693,34 @@ footer { background: linear-gradient(180deg, var(--teal-deep) 0%, var(--navy-dee
 </section>
 
 <section id="chatHubSection" class="container hidden">
- <h2 class="section-title">💬 الدردشة والطلبات</h2>
- <div id="chatHubPendingRequests"></div>
- <div id="chatHubThreadsList"><div class="empty">جارٍ تحميل المحادثات والطلبات...</div></div>
+ <h2 class="section-title">📋 طلباتي</h2>
+ <div id="chatHubThreadsList"><div class="empty">جارٍ تحميل الطلبات...</div></div>
 </section>
 
 <section id="fullOrderChatSection" class="container hidden">
  <div class="full-chat-shell">
   <div class="chat-topbar">
-   <h3 id="fullChatTitle" style="margin:0; font-size:15px; font-weight:900; color:var(--navy);">💬 محادثة الطلب</h3>
+   <h3 id="fullChatTitle" style="margin:0; font-size:15px; font-weight:900; color:var(--navy);">💬 دردشة الطلب</h3>
    <div style="display:flex; gap:6px; align-items:center;">
-    <button type="button" id="btnWhatsappInChat" class="btn whatsapp-btn" style="padding:5px 9px; font-size:11px;" onclick="requestWhatsappInChat()">🟢 واتساب</button>
-    <button type="button" id="btnEndOrderChat" class="btn danger" style="padding:5px 9px; font-size:11px;" onclick="endOrderChatByActor()">🔒 إنهاء</button>
+     <button type="button" id="btnEndOrderChat" class="btn danger" style="padding:5px 9px; font-size:11px;" onclick="endOrderChatByActor()">🔒 إنهاء الطلب</button>
     <button type="button" class="btn light" style="padding:5px 10px; font-size:11px;" onclick="closeFullOrderChat()">←</button>
    </div>
   </div>
 
   <div id="fullChatStatusBanner" class="chat-status-banner">جارٍ تحميل حالة الطلب...</div>
 
-  <div id="fullChatReviewBox" class="card hidden" style="margin-bottom:10px; background:#fffbeb; border-color:#f59e0b;">
-   <h4 style="margin:0 0 8px; color:var(--navy); font-size:14px; font-weight:900;">⭐ التقييم والملاحظات بعد إنهاء الدردشة</h4>
-   <div class="field" style="margin:6px 0;">
-    <label>التقييم بالنجوم</label>
-    <select id="orderReviewStars">
-     <option value="5">⭐⭐⭐⭐⭐ (ممتاز جداً)</option>
-     <option value="4">⭐⭐⭐⭐ (جيد جداً)</option>
-     <option value="3">⭐⭐⭐ (جيد)</option>
-     <option value="2">⭐⭐ (مقبول)</option>
-     <option value="1">⭐ (ضعيف)</option>
-    </select>
-   </div>
-   <div class="field" style="margin:6px 0;">
-    <label>ملاحظتك حول العمل</label>
-    <textarea id="orderReviewNote" placeholder="اكتب ملاحظتك أو تقييمك للخدمة..."></textarea>
-   </div>
-   <button type="button" class="btn primary" style="width:100%;" onclick="submitOrderReviewAndNote()">إرسال التقييم والملاحظة</button>
-   <div id="orderReviewMsg"></div>
+  <div id="fullChatReviewBox" class="order-review-compact hidden">
+   <div class="order-review-head"><strong>⭐ قيّم الفني</strong><span>طلب مكتمل</span></div>
+   <label for="orderReviewStars">تقييمك للخدمة</label>
+   <select id="orderReviewStars" aria-label="عدد النجوم">
+    <option value="5">★★★★★ ممتاز</option>
+    <option value="4">★★★★ جيد جداً</option>
+    <option value="3">★★★ جيد</option>
+    <option value="2">★★ مقبول</option>
+    <option value="1">★ يحتاج تحسين</option>
+   </select>
+   <textarea id="orderReviewNote" rows="2" placeholder="ملاحظة اختيارية (مو ضرورية)..."></textarea>
+   <button type="button" class="btn primary" onclick="submitOrderReviewAndNote()">إرسال التقييم</button>
   </div>
 
   <div id="fullChatMessages" class="full-chat-messages"></div>
@@ -729,7 +729,7 @@ footer { background: linear-gradient(180deg, var(--teal-deep) 0%, var(--navy-dee
    <input id="fullChatInput" placeholder="اكتب رسالتك هنا..." onkeydown="if(event.key==='Enter'){event.preventDefault();sendOrderChatMessage();}">
    <button type="button" class="btn primary" onclick="sendOrderChatMessage()">إرسال</button>
   </div>
-  <div id="fullChatEndedNotice" class="notice hidden" style="text-align:center; margin:0; font-weight:800;">🔒 تم إنهاء هذه الدردشة — السجل محفوظ للقراءة فقط.</div>
+  <div id="fullChatEndedNotice" class="notice hidden" style="text-align:center; margin:0; font-weight:800;">🔒 تم إنهاء الطلب — السجل محفوظ للقراءة فقط.</div>
  </div>
 </section>
   
@@ -1054,9 +1054,9 @@ footer { background: linear-gradient(180deg, var(--teal-deep) 0%, var(--navy-dee
 <div class="modal hidden" id="phoneRequiredModal">
  <div class="modal-box">
   <div class="modal-head"><h3 id="reqPhoneModalTitle">استكمال البيانات الأساسية</h3><div class="close" onclick="closeModal('phoneRequiredModal')">✕</div></div>
-  <div class="notice">تأكد من كتابة اسمك الحقيقي وتحديد المحافظة والقضاء (رقم الهاتف اختياري ويُطلب فقط عند التواصل عبر واتساب).</div>
+  <div class="notice">تأكد من كتابة اسمك الحقيقي وتحديد المحافظة والقضاء. نستخدم رقم الهاتف للتواصل بخصوص طلب الخدمة.</div>
   <div class="field"><label>الاسم الكامل</label><input id="reqPhoneName" placeholder="الاسم الكامل"></div>
-  <div class="field"><label>رقم الهاتف (اختياري - 07XXXXXXXXX)</label><input id="reqPhoneNumber" inputmode="tel" placeholder="07XXXXXXXXX (اختياري)"></div>
+  <div class="field"><label>رقم الهاتف (للتواصل بخصوص الطلب)</label><input id="reqPhoneNumber" inputmode="tel" placeholder="07XXXXXXXXX"></div>
   <div class="row">
    <div class="field"><label>المحافظة</label><select id="reqPhoneCity" onchange="setDistricts('reqPhoneArea', this.value)"></select></div>
    <div class="field"><label>القضاء</label><select id="reqPhoneArea"><option value="">اختر القضاء</option></select></div>
@@ -1066,18 +1066,6 @@ footer { background: linear-gradient(180deg, var(--teal-deep) 0%, var(--navy-dee
    <select id="reqPhoneService"></select>
   </div>
   <button type="button" class="btn primary" style="width:100%; margin-top:10px;" onclick="saveRequiredPhoneProfile()">حفظ البيانات والمتابعة</button>
- </div>
-</div>
-
-<div class="modal hidden" id="whatsappPhoneOnlyModal">
- <div class="modal-box">
-  <div class="modal-head"><h3>📱 إضافة رقم الهاتف للربط عبر واتساب</h3><div class="close" onclick="closeModal('whatsappPhoneOnlyModal')">✕</div></div>
-  <div class="notice">لإتمام الربط عبر واتساب، أضف رقم هاتفك هنا. سيُحفظ في ملفك الشخصي بشكل سري <b>ولا يظهر لأي شخص آخر</b> إلا بعد موافقتك على فتح الواتساب.</div>
-  <div class="field">
-   <label>رقم الهاتف العراقي (07XXXXXXXXX)</label>
-   <input id="waPrivatePhoneInput" inputmode="tel" placeholder="07XXXXXXXXX">
-  </div>
-  <button type="button" class="btn whatsapp-btn" style="width:100%; margin-top:10px; padding:10px;" onclick="savePrivateWhatsappPhone()">💾 حفظ الرقم في ملفي وإكمال الربط</button>
  </div>
 </div>
 
@@ -1184,7 +1172,7 @@ footer { background: linear-gradient(180deg, var(--teal-deep) 0%, var(--navy-dee
   <div class="modal-head"><h3>استرجاع كلمة المرور عبر البريد</h3><div class="close" onclick="closeModal('forgotPasswordModal')">✕</div></div>
   <div class="notice">إذا كنت مسجلاً ببريد إلكتروني، سنرسل رابط إعادة تعيين الرمز مباشرة لبريدك. وإذا لم تسجل ببريد سابقاً، أدخل بريدك الإلكتروني ورقم هاتفك لإرسال الرمز إليك.</div>
   <div class="field"><label>البريد الإلكتروني لإرسال الرمز / الرابط</label><input id="forgotEmail" type="email" inputmode="email" placeholder="example@gmail.com"></div>
-  <div class="field"><label>رقم الهاتف (في حال لم تسجل بالبريد مسبقاً)</label><input id="forgotPhone" inputmode="tel" placeholder="07XXXXXXXXX (اختياري)"></div>
+  <div class="field"><label>رقم الهاتف (في حال لم تسجل بالبريد مسبقاً)</label><input id="forgotPhone" inputmode="tel" placeholder="07XXXXXXXXX"></div>
   <button type="button" class="btn primary" style="width:100%; margin-top:10px;" onclick="submitForgotPasswordRequest()">📧 إرسال الرمز إلى البريد الإلكتروني</button>
  </div>
 </div>
@@ -1281,7 +1269,7 @@ let currentSelectedService="",currentSelectedSubservice="",currentAdminTechsSubT
 let currentSectionId="home",navigationHistory=["home"];
 let techJobsListener=null,customerOrdersBadgeListener=null,supportChatListener=null,orderChatListener=null,orderMetaListener=null,badgeListener=null,chatHubLiveRef=null;
 let activeOrderChatId=null,activeOrderMeta=null;
-let preferredGoogleRole="auto",pendingAfterPhoneCheck=null,pendingAfterWhatsappPhone=null,announcementTimer=null,pendingAfterGate=null;
+let preferredGoogleRole="auto",pendingAfterPhoneCheck=null,announcementTimer=null,pendingAfterGate=null;
 let custRegAuthMode="phone",techRegAuthMode="phone",isSigningOutFlag=false,isGoogleAuthInProgress=false;
 let lastNotifiedJobIds = new Set();
 
@@ -1324,7 +1312,6 @@ function renderFullChatBannerAndControls() {
   const banner = $("fullChatStatusBanner");
   const sendRow = $("fullChatSendRow");
   const endedNotice = $("fullChatEndedNotice");
-  const whatsappBtn = $("btnWhatsappInChat");
   const endBtn = $("btnEndOrderChat");
   const reviewBox = $("fullChatReviewBox");
 
@@ -1343,12 +1330,11 @@ function renderFullChatBannerAndControls() {
   }
 
   if (sendRow) sendRow.classList.toggle("hidden", !writable);
-  if (whatsappBtn) whatsappBtn.classList.toggle("hidden", !writable);
   if (endBtn) endBtn.classList.toggle("hidden", !writable);
   if (endedNotice) {
     endedNotice.classList.toggle("hidden", !ended);
     if (rejected) endedNotice.textContent = "❌ رفض الفني الطلب — السجل محفوظ للقراءة فقط.";
-    else if (ended) endedNotice.textContent = "🔒 تم إنهاء هذه الدردشة — السجل محفوظ للقراءة فقط.";
+    else if (ended) endedNotice.textContent = "🔒 تم إنهاء الطلب — السجل محفوظ للقراءة فقط.";
   }
 
   const actor = getActorMeta();
@@ -1430,7 +1416,7 @@ function startChatBadgeWatcher() {
       lastNotifiedJobIds = new Set(newJobIds);
       if(hasBrandNew && pendingCount > 0) {
         playAlertBeep();
-        if($("techAlertBox")) $("techAlertBox").innerHTML = '<div class="notice success" style="font-weight:900">🔔 وصلك طلب صيانة جديد! راجع خانة الدردشة.</div>';
+        if($("techAlertBox")) $("techAlertBox").innerHTML = '<div class="notice success" style="font-weight:900">🔔 وصلك طلب صيانة جديد! راجع قسم طلباتي.</div>';
       }
       if(currentSectionId === "chatHubSection") renderChatHub();
     });
@@ -2123,7 +2109,7 @@ async function submitCustomerRegistration(){
 
 function renderCustomerAccount() {
   const name = jabalGet("CustomerName") || currentUser?.displayName || "زبون جبل";
-  const phone = jabalGet("CustomerPhone") || "غير مضاف (يُضاف عند طلب واتساب)";
+  const phone = jabalGet("CustomerPhone") || "غير مضاف";
   const email = jabalGet("CustomerEmail") || currentUser?.email || "غير مضاف";
   const city = jabalGet("CustomerCity") || "غير محدد";
   const area = jabalGet("CustomerArea") || "غير محدد";
@@ -2634,14 +2620,10 @@ async function openChatHub() {
 }
 
 async function renderChatHub() {
-  const pendingBox = $("chatHubPendingRequests");
   const threadsBox = $("chatHubThreadsList");
-  if(!pendingBox || !threadsBox || !db) return;
-
+  if(!threadsBox || !db) return;
   if(chatHubLiveRef) { chatHubLiveRef.off(); chatHubLiveRef = null; }
-
-  pendingBox.innerHTML = "";
-  threadsBox.innerHTML = '<div class="empty">جارٍ تحميل المحادثات والطلبات...</div>';
+  threadsBox.innerHTML = '<div class="empty">جارٍ تحميل الطلبات...</div>';
 
   try {
     const activeUid = auth?.currentUser?.uid || currentUser?.uid || "";
@@ -2663,56 +2645,33 @@ async function renderChatHub() {
         const allJobs = [];
         snap.forEach(c => allJobs.push({ ...c.val(), id: c.key }));
         allJobs.sort((a,b) => (b.createdAt||0) - (a.createdAt||0));
+        const pendingCount = allJobs.filter(j => isPendingTechJob(j.status)).length;
+        updateChatUnreadBadge(pendingCount);
 
-        const pendingJobs = allJobs.filter(j => isPendingTechJob(j.status));
-        const otherJobs = allJobs.filter(j => !isPendingTechJob(j.status));
-
-        updateChatUnreadBadge(pendingJobs.length);
-
-        if(pendingJobs.length > 0) {
-          pendingBox.innerHTML = `<h3 class="section-title" style="font-size:15.5px; margin-top:4px;">🔔 طلبات واردة بانتظار موافقتك (${pendingJobs.length})</h3>` + pendingJobs.map(job => {
-            const jDateStr = job.createdAt ? new Date(job.createdAt).toLocaleString('ar-IQ', { dateStyle: 'short', timeStyle: 'short' }) : '';
-            return `
-            <div class="pending-job-card">
-              <h4 style="margin:0 0 4px; color:var(--navy); font-size:14.5px; font-weight:900;">${esc(job.service)} — <span class="badge">طلب جديد</span></h4>
-              <div class="muted">الزبون: <b>${esc(job.customerName || 'زبون')}</b> | الموقع: <b>${esc(job.city || '')} ${job.area ? '— ' + esc(job.area) : ''}</b>${jDateStr ? ` | 📅 ${esc(jDateStr)}` : ''}</div>
-              <p style="margin:8px 0; font-size:13px; font-weight:700; color:var(--text-main);">المشكلة: ${esc(job.problem)}</p>
-              <div class="actions">
-                <button type="button" class="btn primary" onclick="technicianDecision('${esc(job.id)}','مقبول')">✅ موافقة وفتح الدردشة</button>
-                <button type="button" class="btn danger" onclick="technicianDecision('${esc(job.id)}','مرفوض')">❌ رفض الطلب</button>
-              </div>
-            </div>`;
-          }).join("");
-        } else {
-          pendingBox.innerHTML = "";
+        if(!allJobs.length) {
+          threadsBox.innerHTML = '<div class="empty">لا توجد طلبات حالياً.</div>';
+          return;
         }
 
-        if(!otherJobs.length) {
-          threadsBox.innerHTML = pendingJobs.length > 0
-            ? ""
-            : '<div class="empty">لا توجد طلبات أو محادثات حالياً.</div>';
-        } else {
-          threadsBox.innerHTML = otherJobs.map(j => {
-            const isEnded = isOrderEndedOrCompleted(j.status, j.continuationState);
-            const isRejected = j.status === "مرفوض من الفني";
-            const dateStr = j.createdAt ? new Date(j.createdAt).toLocaleString('ar-IQ', { dateStyle: 'short', timeStyle: 'short' }) : '';
-            const statusBadge = isRejected
-              ? `<span class="badge" style="background:#fee2e2;color:#991b1b;border-color:#fca5a5;">مرفوض</span>`
-              : (isEnded
-                ? `<span class="badge" style="background:#e2e8f0;color:#334155;border-color:#cbd5e1;">منتهية (سجل محفوظ)</span>`
-                : `<span class="badge" style="background:#dcfce7;color:#14532d;border-color:#86efac;">دردشة مفتوحة</span>`);
-            return `
-            <div class="list-item">
-              <h4>${esc(j.customerName || 'زبون')} — ${esc(j.service)} ${statusBadge}</h4>
-              <div class="muted">الحالة: <b>${esc(j.status)}</b>${dateStr ? ` | 📅 ${esc(dateStr)}` : ''}</div>
-              <p style="margin:6px 0; font-size:12.5px;">${esc(j.problem || '')}</p>
-              ${!isRejected ? `
-              <div class="actions">
-                <button type="button" class="btn secondary" onclick="openFullOrderChat('${esc(j.id)}','${esc(j.customerName || j.service)}')">${isEnded ? '📜 عرض سجل الدردشة' : '💬 فتح الدردشة'}</button>
-              </div>` : ''}
-            </div>`;
-          }).join("");
-        }
+        threadsBox.innerHTML = allJobs.map(j => {
+          const pending = isPendingTechJob(j.status);
+          const rejected = j.status === "مرفوض من الفني";
+          const ended = isOrderEndedOrCompleted(j.status, j.continuationState);
+          const dateStr = j.createdAt ? new Date(j.createdAt).toLocaleString('ar-IQ', { dateStyle: 'short', timeStyle: 'short' }) : '';
+          const badge = pending
+            ? '<span class="badge" style="background:#fef3c7;color:#92400e;border-color:#fcd34d;">⏳ بانتظار ردك</span>'
+            : rejected
+              ? '<span class="badge" style="background:#fee2e2;color:#991b1b;border-color:#fca5a5;">❌ مرفوض</span>'
+              : ended
+                ? '<span class="badge" style="background:#e2e8f0;color:#334155;border-color:#cbd5e1;">🔒 طلب منتهٍ</span>'
+                : '<span class="badge" style="background:#dcfce7;color:#14532d;border-color:#86efac;">💬 دردشة مفتوحة</span>';
+          const actions = pending
+            ? `<div class="actions"><button type="button" class="btn primary" onclick="technicianDecision('${esc(j.id)}','مقبول')">✅ موافقة وفتح الدردشة</button><button type="button" class="btn danger" onclick="technicianDecision('${esc(j.id)}','مرفوض')">❌ رفض الطلب</button></div>`
+            : (!rejected ? `<div class="actions"><button type="button" class="btn secondary" onclick="openFullOrderChat('${esc(j.id)}','${esc(j.customerName || j.service)}')">${ended ? '📜 عرض الطلب والسجل' : '💬 فتح دردشة الطلب'}</button></div>` : '');
+          return `<div class="list-item"><h4>${esc(j.customerName || 'زبون')} — ${esc(j.service)} ${badge}</h4><div class="muted">الحالة: <b>${esc(j.status || 'غير محددة')}</b>${dateStr ? ' | 📅 ' + esc(dateStr) : ''}</div><p style="margin:6px 0;font-size:12.5px;">${esc(j.problem || '')}</p>${actions}</div>`;
+        }).join("");
+      }, err => {
+        threadsBox.innerHTML = `<div class="notice error">تعذر تحميل الطلبات: ${esc(err.message || err.code || '')}</div>`;
       });
       return;
     }
@@ -2720,9 +2679,9 @@ async function renderChatHub() {
     const custUid = (currentUser && !currentUser.isAnonymous && effectiveRole !== "admin")
       ? currentUser.uid
       : jabalGet("CustomerUid");
-
     if(!custUid) {
-      threadsBox.innerHTML = '<div class="empty">لا توجد طلبات أو محادثات مرسلة حالياً.</div>';
+      threadsBox.innerHTML = '<div class="empty">لا توجد طلبات مرسلة حالياً.</div>';
+      updateChatUnreadBadge(0);
       return;
     }
 
@@ -2731,40 +2690,33 @@ async function renderChatHub() {
       const orders = [];
       snap.forEach(c => orders.push({ ...c.val(), id: c.key }));
       orders.sort((a,b) => (b.createdAt||0) - (a.createdAt||0));
-
       if(!orders.length) {
-        threadsBox.innerHTML = '<div class="empty">لا توجد طلبات أو محادثات حالياً.</div>';
+        threadsBox.innerHTML = '<div class="empty">لا توجد طلبات مرسلة حالياً.</div>';
         return;
       }
 
       threadsBox.innerHTML = orders.map(o => {
-        const isPending = isPendingTechJob(o.status);
-        const isRejected = o.status === "مرفوض من الفني";
-        const isEnded = isOrderEndedOrCompleted(o.status, o.continuationState);
-        const canOpen = true;
+        const pending = isPendingTechJob(o.status);
+        const rejected = o.status === "مرفوض من الفني";
+        const ended = isOrderEndedOrCompleted(o.status, o.continuationState);
         const dateStr = o.createdAt ? new Date(o.createdAt).toLocaleString('ar-IQ', { dateStyle: 'short', timeStyle: 'short' }) : '';
-
-        let badgeHtml = "";
-        if(isPending) badgeHtml = `<span class="badge" style="background:#fef3c7;color:#92400e;border-color:#fcd34d;">⏳ بانتظار موافقة الفني</span>`;
-        else if(isRejected) badgeHtml = `<span class="badge" style="background:#fee2e2;color:#991b1b;border-color:#fca5a5;">❌ تم رفض الطلب</span>`;
-        else if(isEnded) badgeHtml = `<span class="badge" style="background:#e2e8f0;color:#334155;border-color:#cbd5e1;">🔒 منتهية (سجل محفوظ)</span>`;
-        else badgeHtml = `<span class="badge" style="background:#dcfce7;color:#14532d;border-color:#86efac;">💬 وافق الفني — الدردشة مفتوحة</span>`;
-
-        return `
-        <div class="list-item">
-          <h4>${esc(o.assignedTechName || 'فني معتمد')} — ${esc(o.service)} ${badgeHtml}</h4>
-          <div class="muted">الحالة: <b>${esc(o.status)}</b>${dateStr ? ` | 📅 ${esc(dateStr)}` : ''}</div>
-          <p style="margin:6px 0; font-size:12.5px;">${esc(o.problem || '')}</p>
-          <div class="actions">
-            ${canOpen
-              ? `<button type="button" class="btn secondary" onclick="openFullOrderChat('${esc(o.id)}','${esc(o.assignedTechName || o.service)}')">${isEnded ? '📜 عرض سجل الدردشة' : '💬 فتح الدردشة'}</button>`
-              : (isPending ? `<span class="muted">تم إرسال طلبك للفني — ستنفتح الدردشة فور موافقته.</span>` : '')}
-          </div>
-        </div>`;
+        const badge = pending
+          ? '<span class="badge" style="background:#fef3c7;color:#92400e;border-color:#fcd34d;">⏳ بانتظار موافقة الفني</span>'
+          : rejected
+            ? '<span class="badge" style="background:#fee2e2;color:#991b1b;border-color:#fca5a5;">❌ اعتذر الفني</span>'
+            : ended
+              ? '<span class="badge" style="background:#e2e8f0;color:#334155;border-color:#cbd5e1;">🔒 طلب منتهٍ</span>'
+              : '<span class="badge" style="background:#dcfce7;color:#14532d;border-color:#86efac;">💬 وافق الفني — الدردشة مفتوحة</span>';
+        const action = pending
+          ? '<div class="muted" style="margin-top:8px;font-weight:800;">سيظهر زر الدردشة هنا بعد موافقة الفني.</div>'
+          : (!rejected ? `<div class="actions"><button type="button" class="btn secondary" onclick="openFullOrderChat('${esc(o.id)}','${esc(o.assignedTechName || o.service)}')">${ended ? '📜 عرض الطلب والسجل' : '💬 فتح دردشة الطلب'}</button></div>` : '');
+        return `<div class="list-item"><h4>${esc(o.assignedTechName || 'فني معتمد')} — ${esc(o.service)} ${badge}</h4><div class="muted">الحالة: <b>${esc(o.status || 'غير محددة')}</b>${dateStr ? ' | 📅 ' + esc(dateStr) : ''}</div><p style="margin:6px 0;font-size:12.5px;">${esc(o.problem || '')}</p>${action}</div>`;
       }).join("");
+    }, err => {
+      threadsBox.innerHTML = `<div class="notice error">تعذر تحميل الطلبات: ${esc(err.message || err.code || '')}</div>`;
     });
   } catch(e) {
-    threadsBox.innerHTML = '<div class="empty">تعذر تحميل المحادثات حالياً.</div>';
+    threadsBox.innerHTML = `<div class="notice error">تعذر تحميل الطلبات حالياً: ${esc(e.message || '')}</div>`;
   }
 }
 
@@ -2848,88 +2800,11 @@ function getActorMeta() {
   return { actorId: custUid, actorName: custName, actorRole: "customer", labelAr: "الزبون (" + custName + ")" };
 }
 
-function getCurrentUserPrivatePhone() {
-  if(["technician", "suspended"].includes(currentRole)) return normalizeIraqiPhone(currentTech?.phone || "");
-  return normalizeIraqiPhone(jabalGet("CustomerPhone") || "");
-}
-
-function ensurePrivatePhoneBeforeWhatsapp(callback) {
-  const existingPhone = getCurrentUserPrivatePhone();
-  if(isValidIraqiPhone(existingPhone)) { callback(existingPhone); return; }
-  pendingAfterWhatsappPhone = callback;
-  $("waPrivatePhoneInput").value = "";
-  $("whatsappPhoneOnlyModal").classList.remove("hidden");
-}
-
-async function savePrivateWhatsappPhone() {
-  const phone = normalizeIraqiPhone($("waPrivatePhoneInput").value);
-  if(!isValidIraqiPhone(phone)) return showCustomAlert("يرجى إدخال رقم هاتف عراقي صحيح من 11 رقماً يبدأ بـ 07.");
-  try {
-    if(["technician", "suspended"].includes(currentRole) && currentUser && currentTech) {
-      await db.ref("technicians/" + currentUser.uid).update({ phone });
-      await db.ref("publicTechnicians/" + currentUser.uid).update({ phone });
-      await logUserAccount(currentUser.uid, { phone });
-      currentTech.phone = phone;
-      renderTechAccount();
-    } else {
-      jabalSet("CustomerPhone", phone);
-      const uid = (currentUser && !currentUser.isAnonymous) ? currentUser.uid : jabalGet("CustomerUid");
-      if(uid && db) await logUserAccount(uid, { phone });
-    }
-    closeModal("whatsappPhoneOnlyModal");
-    showCustomAlert("تم حفظ رقم هاتفك في ملفك الشخصي بشكل سري بنجاح.");
-    if(typeof pendingAfterWhatsappPhone === "function") {
-      const fn = pendingAfterWhatsappPhone;
-      pendingAfterWhatsappPhone = null;
-      fn(phone);
-    }
-  } catch(e) { showCustomAlert("خطأ أثناء حفظ الرقم: " + e.message); }
-}
-
-function requestWhatsappInChat() {
-  if(!activeOrderChatId || !db) return;
-  if(activeOrderMeta && isPendingTechJob(activeOrderMeta.status)) {
-    return showCustomAlert("يمكن طلب الانتقال إلى واتساب بعد موافقة الفني على الطلب.");
-  }
-  if(activeOrderMeta && (activeOrderMeta.status === "مرفوض من الفني" || isOrderEndedOrCompleted(activeOrderMeta.status, activeOrderMeta.continuationState))) {
-    return showCustomAlert("تم إغلاق هذه الدردشة ولا يمكن إرسال طلبات جديدة.");
-  }
-  ensurePrivatePhoneBeforeWhatsapp(async (myPhone) => {
-    const sender = getActorMeta();
-    try {
-      const msgId = db.ref("orderChats/" + activeOrderChatId + "/messages").push().key;
-      await db.ref("orderChats/" + activeOrderChatId + "/messages/" + msgId).set({
-        type: "whatsapp_request", waStatus: "pending",
-        requesterId: sender.actorId, requesterName: sender.actorName, requesterPhone: myPhone,
-        responderPhone: "", senderId: sender.actorId, senderName: sender.actorName, senderRole: sender.actorRole,
-        createdAt: Date.now()
-      });
-    } catch(e) { showCustomAlert("تعذر إرسال طلب الواتساب: " + e.message); }
-  });
-}
-
-function respondWhatsappRequest(msgKey, decision) {
-  if(!activeOrderChatId || !db || !msgKey) return;
-  if(decision === "rejected") {
-    db.ref("orderChats/" + activeOrderChatId + "/messages/" + msgKey).update({ waStatus: "rejected", respondedAt: Date.now() }).catch(()=>{});
-    return;
-  }
-  ensurePrivatePhoneBeforeWhatsapp(async (myPhone) => {
-    try {
-      const msgRef = db.ref("orderChats/" + activeOrderChatId + "/messages/" + msgKey);
-      const snap = await msgRef.once("value");
-      const msgData = snap.val() || {};
-      await msgRef.update({ waStatus: "accepted", responderPhone: myPhone, respondedAt: Date.now() });
-      if(msgData.requesterPhone) window.open(`https://wa.me/${formatWhatsApp(msgData.requesterPhone)}`, "_blank");
-    } catch(e) { showCustomAlert("تعذر إتمام الموافقة: " + e.message); }
-  });
-}
-
 function endOrderChatByActor() {
   if(!activeOrderChatId || !db || !activeOrderMeta) return;
   if(isOrderEndedOrCompleted(activeOrderMeta.status, activeOrderMeta.continuationState)) return;
 
-  showCustomConfirm("هل أنت متأكد من إنهاء الدردشة؟ ستنتهي المحادثة ويبقى السجل محفوظاً للرجوع إليه.", async () => {
+  showCustomConfirm("هل أنت متأكد من إنهاء الطلب؟ ستُغلق الدردشة ويبقى سجل الطلب محفوظاً.", async () => {
     const actor = getActorMeta();
     const now = Date.now();
     try {
@@ -2971,14 +2846,14 @@ function endOrderChatByActor() {
       const sysMsgId = db.ref(`orderChats/${activeOrderChatId}/messages`).push().key;
       await db.ref(`orderChats/${activeOrderChatId}/messages/${sysMsgId}`).set({
         type: "system_decision",
-        text: `تم إنهاء الدردشة بواسطة: ${actor.labelAr}`,
+        text: `تم إنهاء الطلب بواسطة: ${actor.labelAr}`,
         senderId: actor.actorId,
         senderName: actor.labelAr,
         senderRole: actor.actorRole,
         createdAt: now
       });
     } catch(e) {
-      showCustomAlert("تعذر إنهاء الدردشة: " + e.message);
+      showCustomAlert("تعذر إنهاء الطلب: " + e.message);
     }
   });
 }
@@ -2986,11 +2861,11 @@ function endOrderChatByActor() {
 async function submitOrderReviewAndNote() {
   if(!activeOrderChatId || !activeOrderMeta || !db) return;
   if(activeOrderMeta.rated) return showCustomAlert("سبق أن أرسلت تقييماً لهذا الطلب.");
+  if(!isOrderEndedOrCompleted(activeOrderMeta.status, activeOrderMeta.continuationState)) return showCustomAlert("يمكن تقييم الفني بعد إنهاء الطلب فقط.");
+  const actor = getActorMeta();
+  if(actor.actorRole !== "customer") return showCustomAlert("التقييم متاح للزبون بعد انتهاء الطلب.");
   const stars = Number($("orderReviewStars")?.value || 5);
   const note = ($("orderReviewNote")?.value || "").trim();
-  if(!note) return showCustomAlert("يرجى كتابة ملاحظتك أو تقييمك للخدمة.");
-
-  const actor = getActorMeta();
   const techUid = activeOrderMeta.assignedTech;
   const techName = activeOrderMeta.assignedTechName || "";
   const custUid = activeOrderMeta.customerUid || jabalGet("CustomerUid");
@@ -3004,7 +2879,7 @@ async function submitOrderReviewAndNote() {
       orderId: activeOrderChatId,
       name: actor.actorName,
       stars,
-      text: note,
+      text: note || "بدون ملاحظة",
       createdAt: Date.now()
     });
 
@@ -3025,7 +2900,7 @@ async function submitOrderReviewAndNote() {
 
     activeOrderMeta.rated = true;
     renderFullChatBannerAndControls();
-    showCustomAlert("تم إرسال تقييمك وملاحظتك بنجاح!");
+    showCustomAlert("تم إرسال تقييمك بنجاح!");
   } catch(e) {
     showCustomAlert("تعذر إرسال التقييم: " + e.message);
   }
@@ -3060,7 +2935,14 @@ async function openFullOrderChat(orderId, titleLabel = "") {
 
   activeOrderChatId = String(orderId);
   activeOrderMeta = await resolveOrderMeta(activeOrderChatId);
-  $("fullChatTitle").innerText = titleLabel ? `💬 ${titleLabel}` : "💬 محادثة الطلب";
+  if(isPendingTechJob(activeOrderMeta.status)) {
+    activeOrderChatId = null;
+    activeOrderMeta = null;
+    navigateToSection("chatHubSection");
+    showCustomAlert("الطلب بانتظار موافقة الفني. ستُفتح الدردشة بعد الموافقة فقط.");
+    return;
+  }
+  $("fullChatTitle").innerText = titleLabel ? `💬 ${titleLabel}` : "💬 دردشة الطلب";
   $("fullChatInput").value = "";
   renderFullChatBannerAndControls();
   navigateToSection("fullOrderChatSection");
@@ -3082,7 +2964,7 @@ async function openFullOrderChat(orderId, titleLabel = "") {
     const msgs = [];
     snap.forEach(c => msgs.push({ ...c.val(), _key: c.key }));
     if(!msgs.length) {
-      box.innerHTML = '<div class="muted" style="text-align:center;margin-top:95px;">المحادثة مفتوحة — ابدأ بالتواصل بالكتابة...</div>';
+      box.innerHTML = '<div class="muted" style="text-align:center;margin-top:95px;">الدردشة مفتوحة — ابدأ بالتواصل بالكتابة...</div>';
       return;
     }
     box.innerHTML = msgs.map(m => {
@@ -3094,31 +2976,7 @@ async function openFullOrderChat(orderId, titleLabel = "") {
       }
 
       if(m.type === "whatsapp_request") {
-        if(m.waStatus === "pending") {
-          if(isMine) {
-            return `<div class="chat-bubble wa-card"><div>🟢 أرسلت طلباً للانتقال إلى واتساب — بانتظار موافقة الطرف الآخر...</div><small>${tStr}</small></div>`;
-          }
-          return `
-            <div class="chat-bubble wa-card">
-              <div style="margin-bottom:8px;">🟢 يطلب <b>${esc(m.senderName || 'الطرف الآخر')}</b> فتح محادثة واتساب بينكما. هل توافق؟</div>
-              <div style="display:flex; gap:8px; justify-content:center;">
-                <button type="button" class="btn whatsapp-btn" style="padding:6px 12px; font-size:11.5px;" onclick="respondWhatsappRequest('${esc(m._key)}','accepted')">✅ موافقة وفتح واتساب</button>
-                <button type="button" class="btn danger" style="padding:6px 12px; font-size:11.5px;" onclick="respondWhatsappRequest('${esc(m._key)}','rejected')">❌ رفض</button>
-              </div>
-              <small>${tStr}</small>
-            </div>`;
-        } else if(m.waStatus === "accepted") {
-          const targetPhone = isMine ? m.responderPhone : m.requesterPhone;
-          const waHref = targetPhone ? `https://wa.me/${formatWhatsApp(targetPhone)}` : "#";
-          return `
-            <div class="chat-bubble wa-card">
-              <div style="margin-bottom:6px;">✅ تمت الموافقة على التواصل عبر واتساب</div>
-              ${targetPhone ? `<a class="btn whatsapp-btn" style="padding:6px 14px; font-size:12px;" href="${waHref}" target="_blank">📲 فتح محادثة الواتساب الآن</a>` : ''}
-              <small>${tStr}</small>
-            </div>`;
-        } else {
-          return `<div class="chat-bubble wa-card" style="background:var(--danger-tint); border-color:#fca5a5; color:var(--danger-calm);"><div>❌ تم رفض طلب الواتساب — يستمر التواصل داخل التطبيق</div><small>${tStr}</small></div>`;
-        }
+        return `<div class="chat-bubble sys-card"><div>تم حفظ طلب تواصل سابق خارج التطبيق. التواصل الحالي يكون من خلال دردشة الطلب.</div><small>${tStr}</small></div>`;
       }
 
       return `
@@ -3303,7 +3161,7 @@ async function submitCustomerOrder() {
       });
       if (hasOpenWithSameTech) {
         closeModal("customerOrderModal");
-        showCustomAlert("لديك طلب سابق مفتوح أو بانتظار الرد مع هذا الفني حالياً. يمكنك متابعته من قسم الدردشة.");
+        showCustomAlert("لديك طلب سابق مفتوح أو بانتظار الرد مع هذا الفني حالياً. يمكنك متابعته من قسم طلباتي.");
         openChatHub();
         return;
       }
@@ -3360,8 +3218,9 @@ const cityVal = isAdminSender ? "كل المحافظات" : (chosenCustomerCity 
 
     closeModal("customerOrderModal");
     startChatBadgeWatcher();
-    // يفتح غرفة الطلب المدمجة مباشرة حتى يتابع الزبون حالتها بنفس المكان
-    openFullOrderChat(id, selectedTargetTech.name || fullServiceLabel);
+    // يبقى الطلب في قائمة الطلبات؛ لا تفتح الدردشة إلا بعد موافقة الفني.
+    await openChatHub();
+    showCustomAlert("تم إرسال طلبك بنجاح. ستظهر الدردشة داخل الطلب فور موافقة الفني.");
   } catch(e) {
     showCustomAlert("خطأ في إرسال الطلب: " + e.message);
   }
@@ -3427,7 +3286,7 @@ async function renderTechAccount(){
       <div class="profile-list-card" style="margin-bottom:0;">
         <div class="profile-list-row"><span class="profile-list-label">الاختصاص الرئيسي</span><span class="profile-list-value">${esc(currentTech.service || "غير محدد")}</span></div>
         <div class="profile-list-row"><span class="profile-list-label">التخصصات الفرعية</span><span class="profile-list-value">${esc(subsText)}</span></div>
-        <div class="profile-list-row"><span class="profile-list-label">رقم الهاتف (سري)</span><span class="profile-list-value">${esc(currentTech.phone || "غير مضاف (يُضاف عند طلب واتساب)")}</span></div>
+        <div class="profile-list-row"><span class="profile-list-label">رقم الهاتف (سري)</span><span class="profile-list-value">${esc(currentTech.phone || "غير مضاف")}</span></div>
         <div class="profile-list-row"><span class="profile-list-label">البريد الإلكتروني</span><span class="profile-list-value">${esc(currentTech.email || "غير مضاف")}</span></div>
         <div class="profile-list-row"><span class="profile-list-label">المحافظة والقضاء</span><span class="profile-list-value">${esc(currentTech.city || "---")} / ${esc(currentTech.area || "---")}</span></div>
         <div class="profile-list-row"><span class="profile-list-label">المنطقة / الحي</span><span class="profile-list-value">${esc(currentTech.neighborhood || "غير محدد")}</span></div>
@@ -3848,7 +3707,7 @@ function renderAdmin(){
         <div class="muted" style="margin-top:3px;">⏱️ مدة بقاء المحادثة مفتوحة: <b style="color:var(--teal-calm);">${esc(openDur)}</b>${decInfo}</div>
         <p style="margin:5px 0; font-size:13px;">المشكلة: ${esc(r.problem)}</p>
         <div class="actions">
-         <button type="button" class="btn secondary" onclick="openFullOrderChat('${esc(r.id)}','${esc(r.service)}')">💬 محادثة الطلب</button>
+         <button type="button" class="btn secondary" onclick="openFullOrderChat('${esc(r.id)}','${esc(r.service)}')">💬 دردشة الطلب</button>
          <button type="button" class="btn danger" onclick="adminDeleteRequest('${esc(r.uid)}','${esc(r.id)}')">حذف الطلب</button>
         </div>
       </div>`;
@@ -3879,7 +3738,7 @@ async function submitReview() {
   try {
     const id = db.ref("reviews").push().key, authorUid = currentUser ? currentUser.uid : (jabalGet("CustomerUid") || "");
     await db.ref("reviews/"+id).set({ uid: authorUid, name, stars, text, createdAt: Date.now() });
-    showCustomAlert("تم إرسال تقييمك وملاحظتك بنجاح!");
+    showCustomAlert("تم إرسال تقييمك بنجاح!");
     $("reviewName").value = ""; $("reviewText").value = "";
     loadReviews();
   }catch(e) { showCustomAlert("خطأ: " + e.message); }
