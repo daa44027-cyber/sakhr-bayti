@@ -702,10 +702,6 @@ footer { background: linear-gradient(180deg, var(--teal-deep) 0%, var(--navy-dee
 
 <section id="chatHubSection" class="container hidden">
  <h2 class="section-title">💬 الدردشة والطلبات</h2>
- <div style="display:flex; justify-content:center; gap:8px; margin-bottom:14px;">
-  <button type="button" class="btn primary" id="btnChatActiveTab" onclick="switchChatHistoryTab(false)">🟢 النشطة والجديدة</button>
-  <button type="button" class="btn light" id="btnChatHistoryTab" onclick="switchChatHistoryTab(true)">📁 سجل الطلبات المنتهية</button>
- </div>
  <div id="chatHubPendingRequests"></div>
  <div id="chatHubThreadsList"><div class="empty">جارٍ تحميل المحادثات والطلبات...</div></div>
 </section>
@@ -714,18 +710,17 @@ footer { background: linear-gradient(180deg, var(--teal-deep) 0%, var(--navy-dee
  <div class="full-chat-shell">
   <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:10px; border-bottom:1px solid var(--border-soft); padding-bottom:8px;">
    <h3 id="fullChatTitle" style="margin:0; font-size:16px; font-weight:900; color:var(--navy);">💬 محادثة الطلب</h3>
-   <button type="button" class="btn light" style="padding:6px 12px;" onclick="closeFullOrderChat()">← رجوع للدردشة</button>
+   <button type="button" class="btn light" style="padding:6px 12px;" onclick="closeFullOrderChat()">← رجوع</button>
   </div>
 
   <div id="fullChatStatusBanner" class="chat-status-banner">جارٍ تحميل حالة الطلب...</div>
 
-  <div id="fullChatDecisionRow" class="chat-decision-row hidden">
-   <button type="button" class="btn gold-3d" style="flex:1; padding:8px; font-size:12px;" onclick="setOrderContinuationDecision('ended')">✅ إنهاء الطلب</button>
-   <button type="button" class="btn secondary" style="flex:1; padding:8px; font-size:12px;" onclick="setOrderContinuationDecision('continued')">🔄 الاستمرار بالطلب</button>
+  <div id="fullChatDecisionRow" class="chat-decision-row">
+   <button type="button" id="btnEndOrderChat" class="btn danger" style="width:100%; padding:9px; font-size:12.5px;" onclick="endOrderChatByActor()">🔒 إنهاء الدردشة</button>
   </div>
 
   <div id="fullChatReviewBox" class="card hidden" style="margin-bottom:10px; background:#fffbeb; border-color:#f59e0b;">
-   <h4 style="margin:0 0 8px; color:var(--navy); font-size:14px; font-weight:900;">⭐ التقييم والملاحظات بعد إنهاء الطلب</h4>
+   <h4 style="margin:0 0 8px; color:var(--navy); font-size:14px; font-weight:900;">⭐ التقييم والملاحظات بعد إنهاء الدردشة</h4>
    <div class="field" style="margin:6px 0;">
     <label>التقييم بالنجوم</label>
     <select id="orderReviewStars">
@@ -744,28 +739,31 @@ footer { background: linear-gradient(180deg, var(--teal-deep) 0%, var(--navy-dee
    <div id="orderReviewMsg"></div>
   </div>
 
-  <div class="chat-toolbar">
-   <span class="muted" style="font-weight:800;">محادثة كتابية مستمرة</span>
-   <button type="button" class="btn whatsapp-btn" style="padding:6px 10px; font-size:11.5px;" onclick="requestWhatsappInChat()">
-    <span>🟢</span> طلب واتساب
-   </button>
-  </div>
+  <div id="fullChatActiveControls">
+   <div class="chat-toolbar">
+    <span class="muted" style="font-weight:800;">محادثة كتابية مستمرة</span>
+    <button type="button" class="btn whatsapp-btn" style="padding:6px 10px; font-size:11.5px;" onclick="requestWhatsappInChat()">
+     <span>🟢</span> طلب واتساب
+    </button>
+   </div>
 
-  <div class="quick-replies-row">
-   <button type="button" class="quick-reply-chip" onclick="insertQuickReply('دزلي الموقع (GPS) لو سمحت')">📍 دزلي الموقع</button>
-   <button type="button" class="quick-reply-chip" onclick="insertQuickReply('أني بالطريق وجاييك')">🚗 أني بالطريق</button>
-   <button type="button" class="quick-reply-chip" onclick="insertQuickReply('تم الاتفاق على السعر والوقت')">🤝 تم الاتفاق</button>
+   <div class="quick-replies-row">
+    <button type="button" class="quick-reply-chip" onclick="insertQuickReply('دزلي الموقع (GPS) لو سمحت')">📍 دزلي الموقع</button>
+    <button type="button" class="quick-reply-chip" onclick="insertQuickReply('أني بالطريق وجاييك')">🚗 أني بالطريق</button>
+    <button type="button" class="quick-reply-chip" onclick="insertQuickReply('تم الاتفاق على السعر والوقت')">🤝 تم الاتفاق</button>
+   </div>
   </div>
 
   <div id="fullChatMessages" class="full-chat-messages"></div>
 
-  <div class="chat-send-row">
+  <div id="fullChatSendRow" class="chat-send-row">
    <input id="fullChatInput" placeholder="اكتب رسالتك هنا..." onkeydown="if(event.key==='Enter'){event.preventDefault();sendOrderChatMessage();}">
    <button type="button" class="btn primary" onclick="sendOrderChatMessage()">إرسال</button>
   </div>
+  <div id="fullChatEndedNotice" class="notice hidden" style="text-align:center; margin:0; font-weight:800;">🔒 تم إنهاء هذه الدردشة — السجل محفوظ للقراءة فقط.</div>
  </div>
 </section>
-
+  
 <section id="adminTechsSection" class="container hidden">
  <h2 class="section-title">🛠️ إدارة الفنيين ومشاكل التسجيل</h2>
 
@@ -2613,14 +2611,7 @@ function renderPublicTechs(){
   el.innerHTML = fallbackCityNotice + cardsHtml;
 }
 
-function switchChatHistoryTab(showEnded) {
-  showEndedChatHistory = Boolean(showEnded);
-  $("btnChatActiveTab")?.classList.toggle("primary", !showEndedChatHistory);
-  $("btnChatActiveTab")?.classList.toggle("light", showEndedChatHistory);
-  $("btnChatHistoryTab")?.classList.toggle("primary", showEndedChatHistory);
-  $("btnChatHistoryTab")?.classList.toggle("light", !showEndedChatHistory);
-  renderChatHub();
-}
+let chatHubLiveRef = null;
 
 async function openChatHub() {
   navigateToSection("chatHubSection");
@@ -2631,6 +2622,8 @@ async function renderChatHub() {
   const pendingBox = $("chatHubPendingRequests");
   const threadsBox = $("chatHubThreadsList");
   if(!pendingBox || !threadsBox || !db) return;
+
+  if(chatHubLiveRef) { chatHubLiveRef.off(); chatHubLiveRef = null; }
 
   pendingBox.innerHTML = "";
   threadsBox.innerHTML = '<div class="empty">جارٍ تحميل المحادثات والطلبات...</div>';
@@ -2650,51 +2643,59 @@ async function renderChatHub() {
     }
 
     if(["technician", "suspended"].includes(effectiveRole) && activeUid) {
-      const snap = await db.ref("technicianJobs/" + activeUid).once("value");
-      const allJobs = [];
-      snap.forEach(c => allJobs.push({ ...c.val(), id: c.key }));
-      allJobs.sort((a,b) => (b.createdAt||0) - (a.createdAt||0));
+      chatHubLiveRef = db.ref("technicianJobs/" + activeUid);
+      chatHubLiveRef.on("value", snap => {
+        const allJobs = [];
+        snap.forEach(c => allJobs.push({ ...c.val(), id: c.key }));
+        allJobs.sort((a,b) => (b.createdAt||0) - (a.createdAt||0));
 
-      const pendingJobs = allJobs.filter(j => isPendingTechJob(j.status));
-      const filteredJobs = allJobs.filter(j => {
-        if(isPendingTechJob(j.status)) return false;
-        const ended = isOrderEndedOrCompleted(j.status, j.continuationState);
-        return showEndedChatHistory ? ended : !ended;
+        const pendingJobs = allJobs.filter(j => isPendingTechJob(j.status));
+        const otherJobs = allJobs.filter(j => !isPendingTechJob(j.status));
+
+        updateChatUnreadBadge(pendingJobs.length);
+
+        if(pendingJobs.length > 0) {
+          pendingBox.innerHTML = `<h3 class="section-title" style="font-size:15.5px; margin-top:4px;">🔔 طلبات واردة بانتظار موافقتك (${pendingJobs.length})</h3>` + pendingJobs.map(job => `
+            <div class="pending-job-card">
+              <h4 style="margin:0 0 4px; color:var(--navy); font-size:14.5px; font-weight:900;">${esc(job.service)} — <span class="badge">طلب جديد</span></h4>
+              <div class="muted">الزبون: <b>${esc(job.customerName || 'زبون')}</b> | الموقع: <b>${esc(job.city || '')} ${job.area ? '— ' + esc(job.area) : ''}</b></div>
+              <p style="margin:8px 0; font-size:13px; font-weight:700; color:var(--text-main);">المشكلة: ${esc(job.problem)}</p>
+              <div class="actions">
+                <button type="button" class="btn primary" onclick="technicianDecision('${esc(job.id)}','مقبول')">✅ موافقة وفتح الدردشة</button>
+                <button type="button" class="btn danger" onclick="technicianDecision('${esc(job.id)}','مرفوض')">❌ رفض الطلب</button>
+              </div>
+            </div>
+          `).join("");
+        } else {
+          pendingBox.innerHTML = "";
+        }
+
+        if(!otherJobs.length) {
+          threadsBox.innerHTML = pendingJobs.length > 0
+            ? ""
+            : '<div class="empty">لا توجد طلبات أو محادثات حالياً.</div>';
+        } else {
+          threadsBox.innerHTML = otherJobs.map(j => {
+            const isEnded = isOrderEndedOrCompleted(j.status, j.continuationState);
+            const isRejected = j.status === "مرفوض من الفني";
+            const statusBadge = isRejected
+              ? `<span class="badge" style="background:#fee2e2;color:#991b1b;border-color:#fca5a5;">مرفوض</span>`
+              : (isEnded
+                ? `<span class="badge" style="background:#e2e8f0;color:#334155;border-color:#cbd5e1;">منتهية (سجل محفوظ)</span>`
+                : `<span class="badge" style="background:#dcfce7;color:#14532d;border-color:#86efac;">دردشة مفتوحة</span>`);
+            return `
+            <div class="list-item">
+              <h4>${esc(j.customerName || 'زبون')} — ${esc(j.service)} ${statusBadge}</h4>
+              <div class="muted">الحالة: <b>${esc(j.status)}</b></div>
+              <p style="margin:6px 0; font-size:12.5px;">${esc(j.problem || '')}</p>
+              ${!isRejected ? `
+              <div class="actions">
+                <button type="button" class="btn secondary" onclick="openFullOrderChat('${esc(j.id)}','${esc(j.customerName || j.service)}')">${isEnded ? '📜 عرض سجل الدردشة' : '💬 فتح الدردشة'}</button>
+              </div>` : ''}
+            </div>`;
+          }).join("");
+        }
       });
-
-      updateChatUnreadBadge(pendingJobs.length);
-
-      if(!showEndedChatHistory && pendingJobs.length > 0) {
-        pendingBox.innerHTML = `<h3 class="section-title" style="font-size:15.5px; margin-top:4px;">🔴 طلبات جديدة بانتظار ردك (${pendingJobs.length})</h3>` + pendingJobs.map(job => `
-          <div class="pending-job-card">
-            <h4 style="margin:0 0 4px; color:var(--navy); font-size:14.5px; font-weight:900;">${esc(job.service)} — <span class="badge">طلب جديد</span></h4>
-            <div class="muted">الزبون: <b>${esc(job.customerName || 'زبون')}</b> | الموقع: <b>${esc(job.city || '')} ${job.area ? '— ' + esc(job.area) : ''}</b></div>
-            <p style="margin:8px 0; font-size:13px; font-weight:700; color:var(--text-main);">المشكلة: ${esc(job.problem)}</p>
-            <div class="actions">
-              <button type="button" class="btn primary" onclick="technicianDecision('${esc(job.id)}','مقبول')">✅ موافقة على الطلب</button>
-              <button type="button" class="btn danger" onclick="technicianDecision('${esc(job.id)}','مرفوض')">❌ رفض الطلب</button>
-            </div>
-          </div>
-        `).join("");
-      }
-
-      if(!filteredJobs.length) {
-        threadsBox.innerHTML = pendingJobs.length > 0 && !showEndedChatHistory
-          ? ''
-          : `<div class="empty">${showEndedChatHistory ? 'لا توجد طلبات منتهية في السجل.' : 'لا توجد محادثات نشطة حالياً.'}</div>`;
-      } else {
-        threadsBox.innerHTML = `<h3 class="section-title" style="font-size:15.5px;">${showEndedChatHistory ? 'سجل الطلبات المنتهية' : 'المحادثات الجارية'}</h3>` + filteredJobs.map(j => {
-          const dur = j.chatStartedAt ? formatOpenDuration(j.chatStartedAt, j.chatEndedAt || null) : "—";
-          return `
-          <div class="list-item">
-            <h4>${esc(j.customerName || 'زبون')} — ${esc(j.service)}</h4>
-            <div class="muted">الحالة: <b>${esc(j.status)}</b> | مدة الفتح: <b>${esc(dur)}</b></div>
-            <div class="actions">
-              <button type="button" class="btn secondary" onclick="openFullOrderChat('${esc(j.id)}','${esc(j.customerName || j.service)}')">💬 فتح المحادثة</button>
-            </div>
-          </div>`;
-        }).join("");
-      }
       return;
     }
 
@@ -2707,36 +2708,42 @@ async function renderChatHub() {
       return;
     }
 
-    const snap = await db.ref("requests/" + custUid).once("value");
-    const orders = [];
-    snap.forEach(c => orders.push({ ...c.val(), id: c.key }));
-    orders.sort((a,b) => (b.createdAt||0) - (a.createdAt||0));
+    chatHubLiveRef = db.ref("requests/" + custUid);
+    chatHubLiveRef.on("value", snap => {
+      const orders = [];
+      snap.forEach(c => orders.push({ ...c.val(), id: c.key }));
+      orders.sort((a,b) => (b.createdAt||0) - (a.createdAt||0));
 
-    const visibleOrders = orders.filter(o => {
-      const ended = isOrderEndedOrCompleted(o.status, o.continuationState);
-      return showEndedChatHistory ? ended : !ended;
+      if(!orders.length) {
+        threadsBox.innerHTML = '<div class="empty">لا توجد طلبات أو محادثات حالياً.</div>';
+        return;
+      }
+
+      threadsBox.innerHTML = orders.map(o => {
+        const isPending = isPendingTechJob(o.status);
+        const isRejected = o.status === "مرفوض من الفني";
+        const isEnded = isOrderEndedOrCompleted(o.status, o.continuationState);
+        const canOpen = !isPending && !isRejected;
+
+        let badgeHtml = "";
+        if(isPending) badgeHtml = `<span class="badge" style="background:#fef3c7;color:#92400e;border-color:#fcd34d;">⏳ بانتظار موافقة الفني</span>`;
+        else if(isRejected) badgeHtml = `<span class="badge" style="background:#fee2e2;color:#991b1b;border-color:#fca5a5;">❌ تم رفض الطلب</span>`;
+        else if(isEnded) badgeHtml = `<span class="badge" style="background:#e2e8f0;color:#334155;border-color:#cbd5e1;">🔒 منتهية (سجل محفوظ)</span>`;
+        else badgeHtml = `<span class="badge" style="background:#dcfce7;color:#14532d;border-color:#86efac;">💬 وافق الفني — الدردشة مفتوحة</span>`;
+
+        return `
+        <div class="list-item">
+          <h4>${esc(o.assignedTechName || 'فني معتمد')} — ${esc(o.service)} ${badgeHtml}</h4>
+          <div class="muted">الحالة: <b>${esc(o.status)}</b></div>
+          <p style="margin:6px 0; font-size:12.5px;">${esc(o.problem || '')}</p>
+          <div class="actions">
+            ${canOpen
+              ? `<button type="button" class="btn secondary" onclick="openFullOrderChat('${esc(o.id)}','${esc(o.assignedTechName || o.service)}')">${isEnded ? '📜 عرض سجل الدردشة' : '💬 فتح الدردشة'}</button>`
+              : (isPending ? `<span class="muted">تم إرسال طلبك للفني — ستنفتح الدردشة فور موافقته.</span>` : '')}
+          </div>
+        </div>`;
+      }).join("");
     });
-
-    if(!visibleOrders.length) {
-      threadsBox.innerHTML = `<div class="empty">${showEndedChatHistory ? 'لا توجد طلبات منتهية في السجل.' : 'لا توجد طلبات أو محادثات نشطة حالياً.'}</div>`;
-      return;
-    }
-
-    threadsBox.innerHTML = visibleOrders.map(o => {
-      const canOpen = ["مقبول من الفني", "مستمر", "منتهي", "مكتمل"].includes(o.status);
-      const badgeHtml = o.status === "مقبول من الفني" ? `<span class="badge" style="background:#dcfce7;color:#14532d;border-color:#86efac;">وافق الفني — جاهزة للمحادثة</span>` : "";
-      return `
-      <div class="list-item">
-        <h4>${esc(o.assignedTechName || 'فني معتمد')} — ${esc(o.service)} ${badgeHtml}</h4>
-        <div class="muted">الحالة: <b>${esc(o.status)}</b></div>
-        <p style="margin:6px 0; font-size:12.5px;">${esc(o.problem)}</p>
-        <div class="actions">
-          ${canOpen
-            ? `<button type="button" class="btn secondary" onclick="openFullOrderChat('${esc(o.id)}','${esc(o.assignedTechName || o.service)}')">💬 فتح المحادثة</button>`
-            : `<span class="muted">بانتظار موافقة الفني لفتح المحادثة...</span>`}
-        </div>
-      </div>`;
-    }).join("");
   } catch(e) {
     threadsBox.innerHTML = '<div class="empty">تعذر تحميل المحادثات حالياً.</div>';
   }
@@ -2801,6 +2808,9 @@ async function savePrivateWhatsappPhone() {
 
 function requestWhatsappInChat() {
   if(!activeOrderChatId || !db) return;
+  if(activeOrderMeta && isOrderEndedOrCompleted(activeOrderMeta.status, activeOrderMeta.continuationState)) {
+    return showCustomAlert("تم إنهاء هذه الدردشة ولا يمكن إرسال طلبات جديدة.");
+  }
   ensurePrivatePhoneBeforeWhatsapp(async (myPhone) => {
     const sender = getActorMeta();
     try {
@@ -2832,59 +2842,61 @@ function respondWhatsappRequest(msgKey, decision) {
   });
 }
 
-async function setOrderContinuationDecision(decision) {
+function endOrderChatByActor() {
   if(!activeOrderChatId || !db || !activeOrderMeta) return;
-  const actor = getActorMeta();
-  const now = Date.now();
-  const isEnding = decision === "ended";
-  const newStatus = isEnding ? "منتهي" : "مستمر";
-  const decisionLabelAr = isEnding ? "إنهاء الطلب" : "الاستمرار بالطلب";
+  if(isOrderEndedOrCompleted(activeOrderMeta.status, activeOrderMeta.continuationState)) return;
 
-  try {
-    const updates = {};
-    updates[`orderChats/${activeOrderChatId}/meta/status`] = newStatus;
-    updates[`orderChats/${activeOrderChatId}/meta/continuationState`] = decision;
-    updates[`orderChats/${activeOrderChatId}/meta/lastDecisionBy`] = actor.labelAr;
-    updates[`orderChats/${activeOrderChatId}/meta/lastDecisionRole`] = actor.actorRole;
-    updates[`orderChats/${activeOrderChatId}/meta/lastDecisionAt`] = now;
-    if(isEnding) updates[`orderChats/${activeOrderChatId}/meta/chatEndedAt`] = now;
-    else updates[`orderChats/${activeOrderChatId}/meta/chatEndedAt`] = null;
+  showCustomConfirm("هل أنت متأكد من إنهاء الدردشة؟ ستنتهي المحادثة ويبقى السجل محفوظاً للرجوع إليه.", async () => {
+    const actor = getActorMeta();
+    const now = Date.now();
+    try {
+      const updates = {};
+      updates[`orderChats/${activeOrderChatId}/meta/status`] = "منتهي";
+      updates[`orderChats/${activeOrderChatId}/meta/continuationState`] = "ended";
+      updates[`orderChats/${activeOrderChatId}/meta/lastDecisionBy`] = actor.labelAr;
+      updates[`orderChats/${activeOrderChatId}/meta/lastDecisionRole`] = actor.actorRole;
+      updates[`orderChats/${activeOrderChatId}/meta/lastDecisionAt`] = now;
+      updates[`orderChats/${activeOrderChatId}/meta/chatEndedAt`] = now;
 
-    if(activeOrderMeta.customerUid) {
-      updates[`requests/${activeOrderMeta.customerUid}/${activeOrderChatId}/status`] = newStatus;
-      updates[`requests/${activeOrderMeta.customerUid}/${activeOrderChatId}/continuationState`] = decision;
-      updates[`requests/${activeOrderMeta.customerUid}/${activeOrderChatId}/lastDecisionBy`] = actor.labelAr;
-      updates[`requests/${activeOrderMeta.customerUid}/${activeOrderChatId}/lastDecisionAt`] = now;
-      if(isEnding) updates[`requests/${activeOrderMeta.customerUid}/${activeOrderChatId}/chatEndedAt`] = now;
+      if(activeOrderMeta.customerUid) {
+        updates[`requests/${activeOrderMeta.customerUid}/${activeOrderChatId}/status`] = "منتهي";
+        updates[`requests/${activeOrderMeta.customerUid}/${activeOrderChatId}/continuationState`] = "ended";
+        updates[`requests/${activeOrderMeta.customerUid}/${activeOrderChatId}/lastDecisionBy`] = actor.labelAr;
+        updates[`requests/${activeOrderMeta.customerUid}/${activeOrderChatId}/lastDecisionAt`] = now;
+        updates[`requests/${activeOrderMeta.customerUid}/${activeOrderChatId}/chatEndedAt`] = now;
+      }
+      if(activeOrderMeta.assignedTech) {
+        updates[`technicianJobs/${activeOrderMeta.assignedTech}/${activeOrderChatId}/status`] = "منتهي";
+        updates[`technicianJobs/${activeOrderMeta.assignedTech}/${activeOrderChatId}/continuationState`] = "ended";
+        updates[`technicianJobs/${activeOrderMeta.assignedTech}/${activeOrderChatId}/lastDecisionBy`] = actor.labelAr;
+        updates[`technicianJobs/${activeOrderChatId}/lastDecisionAt`] = now;
+        updates[`technicianJobs/${activeOrderMeta.assignedTech}/${activeOrderChatId}/chatEndedAt`] = now;
+      }
+
+      await db.ref().update(updates);
+
+      const sysMsgId = db.ref(`orderChats/${activeOrderChatId}/messages`).push().key;
+      await db.ref(`orderChats/${activeOrderChatId}/messages/${sysMsgId}`).set({
+        type: "system_decision",
+        text: `تم إنهاء الدردشة بواسطة: ${actor.labelAr}`,
+        senderId: actor.actorId,
+        senderName: actor.labelAr,
+        senderRole: actor.actorRole,
+        createdAt: now
+      });
+    } catch(e) {
+      showCustomAlert("تعذر إنهاء الدردشة: " + e.message);
     }
-    if(activeOrderMeta.assignedTech) {
-      updates[`technicianJobs/${activeOrderMeta.assignedTech}/${activeOrderChatId}/status`] = newStatus;
-      updates[`technicianJobs/${activeOrderMeta.assignedTech}/${activeOrderChatId}/continuationState`] = decision;
-      updates[`technicianJobs/${activeOrderMeta.assignedTech}/${activeOrderChatId}/lastDecisionBy`] = actor.labelAr;
-      updates[`technicianJobs/${activeOrderMeta.assignedTech}/${activeOrderChatId}/lastDecisionAt`] = now;
-      if(isEnding) updates[`technicianJobs/${activeOrderMeta.assignedTech}/${activeOrderChatId}/chatEndedAt`] = now;
-    }
-
-    await db.ref().update(updates);
-
-    const sysMsgId = db.ref(`orderChats/${activeOrderChatId}/messages`).push().key;
-    await db.ref(`orderChats/${activeOrderChatId}/messages/${sysMsgId}`).set({
-      type: "system_decision",
-      text: `تم اختيار (${decisionLabelAr}) بواسطة: ${actor.labelAr}`,
-      senderId: actor.actorId,
-      senderName: actor.labelAr,
-      senderRole: actor.actorRole,
-      createdAt: now
-    });
-  } catch(e) {
-    showCustomAlert("تعذر تحديث حالة الطلب: " + e.message);
-  }
+  });
 }
 
 function renderFullChatBannerAndControls() {
   const banner = $("fullChatStatusBanner");
   const decRow = $("fullChatDecisionRow");
   const revBox = $("fullChatReviewBox");
+  const activeControls = $("fullChatActiveControls");
+  const sendRow = $("fullChatSendRow");
+  const endedNotice = $("fullChatEndedNotice");
   if(!banner) return;
 
   const meta = activeOrderMeta || {};
@@ -2894,9 +2906,8 @@ function renderFullChatBannerAndControls() {
   const openDuration = startedAt ? formatOpenDuration(startedAt, meta.chatEndedAt || null) : "غير محدد";
 
   let decisionLine = "";
-  if(meta.lastDecisionBy) {
-    const actText = isEnded ? "إنهاء الطلب" : "الاستمرار بالطلب";
-    decisionLine = `<br>آخر قرار: <b>${esc(actText)}</b> — بواسطة: <b>${esc(meta.lastDecisionBy)}</b>`;
+  if(isEnded && meta.lastDecisionBy) {
+    decisionLine = `<br>أُنهيت الدردشة بواسطة: <b>${esc(meta.lastDecisionBy)}</b>`;
   }
 
   let adminDurationLine = "";
@@ -2904,8 +2915,12 @@ function renderFullChatBannerAndControls() {
     adminDurationLine = `<br><span style="color:var(--teal-calm);">📊 للإدارة — مدة بقاء المحادثة مفتوحة: <b>${esc(openDuration)}</b></span>`;
   }
 
-  banner.innerHTML = `حالة الطلب: <b>${esc(status)}</b>${decisionLine}${adminDurationLine}`;
-  decRow?.classList.remove("hidden");
+  banner.innerHTML = `حالة الطلب: <b>${esc(isEnded ? "منتهية (سجل محفوظ)" : "دردشة مفتوحة")}</b>${decisionLine}${adminDurationLine}`;
+
+  decRow?.classList.toggle("hidden", isEnded);
+  activeControls?.classList.toggle("hidden", isEnded);
+  sendRow?.classList.toggle("hidden", isEnded);
+  endedNotice?.classList.toggle("hidden", !isEnded);
 
   if(revBox) {
     const isCustomerView = !["technician", "suspended", "admin"].includes(currentRole);
@@ -2982,14 +2997,14 @@ async function resolveOrderMeta(orderId) {
 }
 
 async function openFullOrderChat(orderId, titleLabel = "") {
-  if(!orderId || !db) return showCustomAlert("معرّف المحادثة غير متوفر.");
+  if(!orderId || !db) return;
   if(orderChatListener) { orderChatListener.off(); orderChatListener = null; }
   if(orderMetaListener) { orderMetaListener.off(); orderMetaListener = null; }
 
   activeOrderChatId = String(orderId);
   activeOrderMeta = await resolveOrderMeta(activeOrderChatId);
-  if($("fullChatTitle")) $("fullChatTitle").innerText = titleLabel ? `💬 ${titleLabel}` : "💬 محادثة الطلب";
-  if($("fullChatInput")) $("fullChatInput").value = "";
+  $("fullChatTitle").innerText = titleLabel ? `💬 ${titleLabel}` : "💬 محادثة الطلب";
+  $("fullChatInput").value = "";
   renderFullChatBannerAndControls();
   navigateToSection("fullOrderChatSection");
 
@@ -3002,11 +3017,13 @@ async function openFullOrderChat(orderId, titleLabel = "") {
   });
 
   const box = $("fullChatMessages");
-  if(!box) return;
   box.innerHTML = '<div class="muted" style="text-align:center;margin-top:95px;">جارٍ تحميل رسائل الطلب...</div>';
 
-  const renderMessagesList = (msgs) => {
-    const sender = getActorMeta();
+  const sender = getActorMeta();
+  orderChatListener = db.ref("orderChats/" + activeOrderChatId + "/messages").limitToLast(120);
+  orderChatListener.on("value", snap => {
+    const msgs = [];
+    snap.forEach(c => msgs.push({ ...c.val(), _key: c.key }));
     if(!msgs.length) {
       box.innerHTML = '<div class="muted" style="text-align:center;margin-top:95px;">المحادثة مفتوحة — ابدأ بالتواصل بالكتابة...</div>';
       return;
@@ -3054,64 +3071,28 @@ async function openFullOrderChat(orderId, titleLabel = "") {
         </div>`;
     }).join("");
     box.scrollTop = box.scrollHeight;
-  };
-
-  orderChatListener = db.ref("orderChats/" + activeOrderChatId + "/messages").limitToLast(120);
-  orderChatListener.on("value", snap => {
-    const msgs = [];
-    snap.forEach(c => msgs.push({ ...c.val(), _key: c.key }));
-    renderMessagesList(msgs);
   }, err => {
-    box.innerHTML = `<div class="notice error">تعذر قراءة الرسائل من قاعدة البيانات: ${esc(err.message || err.code || '')}</div>`;
+    box.innerHTML = `<div class="notice error">تعذر قراءة الرسائل: ${esc(err.message || err.code || '')}</div>`;
   });
 }
 
 async function sendOrderChatMessage() {
   const input = $("fullChatInput");
-  if(!input) return;
   const text = input.value.trim();
-  if(!text) return;
-  if(!activeOrderChatId || !db) {
-    return showCustomAlert("المحادثة غير مرتبطة برقم طلب حالياً. ارجع وافتح المحادثة مرة ثانية.");
+  if(!text || !activeOrderChatId || !db) return;
+  if(activeOrderMeta && isOrderEndedOrCompleted(activeOrderMeta.status, activeOrderMeta.continuationState)) {
+    return showCustomAlert("هذه الدردشة منتهية ومحفوظة كسجل فقط.");
   }
-
   const sender = getActorMeta();
-  const payload = {
-    type: "text",
-    text,
-    senderId: sender.actorId,
-    senderName: sender.actorName,
-    senderRole: sender.actorRole,
-    createdAt: Date.now()
-  };
-
   input.value = "";
   try {
-    const msgRef = db.ref("orderChats/" + activeOrderChatId + "/messages").push();
-    await msgRef.set(payload);
-
-    const checkSnap = await db.ref("orderChats/" + activeOrderChatId + "/messages").limitToLast(120).once("value");
-    const msgs = [];
-    checkSnap.forEach(c => msgs.push({ ...c.val(), _key: c.key }));
-    if(msgs.length > 0 && $("fullChatMessages")) {
-      const box = $("fullChatMessages");
-      box.innerHTML = msgs.map(m => {
-        const isMine = m.senderId === sender.actorId;
-        const tStr = m.createdAt ? new Date(m.createdAt).toLocaleTimeString('ar-IQ', { hour: '2-digit', minute: '2-digit' }) : '';
-        if(m.type === "system_decision") {
-          return `<div class="chat-bubble sys-card"><div>📌 ${esc(m.text)}</div><small>${tStr}</small></div>`;
-        }
-        return `
-          <div class="chat-bubble ${isMine ? 'mine' : 'other'}">
-            <div>${esc(m.text ?? '')}</div>
-            <small>${esc(m.senderName || '')} ${tStr ? '• ' + tStr : ''}</small>
-          </div>`;
-      }).join("");
-      box.scrollTop = box.scrollHeight;
-    }
+    const msgId = db.ref("orderChats/" + activeOrderChatId + "/messages").push().key;
+    await db.ref("orderChats/" + activeOrderChatId + "/messages/" + msgId).set({
+      type: "text", text, senderId: sender.actorId, senderName: sender.actorName, senderRole: sender.actorRole, createdAt: Date.now()
+    });
   } catch(e) {
     input.value = text;
-    showCustomAlert("تعذر إرسال الرسالة: " + (e.message || e.code || "خطأ غير معروف"));
+    showCustomAlert("تعذر إرسال الرسالة: " + e.message);
   }
 }
 
@@ -3122,7 +3103,6 @@ function closeFullOrderChat() {
   activeOrderMeta = null;
   navigateToSection("chatHubSection");
 }
-
 function getCurrentSupportActor() {
   if(currentRole === "admin") return { threadId: null, senderId: currentUser?.uid || "admin", senderName: "فريق الدعم (المدير)", senderRole: "admin" };
   if(["technician", "suspended"].includes(currentRole) && currentUser) {
@@ -3240,6 +3220,22 @@ async function submitCustomerOrder() {
       : ((currentUser && !currentUser.isAnonymous) ? currentUser.uid : (jabalGet("CustomerUid") || ("cust_" + Date.now())));
     if(!isAdminSender) jabalSet("CustomerUid", custId);
 
+if (!isAdminSender) {
+      const existingSnap = await db.ref("requests/" + custId).once("value");
+      let hasOpenWithSameTech = false;
+      existingSnap.forEach(c => {
+        const val = c.val() || {};
+        if (val.assignedTech === selectedTargetTech.uid && !isOrderEndedOrCompleted(val.status, val.continuationState) && val.status !== "مرفوض من الفني") {
+          hasOpenWithSameTech = true;
+        }
+      });
+      if (hasOpenWithSameTech) {
+        closeModal("customerOrderModal");
+        showCustomAlert("لديك طلب سابق مفتوح أو بانتظار الرد مع هذا الفني حالياً. يمكنك متابعته من قسم الدردشة.");
+        openChatHub();
+        return;
+      }
+    }
     const techUid = selectedTargetTech.uid;
     const id = db.ref("requests/"+custId).push().key;
     const now = Date.now();
@@ -3278,7 +3274,6 @@ async function submitCustomerOrder() {
     } catch(_) {}
 
     closeModal("customerOrderModal");
-    showEndedChatHistory = false;
     startChatBadgeWatcher();
 
     if(techWriteErr) {
