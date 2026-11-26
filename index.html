@@ -1310,8 +1310,8 @@ let publicTechs=[],requests=[],technicians=[],passwordRequests=[],allAccountsLis
 let chosenCustomerCity="",chosenCustomerArea="",selectedTargetTech=null;
 let currentSelectedService="",currentSelectedSubservice="",currentAdminTechsSubTab="registered";
 let currentSectionId="home",navigationHistory=["home"];
-let techJobsListener=null,customerOrdersBadgeListener=null,supportChatListener=null,orderChatListener=null,orderMetaListener=null,badgeListener=null;
-let activeOrderChatId=null,activeOrderMeta=null,showEndedChatHistory=false;
+let techJobsListener=null,customerOrdersBadgeListener=null,supportChatListener=null,orderChatListener=null,orderMetaListener=null,badgeListener=null,chatHubLiveRef=null;
+let activeOrderChatId=null,activeOrderMeta=null;
 let preferredGoogleRole="auto",pendingAfterPhoneCheck=null,pendingAfterWhatsappPhone=null,announcementTimer=null,pendingAfterGate=null;
 let custRegAuthMode="phone",techRegAuthMode="phone",isSigningOutFlag=false,isGoogleAuthInProgress=false;
 let lastNotifiedJobIds = new Set();
@@ -2506,6 +2506,7 @@ async function logout(){
     if(supportChatListener) { supportChatListener.off(); supportChatListener = null; }
     if(orderChatListener) { orderChatListener.off(); orderChatListener = null; }
     if(orderMetaListener) { orderMetaListener.off(); orderMetaListener = null; }
+    if(chatHubLiveRef) { chatHubLiveRef.off(); chatHubLiveRef = null; }
     currentRole = "guest"; currentTech = null; currentUser = null;
     await auth.signOut();
     setTimeout(() => { isSigningOutFlag = false; }, 1200);
@@ -2611,8 +2612,6 @@ function renderPublicTechs(){
   el.innerHTML = fallbackCityNotice + cardsHtml;
 }
 
-let chatHubLiveRef = null;
-
 async function openChatHub() {
   navigateToSection("chatHubSection");
   await renderChatHub();
@@ -2655,17 +2654,19 @@ async function renderChatHub() {
         updateChatUnreadBadge(pendingJobs.length);
 
         if(pendingJobs.length > 0) {
-          pendingBox.innerHTML = `<h3 class="section-title" style="font-size:15.5px; margin-top:4px;">🔔 طلبات واردة بانتظار موافقتك (${pendingJobs.length})</h3>` + pendingJobs.map(job => `
+          pendingBox.innerHTML = `<h3 class="section-title" style="font-size:15.5px; margin-top:4px;">🔔 طلبات واردة بانتظار موافقتك (${pendingJobs.length})</h3>` + pendingJobs.map(job => {
+            const pDateStr = job.createdAt ? new Date(job.createdAt).toLocaleString('ar-IQ', { dateStyle: 'short', timeStyle: 'short' }) : '';
+            return `
             <div class="pending-job-card">
               <h4 style="margin:0 0 4px; color:var(--navy); font-size:14.5px; font-weight:900;">${esc(job.service)} — <span class="badge">طلب جديد</span></h4>
-              <div class="muted">الزبون: <b>${esc(job.customerName || 'زبون')}</b> | الموقع: <b>${esc(job.city || '')} ${job.area ? '— ' + esc(job.area) : ''}</b></div>
+              <div class="muted">الزبون: <b>${esc(job.customerName || 'زبون')}</b> | الموقع: <b>${esc(job.city || '')} ${job.area ? '— ' + esc(job.area) : ''}</b>${pDateStr ? ` | 📅 ${esc(pDateStr)}` : ''}</div>
               <p style="margin:8px 0; font-size:13px; font-weight:700; color:var(--text-main);">المشكلة: ${esc(job.problem)}</p>
               <div class="actions">
                 <button type="button" class="btn primary" onclick="technicianDecision('${esc(job.id)}','مقبول')">✅ موافقة وفتح الدردشة</button>
                 <button type="button" class="btn danger" onclick="technicianDecision('${esc(job.id)}','مرفوض')">❌ رفض الطلب</button>
               </div>
-            </div>
-          `).join("");
+            </div>`;
+          }).join("");
         } else {
           pendingBox.innerHTML = "";
         }
@@ -2678,6 +2679,7 @@ async function renderChatHub() {
           threadsBox.innerHTML = otherJobs.map(j => {
             const isEnded = isOrderEndedOrCompleted(j.status, j.continuationState);
             const isRejected = j.status === "مرفوض من الفني";
+            const dateStr = j.createdAt ? new Date(j.createdAt).toLocaleString('ar-IQ', { dateStyle: 'short', timeStyle: 'short' }) : '';
             const statusBadge = isRejected
               ? `<span class="badge" style="background:#fee2e2;color:#991b1b;border-color:#fca5a5;">مرفوض</span>`
               : (isEnded
@@ -2686,7 +2688,7 @@ async function renderChatHub() {
             return `
             <div class="list-item">
               <h4>${esc(j.customerName || 'زبون')} — ${esc(j.service)} ${statusBadge}</h4>
-              <div class="muted">الحالة: <b>${esc(j.status)}</b></div>
+              <div class="muted">الحالة: <b>${esc(j.status)}</b>${dateStr ? ` | 📅 ${esc(dateStr)}` : ''}</div>
               <p style="margin:6px 0; font-size:12.5px;">${esc(j.problem || '')}</p>
               ${!isRejected ? `
               <div class="actions">
@@ -2724,6 +2726,7 @@ async function renderChatHub() {
         const isRejected = o.status === "مرفوض من الفني";
         const isEnded = isOrderEndedOrCompleted(o.status, o.continuationState);
         const canOpen = !isPending && !isRejected;
+        const dateStr = o.createdAt ? new Date(o.createdAt).toLocaleString('ar-IQ', { dateStyle: 'short', timeStyle: 'short' }) : '';
 
         let badgeHtml = "";
         if(isPending) badgeHtml = `<span class="badge" style="background:#fef3c7;color:#92400e;border-color:#fcd34d;">⏳ بانتظار موافقة الفني</span>`;
@@ -2734,7 +2737,7 @@ async function renderChatHub() {
         return `
         <div class="list-item">
           <h4>${esc(o.assignedTechName || 'فني معتمد')} — ${esc(o.service)} ${badgeHtml}</h4>
-          <div class="muted">الحالة: <b>${esc(o.status)}</b></div>
+          <div class="muted">الحالة: <b>${esc(o.status)}</b>${dateStr ? ` | 📅 ${esc(dateStr)}` : ''}</div>
           <p style="margin:6px 0; font-size:12.5px;">${esc(o.problem || '')}</p>
           <div class="actions">
             ${canOpen
@@ -2869,7 +2872,7 @@ function endOrderChatByActor() {
         updates[`technicianJobs/${activeOrderMeta.assignedTech}/${activeOrderChatId}/status`] = "منتهي";
         updates[`technicianJobs/${activeOrderMeta.assignedTech}/${activeOrderChatId}/continuationState`] = "ended";
         updates[`technicianJobs/${activeOrderMeta.assignedTech}/${activeOrderChatId}/lastDecisionBy`] = actor.labelAr;
-        updates[`technicianJobs/${activeOrderChatId}/lastDecisionAt`] = now;
+        updates[`technicianJobs/${activeOrderMeta.assignedTech}/${activeOrderChatId}/lastDecisionAt`] = now;
         updates[`technicianJobs/${activeOrderMeta.assignedTech}/${activeOrderChatId}/chatEndedAt`] = now;
       }
 
@@ -3103,6 +3106,7 @@ function closeFullOrderChat() {
   activeOrderMeta = null;
   navigateToSection("chatHubSection");
 }
+
 function getCurrentSupportActor() {
   if(currentRole === "admin") return { threadId: null, senderId: currentUser?.uid || "admin", senderName: "فريق الدعم (المدير)", senderRole: "admin" };
   if(["technician", "suspended"].includes(currentRole) && currentUser) {
@@ -3220,7 +3224,7 @@ async function submitCustomerOrder() {
       : ((currentUser && !currentUser.isAnonymous) ? currentUser.uid : (jabalGet("CustomerUid") || ("cust_" + Date.now())));
     if(!isAdminSender) jabalSet("CustomerUid", custId);
 
-if (!isAdminSender) {
+    if (!isAdminSender) {
       const existingSnap = await db.ref("requests/" + custId).once("value");
       let hasOpenWithSameTech = false;
       existingSnap.forEach(c => {
@@ -3236,6 +3240,7 @@ if (!isAdminSender) {
         return;
       }
     }
+
     const techUid = selectedTargetTech.uid;
     const id = db.ref("requests/"+custId).push().key;
     const now = Date.now();
