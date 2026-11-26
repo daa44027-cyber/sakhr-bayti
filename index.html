@@ -1288,11 +1288,6 @@ let lastNotifiedJobIds = new Set();
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 
-function isPendingTechJob(status) {
-  const st = String(status || "").trim();
-  return st === "بانتظار رد الفني" || st.includes("بانتظار رد الفني");
-}
-
 function formatOpenDuration(startedAt, endedAt = null) {
   if (!startedAt) return "تبدأ بعد الموافقة";
   const endTs = endedAt || Date.now();
@@ -2866,69 +2861,6 @@ function endOrderChatByActor() {
   });
 }
 
-function renderFullChatBannerAndControls() {
-  const banner = $("fullChatStatusBanner");
-  const endBtn = $("btnEndOrderChat");
-  const waBtn = $("btnWhatsappInChat");
-  const revBox = $("fullChatReviewBox");
-  const sendRow = $("fullChatSendRow");
-  const endedNotice = $("fullChatEndedNotice");
-  if(!banner) return;
-
-  const meta = activeOrderMeta || {};
-  const isPending = isPendingTechJob(meta.status);
-  const isRejected = meta.status === "مرفوض من الفني" || meta.continuationState === "rejected";
-  const isEnded = isOrderEndedOrCompleted(meta.status, meta.continuationState);
-  const isClosed = isEnded || isRejected;
-  const isOpen = !isPending && !isClosed;
-
-  const startedAt = meta.chatStartedAt || meta.createdAt;
-  const openDuration = startedAt ? formatOpenDuration(startedAt, meta.chatEndedAt || null) : "غير محدد";
-
-  let statusLabel = "دردشة مفتوحة";
-  if(isPending) statusLabel = "⏳ بانتظار موافقة الفني";
-  else if(isRejected) statusLabel = "❌ مرفوض من الفني";
-  else if(isEnded) statusLabel = "🔒 منتهية (سجل محفوظ)";
-
-  let decisionLine = "";
-  if(isEnded && meta.lastDecisionBy) {
-    decisionLine = `<br>أُنهيت الدردشة بواسطة: <b>${esc(meta.lastDecisionBy)}</b>`;
-  }
-
-  // إذا الطلب معلق والفني فاتح الغرفة، تظهر أزرار الموافقة والرفض مباشرة هنا
-  let pendingTechActions = "";
-  if(isPending && ["technician", "suspended"].includes(currentRole) && activeOrderChatId) {
-    pendingTechActions = `
-      <div style="display:flex; gap:8px; margin-top:8px;">
-        <button type="button" class="btn primary" style="flex:1;" onclick="technicianDecision('${esc(activeOrderChatId)}','مقبول')">✅ موافقة وفتح الكتابة</button>
-        <button type="button" class="btn danger" style="flex:1;" onclick="technicianDecision('${esc(activeOrderChatId)}','مرفوض')">❌ رفض الطلب</button>
-      </div>`;
-  }
-
-  let adminDurationLine = "";
-  if(currentRole === "admin") {
-    adminDurationLine = `<br><span style="color:var(--teal-calm);">📊 للإدارة — مدة بقاء المحادثة مفتوحة: <b>${esc(openDuration)}</b></span>`;
-  }
-
-  banner.innerHTML = `الحالة: <b>${esc(statusLabel)}</b>${decisionLine}${adminDurationLine}${pendingTechActions}`;
-
-  endBtn?.classList.toggle("hidden", !isOpen);
-  waBtn?.classList.toggle("hidden", !isOpen);
-  sendRow?.classList.toggle("hidden", !isOpen);
-
-  if(endedNotice) {
-    endedNotice.classList.toggle("hidden", isOpen);
-    if(isPending) endedNotice.innerText = "⏳ حقل الكتابة مقفول مؤقتاً — سيُفتح فور موافقة الفني على الطلب.";
-    else if(isRejected) endedNotice.innerText = "❌ تم رفض هذا الطلب — السجل محفوظ للقراءة فقط.";
-    else endedNotice.innerText = "🔒 تم إنهاء هذه الدردشة — السجل محفوظ للقراءة فقط.";
-  }
-
-  if(revBox) {
-    const isCustomerView = !["technician", "suspended", "admin"].includes(currentRole);
-    revBox.classList.toggle("hidden", !(isEnded && isCustomerView && !meta.rated));
-  }
-}
-
 async function submitOrderReviewAndNote() {
   if(!activeOrderChatId || !activeOrderMeta || !db) return;
   const stars = Number($("orderReviewStars")?.value || 5);
@@ -3198,9 +3130,6 @@ async function chooseServiceDirect(service, techUid){
   const techList = [...publicTechs, ...technicians];
   selectedTargetTech = techList.find(t => t.uid === techUid);
   if(!selectedTargetTech) return showCustomAlert("الفني غير موجود.");
-  if(currentRole !== "admin" && !canTechAcceptMoreJobs(selectedTargetTech)) {
-    return showCustomAlert("عذراً، هذا الفني استنفذ رصيده المجاني ولم يجدد اشتراكه بعد.");
-  }
   const subTitle = currentSelectedSubservice ? ` - ${currentSelectedSubservice}` : "";
   $("orderModalTitle").innerText = "طلب الفني: " + selectedTargetTech.name + subTitle;
   $("custOrderProblem").value = currentRole === "admin" ? "طلب مباشر من إدارة جبل" : "";
@@ -3411,68 +3340,6 @@ async function renderTechAccount(){
     if($("editTechBio")) $("editTechBio").value = currentTech.bio || "";
     if($("editTechExtra")) $("editTechExtra").value = currentTech.extraInfo || "";
   }catch(e){}
-}
-
-async function technicianDecision(jobId, decision) {
-  if(!currentUser) return;
-  const uid = currentUser.uid;
-  if (decision === "مقبول" && !canTechAcceptMoreJobs(currentTech)) {
-    return showCustomAlert("لقد استنفذت رصيدك المجاني (3 أعمال). يرجى مراسلة فريق الدعم لتفعيل اشتراكك قبل قبول طلبات جديدة.");
-  }
-
-  const isAccepted = decision === "مقبول";
-  const status = isAccepted ? "مقبول من الفني" : "مرفوض من الفني";
-  const contState = isAccepted ? "continued" : "rejected";
-  const now = Date.now();
-
-  try {
-    const metaSnap = await db.ref(`orderChats/${jobId}/meta`).once("value");
-    const jobSnap = await db.ref(`technicianJobs/${uid}/${jobId}`).once("value");
-    const job = { ...(jobSnap.val() || {}), ...(metaSnap.val() || {}) };
-
-    const sysId = db.ref(`orderChats/${jobId}/messages`).push().key;
-    const updates = {};
-
-    // تحديث موحّد للمسارات الثلاثة بنفس اللحظة
-    updates[`orderChats/${jobId}/meta/status`] = status;
-    updates[`orderChats/${jobId}/meta/continuationState`] = contState;
-    updates[`technicianJobs/${uid}/${jobId}/status`] = status;
-    updates[`technicianJobs/${uid}/${jobId}/continuationState`] = contState;
-
-    if(isAccepted) {
-      updates[`orderChats/${jobId}/meta/chatStartedAt`] = now;
-      updates[`technicianJobs/${uid}/${jobId}/chatStartedAt`] = now;
-    }
-
-    if(job.customerUid) {
-      updates[`requests/${job.customerUid}/${jobId}/status`] = status;
-      updates[`requests/${job.customerUid}/${jobId}/continuationState`] = contState;
-      if(isAccepted) updates[`requests/${job.customerUid}/${jobId}/chatStartedAt`] = now;
-    }
-
-    updates[`orderChats/${jobId}/messages/${sysId}`] = {
-      type: "system_decision",
-      text: isAccepted
-        ? `✅ وافق الفني (${currentTech?.name || 'فني'}) على الطلب — المحادثة مفتوحة الآن.`
-        : `❌ اعتذر الفني (${currentTech?.name || 'فني'}) عن قبول الطلب.`,
-      senderId: uid,
-      senderName: currentTech?.name || "فني",
-      senderRole: "technician",
-      createdAt: now
-    };
-
-    await db.ref().update(updates);
-
-    if(isAccepted) {
-      openFullOrderChat(jobId, job.customerName || job.service || "محادثة الطلب");
-    } else {
-      showCustomAlert("تم رفض الطلب بنجاح.");
-      if(currentSectionId === "fullOrderChatSection") closeFullOrderChat();
-      else if(currentSectionId === "chatHubSection") renderChatHub();
-    }
-  } catch(e) {
-    showCustomAlert("خطأ: " + e.message);
-  }
 }
 
 async function saveTechAccountProfile() {
